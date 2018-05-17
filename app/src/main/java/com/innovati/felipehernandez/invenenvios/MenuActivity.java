@@ -16,9 +16,21 @@ public class MenuActivity extends AppCompatActivity
         this.setTitle("Menú");
     }
 
-    public void clientes(View v)
+
+    public void botones(View v)
     {
-        Intent i = new Intent(this, ClientesActivity.class);
+        Intent i = new Intent();
+
+        switch (v.getId())
+        {
+            case R.id.ArticulosImageButton:
+                i = new Intent(this, ArticuloActivity.class);
+            break;
+            case R.id.ClientesImageButton:
+                i = new Intent(this, ClientesActivity.class);
+            break;
+
+        }
         startActivity(i);
     }
 }
