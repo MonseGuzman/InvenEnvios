@@ -30,8 +30,9 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/secondaryColor"
                 android:padding="60dp"
-                android:src="@drawable/ic_cliente"
-                android:tooltipText="Clientes" />
+                android:src="@drawable/ic_clientes"
+                android:tooltipText="Clientes"
+                android:onClick="clientes"/>
 
             <ImageButton
                 android:layout_width="150dp"
