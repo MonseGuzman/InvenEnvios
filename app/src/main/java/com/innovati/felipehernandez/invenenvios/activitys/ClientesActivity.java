@@ -1,4 +1,4 @@
-package com.innovati.felipehernandez.invenenvios;
+package com.innovati.felipehernandez.invenenvios.activitys;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ClientesAdaptador;
 
 public class ClientesActivity extends AppCompatActivity

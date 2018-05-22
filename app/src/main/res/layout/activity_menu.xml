@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuActivity">
+    tools:context=".activitys.MenuActivity">
 
     <TableLayout
         android:id="@+id/tableLayout2"
@@ -36,12 +36,14 @@
                 android:onClick="botones"/>
 
             <ImageButton
-                android:id="@+id/PedidosImageButton"
+                android:id="@+id/ArticulosImageButton"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:background="@color/secondaryColor"
-                android:src="@drawable/ic_pedidos"
-                android:tooltipText="Pedidos" />
+                android:onClick="botones"
+                android:src="@drawable/ic_articulos"
+                android:tooltipText="Articulos" />
+
         </TableRow>
 
 
@@ -60,13 +62,13 @@
                 android:tooltipText="Entrega" />
 
             <ImageButton
-                android:id="@+id/ArticulosImageButton"
+                android:id="@+id/PedidosImageButton"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:background="@color/secondaryColor"
-                android:src="@drawable/ic_articulos"
-                android:tooltipText="Articulos"
-                android:onClick="botones"/>
+                android:src="@drawable/ic_pedidos"
+                android:tooltipText="Pedidos" />
+
         </TableRow>
 
         <TableRow

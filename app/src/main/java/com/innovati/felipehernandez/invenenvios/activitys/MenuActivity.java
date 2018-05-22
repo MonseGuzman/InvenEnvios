@@ -1,9 +1,11 @@
-package com.innovati.felipehernandez.invenenvios;
+package com.innovati.felipehernandez.invenenvios.activitys;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.innovati.felipehernandez.invenenvios.R;
 
 public class MenuActivity extends AppCompatActivity
 {

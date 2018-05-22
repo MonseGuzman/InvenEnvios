@@ -1,9 +1,10 @@
-package com.innovati.felipehernandez.invenenvios;
+package com.innovati.felipehernandez.invenenvios.activitys;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticuloAdapter;
 
 public class ArticuloActivity extends AppCompatActivity
