@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
@@ -45,12 +46,18 @@ public class LoginActivity extends AppCompatActivity
 
         if(wifi.conexionRed())
         {
+            Toast.makeText(this, "conectado", Toast.LENGTH_SHORT).show();
             //si la conexion wifi es conectada
+        }
+        else
+        {
+            //cuando no esta conectado a ninguna red
+            Toast.makeText(this, "no conectado", Toast.LENGTH_SHORT).show();
         }
         Intent i = new Intent(this, MenuActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
-        guardarPreferencias(etUsuario.getText().toString(), etPassword.getText().toString());
+        /*guardarPreferencias(etUsuario.getText().toString(), etPassword.getText().toString());*/
     }
 
     private void Alerta(String titulo, String mensaje)

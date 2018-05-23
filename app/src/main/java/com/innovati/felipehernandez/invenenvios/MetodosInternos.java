@@ -15,12 +15,13 @@ public class MetodosInternos
     public boolean conexionRed()
     {
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo info_wifi = connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        NetworkInfo info_datos = connectivity.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        NetworkInfo tipoRed = connectivity.getActiveNetworkInfo();
 
-        if (String.valueOf(info_wifi.getState()).equals("CONNECTED") || String.valueOf(info_datos.getState()).equals("CONNECTED"))
-            return true;
-        else
-            return false;
+        if(tipoRed != null)
+        {
+            if (tipoRed.getType() == ConnectivityManager.TYPE_MOBILE || tipoRed.getType() == ConnectivityManager.TYPE_WIFI)
+                return true;
+        }
+        return false;
     }
 }
