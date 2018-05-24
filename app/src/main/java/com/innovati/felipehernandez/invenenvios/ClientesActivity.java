@@ -10,9 +10,9 @@ import android.widget.ListView;
 
 import com.innovati.felipehernandez.invenenvios.adapters.ClientesAdaptador;
 
-public class ClientesActivity extends AppCompatActivity {
-
-    private ListView clienteListView_C;
+public class ClientesActivity extends AppCompatActivity
+{
+   private ListView clienteListView_C;
     private ClientesAdaptador adaptador;
 
     @Override
