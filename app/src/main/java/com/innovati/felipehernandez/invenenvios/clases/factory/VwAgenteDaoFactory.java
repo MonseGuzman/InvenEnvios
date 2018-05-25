@@ -9,8 +9,8 @@
 package com.innovati.felipehernandez.invenenvios.clases.factory;
 
 import java.sql.Connection;
-import com.innovati.felipehernandez.invenenvios.dao.*;
-import com.innovati.felipehernandez.invenenvios.jdbc.*;
+import com.innovati.felipehernandez.invenenvios.clases.dao.*;
+import com.innovati.felipehernandez.invenenvios.clases.jdbc.*;
 
 public class VwAgenteDaoFactory
 {

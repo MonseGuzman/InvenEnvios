@@ -8,8 +8,8 @@
 
 package com.innovati.felipehernandez.invenenvios.clases.dao;
 
-import com.innovati.felipehernandez.invenenvios.dto.*;
-import com.innovati.felipehernandez.invenenvios.exceptions.*;
+import com.innovati.felipehernandez.invenenvios.clases.dto.*;
+import com.innovati.felipehernandez.invenenvios.clases.exceptions.*;
 
 public interface VwClientesDao
 {

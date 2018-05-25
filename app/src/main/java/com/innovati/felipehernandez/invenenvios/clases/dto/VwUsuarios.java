@@ -8,9 +8,9 @@
 
 package com.innovati.felipehernandez.invenenvios.clases.dto;
 
-import com.innovati.felipehernandez.invenenvios.dao.*;
-import com.innovati.felipehernandez.invenenvios.factory.*;
-import com.innovati.felipehernandez.invenenvios.exceptions.*;
+import com.innovati.felipehernandez.invenenvios.clases.dao.*;
+import com.innovati.felipehernandez.invenenvios.clases.factory.*;
+import com.innovati.felipehernandez.invenenvios.clases.exceptions.*;
 import java.io.Serializable;
 import java.util.Date;
 

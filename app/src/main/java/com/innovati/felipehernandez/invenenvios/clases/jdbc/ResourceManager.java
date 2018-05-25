@@ -5,7 +5,7 @@ import java.sql.*;
 public class ResourceManager
 {
     private static String JDBC_DRIVER   = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static String JDBC_URL      = "jdbc:sqlserver://SERVERNET\PDPSERVER:1433;databaseName=Inven_E";
+    private static String JDBC_URL      = "jdbc:sqlserver://SERVERNET\\PDPSERVER:1433;databaseName=Inven_E";
 
     private static String JDBC_USER     = "sa";
     private static String JDBC_PASSWORD = "0f3734m0_%%";
