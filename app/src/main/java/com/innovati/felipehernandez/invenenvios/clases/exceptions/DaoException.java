@@ -6,7 +6,7 @@
  * For more information please visit http://www.codefutures.com/products/firestorm
  */
 
-package com.innovati.felipehernandez.invenenvios.innovati.felipehernandez.invenenvios.exceptions;
+package com.innovati.felipehernandez.invenenvios.clases.exceptions;
 
 public class DaoException extends Exception
 {

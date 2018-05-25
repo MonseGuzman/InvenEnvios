@@ -1,4 +1,4 @@
-package com.innovati.felipehernandez.invenenvios.innovati.felipehernandez.invenenvios.jdbc;
+package com.innovati.felipehernandez.invenenvios.clases.jdbc;
 
 import java.io.*;
 import java.sql.*;

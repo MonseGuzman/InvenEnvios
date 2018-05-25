@@ -6,7 +6,7 @@
  * For more information please visit http://www.codefutures.com/products/firestorm
  */
 
-package com.innovati.felipehernandez.invenenvios.innovati.felipehernandez.invenenvios.jdbc;
+package com.innovati.felipehernandez.invenenvios.clases.jdbc;
 
 import com.innovati.felipehernandez.invenenvios.dao.*;
 import com.innovati.felipehernandez.invenenvios.factory.*;
@@ -16,14 +16,9 @@ import com.innovati.felipehernandez.invenenvios.exceptions.*;
 import java.sql.Connection;
 import java.util.Collection;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.util.List;
-import java.util.Iterator;
 import java.util.ArrayList;
-import java.sql.CallableStatement;
 
 public class VwUsuariosDaoImpl extends AbstractDAO implements VwUsuariosDao
 {

@@ -6,7 +6,7 @@
  * For more information please visit http://www.codefutures.com/products/firestorm
  */
 
-package com.innovati.felipehernandez.invenenvios.innovati.felipehernandez.invenenvios.factory;
+package com.innovati.felipehernandez.invenenvios.clases.factory;
 
 import java.sql.Connection;
 import com.innovati.felipehernandez.invenenvios.dao.*;

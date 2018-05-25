@@ -6,27 +6,27 @@
  * For more information please visit http://www.codefutures.com/products/firestorm
  */
 
-package com.innovati.felipehernandez.invenenvios.innovati.felipehernandez.invenenvios.exceptions;
+package com.innovati.felipehernandez.invenenvios.clases.exceptions;
 
-public class VwAgenteDaoException extends DaoException
+public class VwClientesDaoException extends DaoException
 {
 	/**
-	 * Method 'VwAgenteDaoException'
+	 * Method 'VwClientesDaoException'
 	 * 
 	 * @param message
 	 */
-	public VwAgenteDaoException(String message)
+	public VwClientesDaoException(String message)
 	{
 		super(message);
 	}
 
 	/**
-	 * Method 'VwAgenteDaoException'
+	 * Method 'VwClientesDaoException'
 	 * 
 	 * @param message
 	 * @param cause
 	 */
-	public VwAgenteDaoException(String message, Throwable cause)
+	public VwClientesDaoException(String message, Throwable cause)
 	{
 		super(message, cause);
 	}

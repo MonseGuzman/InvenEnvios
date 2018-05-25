@@ -6,12 +6,11 @@
  * For more information please visit http://www.codefutures.com/products/firestorm
  */
 
-package com.innovati.felipehernandez.invenenvios.innovati.felipehernandez.invenenvios.dao;
+package com.innovati.felipehernandez.invenenvios.clases.dao;
 
 import java.util.Date;
 import com.innovati.felipehernandez.invenenvios.dto.*;
 import com.innovati.felipehernandez.invenenvios.exceptions.*;
-import java.sql.CallableStatement;
 
 public interface VwUsuariosDao
 {

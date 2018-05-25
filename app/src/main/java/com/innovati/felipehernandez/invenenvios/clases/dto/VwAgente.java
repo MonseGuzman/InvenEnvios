@@ -6,13 +6,12 @@
  * For more information please visit http://www.codefutures.com/products/firestorm
  */
 
-package com.innovati.felipehernandez.invenenvios.innovati.felipehernandez.invenenvios.dto;
+package com.innovati.felipehernandez.invenenvios.clases.dto;
 
 import com.innovati.felipehernandez.invenenvios.dao.*;
 import com.innovati.felipehernandez.invenenvios.factory.*;
 import com.innovati.felipehernandez.invenenvios.exceptions.*;
 import java.io.Serializable;
-import java.util.*;
 
 public class VwAgente implements Serializable
 {
