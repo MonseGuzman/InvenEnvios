@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuActivity">
+    tools:context=".activitys.MenuActivity">
 
     <TableLayout
         android:id="@+id/tableLayout2"
@@ -25,6 +25,7 @@
             android:layout_margin="10dp">
 
             <ImageButton
+                android:id="@+id/ClientesImageButton"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:layout_marginRight="10dp"
@@ -32,15 +33,19 @@
                 android:padding="60dp"
                 android:src="@drawable/ic_clientes"
                 android:tooltipText="Clientes"
-                android:onClick="clientes"/>
+                android:onClick="botones"/>
 
             <ImageButton
+                android:id="@+id/ArticulosImageButton"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:background="@color/secondaryColor"
-                android:src="@drawable/ic_pedidos"
-                android:tooltipText="Pedidos" />
+                android:onClick="botones"
+                android:src="@drawable/ic_articulos"
+                android:tooltipText="Articulos" />
+
         </TableRow>
+
 
         <TableRow
             android:layout_width="match_parent"
@@ -48,6 +53,7 @@
             android:layout_margin="10dp">
 
             <ImageButton
+                android:id="@+id/EntregaImageButton"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:layout_marginRight="10dp"
@@ -56,11 +62,13 @@
                 android:tooltipText="Entrega" />
 
             <ImageButton
+                android:id="@+id/PedidosImageButton"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:background="@color/secondaryColor"
-                android:src="@drawable/ic_articulos"
-                android:tooltipText="Articulos" />
+                android:src="@drawable/ic_pedidos"
+                android:tooltipText="Pedidos" />
+
         </TableRow>
 
         <TableRow
@@ -69,6 +77,7 @@
             android:layout_margin="10dp">
 
             <ImageButton
+                android:id="@+id/LevantamientosImageButton"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:layout_marginRight="10dp"
@@ -77,6 +86,7 @@
                 android:tooltipText="Levantamientos" />
 
             <ImageButton
+                android:id="@+id/SalirImageButton"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:background="@color/secondaryColor"
@@ -88,7 +98,7 @@
     </TableLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/SincronizarfloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
