@@ -8,11 +8,11 @@
 
 package com.innovati.felipehernandez.invenenvios.clases.jdbc;
 
-import com.innovati.felipehernandez.invenenvios.dao.*;
-import com.innovati.felipehernandez.invenenvios.factory.*;
+import com.innovati.felipehernandez.invenenvios.clases.dao.*;
+import com.innovati.felipehernandez.invenenvios.clases.factory.*;
 import java.util.Date;
-import com.innovati.felipehernandez.invenenvios.dto.*;
-import com.innovati.felipehernandez.invenenvios.exceptions.*;
+import com.innovati.felipehernandez.invenenvios.clases.dto.*;
+import com.innovati.felipehernandez.invenenvios.clases.exceptions.*;
 import java.sql.Connection;
 import java.util.Collection;
 import java.sql.PreparedStatement;
