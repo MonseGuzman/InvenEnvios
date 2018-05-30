@@ -7,29 +7,31 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.innovati.felipehernandez.invenenvios.Clientes;
 import com.innovati.felipehernandez.invenenvios.R;
+
+import java.util.List;
 
 public class ArticuloAdapter extends BaseAdapter
 {
     private Context context;
-    //private List<Board> lista; agregar Lista de clientes
+    private List<Clientes> lista; //agregar Lista de clientes
     private int layaout;
 
-    public ArticuloAdapter(Context context, int layaout) {
+    public ArticuloAdapter(Context context, List<Clientes> lista, int layaout) {
         this.context = context;
+        this.lista = lista;
         this.layaout = layaout;
     }
 
     @Override
     public int getCount() {
-        //return lista.size();
-        return 0;
+        return lista.size();
     }
 
     @Override
     public Object getItem(int position) {
-        //return lista.get(position);
-        return 0;
+        return lista.get(position);
     }
 
     @Override
@@ -55,8 +57,9 @@ public class ArticuloAdapter extends BaseAdapter
             vh = (ArticuloAdapter.ViewHolder) convertView.getTag();
         }
 
-        vh.nombreArticulo.setText("prueba");
-        vh.existencia.setText("$10");
+        Clientes clientes = lista.get(position);
+        vh.nombreArticulo.setText(clientes.getNombre());
+        vh.existencia.setText(clientes.getRFC());
         return convertView;
     }
 

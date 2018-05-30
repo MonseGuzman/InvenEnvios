@@ -8,13 +8,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.innovati.felipehernandez.invenenvios.Clientes;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ClientesAdaptador;
 
+import java.util.List;
+
 public class ClientesActivity extends AppCompatActivity
 {
-   private ListView clienteListView_C;
+    private ListView clienteListView_C;
     private ClientesAdaptador adaptador;
+    private List<Clientes> prueba;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +27,7 @@ public class ClientesActivity extends AppCompatActivity
 
         inicializacion();
 
-        adaptador = new ClientesAdaptador(this, R.layout.listview_cliente);
+        adaptador = new ClientesAdaptador(this, prueba,  R.layout.listview_cliente);
         clienteListView_C.setAdapter(adaptador);
 
         //menú de contexto
