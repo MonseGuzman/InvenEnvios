@@ -53,7 +53,7 @@ public class ClientesActivity extends AppCompatActivity
 
     private void inicializacion()
     {
-        clienteListView_C = (ListView)findViewById(R.id.clienteListView_C);
+        clienteListView_C = (ListView)findViewById(R.id.articuloListView_A);
     }
 
     //menú de contexto
