@@ -25,12 +25,12 @@ public class ClientesAdaptador extends BaseAdapter
 {
     private Context context;
     private VwClientes lista[];// agregar Lista de clientes
-    private int layaout;
+    private int layout;
 
     public ClientesAdaptador(Context context, int layaout, VwClientes lista[])
     {
         this.context = context;
-        this.layaout = layaout;
+        this.layout = layaout;
         this.lista = lista;
     }
 

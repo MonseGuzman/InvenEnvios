@@ -66,7 +66,7 @@ public class ClientesActivity extends AppCompatActivity
 
        clienteListView_C.setFocusable(true);
 
-        adaptador = new ClientesAdaptador(this, clientes,  R.layout.listview_cliente);
+        adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
         clienteListView_C.setAdapter(adaptador);
 
         //menú de contexto
