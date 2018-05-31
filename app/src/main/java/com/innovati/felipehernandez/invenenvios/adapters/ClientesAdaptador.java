@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.innovati.felipehernandez.invenenvios.Clientes;
 import com.innovati.felipehernandez.invenenvios.R;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,23 +24,26 @@ import java.util.List;
 public class ClientesAdaptador extends BaseAdapter
 {
     private Context context;
-    private ArrayList<Clientes> lista; //agregar Lista de clientes
-    private int layout;
+    private VwClientes lista[];// agregar Lista de clientes
+    private int layaout;
 
-    public ClientesAdaptador(Context context, ArrayList lista, int layout) {
+    public ClientesAdaptador(Context context, int layaout, VwClientes lista[])
+    {
         this.context = context;
+        this.layaout = layaout;
         this.lista = lista;
-        this.layout = layout;
     }
 
     @Override
     public int getCount() {
-        return lista.size();
+        //return lista.size();
+        return lista.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return lista.get(position);
+        //return lista.get(position);
+        return lista[position];
     }
 
     @Override
@@ -48,7 +53,7 @@ public class ClientesAdaptador extends BaseAdapter
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final ViewHolder vh;
+        ViewHolder vh;
 
         if(convertView == null)
         {
@@ -65,9 +70,10 @@ public class ClientesAdaptador extends BaseAdapter
             vh = (ViewHolder) convertView.getTag();
         }
 
-        Clientes clientes = lista.get(position);
+
+        VwClientes clientes = lista[position];
         vh.nombreCliente.setText(clientes.getNombre());
-        vh.RFCCliente.setText(clientes.getRFC());
+        vh.RFCCliente.setText(clientes.getRfc());
         vh.telefonoCliente.setText(clientes.getTelefono());
 
         return convertView;
