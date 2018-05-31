@@ -7,9 +7,17 @@ import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ClientesAdaptador;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwAgenteDao;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwAgente;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
+import com.innovati.felipehernandez.invenenvios.clases.exceptions.VwAgenteDaoException;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwAgenteDaoFactory;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
 
 public class ClientesActivity extends AppCompatActivity
 {
@@ -20,10 +28,22 @@ public class ClientesActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientes);
-
+        VwClientes result[] = null;
         inicializacion();
+        try
+        {
+            VwClientesDao _dao = getVwClientesDao();
+            result = _dao.findAll();
 
-        adaptador = new ClientesAdaptador(this, R.layout.listview_cliente);
+        }
+        catch(Exception e)
+        {
+            Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
+        }
+
+
+
+       adaptador = new ClientesAdaptador(this, R.layout.listview_cliente, result);
         clienteListView_C.setAdapter(adaptador);
 
         //menú de contexto
@@ -43,5 +63,10 @@ public class ClientesActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.menu_listview_cliente ,menu);
 
         super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    public static VwClientesDao getVwClientesDao()
+    {
+        return VwClientesDaoFactory.create();
     }
 }

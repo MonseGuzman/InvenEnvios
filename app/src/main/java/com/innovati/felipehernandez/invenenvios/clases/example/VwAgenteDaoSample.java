@@ -47,6 +47,7 @@ public class VwAgenteDaoSample
 		try {
 			VwAgenteDao _dao = getVwAgenteDao();
 			VwAgente _result[] = _dao.findAll();
+
 			for (int i=0; i<_result.length; i++ ) {
 				display( _result[i] );
 			}

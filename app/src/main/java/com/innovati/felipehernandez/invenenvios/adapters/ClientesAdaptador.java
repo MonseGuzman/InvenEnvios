@@ -8,28 +8,32 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.innovati.felipehernandez.invenenvios.R;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 
 public class ClientesAdaptador extends BaseAdapter
 {
     private Context context;
-    //private List<Board> lista; agregar Lista de clientes
+    private VwClientes lista[];// agregar Lista de clientes
     private int layaout;
 
-    public ClientesAdaptador(Context context, int layaout) {
+    public ClientesAdaptador(Context context, int layaout, VwClientes lista[])
+    {
         this.context = context;
         this.layaout = layaout;
+        this.lista = lista;
     }
 
     @Override
     public int getCount() {
         //return lista.size();
-        return 0;
+        return lista.length;
     }
 
     @Override
     public Object getItem(int position) {
         //return lista.get(position);
-        return 0;
+        return lista[position];
     }
 
     @Override
@@ -55,8 +59,9 @@ public class ClientesAdaptador extends BaseAdapter
             vh = (ViewHolder) convertView.getTag();
         }
 
-        vh.nombreCliente.setText("prueba");
-        vh.saldoCliente.setText("$10");
+
+        vh.nombreCliente.setText(lista[position].getNombre());
+        vh.saldoCliente.setText(lista[position].getRfc());
         return convertView;
     }
 
