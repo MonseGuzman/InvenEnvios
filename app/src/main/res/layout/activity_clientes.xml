@@ -20,21 +20,22 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/buscarClienteEditText_A"
+            android:id="@+id/buscarClienteEditText_C"
             android:layout_width="287dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp" />
 
         <ImageButton
-            android:id="@+id/BuscarImageButton_A"
+            android:id="@+id/BuscarImageButton_C"
             android:layout_width="43dp"
             android:layout_height="match_parent"
             android:background="@color/secondaryColor"
-            android:src="@drawable/ic_busqueda" />
+            android:src="@drawable/ic_busqueda"
+            android:onClick="filtar"/>
     </LinearLayout>
 
     <ListView
-        android:id="@+id/articuloListView_A"
+        android:id="@+id/clienteListView"
         android:layout_width="356dp"
         android:layout_height="424dp"
         android:layout_marginBottom="8dp"
@@ -49,7 +50,7 @@
     </ListView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/AgregarFAB_A"
+        android:id="@+id/AgregarFAB_C"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"

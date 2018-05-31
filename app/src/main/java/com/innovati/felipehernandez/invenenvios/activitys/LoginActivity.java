@@ -42,22 +42,32 @@ public class LoginActivity extends AppCompatActivity
 
     public void login(View v)
     {
-        MetodosInternos wifi = new MetodosInternos(this);
+        //si la conexion wifi/datos es conectada
+        MetodosInternos conectado = new MetodosInternos(this);
+        String usuario, password;
 
-        if(wifi.conexionRed())
+        usuario = etUsuario.getText().toString();
+        password = etPassword.getText().toString();
+
+        if(conectado.conexionRed())
         {
+            /*if(conectado.validacion(usuario, password))
+            {
+               if(conectado.login(usuario, password))
+               {*/
+                   Intent i = new Intent(this, MenuActivity.class);
+                   i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                   startActivity(i);
+                   guardarPreferencias(usuario, password);
+               /*}
+            }*/
             Toast.makeText(this, "conectado", Toast.LENGTH_SHORT).show();
-            //si la conexion wifi es conectada
         }
         else
         {
             //cuando no esta conectado a ninguna red
-            Toast.makeText(this, "no conectado", Toast.LENGTH_SHORT).show();
+            Alerta("Sin acceso a Internet", "Favor de conectarse a una red ya sea WiFi o datos móviles");
         }
-        Intent i = new Intent(this, MenuActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(i);
-        /*guardarPreferencias(etUsuario.getText().toString(), etPassword.getText().toString());*/
     }
 
     private void Alerta(String titulo, String mensaje)
@@ -89,8 +99,10 @@ public class LoginActivity extends AppCompatActivity
     }
 
     private void guardarPreferencias(String email, String contra)
-    { //cuando abre la actividad
-        if (chRecordarme.isChecked()) {
+    {
+        //cuando abre la actividad
+        if (chRecordarme.isChecked())
+        {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("usuario", email);
             editor.putString("contraseña", contra);
