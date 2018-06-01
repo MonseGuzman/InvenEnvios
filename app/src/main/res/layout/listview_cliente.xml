@@ -17,7 +17,10 @@
         android:id="@+id/NombreClienteTextView_C"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14dp"/>
+        android:textSize="14dp"
+        android:textColor="#000"
+        android:typeface="normal"
+        android:text="Andrea Monserrat"/>
 
     <TextView
         android:id="@+id/RFCTextView_C"
@@ -26,12 +29,18 @@
         android:layout_marginLeft="0dp"
         android:textAlignment="textStart"
         android:textSize="12dp"
+        android:textColor="@color/secondaryDarkColor"
+        android:text="GULA962309FM5"
         android:typeface="normal" />
 
     <TextView
         android:id="@+id/TelefonoTextView_C"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="3411009819"
+        android:maxLength="15"
+        android:textColor="@color/colorPrimaryDark"
         />
 
 </LinearLayout>

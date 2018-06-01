@@ -31,8 +31,12 @@ public class MenuActivity extends AppCompatActivity
             case R.id.ClientesImageButton:
                 i = new Intent(this, ClientesActivity.class);
             break;
-
         }
         startActivity(i);
+    }
+
+    public void salir(View v)
+    {
+        finish();
     }
 }
