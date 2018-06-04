@@ -10,6 +10,8 @@ import com.innovati.felipehernandez.invenenvios.adapters.ArticuloAdapter;
 
 import java.util.List;
 
+import java.util.List;
+
 public class ArticuloActivity extends AppCompatActivity
 {
     private ArticuloAdapter adaptador;
