@@ -6,18 +6,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.R;
+import com.innovati.felipehernandez.invenenvios.activitys.ArticuloActivity;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
 
 public class ArticuloAdapter extends BaseAdapter
 {
     private Context context;
-    //private List<Board> lista; agregar Lista de clientes
+    private VwArticulos lista[];
     private int layaout;
 
-    public ArticuloAdapter(Context context, int layaout) {
+    public ArticuloAdapter(Context context, int layaout, VwArticulos lista[])
+    {
         this.context = context;
         this.layaout = layaout;
+        this.lista = lista;
     }
 
     @Override
@@ -54,9 +62,8 @@ public class ArticuloAdapter extends BaseAdapter
         {
             vh = (ArticuloAdapter.ViewHolder) convertView.getTag();
         }
-
-        vh.nombreArticulo.setText("prueba");
-        vh.existencia.setText("$10");
+        vh.nombreArticulo.setText(lista[position].getNombre());
+        vh.existencia.setText(String.valueOf(lista[position].getExistenciaTotal()));
         return convertView;
     }
 
@@ -64,5 +71,10 @@ public class ArticuloAdapter extends BaseAdapter
     {
         TextView nombreArticulo, existencia;
 
+    }
+
+    public static VwArticulosDao getVwArticulosDao()
+    {
+        return VwArticulosDaoFactory.create();
     }
 }
