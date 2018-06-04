@@ -60,26 +60,27 @@ public class LoginActivity extends AppCompatActivity
             if(conectado.validacion(usuario, password))
             {
                 //login
-              /* try
+               try
                {
                    String parametros[] = {usuario,password};
                    VwUsuariosDao _dao = getVwUsuariosDao();
                    result = _dao.findByDynamicWhere("NickName = ? AND Password = ? ", parametros);
-                   if(result != null)
-                   {*/
+                   if(result.length > 0)
+                   {
                        //calar mañana
                        Intent i = new Intent(this, MenuActivity.class);
                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                        startActivity(i);
                        guardarPreferencias(usuario, password);
-                   /*}
+                   }
+                   else
+                       conectado.Alerta(R.string.error, R.string.noValido);
 
                }
                catch(Exception e)
                {
                    Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
-               }*/
-
+               }
             }
             else
                 Snackbar.make(v, R.string.sinDatos, Snackbar.LENGTH_SHORT).show();

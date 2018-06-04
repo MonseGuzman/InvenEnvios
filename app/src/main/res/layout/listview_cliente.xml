@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:text="3411009819"
-        android:maxLength="15"
+        android:maxLength="20"
         android:textColor="@color/colorPrimaryDark"
         />
 

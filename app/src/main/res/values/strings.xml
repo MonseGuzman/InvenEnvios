@@ -6,7 +6,8 @@
     <string name="sinInternet">Sin acceso a Internet</string>
     <string name="conectarse">Favor de conectarse a una red ya sea Wi-Fi o datos móviles</string>
     <string name="sinDatos">Favor de ingresar los datos solicitados</string>
-    <string name="error">Usuario/Contraseña no válidos</string>
+    <string name="error">Error</string>
+    <string name="noValido">Usuario y/o Contraseña no válidos</string>
 
     <!--Menú-->
     <string name="menuLlamar">Llamar</string>
