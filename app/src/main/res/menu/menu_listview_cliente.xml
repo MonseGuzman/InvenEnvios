@@ -8,4 +8,8 @@
         android:id="@+id/Agregar_C"
         android:title="Agregar"
         android:enabled="false"/>
+    <item
+        android:id="@+id/Llamar_C"
+        android:title="Llamar"
+        android:enabled="true" />
 </menu>

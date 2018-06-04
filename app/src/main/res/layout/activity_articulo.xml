@@ -33,7 +33,7 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/clienteListView_C"
+        android:id="@+id/articuloListView_A"
         android:layout_width="356dp"
         android:layout_height="424dp"
         android:layout_marginBottom="8dp"

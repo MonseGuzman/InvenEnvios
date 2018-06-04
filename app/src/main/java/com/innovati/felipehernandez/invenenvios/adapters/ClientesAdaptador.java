@@ -1,26 +1,36 @@
 package com.innovati.felipehernandez.invenenvios.adapters;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.innovati.felipehernandez.invenenvios.Clientes;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientesAdaptador extends BaseAdapter
 {
     private Context context;
     private VwClientes lista[];// agregar Lista de clientes
-    private int layaout;
+    private int layout;
 
     public ClientesAdaptador(Context context, int layaout, VwClientes lista[])
     {
         this.context = context;
-        this.layaout = layaout;
+        this.layout = layaout;
         this.lista = lista;
     }
 
@@ -47,10 +57,11 @@ public class ClientesAdaptador extends BaseAdapter
 
         if(convertView == null)
         {
-            convertView = LayoutInflater.from(context).inflate(layaout, null);
+            convertView = LayoutInflater.from(context).inflate(layout, null);
             vh = new ViewHolder();
             vh.nombreCliente = (TextView)convertView.findViewById(R.id.NombreClienteTextView_C);
-            vh.saldoCliente = (TextView)convertView.findViewById(R.id.SaldoTextView_C);
+            vh.RFCCliente = (TextView)convertView.findViewById(R.id.RFCTextView_C);
+            vh.telefonoCliente = (TextView) convertView.findViewById(R.id.TelefonoTextView_C);
 
             convertView.setTag(vh);
         }
@@ -60,14 +71,17 @@ public class ClientesAdaptador extends BaseAdapter
         }
 
 
-        vh.nombreCliente.setText(lista[position].getNombre());
-        vh.saldoCliente.setText(lista[position].getRfc());
+        VwClientes clientes = lista[position];
+        vh.nombreCliente.setText(clientes.getNombre());
+        vh.RFCCliente.setText(clientes.getRfc());
+        vh.telefonoCliente.setText(clientes.getTelefono());
+
         return convertView;
     }
 
     public class ViewHolder
     {
-        TextView nombreCliente, saldoCliente;
+        TextView nombreCliente, RFCCliente, telefonoCliente;
 
     }
 }
