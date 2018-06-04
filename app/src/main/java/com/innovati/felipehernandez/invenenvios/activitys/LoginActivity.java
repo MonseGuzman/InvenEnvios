@@ -110,4 +110,22 @@ public class LoginActivity extends AppCompatActivity
             editor.apply(); //guarda todos los cambios aunque no se guarden todos
         }
     }
+
+    //persistencia de datos para la activity de login
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //Guardar user y password
+        outState.putString("user",etUsuario.getText().toString());
+        outState.putString("password",etPassword.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        //Restablece los datos en los campos
+        etUsuario.setText(savedInstanceState.get("user").toString());
+        etPassword.setText(savedInstanceState.get("password").toString());
+    }
 }
