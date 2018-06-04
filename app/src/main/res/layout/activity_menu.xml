@@ -31,7 +31,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/secondaryColor"
                 android:padding="60dp"
-                android:src="@drawable/ic_clientes"
+                android:src="@drawable/ic_cliente"
                 android:tooltipText="Clientes"
                 android:onClick="botones"/>
 
@@ -91,9 +91,9 @@
                 android:layout_height="100dp"
                 android:background="@color/secondaryColor"
                 android:src="@drawable/ic_salir"
-                android:tooltipText="Salir" />
+                android:tooltipText="Salir"
+                android:onClick="salir"/>
         </TableRow>
-
 
     </TableLayout>
 
