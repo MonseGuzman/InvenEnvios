@@ -6,32 +6,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.innovati.felipehernandez.invenenvios.Clientes;
 import com.innovati.felipehernandez.invenenvios.R;
-
-import java.util.List;
+import com.innovati.felipehernandez.invenenvios.activitys.ArticuloActivity;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
 
 public class ArticuloAdapter extends BaseAdapter
 {
     private Context context;
-    private List<Clientes> lista; //agregar Lista de clientes
+    private VwArticulos lista[];
     private int layaout;
 
-    public ArticuloAdapter(Context context, List<Clientes> lista, int layaout) {
+    public ArticuloAdapter(Context context, int layaout, VwArticulos lista[])
+    {
         this.context = context;
-        this.lista = lista;
         this.layaout = layaout;
+        this.lista = lista;
     }
 
     @Override
     public int getCount() {
-        return lista.size();
+        //return lista.size();
+        return 0;
     }
 
     @Override
     public Object getItem(int position) {
-        return lista.get(position);
+        //return lista.get(position);
+        return 0;
     }
 
     @Override
@@ -56,10 +62,8 @@ public class ArticuloAdapter extends BaseAdapter
         {
             vh = (ArticuloAdapter.ViewHolder) convertView.getTag();
         }
-
-        Clientes clientes = lista.get(position);
-        vh.nombreArticulo.setText(clientes.getNombre());
-        vh.existencia.setText(clientes.getRFC());
+        vh.nombreArticulo.setText(lista[position].getNombre());
+        vh.existencia.setText(String.valueOf(lista[position].getExistenciaTotal()));
         return convertView;
     }
 
@@ -67,5 +71,10 @@ public class ArticuloAdapter extends BaseAdapter
     {
         TextView nombreArticulo, existencia;
 
+    }
+
+    public static VwArticulosDao getVwArticulosDao()
+    {
+        return VwArticulosDaoFactory.create();
     }
 }
