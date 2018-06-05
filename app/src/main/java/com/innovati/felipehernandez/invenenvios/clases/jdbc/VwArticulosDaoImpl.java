@@ -195,7 +195,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
    public VwArticulos[] findWhereNombreEquals(String nombre) throws VwArticulosDaoException
    {
-      return findByDynamicSelect( SQL_SELECT + " WHERE Nombre = ? ORDER BY Nombre", new Object[] { nombre } );
+      return findByDynamicSelect( SQL_SELECT + " WHERE Nombre LIKE ? ORDER BY Nombre", new Object[] { nombre } );
    }
 
 	/** 
