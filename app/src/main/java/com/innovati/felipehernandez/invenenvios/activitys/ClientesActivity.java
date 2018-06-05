@@ -145,6 +145,8 @@ public class ClientesActivity extends AppCompatActivity
             //todos los que se parecen con el where
             try
             {
+                nombre = "%" + nombre;
+                nombre += "%";
                 VwClientesDao _dao = getVwClientesDao();
                 result = _dao.findWhereNombreEquals(nombre);
                 adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);

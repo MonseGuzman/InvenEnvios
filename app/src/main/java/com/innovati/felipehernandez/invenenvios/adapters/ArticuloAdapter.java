@@ -31,13 +31,13 @@ public class ArticuloAdapter extends BaseAdapter
     @Override
     public int getCount() {
         //return lista.size();
-        return 0;
+        return lista.length;
     }
 
     @Override
     public Object getItem(int position) {
         //return lista.get(position);
-        return 0;
+        return lista[position];
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ArticuloAdapter extends BaseAdapter
         if(convertView == null)
         {
             convertView = LayoutInflater.from(context).inflate(layaout, null);
-            vh = new ArticuloAdapter.ViewHolder();
+            vh = new ViewHolder();
             vh.nombreArticulo = (TextView)convertView.findViewById(R.id.articuloTextView_A);
             vh.existencia = (TextView)convertView.findViewById(R.id.ExistenciasTextView_A);
 
