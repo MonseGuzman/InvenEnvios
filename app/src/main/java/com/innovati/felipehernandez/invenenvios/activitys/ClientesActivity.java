@@ -17,18 +17,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.innovati.felipehernandez.invenenvios.Clientes;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ClientesAdaptador;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
-
-import java.util.ArrayList;
+import com.innovati.felipehernandez.invenenvios.fragments.ClienteFragment;
 
 public class ClientesActivity extends AppCompatActivity
 {
@@ -36,6 +33,7 @@ public class ClientesActivity extends AppCompatActivity
     private EditText buscarClienteEditText_C;
     private ClientesAdaptador adaptador;
     VwClientes result[];
+    MetodosInternos metodosInternos = new MetodosInternos(this);
 
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int posicion;
@@ -47,6 +45,14 @@ public class ClientesActivity extends AppCompatActivity
 
         inicializacion();
 
+        clienteListView_C.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                ClienteFragment clienteFragment = new ClienteFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.ClienteConstraintLayout, clienteFragment).addToBackStack(null).commit();
+            }
+        });
         //menú de contexto
         registerForContextMenu(clienteListView_C);
     }
@@ -93,14 +99,6 @@ public class ClientesActivity extends AppCompatActivity
         }
     }
 
-    /*private void rellenaLista()
-    {
-        //añadir otro o el mismo con el where blah_blah = blah,
-        MetodosInternos metodosInternos = new MetodosInternos(this);
-        clientes = metodosInternos.consultaDeTodos();
-
-    }*/
-
     public void telefono(int position)
     {
         String telefono = result[position].getTelefono();
@@ -126,35 +124,48 @@ public class ClientesActivity extends AppCompatActivity
         if(TextUtils.isEmpty(nombre))
         {
             //sin filtro = todos
-            try
+            if(metodosInternos.conexionRed())
             {
-                VwClientesDao _dao = getVwClientesDao();
-                result = _dao.findAll();
-                adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
-                clienteListView_C.setAdapter(adaptador);
+                try
+                {
+                    VwClientesDao _dao = getVwClientesDao();
+                    result = _dao.findAll();
+                    adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
+                    clienteListView_C.setAdapter(adaptador);
 
+                }
+                catch(Exception e)
+                {
+                    Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                }
             }
-            catch(Exception e)
+            else
             {
-                Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                //bd interna
             }
-
         }
         else
         {
             //todos los que se parecen con el where
-            try
+            if(metodosInternos.conexionRed())
             {
-                nombre = "%" + nombre;
-                nombre += "%";
-                VwClientesDao _dao = getVwClientesDao();
-                result = _dao.findWhereNombreEquals(nombre);
-                adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
-                clienteListView_C.setAdapter(adaptador);
+                try
+                {
+                    nombre = "%" + nombre;
+                    nombre += "%";
+                    VwClientesDao _dao = getVwClientesDao();
+                    result = _dao.findWhereNombreEquals(nombre);
+                    adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
+                    clienteListView_C.setAdapter(adaptador);
+                }
+                catch(Exception e)
+                {
+                    Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                }
             }
-            catch(Exception e)
+            else
             {
-                Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                //bd interna
             }
         }
     }

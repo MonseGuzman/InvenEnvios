@@ -29,11 +29,17 @@ public class MenuActivity extends AppCompatActivity
 
         switch (v.getId())
         {
-            case R.id.ArticulosImageButton:
+            case R.id.ArticulosButton:
                 i = new Intent(this, ArticuloActivity.class);
+                i.putExtra("actividad", "Articulos");
             break;
-            case R.id.ClientesImageButton:
+            case R.id.ClientesButton:
                 i = new Intent(this, ClientesActivity.class);
+                break;
+            case R.id.PedidosButton:
+                i = new Intent(this, ArticuloActivity.class);
+                i.putExtra("actividad", "Pedidos");
+                //i = new Intent(this, EntregasActivity.class);
             break;
         }
         startActivity(i);

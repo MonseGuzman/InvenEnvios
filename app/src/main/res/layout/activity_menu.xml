@@ -8,8 +8,8 @@
 
     <TableLayout
         android:id="@+id/tableLayout2"
-        android:layout_width="314dp"
-        android:layout_height="365dp"
+        android:layout_width="322dp"
+        android:layout_height="360dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -24,51 +24,30 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp">
 
-            <ImageButton
-                android:id="@+id/ClientesImageButton"
+            <Button
+                android:id="@+id/ClientesButton"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:layout_marginRight="10dp"
                 android:background="@color/secondaryColor"
-                android:padding="60dp"
-                android:src="@drawable/ic_cliente"
-                android:tooltipText="Clientes"
-                android:onClick="botones"/>
-
-            <ImageButton
-                android:id="@+id/ArticulosImageButton"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:background="@color/secondaryColor"
+                android:drawableTop="@drawable/ic_cliente"
                 android:onClick="botones"
-                android:src="@drawable/ic_articulos"
-                android:tooltipText="Articulos" />
+                android:paddingTop="15dp"
+                android:text="Clientes"
+                android:textAlignment="center"
+                android:textColor="#FFF" />
 
-        </TableRow>
-
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp">
-
-            <ImageButton
-                android:id="@+id/EntregaImageButton"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/secondaryColor"
-                android:src="@drawable/ic_entrega"
-                android:tooltipText="Entrega" />
-
-            <ImageButton
-                android:id="@+id/PedidosImageButton"
+            <Button
+                android:id="@+id/ArticulosButton"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:background="@color/secondaryColor"
-                android:src="@drawable/ic_pedidos"
-                android:tooltipText="Pedidos" />
-
+                android:drawableTop="@drawable/ic_articulos"
+                android:onClick="botones"
+                android:paddingTop="15dp"
+                android:text="Articulos"
+                android:textAlignment="center"
+                android:textColor="#FFF" />
         </TableRow>
 
         <TableRow
@@ -76,23 +55,59 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp">
 
-            <ImageButton
-                android:id="@+id/LevantamientosImageButton"
+            <Button
+                android:id="@+id/EntregaButton"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:layout_marginRight="10dp"
                 android:background="@color/secondaryColor"
-                android:src="@drawable/ic_levantamientos"
-                android:tooltipText="Levantamientos" />
+                android:drawableTop="@drawable/ic_entrega"
+                android:onClick="botones"
+                android:paddingTop="15dp"
+                android:text="Entrega"
+                android:textAlignment="center"
+                android:textColor="#FFF" />
 
-            <ImageButton
-                android:id="@+id/SalirImageButton"
+            <Button
+                android:id="@+id/PedidosButton"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:background="@color/secondaryColor"
-                android:src="@drawable/ic_salir"
-                android:tooltipText="Salir"
-                android:onClick="salir"/>
+                android:drawableTop="@drawable/ic_pedidos"
+                android:paddingTop="15dp"
+                android:text="Pedidos"
+                android:textAlignment="center"
+                android:textColor="#FFF" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <Button
+                android:id="@+id/LevantamientosButton"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/secondaryColor"
+                android:drawableTop="@drawable/ic_levantamientos"
+                android:paddingTop="15dp"
+                android:text="Levantamientos"
+                android:textAlignment="center"
+                android:textColor="#FFF" />
+
+            <Button
+                android:id="@+id/SalirButton"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:background="@color/secondaryColor"
+                android:drawableTop="@drawable/ic_salir"
+                android:onClick="salir"
+                android:paddingTop="15dp"
+                android:text="Salir"
+                android:textAlignment="center"
+                android:textColor="#FFF" />
         </TableRow>
 
     </TableLayout>
@@ -109,10 +124,10 @@
         app:backgroundTint="@color/secondaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.963"
+        app:layout_constraintHorizontal_bias="0.975"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout2"
-        app:layout_constraintVertical_bias="0.565"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.982"
         app:srcCompat="@android:drawable/stat_notify_sync_noanim" />
 
 </android.support.constraint.ConstraintLayout>

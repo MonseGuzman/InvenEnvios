@@ -1,29 +1,38 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Fragment;
+import android.net.Uri;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticuloAdapter;
-import com.innovati.felipehernandez.invenenvios.adapters.ClientesAdaptador;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
-import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
-import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.fragments.ClienteFragment;
 
 public class ArticuloActivity extends AppCompatActivity
 {
     private ArticuloAdapter adaptador;
     private ListView articuloListView_A;
-    private TextView buscarArticuloEditText_C;
-    VwArticulos result[];
+    private EditText buscarArticuloEditText_A;
+    private FloatingActionButton AgregarFAB_A;
 
+    VwArticulos result[];
+    MetodosInternos metodosInternos = new MetodosInternos(this);
+    String actividad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,12 +42,30 @@ public class ArticuloActivity extends AppCompatActivity
 
         inicializacion();
 
+        actividad = getIntent().getExtras().getString("actividad");
+
+        articuloListView_A.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                if(metodosInternos.conexionRed())
+                {
+                    //conectado wifi/datos
+                }
+                else
+                {
+                    //bd interna
+                }
+            }
+        });
+
     }
 
     private void inicializacion()
     {
         articuloListView_A = (ListView)findViewById(R.id.articuloListView_A);
-        buscarArticuloEditText_C = findViewById(R.id.buscarArticuloEditText_C);
+        buscarArticuloEditText_A = (EditText) findViewById(R.id.buscarArticuloEditText_A);
+        AgregarFAB_A = (FloatingActionButton) findViewById(R.id.AgregarFAB_A);
     }
 
     public static VwArticulosDao getVwArticulosDao()
@@ -48,37 +75,51 @@ public class ArticuloActivity extends AppCompatActivity
 
     public void filtar(View v)
     {
-        String nombre = buscarArticuloEditText_C.getText().toString();
+        String nombre = buscarArticuloEditText_A.getText().toString();
         if(TextUtils.isEmpty(nombre))
         {
-            //sin filtro = todos
-            try
+            if(metodosInternos.conexionRed())
             {
-                VwArticulosDao _dao = getVwArticulosDao();
-                result = _dao.findAll();
-                adaptador = new ArticuloAdapter(this,  R.layout.listview_articulos, result);
-                articuloListView_A.setAdapter(adaptador);
+                //sin filtro = todos
+                try
+                {
+                    VwArticulosDao _dao = getVwArticulosDao();
+                    result = _dao.findAll();
+                    adaptador = new ArticuloAdapter(this,  R.layout.listview_articulos, result);
+                    articuloListView_A.setAdapter(adaptador);
+                }
+                catch(Exception e)
+                {
+                    Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                }
             }
-            catch(Exception e)
+            else
             {
-                Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                //código para buscar en la bd interna
             }
         }
         else
         {
             //todos los que se parecen con el where
-            try
+            if(metodosInternos.conexionRed())
             {
-                nombre = "%" + nombre;
-                nombre += "%";
-                VwArticulosDao _dao = getVwArticulosDao();
-                result = _dao.findWhereNombreEquals(nombre);
-                adaptador = new ArticuloAdapter(this,  R.layout.listview_articulos, result);
-                articuloListView_A.setAdapter(adaptador);
+                try
+                {
+                    nombre = "%" + nombre;
+                    nombre += "%";
+                    VwArticulosDao _dao = getVwArticulosDao();
+                    result = _dao.findWhereNombreEquals(nombre);
+                    adaptador = new ArticuloAdapter(this,  R.layout.listview_articulos, result);
+                    articuloListView_A.setAdapter(adaptador);
+                }
+                catch(Exception e)
+                {
+                    Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                }
             }
-            catch(Exception e)
+            else
             {
-                Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                //código para buscar en la bd interna
             }
         }
     }

@@ -55,6 +55,7 @@ public class ArticuloAdapter extends BaseAdapter
             vh = new ViewHolder();
             vh.nombreArticulo = (TextView)convertView.findViewById(R.id.articuloTextView_A);
             vh.existencia = (TextView)convertView.findViewById(R.id.ExistenciasTextView_A);
+            vh.IDArticulo = (TextView)convertView.findViewById(R.id.IDTextView_A);
 
             convertView.setTag(vh);
         }
@@ -63,14 +64,15 @@ public class ArticuloAdapter extends BaseAdapter
             vh = (ArticuloAdapter.ViewHolder) convertView.getTag();
         }
         vh.nombreArticulo.setText(lista[position].getNombre());
-        vh.existencia.setText(String.valueOf(lista[position].getExistenciaTotal()));
+        vh.existencia.setText("Existencias: " +String.valueOf(lista[position].getExistenciaTotal()));
+        vh.IDArticulo.setText(lista[position].getClave());
+
         return convertView;
     }
 
     public class ViewHolder
     {
-        TextView nombreArticulo, existencia;
-
+        TextView nombreArticulo, existencia, IDArticulo;
     }
 
     public static VwArticulosDao getVwArticulosDao()

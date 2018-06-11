@@ -17,4 +17,7 @@
     <string name="usuario">Usuario</string>
     <string name="recordarContrasena">Recordar Contraseña</string>
     <string name="ingresarLogin">Ingresar</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
