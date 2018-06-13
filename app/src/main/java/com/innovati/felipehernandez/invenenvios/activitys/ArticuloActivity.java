@@ -21,6 +21,7 @@ import com.innovati.felipehernandez.invenenvios.adapters.ArticuloAdapter;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.fragments.ArticuloFragment;
 import com.innovati.felipehernandez.invenenvios.fragments.ClienteFragment;
 
 public class ArticuloActivity extends AppCompatActivity
@@ -41,21 +42,38 @@ public class ArticuloActivity extends AppCompatActivity
         setContentView(R.layout.activity_articulo);
 
         inicializacion();
+        this.setTitle(R.string.tituloArticulo);
 
         actividad = getIntent().getExtras().getString("actividad");
+
+        if(actividad.equals("Pedidos"))
+            AgregarFAB_A.setImageResource(R.drawable.ic_pedir);
+        else if(actividad.equals("Articulos"))
+            AgregarFAB_A.setImageResource(R.drawable.ic_suma);
 
         articuloListView_A.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                if(metodosInternos.conexionRed())
+                ArticuloFragment fragment = new ArticuloFragment();
+                Bundle args;
+
+                if(actividad.equals("Articulo"))
                 {
-                    //conectado wifi/datos
+                    //DETALLE
+                    args = new Bundle();
+                    args.putString("fragmento", "Detalles");
+                    fragment.setArguments(args);
                 }
-                else
+                else if(actividad.equals("Pedidos"))
                 {
-                    //bd interna
+                    //AGREGAR ARTICULOS A PERDIDO
+                    args = new Bundle();
+                    args.putString("fragmento", "Agregar");
+                    fragment.setArguments(args);
+                    AgregarFAB_A.setImageResource(R.drawable.ic_agregar_carrito);
                 }
+                getSupportFragmentManager().beginTransaction().replace(R.id.ArticuloConstraintLayout, fragment).addToBackStack(null).commit();
             }
         });
 
@@ -66,6 +84,23 @@ public class ArticuloActivity extends AppCompatActivity
         articuloListView_A = (ListView)findViewById(R.id.articuloListView_A);
         buscarArticuloEditText_A = (EditText) findViewById(R.id.buscarArticuloEditText_A);
         AgregarFAB_A = (FloatingActionButton) findViewById(R.id.AgregarFAB_A);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        //cantidad de fragmentos que estan actualmente apilados.
+        if(getSupportFragmentManager().getBackStackEntryCount() == 0)
+        {
+            super.onBackPressed();
+            getSupportFragmentManager().popBackStack();
+
+            if(actividad.equals("Pedidos"))
+                AgregarFAB_A.setImageResource(R.drawable.ic_pedir);
+            else if(actividad.equals("Articulos"))
+                AgregarFAB_A.setImageResource(R.drawable.ic_suma);
+        }
+
     }
 
     public static VwArticulosDao getVwArticulosDao()

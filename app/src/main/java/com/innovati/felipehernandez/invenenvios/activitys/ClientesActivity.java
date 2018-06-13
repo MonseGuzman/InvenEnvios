@@ -44,6 +44,7 @@ public class ClientesActivity extends AppCompatActivity
         setContentView(R.layout.activity_clientes);
 
         inicializacion();
+        this.setTitle(R.string.tituloClientes);
 
         clienteListView_C.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

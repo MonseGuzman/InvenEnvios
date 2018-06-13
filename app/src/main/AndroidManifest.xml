@@ -23,14 +23,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activitys.LoginActivity" />
-        <activity android:name=".activitys.MenuActivity" />
-        <activity android:name=".activitys.ClientesActivity" />
-        <activity android:name=".activitys.ArticuloActivity" />
+        <activity
+            android:name=".activitys.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activitys.MenuActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activitys.ClientesActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activitys.ArticuloActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activitys.EntregasActivity"
-            android:screenOrientation="landscape">
-        </activity>
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

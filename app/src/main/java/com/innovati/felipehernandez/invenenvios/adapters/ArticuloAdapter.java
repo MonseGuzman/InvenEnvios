@@ -67,6 +67,7 @@ public class ArticuloAdapter extends BaseAdapter
         vh.existencia.setText("Existencias: " +String.valueOf(lista[position].getExistenciaTotal()));
         vh.IDArticulo.setText(lista[position].getClave());
 
+        //se puede agregar el onclick
         return convertView;
     }
 

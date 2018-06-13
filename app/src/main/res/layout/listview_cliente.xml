@@ -40,7 +40,6 @@
         android:textAlignment="center"
         android:text="3411009819"
         android:maxLength="20"
-        android:textColor="@color/colorPrimaryDark"
-        />
+        android:textColor="@color/colorPrimaryDark" />
 
 </LinearLayout>

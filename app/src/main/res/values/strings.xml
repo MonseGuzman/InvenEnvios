@@ -18,6 +18,13 @@
     <string name="recordarContrasena">Recordar Contraseña</string>
     <string name="ingresarLogin">Ingresar</string>
 
+    <!--Articulos-->
+    <string name="tituloArticulo">Artículos</string>
+
+    <!--Clientes-->
+    <string name="tituloClientes">Clientes</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
