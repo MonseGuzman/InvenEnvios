@@ -190,7 +190,8 @@
     </TableLayout>
 
     <LinearLayout
-        android:layout_width="221dp"
+        android:id="@+id/PerdidoslinearLayout"
+        android:layout_width="240dp"
         android:layout_height="59dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -199,7 +200,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintHorizontal_bias="0.257"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout3"
         app:layout_constraintVertical_bias="0.0">
@@ -218,16 +219,15 @@
             android:text="0000" />
 
         <LinearLayout
-            android:id="@+id/PerdidoslinearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <Button
                 android:id="@+id/MasButton_A"
-                android:layout_weight="50"
                 android:layout_width="48dp"
                 android:layout_height="23dp"
+                android:layout_weight="50"
                 android:background="@color/colorPrimary"
                 android:drawableTop="@drawable/ic_suma"
                 android:paddingTop="5dp" />

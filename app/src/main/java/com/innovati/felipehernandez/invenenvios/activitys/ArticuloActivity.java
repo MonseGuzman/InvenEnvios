@@ -42,14 +42,19 @@ public class ArticuloActivity extends AppCompatActivity
         setContentView(R.layout.activity_articulo);
 
         inicializacion();
-        this.setTitle(R.string.tituloArticulo);
 
         actividad = getIntent().getExtras().getString("actividad");
 
         if(actividad.equals("Pedidos"))
+        {
+            this.setTitle(R.string.tituloPedidos);
             AgregarFAB_A.setImageResource(R.drawable.ic_pedir);
+        }
         else if(actividad.equals("Articulos"))
+        {
+            this.setTitle(R.string.tituloArticulo);
             AgregarFAB_A.setImageResource(R.drawable.ic_suma);
+        }
 
         articuloListView_A.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -90,7 +95,7 @@ public class ArticuloActivity extends AppCompatActivity
     public void onBackPressed()
     {
         //cantidad de fragmentos que estan actualmente apilados.
-        if(getSupportFragmentManager().getBackStackEntryCount() == 0)
+        if(getSupportFragmentManager().getBackStackEntryCount() != 0)
         {
             super.onBackPressed();
             getSupportFragmentManager().popBackStack();
@@ -100,7 +105,8 @@ public class ArticuloActivity extends AppCompatActivity
             else if(actividad.equals("Articulos"))
                 AgregarFAB_A.setImageResource(R.drawable.ic_suma);
         }
-
+        else
+            getSupportFragmentManager().popBackStack();
     }
 
     public static VwArticulosDao getVwArticulosDao()
