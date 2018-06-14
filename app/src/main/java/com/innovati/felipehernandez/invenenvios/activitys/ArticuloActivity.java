@@ -69,6 +69,13 @@ public class ArticuloActivity extends AppCompatActivity
                     //DETALLE
                     args = new Bundle();
                     args.putString("fragmento", "Agregar");
+                    args.putString("clave", result[position].getClave());
+                    args.putString("nombre", result[position].getNombre());
+                    args.putString("activo", result[position].getActivo());
+                    args.putDouble("tiempoSurtido", result[position].getTiempoSurtido());
+                    args.putDouble("existencias", result[position].getExistenciaTotal());
+                    args.putDouble("precio", result[position].getPrecio1());
+                    args.putString("unidad", result[position].getUnidadPrimaria());
                     fragment.setArguments(args);
                 }
                 else if(actividad.equals("Pedidos"))
@@ -76,6 +83,13 @@ public class ArticuloActivity extends AppCompatActivity
                     //AGREGAR ARTICULOS A PERDIDO
                     args = new Bundle();
                     args.putString("fragmento", "Detalles");
+                    args.putString("clave", result[position].getClave());
+                    args.putString("nombre", result[position].getNombre());
+                    args.putString("activo", result[position].getActivo());
+                    args.putDouble("tiempoSurtido", result[position].getTiempoSurtido());
+                    args.putDouble("existencias", result[position].getExistenciaTotal());
+                    args.putDouble("precio", result[position].getPrecio1());
+                    args.putString("unidad", result[position].getUnidadPrimaria());
                     fragment.setArguments(args);
                     AgregarFAB_A.setImageResource(R.drawable.ic_agregar_carrito);
                 }
