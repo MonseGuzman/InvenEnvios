@@ -42,6 +42,7 @@ public class ArticuloActivity extends AppCompatActivity
         setContentView(R.layout.activity_articulo);
 
         inicializacion();
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         actividad = getIntent().getExtras().getString("actividad");
 
@@ -63,18 +64,18 @@ public class ArticuloActivity extends AppCompatActivity
                 ArticuloFragment fragment = new ArticuloFragment();
                 Bundle args;
 
-                if(actividad.equals("Articulo"))
+                if(actividad.equals("Articulos"))
                 {
                     //DETALLE
                     args = new Bundle();
-                    args.putString("fragmento", "Detalles");
+                    args.putString("fragmento", "Agregar");
                     fragment.setArguments(args);
                 }
                 else if(actividad.equals("Pedidos"))
                 {
                     //AGREGAR ARTICULOS A PERDIDO
                     args = new Bundle();
-                    args.putString("fragmento", "Agregar");
+                    args.putString("fragmento", "Detalles");
                     fragment.setArguments(args);
                     AgregarFAB_A.setImageResource(R.drawable.ic_agregar_carrito);
                 }
@@ -106,7 +107,7 @@ public class ArticuloActivity extends AppCompatActivity
                 AgregarFAB_A.setImageResource(R.drawable.ic_suma);
         }
         else
-            getSupportFragmentManager().popBackStack();
+            finish();
     }
 
     public static VwArticulosDao getVwArticulosDao()
