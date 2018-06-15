@@ -4,56 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/ClienteConstraintLayout"
     tools:context=".activitys.ClientesActivity">
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="351dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <EditText
-            android:id="@+id/buscarClienteEditText_C"
-            android:layout_width="287dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp" />
-
-        <ImageButton
-            android:id="@+id/BuscarImageButton_C"
-            android:layout_width="43dp"
-            android:layout_height="match_parent"
-            android:background="@color/secondaryColor"
-            android:src="@drawable/ic_busqueda"
-            android:onClick="filtar"/>
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/clienteListView"
-        android:layout_width="356dp"
-        android:layout_height="424dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
-
-    </ListView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/AgregarFAB_C"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_width="62dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -62,10 +20,53 @@
         app:backgroundTint="@color/secondaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.975"
+        app:layout_constraintHorizontal_bias="0.933"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.989" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.982" />
+
+    <LinearLayout
+        android:layout_width="349dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="351dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/buscarClienteEditText_C"
+                android:layout_width="287dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp" />
+
+            <ImageButton
+                android:id="@+id/BuscarImageButton_C"
+                android:layout_width="43dp"
+                android:layout_height="match_parent"
+                android:background="@color/secondaryColor"
+                android:onClick="filtar"
+                android:src="@drawable/ic_busqueda" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/clienteListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

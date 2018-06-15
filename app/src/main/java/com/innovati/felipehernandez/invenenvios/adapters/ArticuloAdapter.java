@@ -6,32 +6,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.innovati.felipehernandez.invenenvios.Clientes;
 import com.innovati.felipehernandez.invenenvios.R;
-
-import java.util.List;
+import com.innovati.felipehernandez.invenenvios.activitys.ArticuloActivity;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
 
 public class ArticuloAdapter extends BaseAdapter
 {
     private Context context;
-    private List<Clientes> lista; //agregar Lista de clientes
+    private VwArticulos lista[];
     private int layaout;
 
-    public ArticuloAdapter(Context context, List<Clientes> lista, int layaout) {
+    public ArticuloAdapter(Context context, int layaout, VwArticulos lista[])
+    {
         this.context = context;
-        this.lista = lista;
         this.layaout = layaout;
+        this.lista = lista;
     }
 
     @Override
     public int getCount() {
-        return lista.size();
+        //return lista.size();
+        return lista.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return lista.get(position);
+        //return lista.get(position);
+        return lista[position];
     }
 
     @Override
@@ -46,9 +52,10 @@ public class ArticuloAdapter extends BaseAdapter
         if(convertView == null)
         {
             convertView = LayoutInflater.from(context).inflate(layaout, null);
-            vh = new ArticuloAdapter.ViewHolder();
+            vh = new ViewHolder();
             vh.nombreArticulo = (TextView)convertView.findViewById(R.id.articuloTextView_A);
             vh.existencia = (TextView)convertView.findViewById(R.id.ExistenciasTextView_A);
+            vh.IDArticulo = (TextView)convertView.findViewById(R.id.IDTextView_A);
 
             convertView.setTag(vh);
         }
@@ -56,16 +63,21 @@ public class ArticuloAdapter extends BaseAdapter
         {
             vh = (ArticuloAdapter.ViewHolder) convertView.getTag();
         }
+        vh.nombreArticulo.setText(lista[position].getNombre());
+        vh.existencia.setText("Existencias: " +String.valueOf(lista[position].getExistenciaTotal()));
+        vh.IDArticulo.setText(lista[position].getClave());
 
-        Clientes clientes = lista.get(position);
-        vh.nombreArticulo.setText(clientes.getNombre());
-        vh.existencia.setText(clientes.getRFC());
+        //se puede agregar el onclick
         return convertView;
     }
 
     public class ViewHolder
     {
-        TextView nombreArticulo, existencia;
+        TextView nombreArticulo, existencia, IDArticulo;
+    }
 
+    public static VwArticulosDao getVwArticulosDao()
+    {
+        return VwArticulosDaoFactory.create();
     }
 }

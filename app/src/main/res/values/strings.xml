@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">Inven-E</string>
+    <!--PROPIOS -->
+
+    <!--Mensaje-->
+    <string name="sinInternet">Sin acceso a Internet</string>
+    <string name="conectarse">Favor de conectarse a una red ya sea Wi-Fi o datos móviles</string>
+    <string name="sinDatos">Favor de ingresar los datos solicitados</string>
+    <string name="error">Error</string>
+    <string name="noValido">Usuario y/o Contraseña no válidos</string>
+
+    <!--Menú-->
+    <string name="menuLlamar">Llamar</string>
+
+    <!--Login-->
+    <string name="contrasena">Contraseña</string>
+    <string name="usuario">Usuario</string>
+    <string name="recordarContrasena">Recordar Contraseña</string>
+    <string name="ingresarLogin">Ingresar</string>
+
+    <!--Articulos-->
+    <string name="tituloArticulo">Artículos</string>
+
+    <!--Clientes-->
+    <string name="tituloClientes">Clientes</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Pedidos-->
+    <string name="tituloPedidos">Pedidos</string>
 </resources>

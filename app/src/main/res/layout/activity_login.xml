@@ -45,8 +45,8 @@
                 android:id="@+id/etUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Usuario"
-                android:inputType="textEmailAddress" />
+                android:hint="@string/usuario"
+                android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -59,7 +59,7 @@
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Contraseña"
+                android:hint="@string/contrasena"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
@@ -70,7 +70,7 @@
             android:layout_gravity="right"
             android:layout_marginEnd="10dp"
             android:layout_marginLeft="50dp"
-            android:text="Recordar Contraseña"
+            android:text="@string/recordarContrasena"
             android:textColorLink="@color/secondaryLightColor" />
 
         <Button
@@ -81,7 +81,7 @@
             android:layout_weight="1"
             android:background="@color/secondaryColor"
             android:onClick="login"
-            android:text="Ingresar"
+            android:text="@string/ingresarLogin"
             android:textColor="@color/primaryTextColor" />
     </LinearLayout>
 
