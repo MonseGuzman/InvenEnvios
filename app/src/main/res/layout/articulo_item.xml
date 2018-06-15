@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="10dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:orientation="vertical"
+    android:layout_marginBottom="10dp">
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="5dp"
+        >
+        <TextView
+            android:id="@+id/tvNombreArticuloItem"
+            android:text="Nombre del Producto"
+            android:layout_alignParentLeft="true"
+            android:textSize="24dp"
+            app:layout_heightPercent="@fraction/articlePercentItem"
+            app:layout_widthPercent="@fraction/articleTitleItem"
+            />
+        <TextView
+            android:id="@+id/tvPercentacionArticuloItem"
+            android:text="percentacion"
+            android:layout_alignParentRight="true"
+            android:textSize="20dp"
+            app:layout_heightPercent="@fraction/articlePercentItem"
+            app:layout_widthPercent="@fraction/asideTitleItem"
+            />
+        <TextView
+            android:id="@+id/tvCountArticuloItem"
+            android:text="Cantidad: "
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:textSize="18dp"
+            app:layout_heightPercent="@fraction/asidePercentbItem"
+            app:layout_widthPercent="@fraction/asideCountItem"
+            />
+        <TextView
+            android:id="@+id/tvPriceArticuloItem"
+            android:text="Precio: "
+            android:textSize="18dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/tvCountArticuloItem"
+            app:layout_heightPercent="@fraction/asidePercentbItem"
+            app:layout_widthPercent="@fraction/asidePriceItem"
+            />
+        <TextView
+            android:id="@+id/tvSubArticuloItem"
+            android:text="Sub: "
+            android:textSize="18dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            app:layout_heightPercent="@fraction/asidePercentbItem"
+            app:layout_widthPercent="@fraction/asideSubItem"
+            />
+    </android.support.percent.PercentRelativeLayout>
+</LinearLayout>
+</android.support.v7.widget.CardView>

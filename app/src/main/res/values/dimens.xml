@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <fraction name="articleTitleItem">80%</fraction>
+    <fraction name="asideTitleItem">20%</fraction>
+    <fraction name="asideCountItem">40%</fraction>
+    <fraction name="asidePriceItem">30%</fraction>
+    <fraction name="asideSubItem">30%</fraction>
+    <fraction name="articlePercentItem">65%</fraction>
+    <fraction name="asidePercentbItem">30%</fraction>
+    <fraction name="marginItem">5%</fraction>
+</resources>
