@@ -34,6 +34,8 @@ public class ArticuloActivity extends AppCompatActivity
     VwArticulos result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
     String actividad;
+    Bundle args;
+    String fragmento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -62,10 +64,10 @@ public class ArticuloActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 ArticuloFragment fragment = new ArticuloFragment();
-                Bundle args;
 
                 if(actividad.equals("Articulos"))
                 {
+                    fragmento = "Agregar";
                     //DETALLE
                     args = new Bundle();
                     args.putString("fragmento", "Agregar");
@@ -80,6 +82,7 @@ public class ArticuloActivity extends AppCompatActivity
                 }
                 else if(actividad.equals("Pedidos"))
                 {
+                    fragmento = "Detalles";
                     //AGREGAR ARTICULOS A PERDIDO
                     args = new Bundle();
                     args.putString("fragmento", "Detalles");
@@ -178,5 +181,26 @@ public class ArticuloActivity extends AppCompatActivity
                 //código para buscar en la bd interna
             }
         }
+    }
+
+    public void pruebas(View v)
+    {
+        ArticuloFragment fragment = new ArticuloFragment();
+
+        if(actividad.equals("Articulos"))
+        {
+            //abre el fragmento sin nada ni nada
+            args = new Bundle();
+            args.putString("fragmento", "NuevoArticulo");
+            fragment.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.ArticuloConstraintLayout, fragment).addToBackStack(null).commit();
+        }
+       /* else if(actividad.equals("Pedidos"))
+        {
+                    //abre el activity de ENTREGAS
+        }*/
+
+        Toast.makeText(this, actividad, Toast.LENGTH_SHORT).show();
     }
 }

@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,6 +32,8 @@ public class ClientesActivity extends AppCompatActivity
 {
     private ListView clienteListView_C;
     private EditText buscarClienteEditText_C;
+    private ImageButton BuscarImageButton_C;
+
     private ClientesAdaptador adaptador;
     VwClientes result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
@@ -54,6 +57,13 @@ public class ClientesActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.ClienteConstraintLayout, clienteFragment).addToBackStack(null).commit();
             }
         });
+
+        BuscarImageButton_C.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filtar(v);
+            }
+        });
         //menú de contexto
         registerForContextMenu(clienteListView_C);
     }
@@ -63,6 +73,7 @@ public class ClientesActivity extends AppCompatActivity
     {
         clienteListView_C = (ListView)findViewById(R.id.clienteListView);
         buscarClienteEditText_C = (EditText)findViewById(R.id.buscarClienteEditText_C);
+        BuscarImageButton_C = (ImageButton)findViewById(R.id.BuscarImageButton_C);
     }
 
     //menú de contexto

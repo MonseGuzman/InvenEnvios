@@ -1,6 +1,7 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.R;
 
@@ -31,6 +33,8 @@ public class ArticuloFragment extends Fragment
     Double existencias;
     Double precio;
     String unidad;
+
+    FloatingActionButton AgregarFAB_A;
 
     public ArticuloFragment() {
         // Required empty public constructor
@@ -55,7 +59,6 @@ public class ArticuloFragment extends Fragment
         precio = args.getDouble("precio", 0);
         unidad = args.getString("unidad", "");
 
-
         claveTextView_A.setText(clave);
         nombreEditText_A.setText(nombre);
         if(activo.equals("S"))
@@ -67,14 +70,18 @@ public class ArticuloFragment extends Fragment
         precioEditText_A.setText(precio.toString());
         unidadEditText_A.setText(unidad);
 
-        if(fragmento.equals("Agregar"))
+        switch (fragmento)
         {
-            //agregar al carrito
-            PerdidoslinearLayout.setVisibility(View.INVISIBLE);
-        }
-        else if(fragmento.equals("Detalles"))
-        {
-            PerdidoslinearLayout.setVisibility(View.VISIBLE);
+            case "Agregar":
+                PerdidoslinearLayout.setVisibility(View.INVISIBLE);
+                break;
+            case "Detalles":
+                PerdidoslinearLayout.setVisibility(View.VISIBLE);
+                break;
+            case "NuevoArticulo":
+                PerdidoslinearLayout.setVisibility(View.INVISIBLE);
+                limpiar();
+                break;
         }
 
         return v;
@@ -91,6 +98,29 @@ public class ArticuloFragment extends Fragment
         existenciasEditText_A = v.findViewById(R.id.ExistenciaEditText_A);
         precioEditText_A = v.findViewById(R.id.PrecioEditText_A);
 
+    }
+
+    private void limpiar()
+    {
+        //LIMPIA
+        claveTextView_A.setText("");
+        nombreEditText_A.setText("");
+        estatusCheckbox_A.setChecked(false);
+        tiempoSurtidoEditText_A.setText("");
+        existenciasEditText_A.setText("");
+        precioEditText_A.setText("");
+        unidadEditText_A.setText("");
+
+        //INAVILITA
+        nombreEditText_A.setFocusable(true);
+
+        claveTextView_A.setEnabled(true);
+        nombreEditText_A.setEnabled(true);
+        estatusCheckbox_A.setEnabled(true);
+        tiempoSurtidoEditText_A.setEnabled(true);
+        existenciasEditText_A.setEnabled(true);
+        precioEditText_A.setEnabled(true);
+        unidadEditText_A.setEnabled(true);
     }
 
 }

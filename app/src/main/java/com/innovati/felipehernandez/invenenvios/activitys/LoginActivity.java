@@ -117,8 +117,8 @@ public class LoginActivity extends AppCompatActivity
         }
     }
 
-    public static VwUsuariosDao getVwUsuariosDao()
-    {
+    public static VwUsuariosDao getVwUsuariosDao() {
         return VwUsuariosDaoFactory.create();
     }
+
 }

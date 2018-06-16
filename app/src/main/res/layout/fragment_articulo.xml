@@ -223,7 +223,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="50"
                 android:background="@color/colorPrimary"
-                android:drawableTop="@drawable/ic_suma"
+                android:drawableTop="@drawable/ic_menos"
                 android:paddingTop="15dp" />
 
             <EditText
@@ -239,7 +239,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="50"
                 android:background="@color/colorPrimary"
-                android:drawableTop="@drawable/ic_menos"
+                android:drawableTop="@drawable/ic_suma"
                 android:paddingTop="15dp" />
         </TableRow>
 
