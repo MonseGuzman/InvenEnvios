@@ -33,6 +33,7 @@ public class ClientesActivity extends AppCompatActivity
     private ListView clienteListView_C;
     private EditText buscarClienteEditText_C;
     private ImageButton BuscarImageButton_C;
+    private Bundle args;
 
     private ClientesAdaptador adaptador;
     VwClientes result[];
@@ -54,6 +55,16 @@ public class ClientesActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 ClienteFragment clienteFragment = new ClienteFragment();
+
+                args = new Bundle();
+                args.putString("nombre", result[position].getNombre());
+                args.putString("rfc", result[position].getRfc());
+                args.putString("calle", result[position].getCalle());
+                args.putString("numeroExterior", result[position].getNumeroExterior());
+                args.putString("numeroInterior", result[position].getNumeroInterior());
+                args.putString("colonia", result[position].getColonia());
+                args.putString("telefono", result[position].getTelefono());
+                clienteFragment.setArguments(args);
                 getSupportFragmentManager().beginTransaction().replace(R.id.ClienteConstraintLayout, clienteFragment).addToBackStack(null).commit();
             }
         });
