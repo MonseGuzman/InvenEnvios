@@ -116,9 +116,9 @@ public class LoginActivity extends AppCompatActivity
             editor.apply(); //guarda todos los cambios aunque no se guarden todos
         }
     }
-    }
+
+    public static VwUsuariosDao getVwUsuariosDao() {
         return VwUsuariosDaoFactory.create();
-    {
-    public static VwUsuariosDao getVwUsuariosDao()
+    }
 
 }
