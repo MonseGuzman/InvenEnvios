@@ -30,9 +30,9 @@ import com.innovati.felipehernandez.invenenvios.fragments.ClienteFragment;
 
 public class ClientesActivity extends AppCompatActivity
 {
-    private ListView clienteListView_C;
-    private EditText buscarClienteEditText_C;
-    private ImageButton BuscarImageButton_C;
+    private ListView datitosListView;
+    private EditText buscarEditText;
+    private ImageButton BuscarImageButton;
     private Bundle args;
 
     private ClientesAdaptador adaptador;
@@ -50,7 +50,7 @@ public class ClientesActivity extends AppCompatActivity
         inicializacion();
         this.setTitle(R.string.tituloClientes);
 
-        clienteListView_C.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        datitosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
@@ -69,22 +69,22 @@ public class ClientesActivity extends AppCompatActivity
             }
         });
 
-        BuscarImageButton_C.setOnClickListener(new View.OnClickListener() {
+        BuscarImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 filtar(v);
             }
         });
         //menú de contexto
-        registerForContextMenu(clienteListView_C);
+        registerForContextMenu(datitosListView);
     }
 
 
     private void inicializacion()
     {
-        clienteListView_C = (ListView)findViewById(R.id.clienteListView);
-        buscarClienteEditText_C = (EditText)findViewById(R.id.buscarClienteEditText_C);
-        BuscarImageButton_C = (ImageButton)findViewById(R.id.BuscarImageButton_C);
+        datitosListView = (ListView)findViewById(R.id.datitosListView);
+        buscarEditText = (EditText)findViewById(R.id.buscarEditText);
+        BuscarImageButton = (ImageButton)findViewById(R.id.BuscarImageButton);
     }
 
     //menú de contexto
@@ -143,7 +143,7 @@ public class ClientesActivity extends AppCompatActivity
 
     public void filtar(View v)
     {
-        String nombre = buscarClienteEditText_C.getText().toString();
+        String nombre = buscarEditText.getText().toString();
         if(TextUtils.isEmpty(nombre))
         {
             //sin filtro = todos
@@ -154,7 +154,7 @@ public class ClientesActivity extends AppCompatActivity
                     VwClientesDao _dao = getVwClientesDao();
                     result = _dao.findAll();
                     adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
-                    clienteListView_C.setAdapter(adaptador);
+                    datitosListView.setAdapter(adaptador);
 
                 }
                 catch(Exception e)
@@ -179,7 +179,7 @@ public class ClientesActivity extends AppCompatActivity
                     VwClientesDao _dao = getVwClientesDao();
                     result = _dao.findWhereNombreEquals(nombre);
                     adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
-                    clienteListView_C.setAdapter(adaptador);
+                    datitosListView.setAdapter(adaptador);
                 }
                 catch(Exception e)
                 {

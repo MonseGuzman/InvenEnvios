@@ -27,7 +27,7 @@
 
    <include
        android:id="@+id/buscarCliente"
-       layout="@layout/buscar_cliente">
+       layout="@layout/buscar">
    </include>
 
 

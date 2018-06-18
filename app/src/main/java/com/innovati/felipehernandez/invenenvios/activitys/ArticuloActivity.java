@@ -1,9 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
-import android.app.Fragment;
-import android.net.Uri;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -12,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
@@ -22,13 +18,13 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.fragments.ArticuloFragment;
-import com.innovati.felipehernandez.invenenvios.fragments.ClienteFragment;
 
 public class ArticuloActivity extends AppCompatActivity
 {
     private ArticuloAdapter adaptador;
-    private ListView articuloListView_A;
-    private EditText buscarArticuloEditText_A;
+    private ListView datitosListView;
+    private EditText buscarEditText;
+    private ImageButton BuscarImageButton;
     private FloatingActionButton AgregarFAB_A;
 
     VwArticulos result[];
@@ -44,7 +40,6 @@ public class ArticuloActivity extends AppCompatActivity
         setContentView(R.layout.activity_articulo);
 
         inicializacion();
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         actividad = getIntent().getExtras().getString("actividad");
 
@@ -59,7 +54,7 @@ public class ArticuloActivity extends AppCompatActivity
             AgregarFAB_A.setImageResource(R.drawable.ic_suma);
         }
 
-        articuloListView_A.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        datitosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
@@ -100,12 +95,20 @@ public class ArticuloActivity extends AppCompatActivity
             }
         });
 
+        BuscarImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filtar(v);
+            }
+        });
+
     }
 
     private void inicializacion()
     {
-        articuloListView_A = (ListView)findViewById(R.id.articuloListView_A);
-        buscarArticuloEditText_A = (EditText) findViewById(R.id.buscarArticuloEditText_A);
+        datitosListView = (ListView)findViewById(R.id.datitosListView);
+        buscarEditText = (EditText) findViewById(R.id.buscarEditText);
+        BuscarImageButton = (ImageButton) findViewById(R.id.BuscarImageButton);
         AgregarFAB_A = (FloatingActionButton) findViewById(R.id.AgregarFAB_A);
     }
 
@@ -134,7 +137,7 @@ public class ArticuloActivity extends AppCompatActivity
 
     public void filtar(View v)
     {
-        String nombre = buscarArticuloEditText_A.getText().toString();
+        String nombre = buscarEditText.getText().toString();
         if(TextUtils.isEmpty(nombre))
         {
             if(metodosInternos.conexionRed())
@@ -145,7 +148,7 @@ public class ArticuloActivity extends AppCompatActivity
                     VwArticulosDao _dao = getVwArticulosDao();
                     result = _dao.findAll();
                     adaptador = new ArticuloAdapter(this,  R.layout.listview_articulos, result);
-                    articuloListView_A.setAdapter(adaptador);
+                    datitosListView.setAdapter(adaptador);
                 }
                 catch(Exception e)
                 {
@@ -169,7 +172,7 @@ public class ArticuloActivity extends AppCompatActivity
                     VwArticulosDao _dao = getVwArticulosDao();
                     result = _dao.findWhereNombreEquals(nombre);
                     adaptador = new ArticuloAdapter(this,  R.layout.listview_articulos, result);
-                    articuloListView_A.setAdapter(adaptador);
+                    datitosListView.setAdapter(adaptador);
                 }
                 catch(Exception e)
                 {
