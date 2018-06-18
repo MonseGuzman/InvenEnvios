@@ -20,13 +20,13 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/buscarClienteEditText_C"
+            android:id="@+id/buscarEditText"
             android:layout_width="287dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp" />
 
         <ImageButton
-            android:id="@+id/BuscarImageButton_C"
+            android:id="@+id/BuscarImageButton"
             android:layout_width="43dp"
             android:layout_height="match_parent"
             android:background="@color/secondaryColor"
@@ -34,7 +34,7 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/clienteListView"
+        android:id="@+id/datitosListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

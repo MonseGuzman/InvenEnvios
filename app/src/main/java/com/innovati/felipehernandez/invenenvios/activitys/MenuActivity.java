@@ -19,7 +19,6 @@ public class MenuActivity extends AppCompatActivity
         setContentView(R.layout.activity_menu);
 
         this.setTitle("Menú");
-        //getSupportActionBar().setDisplayUseLogoEnabled(true);
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
     }
 
