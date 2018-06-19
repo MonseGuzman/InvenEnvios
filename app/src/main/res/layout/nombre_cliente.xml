@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/introduzcaCliente"
+        android:textColor="@color/secondaryColor"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/nombreDialogoEditText"
+            android:layout_width="278dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="@string/seleccionarCliente"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/buscarButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="color/secondaryTextColor"
+            android:text="Buscar"
+            android:textColor="@color/secondaryColor" />
+    </LinearLayout>
+</LinearLayout>

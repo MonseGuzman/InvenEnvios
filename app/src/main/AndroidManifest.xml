@@ -37,7 +37,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activitys.EntregasActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -6,14 +6,4 @@
     android:layout_height="match_parent"
     tools:context=".activitys.EntregasActivity">
 
-    <fragment
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="50" />
-
-    <fragment
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="50" />
-
 </LinearLayout>
