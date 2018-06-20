@@ -31,7 +31,7 @@ public class EntregasActivity extends AppCompatActivity
 
     public void cuadroDialogo()
     {
-        final AlertDialog.Builder mensaje = new AlertDialog.Builder(this);
+        /*final AlertDialog.Builder mensaje = new AlertDialog.Builder(this);
 
         View v = getLayoutInflater().inflate(R.layout.nombre_cliente, null);
         mensaje.setTitle(R.string.seleccionarCliente);
@@ -82,7 +82,7 @@ public class EntregasActivity extends AppCompatActivity
             }
         });
         builder.setCancelable(true); //false
-        builder.show();
+        builder.show();*/
     }
 
     public void filtar(String nombre)
