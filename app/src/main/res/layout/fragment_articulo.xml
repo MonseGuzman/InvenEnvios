@@ -227,6 +227,7 @@
                 android:paddingTop="15dp" />
 
             <EditText
+                android:id="@+id/cantidadEditText_A"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:enabled="false"

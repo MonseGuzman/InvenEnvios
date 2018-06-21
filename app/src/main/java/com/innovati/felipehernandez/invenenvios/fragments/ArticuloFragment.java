@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -15,7 +16,7 @@ import android.widget.Toast;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.activitys.ArticuloActivity;
 
-public class ArticuloFragment extends Fragment
+public class ArticuloFragment extends Fragment implements View.OnClickListener
 {
     private LinearLayout PerdidoslinearLayout;
     private TextView claveTextView_A;
@@ -25,6 +26,9 @@ public class ArticuloFragment extends Fragment
     private EditText unidadEditText_A;
     private EditText precioEditText_A;
     private EditText existenciasEditText_A;
+    private Button MenosButton_A;
+    private Button MasButton_A;
+    private EditText cantidadEditText_A;
 
     String fragmento;
     String clave;
@@ -34,6 +38,7 @@ public class ArticuloFragment extends Fragment
     Double existencias;
     Double precio;
     String unidad;
+    float cantidadPedido = 0;
 
     FloatingActionButton AgregarFAB_A;
 
@@ -43,9 +48,8 @@ public class ArticuloFragment extends Fragment
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View v = inflater.inflate(R.layout.fragment_articulo, container, false);
 
         inicializar(v);
@@ -85,6 +89,9 @@ public class ArticuloFragment extends Fragment
                 break;
         }
 
+        MasButton_A.setOnClickListener(this);
+        MenosButton_A.setOnClickListener(this);
+
         return v;
     }
 
@@ -99,6 +106,9 @@ public class ArticuloFragment extends Fragment
         existenciasEditText_A = v.findViewById(R.id.ExistenciaEditText_A);
         precioEditText_A = v.findViewById(R.id.PrecioEditText_A);
 
+        MenosButton_A =  (Button) v.findViewById(R.id.MenosButton_A);
+        MasButton_A = (Button) v.findViewById(R.id.MasButton_A);
+        cantidadEditText_A = (EditText) v.findViewById(R.id.cantidadEditText_A);
     }
 
     private void limpiar()
@@ -128,5 +138,18 @@ public class ArticuloFragment extends Fragment
     public void onDestroyView() {
         super.onDestroyView();
         ArticuloActivity.disableLista();
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.MasButton_A:
+                break;
+            case R.id.MenosButton_A:
+                break;
+        }
+        cantidadEditText_A.setText(String.valueOf(cantidadPedido));
     }
 }
