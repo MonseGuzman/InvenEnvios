@@ -209,12 +209,12 @@ public class ArticuloActivity extends AppCompatActivity
             i = new Intent(ClientesActivity.this, ArticuloActivity.class);
             i.putExtra("nombre", nombre);
             i.putExtra("clave", clave);*/
-            args = new Bundle();
+           /* args = new Bundle();
             args.putString("nombre", nombre);
             args.putString("clave", clave);
-            fragment.setArguments(args);
-            disableControl();
-            getSupportFragmentManager().beginTransaction().replace(R.id.containerCarro, fragment).addToBackStack(null).commit();
+            fragment.setArguments(args);*/
+            /*disableControl();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerCarro, fragment).addToBackStack(null).commit();*/
         }
 
         Toast.makeText(this, actividad, Toast.LENGTH_SHORT).show();
