@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.R;
+import com.innovati.felipehernandez.invenenvios.activitys.ArticuloActivity;
 
 public class ArticuloFragment extends Fragment
 {
@@ -123,4 +124,9 @@ public class ArticuloFragment extends Fragment
         unidadEditText_A.setEnabled(true);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ArticuloActivity.disableLista();
+    }
 }

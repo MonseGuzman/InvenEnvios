@@ -29,11 +29,6 @@
     <include
         android:id="@+id/buscarCliente"
         layout="@layout/buscar"
-        android:layout_width="380dp"
-        android:layout_height="580dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></include>
+        ></include>
 
 </android.support.constraint.ConstraintLayout>

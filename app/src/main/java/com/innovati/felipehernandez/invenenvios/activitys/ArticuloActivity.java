@@ -1,5 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -22,14 +23,14 @@ import com.innovati.felipehernandez.invenenvios.fragments.ArticuloFragment;
 public class ArticuloActivity extends AppCompatActivity
 {
     private ArticuloAdapter adaptador;
-    private ListView datitosListView;
-    private EditText buscarEditText;
-    private ImageButton BuscarImageButton;
+    private static ListView datitosListView;
+    private static EditText buscarEditText;
+    private static ImageButton BuscarImageButton;
     private FloatingActionButton AgregarFAB_A;
 
     VwArticulos result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
-    String actividad;
+    String actividad, clave, nombre;
     Bundle args;
     String fragmento;
 
@@ -47,6 +48,8 @@ public class ArticuloActivity extends AppCompatActivity
         {
             this.setTitle(R.string.tituloPedidos);
             AgregarFAB_A.setImageResource(R.drawable.ic_pedir);
+            clave = getIntent().getExtras().getString("clave");
+            nombre = getIntent().getExtras().getString("nombre");
         }
         else if(actividad.equals("Articulos"))
         {
@@ -90,6 +93,7 @@ public class ArticuloActivity extends AppCompatActivity
                     args.putString("unidad", result[position].getUnidadPrimaria());
                     fragment.setArguments(args);
                     AgregarFAB_A.setImageResource(R.drawable.ic_agregar_carrito);
+                    disableControl();
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.ArticuloConstraintLayout, fragment).addToBackStack(null).commit();
             }
@@ -199,11 +203,33 @@ public class ArticuloActivity extends AppCompatActivity
 
             getSupportFragmentManager().beginTransaction().replace(R.id.ArticuloConstraintLayout, fragment).addToBackStack(null).commit();
         }
-       /* else if(actividad.equals("Pedidos"))
+       else if(actividad.equals("Pedidos"))
         {
-                    //abre el activity de ENTREGAS
-        }*/
+            /*Intent i = new Intent();
+            i = new Intent(ClientesActivity.this, ArticuloActivity.class);
+            i.putExtra("nombre", nombre);
+            i.putExtra("clave", clave);*/
+            args = new Bundle();
+            args.putString("nombre", nombre);
+            args.putString("clave", clave);
+            fragment.setArguments(args);
+            disableControl();
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerCarro, fragment).addToBackStack(null).commit();
+        }
 
         Toast.makeText(this, actividad, Toast.LENGTH_SHORT).show();
+    }
+    public static void disableLista(){
+        ArticuloActivity.disableListaPedido();
+    }
+    public static void disableListaPedido(){
+        datitosListView.setEnabled(true);
+        buscarEditText.setEnabled(true);
+        BuscarImageButton.setEnabled(true);
+    }
+    private void disableControl(){
+        datitosListView.setEnabled(false);
+        buscarEditText.setEnabled(false);
+        BuscarImageButton.setEnabled(false);
     }
 }

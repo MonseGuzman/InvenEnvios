@@ -38,7 +38,8 @@ public class ClientesActivity extends AppCompatActivity
     private ClientesAdaptador adaptador;
     VwClientes result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
-
+    String actividad;
+    Intent i = new Intent();
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int posicion;
 
@@ -46,7 +47,7 @@ public class ClientesActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientes);
-
+        actividad = getIntent().getExtras().getString("actividad");
         inicializacion();
         this.setTitle(R.string.tituloClientes);
 
@@ -55,17 +56,25 @@ public class ClientesActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 ClienteFragment clienteFragment = new ClienteFragment();
-
                 args = new Bundle();
-                args.putString("nombre", result[position].getNombre());
-                args.putString("rfc", result[position].getRfc());
-                args.putString("calle", result[position].getCalle());
-                args.putString("numeroExterior", result[position].getNumeroExterior());
-                args.putString("numeroInterior", result[position].getNumeroInterior());
-                args.putString("colonia", result[position].getColonia());
-                args.putString("telefono", result[position].getTelefono());
-                clienteFragment.setArguments(args);
-                getSupportFragmentManager().beginTransaction().replace(R.id.ClienteConstraintLayout, clienteFragment).addToBackStack(null).commit();
+                if(actividad.equals("PedidosCliente"))
+                {
+                    i = new Intent(ClientesActivity.this, ArticuloActivity.class);
+                    i.putExtra("actividad", "Pedidos");
+                    i.putExtra("nombre", result[position].getNombre());
+                    i.putExtra("clave", result[position].getClave());
+                    startActivity(i);
+                }else{
+                    args.putString("nombre", result[position].getNombre());
+                    args.putString("rfc", result[position].getRfc());
+                    args.putString("calle", result[position].getCalle());
+                    args.putString("numeroExterior", result[position].getNumeroExterior());
+                    args.putString("numeroInterior", result[position].getNumeroInterior());
+                    args.putString("colonia", result[position].getColonia());
+                    args.putString("telefono", result[position].getTelefono());
+                    clienteFragment.setArguments(args);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.ClienteConstraintLayout, clienteFragment).addToBackStack(null).commit();
+                }
             }
         });
 
@@ -77,6 +86,7 @@ public class ClientesActivity extends AppCompatActivity
         });
         //menú de contexto
         registerForContextMenu(datitosListView);
+
     }
 
 
