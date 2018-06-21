@@ -19,6 +19,9 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.fragments.ArticuloFragment;
+import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
+
+import java.util.List;
 
 public class ArticuloActivity extends AppCompatActivity
 {
@@ -27,6 +30,7 @@ public class ArticuloActivity extends AppCompatActivity
     private static EditText buscarEditText;
     private static ImageButton BuscarImageButton;
     private FloatingActionButton AgregarFAB_A;
+    private static List<ArticulosPedido> ListCarritoPedido;
 
     VwArticulos result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);

@@ -25,19 +25,20 @@
         </activity>
         <activity
             android:name=".activitys.LoginActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.MenuActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.ClientesActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.ArticuloActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.EntregasActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activitys.ArticulosPedidosActivity"></activity>
     </application>
 
 </manifest>

@@ -8,4 +8,5 @@
     <fraction name="articlePercentItem">65%</fraction>
     <fraction name="asidePercentbItem">30%</fraction>
     <fraction name="marginItem">5%</fraction>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
