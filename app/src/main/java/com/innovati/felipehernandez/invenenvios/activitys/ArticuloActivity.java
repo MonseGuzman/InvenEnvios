@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticuloAdapter;
@@ -21,6 +23,8 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFac
 import com.innovati.felipehernandez.invenenvios.fragments.ArticuloFragment;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ArticuloActivity extends AppCompatActivity
@@ -30,7 +34,7 @@ public class ArticuloActivity extends AppCompatActivity
     private static EditText buscarEditText;
     private static ImageButton BuscarImageButton;
     private FloatingActionButton AgregarFAB_A;
-    private static List<ArticulosPedido> ListCarritoPedido;
+    private static ArrayList<ArticulosPedido> ListCarritoPedido = new ArrayList<>();
 
     VwArticulos result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
@@ -209,16 +213,30 @@ public class ArticuloActivity extends AppCompatActivity
         }
        else if(actividad.equals("Pedidos"))
         {
-            /*Intent i = new Intent();
-            i = new Intent(ClientesActivity.this, ArticuloActivity.class);
-            i.putExtra("nombre", nombre);
-            i.putExtra("clave", clave);*/
-           /* args = new Bundle();
-            args.putString("nombre", nombre);
-            args.putString("clave", clave);
-            fragment.setArguments(args);*/
-            /*disableControl();
-            getSupportFragmentManager().beginTransaction().replace(R.id.containerCarro, fragment).addToBackStack(null).commit();*/
+            ArticulosPedido a = new ArticulosPedido();
+            a.setCantidad(1);
+            a.setNombre("s");
+            a.setIdArticulo("s");
+            a.setPrecio(1);
+            a.setSubTotal(1);
+            a.setPresentacion("dd");
+            ArticulosPedido b = new ArticulosPedido();
+            b.setCantidad(3);
+            b.setNombre("s");
+            b.setIdArticulo("s");
+            b.setPrecio(1);
+            b.setSubTotal(1);
+            b.setPresentacion("dd");
+            ListCarritoPedido.add(a);
+            ListCarritoPedido.add(b);
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<ArticulosPedido>>() {}.getType();
+            String json = gson.toJson(ListCarritoPedido, type);
+            Intent intent = new Intent(getBaseContext(), ArticulosPedidosActivity.class);
+            intent.putExtra("articulos", json);
+            intent.putExtra("nombre",nombre);
+            intent.putExtra("clave",clave);
+            startActivity(intent);
         }
 
         Toast.makeText(this, actividad, Toast.LENGTH_SHORT).show();
@@ -235,5 +253,12 @@ public class ArticuloActivity extends AppCompatActivity
         datitosListView.setEnabled(false);
         buscarEditText.setEnabled(false);
         BuscarImageButton.setEnabled(false);
+    }
+
+    public static void addArticulo(ArticulosPedido a){
+        ArticuloActivity.addArticuloList(a);
+    }
+    public static void addArticuloList(ArticulosPedido a){
+        ListCarritoPedido.add(a);
     }
 }

@@ -12,16 +12,21 @@ import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 import java.util.List;
-
 public class ArticulosPedidosAdapter extends RecyclerView.Adapter<ArticulosPedidosAdapter.ViewHolder>{
-    Context context;
+    private RecycleViewOnItemClickListener recyclerViewOnItemClickListener;
     public List<ArticulosPedido> articulosPedidos;
+    private Context   context;
+    /*public ArticulosPedidosAdapter( List<ArticulosPedido> articulosPedidos,@NonNull RecycleViewOnItemClickListener recyclerViewOnItemClickListener)
+    {
+        this.recyclerViewOnItemClickListener = recyclerViewOnItemClickListener;
+        this.articulosPedidos = articulosPedidos;
+    }*/
+    public ArticulosPedidosAdapter( List<ArticulosPedido> articulosPedidos)
+    {
 
-    public ArticulosPedidosAdapter(Context context, List<ArticulosPedido> articulosPedidos){
-        this.context = context;
+        //this.context = context;
         this.articulosPedidos = articulosPedidos;
     }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,7 +49,26 @@ public class ArticulosPedidosAdapter extends RecyclerView.Adapter<ArticulosPedid
         return articulosPedidos.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    /*public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        CardView cardView;
+        TextView tvNombreArticuloItem, tvPercentacionArticuloItem,tvCountArticuloItem,tvPriceArticuloItem,tvSubArticuloItem;
+        public ViewHolder(View itemView) {
+            super(itemView);
+            cardView =itemView.findViewById(R.id.cardview);
+            tvNombreArticuloItem = itemView.findViewById(R.id.tvNombreArticuloItem);
+            tvPercentacionArticuloItem = itemView.findViewById(R.id.tvPercentacionArticuloItem);
+            tvCountArticuloItem = itemView.findViewById(R.id.tvCountArticuloItem);
+            tvPriceArticuloItem = itemView.findViewById(R.id.tvPriceArticuloItem);
+            tvSubArticuloItem = itemView.findViewById(R.id.tvSubArticuloItem);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            recyclerViewOnItemClickListener.onClick(view,getAdapterPosition());
+        }
+    }*/
+    public class ViewHolder extends RecyclerView.ViewHolder{
         CardView cardView;
         TextView tvNombreArticuloItem, tvPercentacionArticuloItem,tvCountArticuloItem,tvPriceArticuloItem,tvSubArticuloItem;
         public ViewHolder(View itemView) {
@@ -56,5 +80,7 @@ public class ArticulosPedidosAdapter extends RecyclerView.Adapter<ArticulosPedid
             tvPriceArticuloItem = itemView.findViewById(R.id.tvPriceArticuloItem);
             tvSubArticuloItem = itemView.findViewById(R.id.tvSubArticuloItem);
         }
+
+
     }
 }
