@@ -12,7 +12,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticulosPedidosAdapter;
-import com.innovati.felipehernandez.invenenvios.adapters.RecycleViewOnItemClickListener;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 import java.lang.reflect.Type;
@@ -23,6 +22,7 @@ public class ArticulosPedidosActivity extends AppCompatActivity {
     private RecyclerView recyclerArticulos;
     private String nombre, clave;
     private TextView tvClientePedido, tvFolio, tvPrecioPedido;
+    ArticulosPedidosAdapter articulosPedidosAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +36,11 @@ public class ArticulosPedidosActivity extends AppCompatActivity {
         clave = bundle.getString("clave");
         String stringLocation = bundle.getString("articulos");
         if(stringLocation != null) {
-            Log.d("Location Count", stringLocation);
             Type type = new TypeToken<List<ArticulosPedido>>() {
             }.getType();
             articulosPedidoList = gson.fromJson(stringLocation, type);
             Log.d("Location Count", Integer.toString(articulosPedidoList.size()));
+            updateAdapter();
         }
         else{
             Log.d("Location Count","failed");
@@ -60,6 +60,8 @@ public class ArticulosPedidosActivity extends AppCompatActivity {
         }));*/
         //ArticulosPedidosAdapter adapter = new ArticulosPedidosAdapter(articulosPedidoList);
         //recyclerArticulos.setAdapter(adapter);
+        articulosPedidosAdapter = new ArticulosPedidosAdapter(this,articulosPedidoList);
+        recyclerArticulos.setAdapter(articulosPedidosAdapter);
     }
     private  void queryArticle(int position){
        //
@@ -72,7 +74,7 @@ public class ArticulosPedidosActivity extends AppCompatActivity {
         }
     }
 
-    public void pedido(String clave, float precio, float cantidad, float subTotal, float iva, float total ){
+    public void pedido(String clave, double precio, double cantidad, double subTotal, double iva, double total ){
 
     }
 }

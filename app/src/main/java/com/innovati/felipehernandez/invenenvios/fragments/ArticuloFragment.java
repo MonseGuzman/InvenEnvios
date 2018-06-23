@@ -11,10 +11,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.activitys.ArticuloActivity;
+import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 public class ArticuloFragment extends Fragment implements View.OnClickListener
 {
@@ -137,7 +137,16 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ArticuloActivity.disableLista();
+        ArticuloActivity.disableLista("");
+        ArticulosPedido articulosPedido = new ArticulosPedido();
+        articulosPedido.setIdArticulo(clave);
+        articulosPedido.setNombre(nombre);
+        articulosPedido.setPrecio(precio);
+        articulosPedido.setCantidad(cantidadPedido);
+        articulosPedido.setSubTotal((precio*cantidadPedido));
+        articulosPedido.setIva(articulosPedido.getSubTotal()*0.16);
+        articulosPedido.setTotal(articulosPedido.getSubTotal()+articulosPedido.getIva());
+        ArticuloActivity.addArticulo(articulosPedido);
     }
 
     @Override
@@ -146,8 +155,10 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
         switch (v.getId())
         {
             case R.id.MasButton_A:
+                cantidadPedido -=1;
                 break;
             case R.id.MenosButton_A:
+                cantidadPedido +=1;
                 break;
         }
         cantidadEditText_A.setText(String.valueOf(cantidadPedido));

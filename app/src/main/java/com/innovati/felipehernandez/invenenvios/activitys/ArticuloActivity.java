@@ -35,12 +35,13 @@ public class ArticuloActivity extends AppCompatActivity
     private static ImageButton BuscarImageButton;
     private FloatingActionButton AgregarFAB_A;
     private static ArrayList<ArticulosPedido> ListCarritoPedido = new ArrayList<>();
-
+    ArticuloFragment fragment = new ArticuloFragment();
     VwArticulos result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
     String actividad, clave, nombre;
     Bundle args;
-    String fragmento;
+    private static boolean ban = false;
+    static String fragmento = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -200,8 +201,8 @@ public class ArticuloActivity extends AppCompatActivity
 
     public void pruebas(View v)
     {
-        ArticuloFragment fragment = new ArticuloFragment();
 
+        ban =false;
         if(actividad.equals("Articulos"))
         {
             //abre el fragmento sin nada ni nada
@@ -213,41 +214,32 @@ public class ArticuloActivity extends AppCompatActivity
         }
        else if(actividad.equals("Pedidos"))
         {
-            ArticulosPedido a = new ArticulosPedido();
-            a.setCantidad(1);
-            a.setNombre("s");
-            a.setIdArticulo("s");
-            a.setPrecio(1);
-            a.setSubTotal(1);
-            a.setPresentacion("dd");
-            ArticulosPedido b = new ArticulosPedido();
-            b.setCantidad(3);
-            b.setNombre("s");
-            b.setIdArticulo("s");
-            b.setPrecio(1);
-            b.setSubTotal(1);
-            b.setPresentacion("dd");
-            ListCarritoPedido.add(a);
-            ListCarritoPedido.add(b);
-            Gson gson = new Gson();
-            Type type = new TypeToken<List<ArticulosPedido>>() {}.getType();
-            String json = gson.toJson(ListCarritoPedido, type);
-            Intent intent = new Intent(getBaseContext(), ArticulosPedidosActivity.class);
-            intent.putExtra("articulos", json);
-            intent.putExtra("nombre",nombre);
-            intent.putExtra("clave",clave);
-            startActivity(intent);
+            if(fragmento != "Detalles"){
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<ArticulosPedido>>() {}.getType();
+                String json = gson.toJson(ListCarritoPedido, type);
+                Intent intent = new Intent(getBaseContext(), ArticulosPedidosActivity.class);
+                intent.putExtra("articulos", json);
+                intent.putExtra("nombre",nombre);
+                intent.putExtra("clave",clave);
+                startActivity(intent);
+            }else{
+                Toast.makeText(this,"si",Toast.LENGTH_SHORT).show();
+                ban=true;
+                getSupportFragmentManager().popBackStack();
+            }
+
         }
 
-        Toast.makeText(this, actividad, Toast.LENGTH_SHORT).show();
     }
-    public static void disableLista(){
-        ArticuloActivity.disableListaPedido();
+    public static void disableLista(String s){
+        ArticuloActivity.disableListaPedido(s);
     }
-    public static void disableListaPedido(){
+    public static void disableListaPedido(String s){
         datitosListView.setEnabled(true);
         buscarEditText.setEnabled(true);
         BuscarImageButton.setEnabled(true);
+        fragmento = s;
     }
     private void disableControl(){
         datitosListView.setEnabled(false);
@@ -256,7 +248,10 @@ public class ArticuloActivity extends AppCompatActivity
     }
 
     public static void addArticulo(ArticulosPedido a){
-        ArticuloActivity.addArticuloList(a);
+        if (ban){
+            ArticuloActivity.addArticuloList(a);
+        }
+
     }
     public static void addArticuloList(ArticulosPedido a){
         ListCarritoPedido.add(a);

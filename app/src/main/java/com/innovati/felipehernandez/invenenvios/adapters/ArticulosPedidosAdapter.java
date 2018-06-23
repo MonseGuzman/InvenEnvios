@@ -21,10 +21,10 @@ public class ArticulosPedidosAdapter extends RecyclerView.Adapter<ArticulosPedid
         this.recyclerViewOnItemClickListener = recyclerViewOnItemClickListener;
         this.articulosPedidos = articulosPedidos;
     }*/
-    public ArticulosPedidosAdapter( List<ArticulosPedido> articulosPedidos)
+    public ArticulosPedidosAdapter(Context context, List<ArticulosPedido> articulosPedidos)
     {
 
-        //this.context = context;
+        this.context = context;
         this.articulosPedidos = articulosPedidos;
     }
     @NonNull
