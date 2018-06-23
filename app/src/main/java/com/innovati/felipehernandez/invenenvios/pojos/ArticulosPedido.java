@@ -7,17 +7,21 @@ public class ArticulosPedido {
     float cantidad;
     float precio;
     float subTotal;
+    float iva;
+    float total;
 
     public ArticulosPedido() {
     }
 
-    public ArticulosPedido(String idArticulo, String nombre, String presentacion, float cantidad, float precio, float subTotal) {
+    public ArticulosPedido(String idArticulo, String nombre, String presentacion, float cantidad, float precio, float subTotal, float iva, float total) {
         this.idArticulo = idArticulo;
         this.nombre = nombre;
         this.presentacion = presentacion;
         this.cantidad = cantidad;
         this.precio = precio;
         this.subTotal = subTotal;
+        this.iva = iva;
+        this.total = total;
     }
 
     public String getIdArticulo() {
@@ -66,5 +70,21 @@ public class ArticulosPedido {
 
     public void setSubTotal(float subTotal) {
         this.subTotal = subTotal;
+    }
+
+    public float getIva() {
+        return iva;
+    }
+
+    public void setIva(float iva) {
+        this.iva = iva;
+    }
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
     }
 }
