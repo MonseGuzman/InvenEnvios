@@ -35,6 +35,7 @@ public class MenuActivity extends AppCompatActivity
             break;
             case R.id.ClientesButton:
                 i = new Intent(this, ClientesActivity.class);
+                i.putExtra("actividad", "Clietes");
                 break;
             case R.id.PedidosButton:
                 /*i = new Intent(this, ArticuloActivity.class);

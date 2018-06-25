@@ -1,5 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,10 +13,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticulosPedidosAdapter;
+import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 import java.lang.reflect.Type;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class ArticulosPedidosActivity extends AppCompatActivity {
     List<ArticulosPedido> articulosPedidoList;
@@ -75,6 +80,24 @@ public class ArticulosPedidosActivity extends AppCompatActivity {
     }
 
     public void pedido(String clave, double precio, double cantidad, double subTotal, double iva, double total ){
+
+    }
+
+    public void insertar(String idUsuario, String claveCliente, Date fecha, short estatus, float subtotal, float iva, float total, String observaciones)
+    {
+        String idPedido = UUID.randomUUID().toString();
+        Pedidos pedidos = new Pedidos();
+        pedidos.setIdPedido(idPedido);
+        pedidos.setIdUsuario(idUsuario);
+        pedidos.setClaveCliente(claveCliente);
+        pedidos.setFecha(fecha);
+        pedidos.setEstatus(estatus);
+        pedidos.setSubtotal(subtotal);
+        pedidos.setIva(iva);
+        pedidos.setTotal(total);
+        pedidos.setObservaciones(observaciones);
+        pedidos.setUltimoUsuarioActualizacion(idUsuario);
+        pedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
 
     }
 }
