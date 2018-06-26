@@ -76,7 +76,7 @@
                 android:background="@color/secondaryColor"
                 android:drawableTop="@drawable/ic_levantamientos"
                 android:paddingTop="15dp"
-                android:text="Abastecimientos"
+                android:text="Abastecimiento"
                 android:textAlignment="center"
                 android:textColor="#FFF" />
         </TableRow>
