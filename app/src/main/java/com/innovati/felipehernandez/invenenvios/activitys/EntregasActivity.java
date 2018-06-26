@@ -53,9 +53,8 @@ public class EntregasActivity extends AppCompatActivity
 
         //crea tab y darle una gravedad
         tabLayout.addTab(tabLayout.newTab().setText("Seleccione cliente"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
-        //tabLayout.setTabTextColors(R.color.secondaryLightColor, R.color.primaryTextColor);
+        tabLayout.addTab(tabLayout.newTab().setText("Seleccione los artículos"));
+        tabLayout.addTab(tabLayout.newTab().setText("Detalles del pedido"));
         //tabLayout.setSelectedTabIndicatorColor(getColor(R.color.primaryTextColor));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 

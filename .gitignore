@@ -9,3 +9,4 @@
 /captures
 .externalNativeBuild
 .idea/misc.xml
+app/src/main/res/values-v21/styles.xml
