@@ -17,8 +17,13 @@ import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 import java.lang.reflect.Type;
+<<<<<<< Updated upstream
 import java.util.Calendar;
 import java.util.Date;
+=======
+import java.text.DecimalFormat;
+import java.text.Format;
+>>>>>>> Stashed changes
 import java.util.List;
 import java.util.UUID;
 
@@ -44,8 +49,16 @@ public class ArticulosPedidosActivity extends AppCompatActivity {
             Type type = new TypeToken<List<ArticulosPedido>>() {
             }.getType();
             articulosPedidoList = gson.fromJson(stringLocation, type);
-            Log.d("Location Count", Integer.toString(articulosPedidoList.size()));
-            updateAdapter();
+            Log.d("json:  ----------- ", stringLocation);
+            for(ArticulosPedido a : articulosPedidoList){
+                Log.d("Location Count", String.valueOf(a.getNombre()));
+            }
+
+            try{
+                updateAdapter();
+            }catch (Exception e){
+
+            }
         }
         else{
             Log.d("Location Count","failed");
@@ -55,6 +68,7 @@ public class ArticulosPedidosActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerArticulos.setLayoutManager(linearLayoutManager);
         tvClientePedido.setText(nombre);
+        tvPrecioPedido.setText(getTotal());
     }
     private void updateAdapter(){
         /*recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(articulosPedidosActivityList, new RecycleViewOnItemClickListener() {
@@ -68,6 +82,18 @@ public class ArticulosPedidosActivity extends AppCompatActivity {
         articulosPedidosAdapter = new ArticulosPedidosAdapter(this,articulosPedidoList);
         recyclerArticulos.setAdapter(articulosPedidosAdapter);
     }
+
+    private String getTotal(){
+        String res = "";
+        double total = 0, iva = 0, sub = 0;
+        for (ArticulosPedido a : articulosPedidoList){
+            total += a.getTotal();
+        }
+        res = "Sub:" + total  + "  IVa:" + (total + 0.16) +"  Total:" + (total + (total + 0.16));
+        res =  String.format("Sub:%.2f  Iva:%2.f  Total:%f2",total,total + 0.16,(total + (total + 0.16)));
+        return res;
+    }
+
     private  void queryArticle(int position){
        //
     }

@@ -79,6 +79,7 @@ public class ArticulosPedidosAdapter extends RecyclerView.Adapter<ArticulosPedid
             tvCountArticuloItem = itemView.findViewById(R.id.tvCountArticuloItem);
             tvPriceArticuloItem = itemView.findViewById(R.id.tvPriceArticuloItem);
             tvSubArticuloItem = itemView.findViewById(R.id.tvSubArticuloItem);
+
         }
 
 
