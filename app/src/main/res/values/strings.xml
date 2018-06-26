@@ -2,6 +2,10 @@
     <string name="app_name">Inven-E</string>
     <!--PROPIOS -->
 
+
+    <!--Generales -->
+    <string name="seleccionar">Escriba lo que desea buscar</string>
+
     <!--Mensaje-->
     <string name="sinInternet">Sin acceso a Internet</string>
     <string name="conectarse">Favor de conectarse a una red ya sea Wi-Fi o datos móviles</string>
@@ -19,11 +23,10 @@
     <string name="ingresarLogin">Ingresar</string>
 
     <!--Articulos-->
-    <string name="tituloArticulo">Artículos</string>
+    <string name="tituloArticulo">Consulta de artículos</string>
 
     <!--Clientes-->
-    <string name="tituloClientes">Clientes</string>
-    <string name="seleccionarCliente">Seleccione a su cliente</string>
+    <string name="tituloClientes">Consulta de clientes</string>
     <string name="introduzcaCliente">Introduzca el nombre del cliente</string>
 
     <!-- TODO: Remove or change this placeholder text -->

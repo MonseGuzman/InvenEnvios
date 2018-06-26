@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -50,6 +51,9 @@ public class ArticuloActivity extends AppCompatActivity
         setContentView(R.layout.activity_articulo);
 
         inicializacion();
+
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         actividad = getIntent().getExtras().getString("actividad");
 
@@ -212,7 +216,7 @@ public class ArticuloActivity extends AppCompatActivity
 
             getSupportFragmentManager().beginTransaction().replace(R.id.ArticuloConstraintLayout, fragment).addToBackStack(null).commit();
         }
-       else if(actividad.equals("Pedidos"))
+        else if(actividad.equals("Pedidos"))
         {
             if(fragmento != "Detalles"){
                 Gson gson = new Gson();
@@ -232,6 +236,20 @@ public class ArticuloActivity extends AppCompatActivity
         }
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                Toast.makeText(this, "homeeeeeeee", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     public static void disableLista(String s){
         ArticuloActivity.disableListaPedido(s);
     }
