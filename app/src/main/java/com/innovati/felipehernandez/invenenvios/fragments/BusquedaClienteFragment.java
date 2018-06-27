@@ -1,5 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.activitys.ClientesActivity;
+import com.innovati.felipehernandez.invenenvios.activitys.EntregasActivity;
 import com.innovati.felipehernandez.invenenvios.adapters.ClientesAdaptador;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
@@ -25,7 +27,7 @@ public class BusquedaClienteFragment extends Fragment
     private EditText buscarEditText;
     private ListView datitosListView;
 
-    MetodosInternos metodosInternos = new MetodosInternos(getContext());
+    MetodosInternos metodosInternos;
     private ClientesAdaptador adaptador;
     VwClientes result[];
 
@@ -62,6 +64,7 @@ public class BusquedaClienteFragment extends Fragment
     public void filtar(View v)
     {
         String nombre = buscarEditText.getText().toString();
+        metodosInternos = new MetodosInternos(getActivity());
         if(TextUtils.isEmpty(nombre))
         {
             //sin filtro = todos
