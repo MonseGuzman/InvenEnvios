@@ -16,12 +16,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.activitys.ArticuloActivity;
-import com.innovati.felipehernandez.invenenvios.activitys.ArticulosPedidosActivity;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticuloAdapter;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
