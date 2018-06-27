@@ -9,11 +9,12 @@ public class ArticulosPedido {
     double subTotal;
     double iva;
     double total;
+    boolean status;
 
     public ArticulosPedido() {
     }
 
-    public ArticulosPedido(String idArticulo, String nombre, String presentacion, double cantidad, double precio, double subTotal, double iva, double total) {
+    public ArticulosPedido(String idArticulo, String nombre, String presentacion, double cantidad, double precio, double subTotal, double iva, double total, boolean status) {
         this.idArticulo = idArticulo;
         this.nombre = nombre;
         this.presentacion = presentacion;
@@ -22,6 +23,15 @@ public class ArticulosPedido {
         this.subTotal = subTotal;
         this.iva = iva;
         this.total = total;
+        this.status = status;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public String getIdArticulo() {
