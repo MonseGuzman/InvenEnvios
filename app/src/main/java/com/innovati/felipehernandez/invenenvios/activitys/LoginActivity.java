@@ -33,6 +33,9 @@ public class LoginActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.logolth);
+
         inicializacion();
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         verificaCredenciales();

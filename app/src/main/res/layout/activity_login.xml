@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ssplaslth"
     tools:context=".activitys.LoginActivity">
 
     <ImageView
@@ -46,7 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/usuario"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textColorLink="@color/secondaryColor" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -60,7 +62,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/contrasena"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textColorLink="@color/secondaryColor" />
         </android.support.design.widget.TextInputLayout>
 
         <CheckBox
@@ -79,12 +82,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
-            android:background="@color/secondaryColor"
+            android:background="@color/colorPrimaryDark"
             android:onClick="login"
             android:text="@string/ingresarLogin"
             android:textColor="@color/primaryTextColor" />
     </LinearLayout>
-
 
 
 </android.support.constraint.ConstraintLayout>
