@@ -62,27 +62,8 @@ public class BusquedaArticulosFragment extends Fragment
             {
                 ArticuloFragment fragment = new ArticuloFragment();
 
-                if(actividad.equals("Articulos"))
-                {
-                    fragmento = "Agregar";
-                    //DETALLE
-                    args = new Bundle();
-                    args.putString("fragmento", "Agregar");
-                    args.putString("clave", result[position].getClave());
-                    args.putString("nombre", result[position].getNombre());
-                    args.putString("activo", result[position].getActivo());
-                    args.putDouble("tiempoSurtido", result[position].getTiempoSurtido());
-                    args.putDouble("existencias", result[position].getExistenciaTotal());
-                    args.putDouble("precio", result[position].getPrecio1());
-                    args.putString("unidad", result[position].getUnidadPrimaria());
-                    fragment.setArguments(args);
-                }
-                else if(actividad.equals("Pedidos"))
-                {
-                    fragmento = "Detalles";
                     //AGREGAR ARTICULOS A PERDIDO
                     args = new Bundle();
-                    args.putString("fragmento", "Detalles");
                     args.putString("clave", result[position].getClave());
                     args.putString("nombre", result[position].getNombre());
                     args.putString("activo", result[position].getActivo());
@@ -93,7 +74,7 @@ public class BusquedaArticulosFragment extends Fragment
                     fragment.setArguments(args);
                     AgregarFAB_A.setImageResource(R.drawable.ic_agregar_carrito);
                     disableControl();
-                }
+
 
             }
         });
