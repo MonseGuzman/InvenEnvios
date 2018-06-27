@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,10 +44,8 @@ public class EntregasActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entregas);
 
-        /*toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);
         final ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
@@ -81,6 +80,33 @@ public class EntregasActivity extends AppCompatActivity
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        //cantidad de fragmentos que estan actualmente apilados.
+        if(getSupportFragmentManager().getBackStackEntryCount() != 0)
+        {
+            //regresa
+            super.onBackPressed();
+            getSupportFragmentManager().popBackStack();
+
+        }
+        else
+            finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /*public void cuadroDialogo()
