@@ -56,18 +56,6 @@
             android:layout_margin="10dp">
 
             <Button
-                android:id="@+id/EntregaButton"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/secondaryColor"
-                android:drawableTop="@drawable/ic_entrega"
-                android:paddingTop="15dp"
-                android:text="Entrega"
-                android:textAlignment="center"
-                android:textColor="#FFF" />
-
-            <Button
                 android:id="@+id/PedidosButton"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
@@ -76,6 +64,19 @@
                 android:onClick="botones"
                 android:paddingTop="15dp"
                 android:text="Pedidos"
+                android:layout_marginRight="10dp"
+                android:textAlignment="center"
+                android:textColor="#FFF" />
+
+            <Button
+                android:id="@+id/AbastecimientoButton"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/secondaryColor"
+                android:drawableTop="@drawable/ic_levantamientos"
+                android:paddingTop="15dp"
+                android:text="Abastecimiento"
                 android:textAlignment="center"
                 android:textColor="#FFF" />
         </TableRow>
@@ -86,14 +87,14 @@
             android:layout_margin="10dp">
 
             <Button
-                android:id="@+id/LevantamientosButton"
+                android:id="@+id/EntregaButton"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:layout_marginRight="10dp"
                 android:background="@color/secondaryColor"
-                android:drawableTop="@drawable/ic_levantamientos"
+                android:drawableTop="@drawable/ic_entrega"
                 android:paddingTop="15dp"
-                android:text="Levantamientos"
+                android:text="Entrega"
                 android:textAlignment="center"
                 android:textColor="#FFF" />
 

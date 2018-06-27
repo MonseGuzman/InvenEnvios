@@ -38,7 +38,7 @@ public class ClientesActivity extends AppCompatActivity
     private ClientesAdaptador adaptador;
     VwClientes result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
-    String actividad;
+    String actividad, fragment ="";
     Intent i = new Intent();
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int posicion;
@@ -49,7 +49,10 @@ public class ClientesActivity extends AppCompatActivity
         setContentView(R.layout.activity_clientes);
         actividad = getIntent().getExtras().getString("actividad");
         inicializacion();
+
         this.setTitle(R.string.tituloClientes);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
 
         datitosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -57,24 +60,21 @@ public class ClientesActivity extends AppCompatActivity
             {
                 ClienteFragment clienteFragment = new ClienteFragment();
                 args = new Bundle();
-                if(actividad.equals("PedidosCliente"))
-                {
-                    i = new Intent(ClientesActivity.this, ArticuloActivity.class);
-                    i.putExtra("actividad", "Pedidos");
-                    i.putExtra("nombre", result[position].getNombre());
-                    i.putExtra("clave", result[position].getClave());
-                    startActivity(i);
-                }else{
-                    args.putString("nombre", result[position].getNombre());
-                    args.putString("rfc", result[position].getRfc());
-                    args.putString("calle", result[position].getCalle());
-                    args.putString("numeroExterior", result[position].getNumeroExterior());
-                    args.putString("numeroInterior", result[position].getNumeroInterior());
-                    args.putString("colonia", result[position].getColonia());
-                    args.putString("telefono", result[position].getTelefono());
-                    clienteFragment.setArguments(args);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.ClienteConstraintLayout, clienteFragment).addToBackStack(null).commit();
-                }
+
+                fragment = "Agregar";
+
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
+
+                args.putString("nombre", result[position].getNombre());
+                args.putString("rfc", result[position].getRfc());
+                args.putString("calle", result[position].getCalle());
+                args.putString("numeroExterior", result[position].getNumeroExterior());
+                args.putString("numeroInterior", result[position].getNumeroInterior());
+                args.putString("colonia", result[position].getColonia());
+                args.putString("telefono", result[position].getTelefono());
+                clienteFragment.setArguments(args);
+                getSupportFragmentManager().beginTransaction().replace(R.id.ClienteConstraintLayout, clienteFragment).addToBackStack(null).commit();
             }
         });
 
@@ -130,6 +130,39 @@ public class ClientesActivity extends AppCompatActivity
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                if (fragment.equals("Agregar"))
+                    onBackPressed();
+                else
+                    finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {//cantidad de fragmentos que estan actualmente apilados.
+        if(getSupportFragmentManager().getBackStackEntryCount() != 0)
+        {
+            //regresa
+            super.onBackPressed();
+            getSupportFragmentManager().popBackStack();
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
+            fragment = "";
+        }
+        else
+            finish();
     }
 
     public void telefono(int position)

@@ -37,8 +37,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.EntregasActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".activitys.ArticulosPedidosActivity"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"/>
+        <activity android:name=".activitys.ArticulosPedidosActivity"/>
     </application>
 
 </manifest>

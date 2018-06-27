@@ -142,6 +142,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_span="3"
                 android:text="Precio"
                 android:textAlignment="center"
                 android:textColor="@color/secondaryColor"
@@ -152,6 +153,7 @@
                 android:id="@+id/PrecioEditText_A"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_span="3"
                 android:ems="10"
                 android:enabled="false"
                 android:inputType="numberDecimal"
@@ -159,6 +161,14 @@
                 android:textColor="#000"
                 android:textSize="13dp" />
 
+            <!--<Button
+                android:id="@+id/EditarPrecioButton_A"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_span="3"
+                android:background="@color/colorPrimary"
+                android:drawableTop="@drawable/ic_editar"
+                android:paddingTop="10dp" />-->
         </TableRow>
 
         <TableRow
@@ -230,8 +240,8 @@
                 android:id="@+id/cantidadEditText_A"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:enabled="false"
-                android:text="0000"
+                android:hint="0000"
+                android:inputType="numberDecimal"
                 android:textAlignment="center" />
 
             <Button
