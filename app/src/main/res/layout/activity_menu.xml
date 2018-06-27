@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activitys.MenuActivity">
+
+    <TableLayout
+        android:id="@+id/tableLayout2"
+        android:layout_width="322dp"
+        android:layout_height="360dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <Button
+                android:id="@+id/ClientesButton"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/secondaryColor"
+                android:drawableTop="@drawable/ic_cliente"
+                android:onClick="botones"
+                android:paddingTop="15dp"
+                android:text="Clientes"
+                android:textAlignment="center"
+                android:textColor="#FFF" />
+
+            <Button
+                android:id="@+id/ArticulosButton"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:background="@color/secondaryColor"
+                android:drawableTop="@drawable/ic_articulos"
+                android:onClick="botones"
+                android:paddingTop="15dp"
+                android:text="Articulos"
+                android:textAlignment="center"
+                android:textColor="#FFF" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <Button
+                android:id="@+id/EntregaButton"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/secondaryColor"
+                android:drawableTop="@drawable/ic_entrega"
+                android:paddingTop="15dp"
+                android:text="Entrega"
+                android:textAlignment="center"
+                android:textColor="#FFF" />
+
+            <Button
+                android:id="@+id/PedidosButton"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:background="@color/secondaryColor"
+                android:drawableTop="@drawable/ic_pedidos"
+                android:onClick="botones"
+                android:paddingTop="15dp"
+                android:text="Pedidos"
+                android:textAlignment="center"
+                android:textColor="#FFF" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <Button
+                android:id="@+id/LevantamientosButton"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/secondaryColor"
+                android:drawableTop="@drawable/ic_levantamientos"
+                android:paddingTop="15dp"
+                android:text="Levantamientos"
+                android:textAlignment="center"
+                android:textColor="#FFF" />
+
+            <Button
+                android:id="@+id/SalirButton"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:background="@color/secondaryColor"
+                android:drawableTop="@drawable/ic_salir"
+                android:onClick="salir"
+                android:paddingTop="15dp"
+                android:text="Salir"
+                android:textAlignment="center"
+                android:textColor="#FFF" />
+        </TableRow>
+
+    </TableLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/SincronizarfloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        app:backgroundTint="@color/secondaryColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.975"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.982"
+        app:srcCompat="@android:drawable/stat_notify_sync_noanim" />
+
+</android.support.constraint.ConstraintLayout>

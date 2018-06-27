@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="354dp"
+    android:layout_height="70dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:id="@+id/NombreClienteTextView_C"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:textColor="#000"
+        android:typeface="normal"
+        android:text="Andrea Monserrat"/>
+
+    <TextView
+        android:id="@+id/RFCTextView_C"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:textAlignment="textStart"
+        android:textSize="12dp"
+        android:textColor="@color/secondaryDarkColor"
+        android:text="GULA962309FM5"
+        android:typeface="normal" />
+
+    <TextView
+        android:id="@+id/TelefonoTextView_C"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="3411009819"
+        android:maxLength="20"
+        android:textColor="@color/colorPrimaryDark" />
+
+</LinearLayout>
