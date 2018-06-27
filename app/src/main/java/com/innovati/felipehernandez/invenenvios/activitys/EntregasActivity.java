@@ -26,12 +26,14 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFact
 import com.innovati.felipehernandez.invenenvios.fragments.BusquedaArticulosFragment;
 import com.innovati.felipehernandez.invenenvios.fragments.BusquedaClienteFragment;
 import com.innovati.felipehernandez.invenenvios.fragments.DatosPedidoFragment;
+import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EntregasActivity extends AppCompatActivity
 {
+    public static List<ArticulosPedido> articulosPedidoList;
     MetodosInternos metodosInternos = new MetodosInternos(this);
     String[] result;
 
@@ -108,6 +110,7 @@ public class EntregasActivity extends AppCompatActivity
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
     /*public void cuadroDialogo()
     {
