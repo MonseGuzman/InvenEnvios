@@ -35,11 +35,11 @@ public class ArticuloActivity extends AppCompatActivity
     private static EditText buscarEditText;
     private static ImageButton BuscarImageButton;
     private FloatingActionButton AgregarFAB_A;
+
     private static ArrayList<ArticulosPedido> ListCarritoPedido = new ArrayList<>();
     ArticuloFragment fragment = new ArticuloFragment();
     VwArticulos result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
-    String actividad, clave, nombre;
     Bundle args;
     private static boolean ban = false;
     static String fragmento = "";
@@ -52,23 +52,11 @@ public class ArticuloActivity extends AppCompatActivity
 
         inicializacion();
 
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
+        this.setTitle(R.string.tituloArticulo);
+        //AgregarFAB_A.setImageResource(R.drawable.ic_suma);
+        //botón de arriba
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        actividad = getIntent().getExtras().getString("actividad");
-
-        if(actividad.equals("Pedidos"))
-        {
-            this.setTitle(R.string.tituloPedidos);
-            AgregarFAB_A.setImageResource(R.drawable.ic_pedir);
-            clave = getIntent().getExtras().getString("clave");
-            nombre = getIntent().getExtras().getString("nombre");
-        }
-        else if(actividad.equals("Articulos"))
-        {
-            this.setTitle(R.string.tituloArticulo);
-            AgregarFAB_A.setImageResource(R.drawable.ic_suma);
-        }
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
 
         datitosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -76,38 +64,23 @@ public class ArticuloActivity extends AppCompatActivity
             {
                 ArticuloFragment fragment = new ArticuloFragment();
 
-                if(actividad.equals("Articulos"))
-                {
-                    fragmento = "Agregar";
-                    //DETALLE
-                    args = new Bundle();
-                    args.putString("fragmento", "Agregar");
-                    args.putString("clave", result[position].getClave());
-                    args.putString("nombre", result[position].getNombre());
-                    args.putString("activo", result[position].getActivo());
-                    args.putDouble("tiempoSurtido", result[position].getTiempoSurtido());
-                    args.putDouble("existencias", result[position].getExistenciaTotal());
-                    args.putDouble("precio", result[position].getPrecio1());
-                    args.putString("unidad", result[position].getUnidadPrimaria());
-                    fragment.setArguments(args);
-                }
-                else if(actividad.equals("Pedidos"))
-                {
-                    fragmento = "Detalles";
-                    //AGREGAR ARTICULOS A PERDIDO
-                    args = new Bundle();
-                    args.putString("fragmento", "Detalles");
-                    args.putString("clave", result[position].getClave());
-                    args.putString("nombre", result[position].getNombre());
-                    args.putString("activo", result[position].getActivo());
-                    args.putDouble("tiempoSurtido", result[position].getTiempoSurtido());
-                    args.putDouble("existencias", result[position].getExistenciaTotal());
-                    args.putDouble("precio", result[position].getPrecio1());
-                    args.putString("unidad", result[position].getUnidadPrimaria());
-                    fragment.setArguments(args);
-                    AgregarFAB_A.setImageResource(R.drawable.ic_agregar_carrito);
-                    disableControl();
-                }
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
+                fragmento = "Agregar";
+                //DETALLE
+                args = new Bundle();
+                args.putString("fragmento", "Agregar");
+                args.putString("clave", result[position].getClave());
+                args.putString("nombre", result[position].getNombre());
+                args.putString("activo", result[position].getActivo());
+                args.putDouble("tiempoSurtido", result[position].getTiempoSurtido());
+                args.putDouble("existencias", result[position].getExistenciaTotal());
+                args.putDouble("precio", result[position].getPrecio1());
+                args.putString("unidad", result[position].getUnidadPrimaria());
+                fragment.setArguments(args);
+
+                disableControl();
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.ArticuloConstraintLayout, fragment).addToBackStack(null).commit();
             }
         });
@@ -135,13 +108,13 @@ public class ArticuloActivity extends AppCompatActivity
         //cantidad de fragmentos que estan actualmente apilados.
         if(getSupportFragmentManager().getBackStackEntryCount() != 0)
         {
+            //regresa
             super.onBackPressed();
             getSupportFragmentManager().popBackStack();
 
-            if(actividad.equals("Pedidos"))
-                AgregarFAB_A.setImageResource(R.drawable.ic_pedir);
-            else if(actividad.equals("Articulos"))
-                AgregarFAB_A.setImageResource(R.drawable.ic_suma);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
+            fragmento = "";
         }
         else
             finish();
@@ -203,38 +176,9 @@ public class ArticuloActivity extends AppCompatActivity
         }
     }
 
-    public void pruebas(View v)
+    public void agregarFAB(View v)
     {
-
-        ban =false;
-        if(actividad.equals("Articulos"))
-        {
-            //abre el fragmento sin nada ni nada
-            args = new Bundle();
-            args.putString("fragmento", "NuevoArticulo");
-            fragment.setArguments(args);
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.ArticuloConstraintLayout, fragment).addToBackStack(null).commit();
-        }
-        else if(actividad.equals("Pedidos"))
-        {
-            if(fragmento != "Detalles"){
-                Gson gson = new Gson();
-                Type type = new TypeToken<List<ArticulosPedido>>() {}.getType();
-                String json = gson.toJson(ListCarritoPedido, type);
-                Intent intent = new Intent(getBaseContext(), ArticulosPedidosActivity.class);
-                intent.putExtra("articulos", json);
-                intent.putExtra("nombre",nombre);
-                intent.putExtra("clave",clave);
-                startActivity(intent);
-            }else{
-                Toast.makeText(this,"si",Toast.LENGTH_SHORT).show();
-                ban=true;
-                getSupportFragmentManager().popBackStack();
-            }
-
-        }
-
+        Toast.makeText(this, "Agregar", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -243,7 +187,10 @@ public class ArticuloActivity extends AppCompatActivity
         switch (item.getItemId())
         {
             case android.R.id.home:
-                Toast.makeText(this, "homeeeeeeee", Toast.LENGTH_SHORT).show();
+                if(fragmento.equals("Agregar"))
+                    onBackPressed();
+                else
+                    finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
