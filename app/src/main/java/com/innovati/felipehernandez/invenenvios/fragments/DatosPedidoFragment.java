@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.innovati.felipehernandez.invenenvios.R;
+import com.innovati.felipehernandez.invenenvios.activitys.EntregasActivity;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticulosPedidosAdapter;
 import com.innovati.felipehernandez.invenenvios.adapters.RecycleViewOnItemClickListener;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
@@ -22,7 +23,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class DatosPedidoFragment extends Fragment {
-    List<ArticulosPedido> articulosPedidoList;
+
     private RecyclerView recyclerArticulos;
     private String nombre, clave;
     private TextView tvClientePedido, tvFolio, tvPrecioPedido;
@@ -52,7 +53,7 @@ public class DatosPedidoFragment extends Fragment {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int  position = viewHolder.getAdapterPosition();
                 if (direction == ItemTouchHelper.RIGHT){
-                    articulosPedidoList.remove(position);
+                    EntregasActivity.articulosPedidoList.remove(position);
                 }else if (direction == ItemTouchHelper.LEFT){
                     ArticulosPedidosAdapter adapter = (ArticulosPedidosAdapter) recyclerArticulos.getAdapter();
                     ArticulosPedido articulosPedido = new ArticulosPedido();
@@ -77,14 +78,14 @@ public class DatosPedidoFragment extends Fragment {
 
 
     private void updateAdapter(){
-        recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(articulosPedidoList, new RecycleViewOnItemClickListener() {
-            @Override
-            public void onClick(View view, int position) {
+        if(EntregasActivity.articulosPedidoList != null){
+            recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(EntregasActivity.articulosPedidoList, new RecycleViewOnItemClickListener() {
+                @Override
+                public void onClick(View view, int position) {
 
-            }
-        }));
-        /*ArticulosPedidosAdapter adapter = new ArticulosPedidosAdapter(articulosPedidoList);
-        recyclerArticulos.setAdapter(adapter);*/
+                }
+            }));
+        }
 
     }
 

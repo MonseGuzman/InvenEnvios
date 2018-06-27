@@ -1,7 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -23,12 +22,6 @@ import com.innovati.felipehernandez.invenenvios.adapters.ArticuloAdapter;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
-import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,7 +34,6 @@ public class BusquedaArticulosFragment extends Fragment
     private static EditText buscarEditText;
     private static ImageButton BuscarImageButton;
     private FloatingActionButton AgregarFAB_A;
-    private static ArrayList<ArticulosPedido> ListCarritoPedido = new ArrayList<>();
     ArticuloFragment fragment = new ArticuloFragment();
     VwArticulos result[];
     MetodosInternos metodosInternos;
@@ -215,14 +207,14 @@ public class BusquedaArticulosFragment extends Fragment
         BuscarImageButton.setEnabled(false);
     }
 
-    public static void addArticulo(ArticulosPedido a){
+    /*public static void addArticulo(ArticulosPedido a){
         if (ban){
             ArticuloActivity.addArticuloList(a);
         }
 
     }
     public static void addArticuloList(ArticulosPedido a){
-        ListCarritoPedido.add(a);
-    }
+        EntregasActivity.articulosPedidoList.add(a);
+    }*/
 
 }
