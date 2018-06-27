@@ -65,7 +65,7 @@ public class DatosPedidoFragment extends Fragment {
                     }
                     adapter.articulosPedidos.set(position,articulosPedido);
                 }
-                updateAdapter();
+                //updateAdapter();
             }
 
         };
@@ -75,6 +75,7 @@ public class DatosPedidoFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_datos_pedido, container, false);
     }
+
 
     private void updateAdapter(){
         if(EntregasActivity.articulosPedidoList != null){
