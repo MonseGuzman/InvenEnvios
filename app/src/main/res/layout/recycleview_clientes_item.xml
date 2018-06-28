@@ -4,12 +4,12 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
-    android:layout_height="220dp"
+    android:layout_height="110dp"
     android:layout_gravity="center_horizontal"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    card_view:cardBackgroundColor="@color/secondaryDarkColor"
+    card_view:cardBackgroundColor="@color/secondaryLightColor"
     card_view:cardCornerRadius="4dp">
 
     <TextView
@@ -18,10 +18,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Andrea Guzmán"
-        android:textSize="50dp"
+        android:textSize="15dp"
         android:textAlignment="center"
         android:textColor="@color/primaryTextColor"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="5dp" />
 
     <TextView
         android:id="@+id/RFCTextView_RV"
@@ -29,8 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:text="GULA960923"
-        android:textSize="30dp"
+        android:textSize="10dp"
         android:textAlignment="center"
-        android:textColor="@color/colorAccent" />
+        android:textColor="@color/colorPrimaryDark" />
 
 </android.support.v7.widget.CardView>

@@ -50,7 +50,7 @@
         android:background="@color/colorPrimary"
         android:layout_below="@+id/linearLayout4"
         android:elevation="4dp"
-        app:tabSelectedTextColor="@color/secondaryLightColor"
+        app:tabSelectedTextColor="#E6C229"
         app:tabTextColor="@color/primaryTextColor"
         app:tabMode="fixed"
         app:tabGravity="fill" />

@@ -63,11 +63,10 @@ public class EntregasRecycleViewAdaptador extends RecyclerView.Adapter<EntregasR
             NombreApellidoTextView.setText(datos.getNombre());
             RFCTextView_RV.setText(datos.getRfc());
 
-            //imageViewPoster.setImageResource(name.getPoster());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onItemClick(datos, getAdapterPosition());
+                    listener.onItemClick(getAdapterPosition());
                 }
             });
         }
@@ -76,6 +75,6 @@ public class EntregasRecycleViewAdaptador extends RecyclerView.Adapter<EntregasR
 
     public interface OnItemClickListener
     {
-        void onItemClick(VwClientes datos, int posicion);
+        void onItemClick(int posicion);
     }
 }
