@@ -11,9 +11,11 @@
         android:id="@+id/tableLayout3"
         android:layout_width="327dp"
         android:layout_height="252dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="36dp"
+        app:layout_constraintBottom_toTopOf="@+id/PerdidoslinearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
@@ -199,38 +201,31 @@
 
     </TableLayout>
 
-    <TableLayout
+    <LinearLayout
         android:id="@+id/PerdidoslinearLayout"
-        android:layout_width="240dp"
-        android:layout_height="70dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="88dp"
-        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:orientation="vertical"
+        android:background="@color/primaryTextColor"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.257"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout3"
-        app:layout_constraintVertical_bias="0.0">
+        tools:layout_editor_absoluteX="29dp">
 
-        <TableRow>
+        <TextView
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:text="Cantidad"
+            android:textColor="#000"
+            android:textSize="18dp" />
 
-            <TextView
-                android:layout_width="85dp"
-                android:layout_height="wrap_content"
-                android:text="Cantidad"
-                android:textColor="#000"
-                android:textSize="18dp" />
-        </TableRow>
-
-        <TableRow>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/MasButton_A"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:layout_weight="50"
                 android:background="@color/colorPrimary"
                 android:drawableTop="@drawable/ic_menos"
@@ -247,13 +242,25 @@
             <Button
                 android:id="@+id/MenosButton_A"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:layout_weight="50"
                 android:background="@color/colorPrimary"
                 android:drawableTop="@drawable/ic_suma"
                 android:paddingTop="15dp" />
-        </TableRow>
+        </LinearLayout>
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/addArticuloList"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="50"
+            android:textSize="24dp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/primaryTextColor"
+            android:text="Añadir el articulo"
+             />
+    </LinearLayout>
 
-    </TableLayout>
+
 
 </android.support.constraint.ConstraintLayout>
