@@ -4,6 +4,7 @@ package com.innovati.felipehernandez.invenenvios.fragments;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -72,8 +73,9 @@ public class BusquedaArticulosFragment extends Fragment
                     args.putDouble("precio", result[position].getPrecio1());
                     args.putString("unidad", result[position].getUnidadPrimaria());
                     fragment.setArguments(args);
-                    AgregarFAB_A.setImageResource(R.drawable.ic_agregar_carrito);
                     disableControl();
+                    getFragmentManager().beginTransaction().replace(R.id.ArticuloFrameLayout, fragment).addToBackStack(null).commit();
+
 
 
             }
