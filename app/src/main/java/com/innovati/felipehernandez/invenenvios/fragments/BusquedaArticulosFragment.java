@@ -23,10 +23,9 @@ import com.innovati.felipehernandez.invenenvios.adapters.ArticuloAdapter;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class BusquedaArticulosFragment extends Fragment
 {
 
@@ -40,7 +39,6 @@ public class BusquedaArticulosFragment extends Fragment
     MetodosInternos metodosInternos;
     String actividad, clave, nombre;
     Bundle args;
-    private static boolean ban = false;
     static String fragmento = "";
 
     public BusquedaArticulosFragment()
@@ -73,7 +71,6 @@ public class BusquedaArticulosFragment extends Fragment
                     args.putDouble("precio", result[position].getPrecio1());
                     args.putString("unidad", result[position].getUnidadPrimaria());
                     fragment.setArguments(args);
-                    disableControl();
                     getFragmentManager().beginTransaction().replace(R.id.ArticuloFrameLayout, fragment).addToBackStack(null).commit();
 
 
@@ -175,29 +172,6 @@ public class BusquedaArticulosFragment extends Fragment
         }
     }
 
-    public static void disableLista(String s){
-        ArticuloActivity.disableListaPedido(s);
-    }
-    public static void disableListaPedido(String s){
-        datitosListView.setEnabled(true);
-        buscarEditText.setEnabled(true);
-        BuscarImageButton.setEnabled(true);
-        fragmento = s;
-    }
-    private void disableControl(){
-        datitosListView.setEnabled(false);
-        buscarEditText.setEnabled(false);
-        BuscarImageButton.setEnabled(false);
-    }
 
-    /*public static void addArticulo(ArticulosPedido a){
-        if (ban){
-            ArticuloActivity.addArticuloList(a);
-        }
-
-    }
-    public static void addArticuloList(ArticulosPedido a){
-        EntregasActivity.articulosPedidoList.add(a);
-    }*/
 
 }

@@ -21,6 +21,8 @@ import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.TabsAdapter;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
+import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
 import com.innovati.felipehernandez.invenenvios.fragments.BusquedaArticulosFragment;
@@ -29,11 +31,14 @@ import com.innovati.felipehernandez.invenenvios.fragments.DatosPedidoFragment;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class EntregasActivity extends AppCompatActivity
 {
-    public static List<ArticulosPedido> articulosPedidoList;
+    public static List<ArticulosPedido> articulosPedidoList = new ArrayList<>();
     MetodosInternos metodosInternos = new MetodosInternos(this);
     String[] result;
 
@@ -110,7 +115,22 @@ public class EntregasActivity extends AppCompatActivity
                 return super.onOptionsItemSelected(item);
         }
     }
-
+    public static void addArticulo(ArticulosPedido a){
+        boolean ban = false;
+        int position = -1;
+        for(ArticulosPedido ar: articulosPedidoList){
+            position +=1;
+            if (ar.getIdArticulo() == a.getIdArticulo()){
+                ban = true;
+                break;
+            }
+        }
+        if (ban){
+            articulosPedidoList.set(position,a);
+        }else{
+            articulosPedidoList.add(a);
+        }
+    }
 
     /*public void cuadroDialogo()
     {
@@ -202,4 +222,34 @@ public class EntregasActivity extends AppCompatActivity
     {
         return VwClientesDaoFactory.create();
     }*/
+
+    public void insertar(String idUsuario, String claveCliente, Date fecha, short estatus, float subtotal, float iva, float total, String observaciones)
+    {
+        String idPedido = UUID.randomUUID().toString();
+        Pedidos pedidos = new Pedidos();
+        pedidos.setIdPedido(idPedido);
+        pedidos.setIdUsuario(idUsuario);
+        pedidos.setClaveCliente(claveCliente);
+        pedidos.setFecha(fecha);
+        pedidos.setEstatus(estatus);
+        pedidos.setSubtotal(subtotal);
+        pedidos.setIva(iva);
+        pedidos.setTotal(total);
+        pedidos.setObservaciones(observaciones);
+        pedidos.setUltimoUsuarioActualizacion(idUsuario);
+        pedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
+
+    }
+    public void detPedido(String idUsuario,String idPedido,ArticulosPedido a){
+        DetallesPedidos detalle = new DetallesPedidos();
+        detalle.setIdPedido(idPedido);
+        detalle.setClaveArticulo(a.getIdArticulo());
+        detalle.setCantidad(a.getCantidad());
+        detalle.setPrecio(a.getPrecio());
+        detalle.setSubtotal(a.getSubTotal());
+        detalle.setIva(a.getIva());
+        detalle.setTotal(a.getTotal());
+        detalle.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
+        detalle.setUltimoUsuarioActualizacion(idUsuario);
+    }
 }

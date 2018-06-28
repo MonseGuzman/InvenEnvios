@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.activitys.ArticuloActivity;
+import com.innovati.felipehernandez.invenenvios.activitys.EntregasActivity;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 public class ArticuloFragment extends Fragment implements View.OnClickListener
@@ -137,16 +138,17 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ArticuloActivity.disableLista("");
+        float precioAux = Float.valueOf(precio.toString());
         ArticulosPedido articulosPedido = new ArticulosPedido();
         articulosPedido.setIdArticulo(clave);
         articulosPedido.setNombre(nombre);
-        articulosPedido.setPrecio(precio);
+        articulosPedido.setPrecio(precioAux);
         articulosPedido.setCantidad(cantidadPedido);
-        articulosPedido.setSubTotal((precio*cantidadPedido));
-        articulosPedido.setIva(articulosPedido.getSubTotal()*0.16);
+        articulosPedido.setSubTotal((precioAux*cantidadPedido));
+        float ivaAux = (float) (articulosPedido.getTotal()*0.16);
+        articulosPedido.setIva(ivaAux);
         articulosPedido.setTotal(articulosPedido.getSubTotal()+articulosPedido.getIva());
-        ArticuloActivity.addArticulo(articulosPedido);
+        EntregasActivity.addArticulo(articulosPedido);
     }
 
     @Override
@@ -160,6 +162,23 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
             case R.id.MenosButton_A:
                 cantidadPedido +=1;
                 break;
+        }
+        cantidadEditText_A.setText(String.valueOf(cantidadPedido));
+    }
+    public void validadCantidad(){
+        boolean ban = false;
+        int position = -1;
+        for(ArticulosPedido ar: EntregasActivity.articulosPedidoList){
+            position +=1;
+            if (ar.getIdArticulo() == clave){
+                ban = true;
+                break;
+            }
+        }
+        if (ban){
+            cantidadPedido = EntregasActivity.articulosPedidoList.get(position).getCantidad();
+        }else{
+            cantidadPedido = 1;
         }
         cantidadEditText_A.setText(String.valueOf(cantidadPedido));
     }
