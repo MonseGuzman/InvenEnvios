@@ -78,14 +78,16 @@ public class DatosPedidoFragment extends Fragment {
 
 
     private void updateAdapter(){
-        if(EntregasActivity.articulosPedidoList != null){
-            recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(EntregasActivity.articulosPedidoList, new RecycleViewOnItemClickListener() {
-                @Override
-                public void onClick(View view, int position) {
+        try{
+            if(EntregasActivity.articulosPedidoList != null){
+                recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(EntregasActivity.articulosPedidoList, new RecycleViewOnItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position) {
 
-                }
-            }));
-        }
+                    }
+                }));
+            }
+        }catch (Exception e){}
 
     }
 
