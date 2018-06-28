@@ -41,7 +41,9 @@ public class EntregasRecycleViewAdaptador extends RecyclerView.Adapter<EntregasR
 
     @Override
     public int getItemCount() {
-        return lista.length;
+        if(lista != null)
+            return lista.length;
+        else return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder
