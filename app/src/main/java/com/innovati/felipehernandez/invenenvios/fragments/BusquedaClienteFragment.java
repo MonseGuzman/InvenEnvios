@@ -3,6 +3,10 @@ package com.innovati.felipehernandez.invenenvios.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +21,7 @@ import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.activitys.ClientesActivity;
 import com.innovati.felipehernandez.invenenvios.activitys.EntregasActivity;
 import com.innovati.felipehernandez.invenenvios.adapters.ClientesAdaptador;
+import com.innovati.felipehernandez.invenenvios.adapters.EntregasRecycleViewAdaptador;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
@@ -26,6 +31,11 @@ public class BusquedaClienteFragment extends Fragment
     private ImageButton BuscarImageButton;
     private EditText buscarEditText;
     private ListView datitosListView;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayour;
+    private int cont = 0;
 
     MetodosInternos metodosInternos;
     private ClientesAdaptador adaptador;
@@ -44,11 +54,29 @@ public class BusquedaClienteFragment extends Fragment
 
         inicializacion(v);
 
+        //mLayour = new LinearLayoutManager(this);
+        mLayour = new GridLayoutManager(getContext(), 2);
+        mLayour = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+
+        mAdapter = new EntregasRecycleViewAdaptador(result, R.layout.recycleview_clientes_item, new EntregasRecycleViewAdaptador.OnItemClickListener() {
+            @Override
+            public void onItemClick(VwClientes datos, int posicion) {
+                Toast.makeText(getContext(), posicion, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //si se tiene controlado el tamaño del layout ponerlo true
+        mRecyclerView.setHasFixedSize(true);
+        //efectos en recycle view
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setLayoutManager(mLayour);
+        mRecyclerView.setAdapter(mAdapter);
+
         BuscarImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                filtar(v);
+                filtar();
             }
         });
         return v;
@@ -59,9 +87,10 @@ public class BusquedaClienteFragment extends Fragment
         BuscarImageButton = (ImageButton)view.findViewById(R.id.BuscarImageButton);
         buscarEditText = (EditText)view.findViewById(R.id.buscarEditText);
         datitosListView = (ListView)view.findViewById(R.id.datitosListView);
+        mRecyclerView = (RecyclerView)view.findViewById(R.id.recycleView);
     }
 
-    public void filtar(View v)
+    public void filtar()
     {
         String nombre = buscarEditText.getText().toString();
         metodosInternos = new MetodosInternos(getActivity());

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:layout_gravity="center_horizontal"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="@color/secondaryDarkColor"
+    card_view:cardCornerRadius="4dp">
+
+    <TextView
+        android:id="@+id/NombreApellidoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Andrea Guzmán"
+        android:textSize="50dp"
+        android:textAlignment="center"
+        android:textColor="@color/primaryTextColor"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:id="@+id/RFCTextView_RV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="GULA960923"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent" />
+
+</android.support.v7.widget.CardView>
