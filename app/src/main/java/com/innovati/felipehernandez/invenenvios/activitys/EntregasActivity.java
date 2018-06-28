@@ -21,10 +21,14 @@ import android.widget.Toast;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.TabsAdapter;
+import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
+import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
+import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
 import com.innovati.felipehernandez.invenenvios.fragments.BusquedaArticulosFragment;
 import com.innovati.felipehernandez.invenenvios.fragments.BusquedaClienteFragment;
@@ -197,6 +201,15 @@ public class EntregasActivity extends AppCompatActivity
         pedidos.setUltimoUsuarioActualizacion(idUsuario);
         pedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
 
+        try
+        {
+            PedidosDao dao = getPedidosDao();
+            dao.insert(pedidos);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT);
+        }
     }
     public void detPedido(String idUsuario,String idPedido,ArticulosPedido a){
         DetallesPedidos detalle = new DetallesPedidos();
@@ -209,5 +222,24 @@ public class EntregasActivity extends AppCompatActivity
         detalle.setTotal(a.getTotal());
         detalle.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
         detalle.setUltimoUsuarioActualizacion(idUsuario);
+
+        try
+        {
+            DetallesPedidosDao dao = getDetallesPedidosDao();
+            dao.insert(detalle);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT);
+        }
+    }
+    public static PedidosDao getPedidosDao()
+    {
+        return PedidosDaoFactory.create();
+    }
+
+    public static DetallesPedidosDao getDetallesPedidosDao()
+    {
+        return DetallesPedidosDaoFactory.create();
     }
 }
