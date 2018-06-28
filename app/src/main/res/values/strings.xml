@@ -35,4 +35,5 @@
     <!--Pedidos-->
     <string name="tituloPedidos">Pedidos</string>
     <string name="title_activity_articulos_pedido">ArticulosPedidoActivity</string>
+    <string name="fecha">Fecha</string>
 </resources>

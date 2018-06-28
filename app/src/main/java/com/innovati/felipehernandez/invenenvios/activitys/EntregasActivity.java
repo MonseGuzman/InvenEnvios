@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
@@ -30,11 +31,13 @@ import com.innovati.felipehernandez.invenenvios.fragments.BusquedaClienteFragmen
 import com.innovati.felipehernandez.invenenvios.fragments.DatosPedidoFragment;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.Locale;
 
 public class EntregasActivity extends AppCompatActivity
 {
@@ -42,9 +45,9 @@ public class EntregasActivity extends AppCompatActivity
     MetodosInternos metodosInternos = new MetodosInternos(this);
     String[] result;
 
-    //private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private TextView fechaTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +57,12 @@ public class EntregasActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
 
-        TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);
-        final ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
+        inicializacion();
+
+        //fecha
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        Date date = new Date();
+        fechaTextView.setText(dateFormat.format(date));
 
         //crea tab y darle una gravedad
         tabLayout.addTab(tabLayout.newTab().setText("Seleccione cliente"));
@@ -87,6 +94,13 @@ public class EntregasActivity extends AppCompatActivity
 
             }
         });
+    }
+
+    private void inicializacion()
+    {
+        tabLayout = (TabLayout)findViewById(R.id.tabs);
+        viewPager = (ViewPager)findViewById(R.id.viewPager);
+        fechaTextView = (TextView)findViewById(R.id.fechaTextView);
     }
 
     @Override
@@ -133,62 +147,6 @@ public class EntregasActivity extends AppCompatActivity
     }
 
     /*public void cuadroDialogo()
-    {
-        *//*final AlertDialog.Builder mensaje = new AlertDialog.Builder(this);
-
-        View v = getLayoutInflater().inflate(R.layout.nombre_cliente, null);
-        mensaje.setTitle(R.string.seleccionarCliente);
-
-        Button aceptarDialogoButton = (Button) v.findViewById(R.id.aceptarDialogoButton);
-        final EditText nombreDialogoEditText = (EditText)v.findViewById(R.id.nombreDialogoEditText);
-
-        mensaje.setView(nombreDialogoEditText);
-        mensaje.setView(v);
-
-        //se crea el nuevo
-        final AlertDialog dialog = mensaje.create();
-
-        aceptarDialogoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                if(!TextUtils.isEmpty(nombreDialogoEditText.getText().toString()))
-                {
-                    filtar(nombreDialogoEditText.getText().toString());
-
-                    if(result.length > 1)
-                        listaClientes();
-                    else
-                    {
-                        //lo que sea que haga para seleccionar
-                        Toast.makeText(EntregasActivity.this, "regreso uno", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else
-                    Toast.makeText(EntregasActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        dialog.setCancelable(true);
-        dialog.show();
-    }
-
-    private void listaClientes()
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.seleccionarCliente);
-        builder.setItems(result, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //lo que sea que haga para seleccionar
-                Toast.makeText(EntregasActivity.this, "lo logro", Toast.LENGTH_SHORT).show();
-            }
-        });
-        builder.setCancelable(true); //false
-        builder.show();*//*
-    }
-
-    public void filtar(String nombre)
     {
         VwClientes[] clientes;
 

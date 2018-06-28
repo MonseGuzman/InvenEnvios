@@ -6,12 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".activitys.EntregasActivity">
 
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/hola"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="Total 52"
+            android:textSize="17dp"
+            android:textColor="@color/primaryTextColor"/>
+
+        <TextView
+            android:id="@+id/fechaTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fecha"
+            android:textSize="17dp"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/primaryTextColor"/>
+
+        <TextView
+            android:id="@+id/hola3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="Almacen"
+            android:textSize="17dp"
+            android:textColor="@color/primaryTextColor"/>
+
+    </LinearLayout>
+
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        android:layout_below="@+id/linearLayout4"
         android:elevation="4dp"
+        app:tabSelectedTextColor="@color/secondaryLightColor"
         app:tabTextColor="@color/primaryTextColor"
         app:tabMode="fixed"
         app:tabGravity="fill" />
