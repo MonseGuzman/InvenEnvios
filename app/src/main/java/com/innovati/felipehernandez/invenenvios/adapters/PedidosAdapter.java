@@ -10,13 +10,13 @@ import android.widget.TextView;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 
-public class ClientesAdaptador extends BaseAdapter
+public class PedidosAdapter extends BaseAdapter
 {
     private Context context;
-    private VwClientes lista[];// agregar Lista de clientes
+    private VwClientes lista[];// agregar Lista de pedidos
     private int layout;
 
-    public ClientesAdaptador(Context context, int layaout, VwClientes lista[])
+    public PedidosAdapter(Context context, int layaout, VwClientes lista[])
     {
         this.context = context;
         this.layout = layaout;
@@ -40,12 +40,12 @@ public class ClientesAdaptador extends BaseAdapter
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder vh;
+        PedidosAdapter.ViewHolder vh;
 
         if(convertView == null)
         {
             convertView = LayoutInflater.from(context).inflate(layout, null);
-            vh = new ViewHolder();
+            vh = new PedidosAdapter.ViewHolder();
             vh.nombreCliente = (TextView)convertView.findViewById(R.id.NombreClienteTextView_C);
             vh.RFCCliente = (TextView)convertView.findViewById(R.id.RFCTextView_C);
             vh.telefonoCliente = (TextView) convertView.findViewById(R.id.TelefonoTextView_C);
@@ -53,7 +53,7 @@ public class ClientesAdaptador extends BaseAdapter
             convertView.setTag(vh);
         }
         else
-            vh = (ViewHolder) convertView.getTag();
+            vh = (PedidosAdapter.ViewHolder) convertView.getTag();
 
 
         VwClientes clientes = lista[position];
@@ -68,5 +68,4 @@ public class ClientesAdaptador extends BaseAdapter
     {
         TextView nombreCliente, RFCCliente, telefonoCliente;
     }
-
 }
