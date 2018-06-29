@@ -66,7 +66,7 @@ public class EntregasRecycleViewAdaptador extends RecyclerView.Adapter<EntregasR
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onItemClick(getAdapterPosition());
+                    listener.onItemClick(datos, getAdapterPosition());
                 }
             });
         }
@@ -75,6 +75,6 @@ public class EntregasRecycleViewAdaptador extends RecyclerView.Adapter<EntregasR
 
     public interface OnItemClickListener
     {
-        void onItemClick(int posicion);
+        void onItemClick(VwClientes datos, int posicion);
     }
 }

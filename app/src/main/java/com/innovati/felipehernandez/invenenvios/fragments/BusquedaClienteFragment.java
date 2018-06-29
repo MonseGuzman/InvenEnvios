@@ -55,7 +55,6 @@ public class BusquedaClienteFragment extends Fragment
         mLayour = new GridLayoutManager(getContext(), 2);
         mLayour = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
-
         BuscarImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -68,7 +67,7 @@ public class BusquedaClienteFragment extends Fragment
 
     private void inicializacion(View view)
     {
-        BuscarImageButton = (ImageButton)view.findViewById(R.id.BuscarImageButton);
+        BuscarImageButton = (ImageButton)view.findViewById(R.id.BusquedaImageButton);
         buscarEditText = (EditText)view.findViewById(R.id.buscadorEditText);
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recycleView);
     }
@@ -89,11 +88,10 @@ public class BusquedaClienteFragment extends Fragment
 
                     mAdapter = new EntregasRecycleViewAdaptador(result, R.layout.recycleview_clientes_item, new EntregasRecycleViewAdaptador.OnItemClickListener() {
                         @Override
-                        public void onItemClick(int posicion) {
+                        public void onItemClick(VwClientes listita, int posicion) {
                             Toast.makeText(getContext(), posicion, Toast.LENGTH_SHORT).show();
                         }
                     });
-
                     //efectos en recycle view
                     mRecyclerView.setItemAnimator(new DefaultItemAnimator());
                     mRecyclerView.setLayoutManager(mLayour);
@@ -123,7 +121,7 @@ public class BusquedaClienteFragment extends Fragment
 
                     mAdapter = new EntregasRecycleViewAdaptador(result, R.layout.recycleview_clientes_item, new EntregasRecycleViewAdaptador.OnItemClickListener() {
                         @Override
-                        public void onItemClick(int posicion) {
+                        public void onItemClick(VwClientes listita, int posicion) {
                             Toast.makeText(getContext(), posicion, Toast.LENGTH_SHORT).show();
                         }
                     });
