@@ -7,15 +7,18 @@
     android:background="@drawable/ssplaslth"
     tools:context=".activitys.LoginActivity">
 
-    <ImageView
+    <TextView
         android:id="@+id/imageView"
         android:layout_width="292dp"
-        android:layout_height="117dp"
+        android:layout_height="76dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorPrimary"
+        android:layout_marginTop="32dp"
+        android:text="@string/bienvenido"
+        android:textAlignment="center"
+        android:textSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,7 +37,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.012">
+        app:layout_constraintVertical_bias="0.16">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="353dp"

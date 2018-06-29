@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -51,7 +53,7 @@ public class ArticuloActivity extends AppCompatActivity
         inicializacion();
 
         this.setTitle(R.string.tituloArticulo);
-        //AgregarFAB_A.setImageResource(R.drawable.ic_suma);
+        buscarEditText.setHint(R.string.seleccionarArticulos);
         //botón de arriba
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
@@ -179,11 +181,20 @@ public class ArticuloActivity extends AppCompatActivity
         Toast.makeText(this, "Agregar", Toast.LENGTH_SHORT).show();
     }
 
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_home, menu);
+        return true;
+    }*/
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         switch (item.getItemId())
         {
+            //case R.id.menu_home:
             case android.R.id.home:
                 if(fragmento.equals("Agregar"))
                     onBackPressed();

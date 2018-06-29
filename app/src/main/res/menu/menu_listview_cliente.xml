@@ -5,10 +5,6 @@
         android:id="@+id/Historial_C"
         android:title="Historial" />
     <item
-        android:id="@+id/Agregar_C"
-        android:title="Agregar"
-        android:enabled="false"/>
-    <item
         android:id="@+id/Llamar_C"
         android:enabled="true"
         android:icon="@drawable/ic_telefono"
