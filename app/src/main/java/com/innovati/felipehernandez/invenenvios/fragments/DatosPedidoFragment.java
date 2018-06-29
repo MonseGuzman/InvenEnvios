@@ -40,7 +40,7 @@ public class DatosPedidoFragment extends Fragment {
         recyclerArticulos.setHasFixedSize(true);
         updateAdapter();
 
-        /*ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 return false;
@@ -67,7 +67,7 @@ public class DatosPedidoFragment extends Fragment {
 
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerArticulos);*/
+        itemTouchHelper.attachToRecyclerView(recyclerArticulos);
 
         // Inflate the layout for this fragment
         return v;

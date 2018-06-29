@@ -19,7 +19,7 @@
             android:id="@+id/tvNombreArticuloItem"
             android:text="Nombre del Producto"
             android:layout_alignParentLeft="true"
-            android:textSize="24dp"
+            android:textSize="21dp"
             app:layout_heightPercent="@fraction/articlePercentItem"
             app:layout_widthPercent="@fraction/articleTitleItem"
             />
