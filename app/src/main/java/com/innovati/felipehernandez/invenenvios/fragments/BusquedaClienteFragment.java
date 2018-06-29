@@ -99,7 +99,7 @@ public class BusquedaClienteFragment extends Fragment
                 }
                 catch(Exception e)
                 {
-                    Toast.makeText(getContext(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
                 }
             }
             else
