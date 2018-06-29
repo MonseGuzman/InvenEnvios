@@ -201,5 +201,6 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
         articulosPedido.setIva(ivaAux);
         articulosPedido.setTotal(articulosPedido.getSubTotal()+articulosPedido.getIva());
         EntregasActivity.addArticulo(articulosPedido);
+        getActivity().onBackPressed();
     }
 }

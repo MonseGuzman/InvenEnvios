@@ -106,11 +106,7 @@ public class BusquedaClienteFragment extends Fragment
                 }
                 catch(Exception e)
                 {
-<<<<<<< HEAD
-                    //Toast.makeText(getContext(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
-=======
                     Toast.makeText(getActivity(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
->>>>>>> MonseBranch
                 }
             }
             else
