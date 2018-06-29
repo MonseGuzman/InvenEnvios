@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.activitys.ArticuloActivity;
@@ -29,6 +30,7 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
     private EditText existenciasEditText_A;
     private Button MenosButton_A;
     private Button MasButton_A;
+    private Button addArticuloList;
     private EditText cantidadEditText_A;
 
     String fragmento;
@@ -92,7 +94,8 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
 
         MasButton_A.setOnClickListener(this);
         MenosButton_A.setOnClickListener(this);
-
+        addArticuloList.setOnClickListener(this);
+        validadCantidad();
         return v;
     }
 
@@ -110,6 +113,7 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
         MenosButton_A =  (Button) v.findViewById(R.id.MenosButton_A);
         MasButton_A = (Button) v.findViewById(R.id.MasButton_A);
         cantidadEditText_A = (EditText) v.findViewById(R.id.cantidadEditText_A);
+        addArticuloList = v.findViewById(R.id.addArticuloList);
     }
 
     private void limpiar()
@@ -138,22 +142,13 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        float precioAux = Float.valueOf(precio.toString());
-        ArticulosPedido articulosPedido = new ArticulosPedido();
-        articulosPedido.setIdArticulo(clave);
-        articulosPedido.setNombre(nombre);
-        articulosPedido.setPrecio(precioAux);
-        articulosPedido.setCantidad(cantidadPedido);
-        articulosPedido.setSubTotal((precioAux*cantidadPedido));
-        float ivaAux = (float) (articulosPedido.getTotal()*0.16);
-        articulosPedido.setIva(ivaAux);
-        articulosPedido.setTotal(articulosPedido.getSubTotal()+articulosPedido.getIva());
-        EntregasActivity.addArticulo(articulosPedido);
+
     }
 
     @Override
     public void onClick(View v)
     {
+        cantidadPedido = Float.valueOf(cantidadEditText_A.getText().toString());
         switch (v.getId())
         {
             case R.id.MasButton_A:
@@ -162,24 +157,48 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
             case R.id.MenosButton_A:
                 cantidadPedido +=1;
                 break;
+            case R.id.addArticuloList:
+                addArticuloList();
+                claveTextView_A.setText("nononono");
+
+                break;
         }
         cantidadEditText_A.setText(String.valueOf(cantidadPedido));
     }
     public void validadCantidad(){
-        boolean ban = false;
-        int position = -1;
-        for(ArticulosPedido ar: EntregasActivity.articulosPedidoList){
-            position +=1;
-            if (ar.getIdArticulo() == clave){
-                ban = true;
-                break;
+        try{
+            boolean ban = false;
+            int position = -1;
+            for(ArticulosPedido ar: EntregasActivity.articulosPedidoList){
+                position +=1;
+                if (ar.getIdArticulo() == clave){
+                    ban = true;
+                    break;
+                }
             }
+            if (ban){
+                cantidadPedido = EntregasActivity.articulosPedidoList.get(position).getCantidad();
+            }else{
+                cantidadPedido = 1;
+            }
+            cantidadEditText_A.setText(String.valueOf(cantidadPedido));
+        }catch (Exception e){
+
         }
-        if (ban){
-            cantidadPedido = EntregasActivity.articulosPedidoList.get(position).getCantidad();
-        }else{
-            cantidadPedido = 1;
-        }
-        cantidadEditText_A.setText(String.valueOf(cantidadPedido));
+    }
+
+    public void addArticuloList(){
+        float precioAux = Float.valueOf(precio.toString());
+        ArticulosPedido articulosPedido = new ArticulosPedido();
+        articulosPedido.setIdArticulo(clave);
+        articulosPedido.setNombre(nombre);
+        articulosPedido.setPrecio(precioAux);
+        articulosPedido.setCantidad(cantidadPedido);
+        articulosPedido.setSubTotal((precioAux*cantidadPedido));
+        articulosPedido.setPresentacion(unidad);
+        float ivaAux = (float) (articulosPedido.getTotal()*0.16);
+        articulosPedido.setIva(ivaAux);
+        articulosPedido.setTotal(articulosPedido.getSubTotal()+articulosPedido.getIva());
+        EntregasActivity.addArticulo(articulosPedido);
     }
 }

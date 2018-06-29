@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,17 +79,15 @@ public class DatosPedidoFragment extends Fragment {
 
 
     private void updateAdapter(){
-        try{
             if(EntregasActivity.articulosPedidoList != null){
-                recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(EntregasActivity.articulosPedidoList, new RecycleViewOnItemClickListener() {
+                /*recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(EntregasActivity.articulosPedidoList, new RecycleViewOnItemClickListener() {
                     @Override
                     public void onClick(View view, int position) {
 
                     }
-                }));
-            }
-        }catch (Exception e){}
+                }));*/
 
+            }
     }
 
 }

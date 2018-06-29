@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -51,7 +52,7 @@ public class EntregasActivity extends AppCompatActivity
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private TextView fechaTextView;
+    private static TextView fechaTextView, tvTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,7 @@ public class EntregasActivity extends AppCompatActivity
         //fecha
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         Date date = new Date();
-        fechaTextView.setText(dateFormat.format(date));
+        fechaTextView.setText("Fecha: "+dateFormat.format(date));
 
         //crea tab y darle una gravedad
         tabLayout.addTab(tabLayout.newTab().setText("Seleccione cliente"));
@@ -98,6 +99,7 @@ public class EntregasActivity extends AppCompatActivity
 
             }
         });
+        calTotal();
     }
 
     private void inicializacion()
@@ -105,6 +107,7 @@ public class EntregasActivity extends AppCompatActivity
         tabLayout = (TabLayout)findViewById(R.id.tabs);
         viewPager = (ViewPager)findViewById(R.id.viewPager);
         fechaTextView = (TextView)findViewById(R.id.fechaTextView);
+        tvTotal = findViewById(R.id.tvTotalEnt);
     }
 
     @Override
@@ -136,11 +139,14 @@ public class EntregasActivity extends AppCompatActivity
     public static void addArticulo(ArticulosPedido a){
         boolean ban = false;
         int position = -1;
-        for(ArticulosPedido ar: articulosPedidoList){
-            position +=1;
-            if (ar.getIdArticulo() == a.getIdArticulo()){
-                ban = true;
-                break;
+        if(articulosPedidoList != null){
+            for(ArticulosPedido ar: articulosPedidoList){
+                Log.e("no ---", ar.getNombre().toString());
+                position +=1;
+                if (ar.getIdArticulo() == a.getIdArticulo()){
+                    ban = true;
+                    break;
+                }
             }
         }
         if (ban){
@@ -148,6 +154,7 @@ public class EntregasActivity extends AppCompatActivity
         }else{
             articulosPedidoList.add(a);
         }
+        calTotal();
     }
 
     /*public void cuadroDialogo()
@@ -241,5 +248,17 @@ public class EntregasActivity extends AppCompatActivity
     public static DetallesPedidosDao getDetallesPedidosDao()
     {
         return DetallesPedidosDaoFactory.create();
+    }
+    static private void calTotal(){
+        float total = 0;
+        if (articulosPedidoList != null){
+            for(ArticulosPedido ar: articulosPedidoList){
+                if (ar.isStatus()){
+                    total += ar.getTotal();
+                    Log.d("test----", String.valueOf(ar.getTotal()));
+                }
+            }
+        }
+        tvTotal.setText("Total: "+String.valueOf(total));
     }
 }

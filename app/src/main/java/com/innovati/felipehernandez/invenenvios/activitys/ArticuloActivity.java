@@ -77,7 +77,7 @@ public class ArticuloActivity extends AppCompatActivity
                 args.putString("unidad", result[position].getUnidadPrimaria());
                 fragment.setArguments(args);
 
-                disableControl();
+                //disableControl();
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.ArticuloConstraintLayout, fragment).addToBackStack(null).commit();
             }
@@ -195,7 +195,7 @@ public class ArticuloActivity extends AppCompatActivity
         }
     }
 
-    public static void disableLista(String s){
+     /*public static void disableLista(String s){
         ArticuloActivity.disableListaPedido(s);
     }
     public static void disableListaPedido(String s){
@@ -210,7 +210,7 @@ public class ArticuloActivity extends AppCompatActivity
         BuscarImageButton.setEnabled(false);
     }
 
-    public static void addArticulo(ArticulosPedido a){
+   public static void addArticulo(ArticulosPedido a){
         if (ban){
             ArticuloActivity.addArticuloList(a);
         }
@@ -218,5 +218,5 @@ public class ArticuloActivity extends AppCompatActivity
     }
     public static void addArticuloList(ArticulosPedido a){
         ListCarritoPedido.add(a);
-    }
+    }*/
 }
