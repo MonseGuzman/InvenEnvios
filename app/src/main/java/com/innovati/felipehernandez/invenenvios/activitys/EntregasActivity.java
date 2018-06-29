@@ -46,7 +46,7 @@ import java.util.Locale;
 
 public class EntregasActivity extends AppCompatActivity
 {
-    public static List<ArticulosPedido> articulosPedidoList = new ArrayList<>();
+    public static List<ArticulosPedido> articulosPedidoList = new ArrayList<ArticulosPedido>();
     MetodosInternos metodosInternos = new MetodosInternos(this);
     String[] result;
 
@@ -204,6 +204,7 @@ public class EntregasActivity extends AppCompatActivity
         pedidos.setSubtotal(subtotal);
         pedidos.setIva(iva);
         pedidos.setTotal(total);
+
         pedidos.setObservaciones(observaciones);
         pedidos.setUltimoUsuarioActualizacion(idUsuario);
         pedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());

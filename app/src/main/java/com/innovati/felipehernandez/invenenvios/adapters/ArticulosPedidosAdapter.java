@@ -15,11 +15,16 @@ import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 import java.util.List;
 public class ArticulosPedidosAdapter extends RecyclerView.Adapter<ArticulosPedidosAdapter.ViewHolder>{
     private RecycleViewOnItemClickListener recyclerViewOnItemClickListener;
-    public List<ArticulosPedido> articulosPedidos;
+    public static List<ArticulosPedido> articulosPedidos;
+    public Context context;
     public ArticulosPedidosAdapter( List<ArticulosPedido> articulosPedidos,@NonNull RecycleViewOnItemClickListener recyclerViewOnItemClickListener)
     {
         this.recyclerViewOnItemClickListener = recyclerViewOnItemClickListener;
         this.articulosPedidos = articulosPedidos;
+    }
+    public ArticulosPedidosAdapter(List<ArticulosPedido> articulosPedidos,Context context){
+        this.articulosPedidos = articulosPedidos;
+        this.context = context;
     }
     @NonNull
     @Override
@@ -41,12 +46,14 @@ public class ArticulosPedidosAdapter extends RecyclerView.Adapter<ArticulosPedid
         }else{
             holder.cardView.setCardBackgroundColor(Color.GRAY);
         }
-
     }
 
     @Override
     public int getItemCount() {
-        return articulosPedidos.size();
+        if(articulosPedidos != null){
+            return articulosPedidos.size();
+        }
+        return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -54,7 +61,7 @@ public class ArticulosPedidosAdapter extends RecyclerView.Adapter<ArticulosPedid
         TextView tvNombreArticuloItem, tvPercentacionArticuloItem,tvCountArticuloItem,tvPriceArticuloItem,tvSubArticuloItem;
         public ViewHolder(View itemView) {
             super(itemView);
-            cardView =itemView.findViewById(R.id.cardview);
+            cardView =itemView.findViewById(R.id.cardviewCarrito);
             tvNombreArticuloItem = itemView.findViewById(R.id.tvNombreArticuloItem);
             tvPercentacionArticuloItem = itemView.findViewById(R.id.tvPercentacionArticuloItem);
             tvCountArticuloItem = itemView.findViewById(R.id.tvCountArticuloItem);
