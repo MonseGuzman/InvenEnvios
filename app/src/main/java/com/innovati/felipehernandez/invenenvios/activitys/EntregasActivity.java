@@ -53,6 +53,7 @@ public class EntregasActivity extends AppCompatActivity
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private static TextView fechaTextView, tvTotal;
+    public static TextView ClienteEntTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +109,7 @@ public class EntregasActivity extends AppCompatActivity
         viewPager = (ViewPager)findViewById(R.id.viewPager);
         fechaTextView = (TextView)findViewById(R.id.fechaTextView);
         tvTotal = findViewById(R.id.tvTotalEnt);
+        ClienteEntTextView = (TextView)findViewById(R.id.ClienteEntTextView);
     }
 
     @Override

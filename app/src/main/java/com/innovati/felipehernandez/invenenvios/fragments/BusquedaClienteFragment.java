@@ -8,12 +8,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
@@ -36,8 +38,9 @@ public class BusquedaClienteFragment extends Fragment
     private RecyclerView.LayoutManager mLayour;
 
     MetodosInternos metodosInternos;
-    private ClientesAdaptador adaptador;
     VwClientes result[];
+    public static String clave;
+    public static String nombreC;
 
     public BusquedaClienteFragment() {
         // Required empty public constructor
@@ -89,7 +92,11 @@ public class BusquedaClienteFragment extends Fragment
                     mAdapter = new EntregasRecycleViewAdaptador(result, R.layout.recycleview_clientes_item, new EntregasRecycleViewAdaptador.OnItemClickListener() {
                         @Override
                         public void onItemClick(VwClientes listita, int posicion) {
-                            Toast.makeText(getContext(), posicion, Toast.LENGTH_SHORT).show();
+                            Log.i(result[posicion].getNombre(), "ERROR");
+
+                            clave = result[posicion].getClave();
+                            nombreC = result[posicion].getNombre();
+                            EntregasActivity.ClienteEntTextView.setText("Cliente: "+nombreC);
                         }
                     });
                     //efectos en recycle view
@@ -99,7 +106,11 @@ public class BusquedaClienteFragment extends Fragment
                 }
                 catch(Exception e)
                 {
+<<<<<<< HEAD
                     //Toast.makeText(getContext(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
+=======
+                    Toast.makeText(getActivity(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
+>>>>>>> MonseBranch
                 }
             }
             else

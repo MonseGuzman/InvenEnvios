@@ -53,6 +53,7 @@ public class ClientesActivity extends AppCompatActivity
         this.setTitle(R.string.tituloClientes);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
+        buscarEditText.setHint(R.string.seleccionarCliente);
 
         datitosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

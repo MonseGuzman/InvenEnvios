@@ -4,7 +4,9 @@
 
 
     <!--Generales -->
-    <string name="seleccionar">Escriba lo que desea buscar</string>
+    <string name="seleccionarCliente">Nombre del cliente a localizar</string>
+    <string name="seleccionarArticulos">Nombre del artículo a localizar</string>
+    <string name="bienvenido">¡Bienvenido!</string>
 
     <!--Mensaje-->
     <string name="sinInternet">Sin acceso a Internet</string>
