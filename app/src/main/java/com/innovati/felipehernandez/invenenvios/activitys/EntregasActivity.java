@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -130,10 +132,16 @@ public class EntregasActivity extends AppCompatActivity
             //regresa
             super.onBackPressed();
             getSupportFragmentManager().popBackStack();
-
         }
         else
             finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
     }
 
     @Override
@@ -141,7 +149,7 @@ public class EntregasActivity extends AppCompatActivity
     {
         switch (item.getItemId())
         {
-            case android.R.id.home:
+            case R.id.menu_home:
                 finish();
                 return true;
             default:
@@ -170,40 +178,6 @@ public class EntregasActivity extends AppCompatActivity
         DatosPedidoFragment.updateAdapter();
     }
 
-    /*public void cuadroDialogo()
-    {
-        VwClientes[] clientes;
-
-        //todos los que se aparecen con el where
-        if(metodosInternos.conexionRed())
-        {
-            try
-            {
-                nombre = "%" + nombre;
-                nombre += "%";
-                VwClientesDao _dao = getVwClientesDao();
-                clientes = _dao.findWhereNombreEquals(nombre);
-
-                for(int x=0; x<clientes.length-1;x++)
-                {
-                    result[x] = clientes[x].getNombre();
-                }
-            }
-            catch(Exception e)
-            {
-                Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
-            }
-        }
-        else
-        {
-            //bd interna
-        }
-    }
-
-    public static VwClientesDao getVwClientesDao()
-    {
-        return VwClientesDaoFactory.create();
-    }*/
 
 
     public static PedidosDao getPedidosDao()

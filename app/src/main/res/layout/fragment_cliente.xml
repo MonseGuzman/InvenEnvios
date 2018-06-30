@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.ClienteFragment"
-    android:background="#FFF">
+    android:background="#FFF"
+    android:id="@+id/raro2">
 
     <TableLayout
         android:layout_width="353dp"
@@ -38,7 +39,7 @@
                 android:ems="10"
                 android:enabled="false"
                 android:inputType="textMultiLine|textPersonName"
-                android:text="Andrea Monserrat Guzmán López"
+                android:hint="Andrea Monserrat Guzmán López"
                 android:textColor="#000"
                 android:textSize="13dp" />
         </TableRow>
@@ -64,7 +65,7 @@
                 android:enabled="false"
                 android:inputType="textCapCharacters|textPersonName"
                 android:maxLength="15"
-                android:text="GULA962309MF05"
+                android:hint="GULA962309MF05"
                 android:textColor="#000"
                 android:textSize="13dp" />
 
@@ -105,7 +106,7 @@
                 android:ems="10"
                 android:enabled="false"
                 android:inputType="textPersonName"
-                android:text="Belisario Dominguez"
+                android:hint="Belisario Dominguez"
                 android:textColor="#000"
                 android:textSize="13dp" />
         </TableRow>
@@ -130,7 +131,7 @@
                 android:ems="10"
                 android:enabled="false"
                 android:inputType="number"
-                android:text="95"
+                android:hint="95"
                 android:textColor="#000"
                 android:textSize="13dp" />
 
@@ -182,7 +183,7 @@
                 android:ems="10"
                 android:enabled="false"
                 android:inputType="textPersonName"
-                android:text="Centro"
+                android:hint="Centro"
                 android:textColor="#000"
                 android:textSize="13dp" />
 
@@ -208,7 +209,7 @@
                 android:ems="10"
                 android:enabled="false"
                 android:inputType="phone"
-                android:text="3411009819"
+                android:hint="3411009819"
                 android:textColor="#000"
                 android:textSize="13dp" />
         </TableRow>

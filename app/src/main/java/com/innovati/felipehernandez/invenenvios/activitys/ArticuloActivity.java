@@ -54,9 +54,6 @@ public class ArticuloActivity extends AppCompatActivity
 
         this.setTitle(R.string.tituloArticulo);
         buscarEditText.setHint(R.string.seleccionarArticulos);
-        //botón de arriba
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
 
         datitosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -112,8 +109,7 @@ public class ArticuloActivity extends AppCompatActivity
             super.onBackPressed();
             getSupportFragmentManager().popBackStack();
 
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             fragmento = "";
         }
         else
@@ -181,25 +177,23 @@ public class ArticuloActivity extends AppCompatActivity
         Toast.makeText(this, "Agregar", Toast.LENGTH_SHORT).show();
     }
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_home, menu);
+        getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
-    }*/
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         switch (item.getItemId())
         {
-            //case R.id.menu_home:
+            case R.id.menu_home:
+                finish();
+                return true;
             case android.R.id.home:
-                if(fragmento.equals("Agregar"))
-                    onBackPressed();
-                else
-                    finish();
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -16,8 +16,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/splashScreen"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/splashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,7 +39,10 @@
         <activity
             android:name=".activitys.EntregasActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MyMaterialTheme"/>
+            android:theme="@style/MyMaterialTheme" />
+        <activity
+            android:name=".activitys.PedidosActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -63,7 +63,7 @@
                 android:drawableTop="@drawable/ic_pedidos"
                 android:onClick="botones"
                 android:paddingTop="15dp"
-                android:text="Pedidos"
+                android:text="@string/tituloPedidos"
                 android:layout_marginRight="10dp"
                 android:textAlignment="center"
                 android:textColor="#FFF" />
@@ -96,7 +96,8 @@
                 android:paddingTop="15dp"
                 android:text="Entrega"
                 android:textAlignment="center"
-                android:textColor="#FFF" />
+                android:textColor="#FFF"
+                android:onClick="botones"/>
 
             <Button
                 android:id="@+id/SalirButton"
