@@ -39,7 +39,7 @@ public class ClientesActivity extends AppCompatActivity
     private ClientesAdaptador adaptador;
     VwClientes result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
-    String actividad, fragment ="";
+    String fragment ="";
     Intent i = new Intent();
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int posicion;
@@ -48,7 +48,7 @@ public class ClientesActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientes);
-        actividad = getIntent().getExtras().getString("actividad");
+
         inicializacion();
 
         this.setTitle(R.string.tituloClientes);

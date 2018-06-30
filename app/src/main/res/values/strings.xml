@@ -4,8 +4,6 @@
 
 
     <!--Generales -->
-    <string name="seleccionarCliente">Nombre del cliente a localizar</string>
-    <string name="seleccionarArticulos">Nombre del artículo a localizar</string>
     <string name="bienvenido">¡Bienvenido!</string>
 
     <!--Mensaje-->
@@ -26,16 +24,22 @@
 
     <!--Articulos-->
     <string name="tituloArticulo">Consulta de artículos</string>
+    <string name="seleccionarArticulos">Nombre del artículo a localizar</string>
 
     <!--Clientes-->
     <string name="tituloClientes">Consulta de clientes</string>
     <string name="introduzcaCliente">Introduzca el nombre del cliente</string>
+    <string name="seleccionarCliente">Nombre del cliente a localizar</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!--Pedidos-->
+    <!--Entregas-->
     <string name="tituloPedidos">Pedidos</string>
     <string name="title_activity_articulos_pedido">ArticulosPedidoActivity</string>
     <string name="fecha">Fecha</string>
+
+    <!--Pedidos-->
+    <string name="tituloEntregas">Consulta de entregas</string>
 </resources>
