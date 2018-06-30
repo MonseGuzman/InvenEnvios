@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -51,8 +52,6 @@ public class ClientesActivity extends AppCompatActivity
         inicializacion();
 
         this.setTitle(R.string.tituloClientes);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
         buscarEditText.setHint(R.string.seleccionarCliente);
 
         datitosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -125,12 +124,16 @@ public class ClientesActivity extends AppCompatActivity
                     telefono(posicion);
 
                 return true;
-            /*case  R.id.edit_note:
-                ShowAlertForEditBoard("Editar", "Cambiar el nombre de la nota", notes.get(info.position));
-                return true;*/
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
     }
 
     @Override
@@ -138,11 +141,11 @@ public class ClientesActivity extends AppCompatActivity
     {
         switch (item.getItemId())
         {
+            case R.id.menu_home:
+                finish();
+                return true;
             case android.R.id.home:
-                if (fragment.equals("Agregar"))
-                    onBackPressed();
-                else
-                    finish();
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -158,8 +161,7 @@ public class ClientesActivity extends AppCompatActivity
             super.onBackPressed();
             getSupportFragmentManager().popBackStack();
 
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             fragment = "";
         }
         else
