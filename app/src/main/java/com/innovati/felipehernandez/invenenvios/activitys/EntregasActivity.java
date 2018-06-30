@@ -1,7 +1,9 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -25,12 +27,15 @@ import com.innovati.felipehernandez.invenenvios.adapters.TabsAdapter;
 import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwUsuarios;
 import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.fragments.BusquedaArticulosFragment;
 import com.innovati.felipehernandez.invenenvios.fragments.BusquedaClienteFragment;
 import com.innovati.felipehernandez.invenenvios.fragments.DatosPedidoFragment;
@@ -41,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.UUID;
 import java.util.Locale;
 
@@ -49,12 +55,14 @@ public class EntregasActivity extends AppCompatActivity
     public static List<ArticulosPedido> articulosPedidoList = new ArrayList<ArticulosPedido>();
     MetodosInternos metodosInternos = new MetodosInternos(this);
     String[] result;
-
+    private SharedPreferences preferences;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private static TextView fechaTextView, tvTotal;
-    public static TextView ClienteEntTextView;
-
+    public static TextView ClienteEntTextView, tvAgente;
+    public static String clave = "";
+    public static String nombreC = "No elegido";
+    public static String agente;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,14 +70,15 @@ public class EntregasActivity extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
-
+        preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         inicializacion();
 
         //fecha
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         Date date = new Date();
         fechaTextView.setText("Fecha: "+dateFormat.format(date));
-
+        agente = preferences.getString("agente", " Falta Dato");
+        tvAgente.setText("Agente: " + agente);
         //crea tab y darle una gravedad
         tabLayout.addTab(tabLayout.newTab().setText("Seleccione cliente"));
         tabLayout.addTab(tabLayout.newTab().setText("Seleccione los artículos"));
@@ -110,6 +119,7 @@ public class EntregasActivity extends AppCompatActivity
         fechaTextView = (TextView)findViewById(R.id.fechaTextView);
         tvTotal = findViewById(R.id.tvTotalEnt);
         ClienteEntTextView = (TextView)findViewById(R.id.ClienteEntTextView);
+        tvAgente = (TextView)findViewById(R.id.tvAgente);
     }
 
     @Override
@@ -157,6 +167,7 @@ public class EntregasActivity extends AppCompatActivity
             articulosPedidoList.add(a);
         }
         calTotal();
+        DatosPedidoFragment.updateAdapter();
     }
 
     /*public void cuadroDialogo()
@@ -194,9 +205,51 @@ public class EntregasActivity extends AppCompatActivity
         return VwClientesDaoFactory.create();
     }*/
 
-    public void insertar(String idUsuario, String claveCliente, Date fecha, short estatus, float subtotal, float iva, float total, String observaciones)
+
+    public static PedidosDao getPedidosDao()
     {
+        return PedidosDaoFactory.create();
+    }
+
+    public static DetallesPedidosDao getDetallesPedidosDao()
+    {
+        return DetallesPedidosDaoFactory.create();
+    }
+    static public void calTotal(){
+        float total = 0;
+        if (articulosPedidoList != null){
+            for(ArticulosPedido ar: articulosPedidoList){
+                if (ar.isStatus()){
+                    total += ar.getTotal();
+                    Log.d("test----", String.valueOf(ar.getTotal()));
+                }
+            }
+        }
+        tvTotal.setText("Total: "+String.valueOf(total));
+    }
+
+    public static void addPedidoDb(){
+        VwUsuarios result[] = null;
+        String idUsuario = "";
+        VwUsuariosDao _dao = getVwUsuariosDao();
+        try{
+            result = _dao.findWhereNickNameEquals(agente);
+            idUsuario = result.toString();
+        }catch (Exception e){}
+
         String idPedido = UUID.randomUUID().toString();
+        Date date = new Date();
+        insertar(idPedido,idUsuario,clave,date,Short.valueOf("R"),getSub(),getIva(),getTotal(),"ff");
+
+        for (ArticulosPedido ar:articulosPedidoList){
+            if (ar.isStatus()){
+                detPedido(idUsuario,idPedido,ar);
+            }
+        }
+    }
+
+    public static void insertar(String idPedido,String idUsuario, String claveCliente, Date fecha, short estatus, float subtotal, float iva, float total, String observaciones)
+    {
         Pedidos pedidos = new Pedidos();
         pedidos.setIdPedido(idPedido);
         pedidos.setIdUsuario(idUsuario);
@@ -218,10 +271,10 @@ public class EntregasActivity extends AppCompatActivity
         }
         catch (Exception e)
         {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT);
+
         }
     }
-    public void detPedido(String idUsuario,String idPedido,ArticulosPedido a){
+    public static void detPedido(String idUsuario,String idPedido,ArticulosPedido a){
         DetallesPedidos detalle = new DetallesPedidos();
         detalle.setIdPedido(idPedido);
         detalle.setClaveArticulo(a.getIdArticulo());
@@ -240,19 +293,10 @@ public class EntregasActivity extends AppCompatActivity
         }
         catch (Exception e)
         {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT);
+
         }
     }
-    public static PedidosDao getPedidosDao()
-    {
-        return PedidosDaoFactory.create();
-    }
-
-    public static DetallesPedidosDao getDetallesPedidosDao()
-    {
-        return DetallesPedidosDaoFactory.create();
-    }
-    static private void calTotal(){
+    public static float getTotal(){
         float total = 0;
         if (articulosPedidoList != null){
             for(ArticulosPedido ar: articulosPedidoList){
@@ -262,6 +306,33 @@ public class EntregasActivity extends AppCompatActivity
                 }
             }
         }
-        tvTotal.setText("Total: "+String.valueOf(total));
+        return total;
+    }
+    public static float getSub(){
+        float sub = 0;
+        if (articulosPedidoList != null){
+            for(ArticulosPedido ar: articulosPedidoList){
+                if (ar.isStatus()){
+                    sub += ar.getSubTotal();
+                    Log.d("test----", String.valueOf(ar.getTotal()));
+                }
+            }
+        }
+        return sub;
+    }
+    public static float getIva(){
+        float iva = 0;
+        if (articulosPedidoList != null){
+            for(ArticulosPedido ar: articulosPedidoList){
+                if (ar.isStatus()){
+                    iva += ar.getIva();
+                    Log.d("test----", String.valueOf(ar.getTotal()));
+                }
+            }
+        }
+        return iva;
+    }
+    public static VwUsuariosDao getVwUsuariosDao() {
+        return VwUsuariosDaoFactory.create();
     }
 }

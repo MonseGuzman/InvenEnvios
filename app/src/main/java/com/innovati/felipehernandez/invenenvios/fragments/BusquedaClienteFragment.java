@@ -39,8 +39,7 @@ public class BusquedaClienteFragment extends Fragment
 
     MetodosInternos metodosInternos;
     VwClientes result[];
-    public static String clave;
-    public static String nombreC;
+
 
     public BusquedaClienteFragment() {
         // Required empty public constructor
@@ -94,9 +93,9 @@ public class BusquedaClienteFragment extends Fragment
                         public void onItemClick(VwClientes listita, int posicion) {
                             Log.i(result[posicion].getNombre(), "ERROR");
 
-                            clave = result[posicion].getClave();
-                            nombreC = result[posicion].getNombre();
-                            EntregasActivity.ClienteEntTextView.setText("Cliente: "+nombreC);
+                            EntregasActivity.clave = result[posicion].getClave();
+                            EntregasActivity.nombreC = result[posicion].getNombre();
+                            EntregasActivity.ClienteEntTextView.setText("Cliente: "+ EntregasActivity.nombreC);
                         }
                     });
                     //efectos en recycle view
