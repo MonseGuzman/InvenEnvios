@@ -55,6 +55,8 @@ import java.util.Locale;
 public class EntregasActivity extends AppCompatActivity
 {
     public static List<ArticulosPedido> articulosPedidoList = new ArrayList<ArticulosPedido>();
+    MetodosInternos metodosInternos = new MetodosInternos(this);
+    String[] result;
     private SharedPreferences preferences;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -63,12 +65,13 @@ public class EntregasActivity extends AppCompatActivity
     public static String clave = "";
     public static String nombreC = "No elegido";
     public static String agente;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entregas);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         inicializacion();
 
@@ -108,7 +111,6 @@ public class EntregasActivity extends AppCompatActivity
 
             }
         });
-        viewPager.setOffscreenPageLimit(3); //mantiene los datos de las tabs
         calTotal();
     }
 

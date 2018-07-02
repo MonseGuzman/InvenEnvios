@@ -7,15 +7,10 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.innovati.felipehernandez.invenenvios.R;
-import com.innovati.felipehernandez.invenenvios.adapters.PedidosAdapter;
-import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 
 public class PedidosActivity extends AppCompatActivity
 {
     private ListView PedidosListView;
-
-    private PedidosAdapter adaptador;
-    Pedidos result[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +19,6 @@ public class PedidosActivity extends AppCompatActivity
 
         inicializacion();
         this.setTitle(R.string.tituloEntregas);
-
-        cargarDatos();
-    }
-
-    private void cargarDatos()
-    {
-        adaptador = new PedidosAdapter(this,  R.layout.listview_pedidos, result);
-        PedidosListView.setAdapter(adaptador);
     }
 
     private void inicializacion()
