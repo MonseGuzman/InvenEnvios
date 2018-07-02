@@ -36,6 +36,11 @@ public interface PedidosDao
 	public Pedidos[] findWhereIdUsuarioEquals(String idUsuario) throws PedidosDaoException;
 
 	/** 
+	 * Returns all rows from the Pedidos table that match the criteria 'Folio = :folio'.
+	 */
+	public Pedidos[] findWhereFolioEquals(String folio) throws PedidosDaoException;
+
+	/** 
 	 * Returns all rows from the Pedidos table that match the criteria 'ClaveCliente = :claveCliente'.
 	 */
 	public Pedidos[] findWhereClaveClienteEquals(String claveCliente) throws PedidosDaoException;

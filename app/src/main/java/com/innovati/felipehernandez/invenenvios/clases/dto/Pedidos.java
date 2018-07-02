@@ -28,6 +28,11 @@ public class Pedidos implements Serializable
 	protected String idUsuario;
 
 	/** 
+	 * This attribute maps to the column Folio in the Pedidos table.
+	 */
+	protected String folio;
+
+	/** 
 	 * This attribute maps to the column ClaveCliente in the Pedidos table.
 	 */
 	protected String claveCliente;
@@ -138,6 +143,26 @@ public class Pedidos implements Serializable
 	public void setIdUsuario(String idUsuario)
 	{
 		this.idUsuario = idUsuario;
+	}
+
+	/**
+	 * Method 'getFolio'
+	 * 
+	 * @return String
+	 */
+	public String getFolio()
+	{
+		return folio;
+	}
+
+	/**
+	 * Method 'setFolio'
+	 * 
+	 * @param folio
+	 */
+	public void setFolio(String folio)
+	{
+		this.folio = folio;
 	}
 
 	/**
@@ -433,6 +458,10 @@ public class Pedidos implements Serializable
 			return false;
 		}
 		
+		if (folio == null ? _cast.folio != folio : !folio.equals( _cast.folio )) {
+			return false;
+		}
+		
 		if (claveCliente == null ? _cast.claveCliente != claveCliente : !claveCliente.equals( _cast.claveCliente )) {
 			return false;
 		}
@@ -504,6 +533,10 @@ public class Pedidos implements Serializable
 			_hashCode = 29 * _hashCode + idUsuario.hashCode();
 		}
 		
+		if (folio != null) {
+			_hashCode = 29 * _hashCode + folio.hashCode();
+		}
+		
 		if (claveCliente != null) {
 			_hashCode = 29 * _hashCode + claveCliente.hashCode();
 		}
@@ -543,9 +576,10 @@ public class Pedidos implements Serializable
 	public String toString()
 	{
 		StringBuffer ret = new StringBuffer();
-		ret.append( "com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos: " );
+		ret.append( "com.innovati.felipehernandez.invenenvios.dto.Pedidos: " );
 		ret.append( "idPedido=" + idPedido );
 		ret.append( ", idUsuario=" + idUsuario );
+		ret.append( ", folio=" + folio );
 		ret.append( ", claveCliente=" + claveCliente );
 		ret.append( ", fecha=" + fecha );
 		ret.append( ", estatus=" + estatus );
