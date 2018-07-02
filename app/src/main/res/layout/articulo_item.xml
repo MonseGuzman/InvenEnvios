@@ -4,12 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardviewCarrito"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_margin="10dp">
+    android:layout_margin="5dp">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="80dp"
     android:orientation="vertical"
-    android:layout_marginBottom="10dp">
+    android:layout_marginBottom="5dp">
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +19,7 @@
             android:id="@+id/tvNombreArticuloItem"
             android:text="Nombre del Producto"
             android:layout_alignParentLeft="true"
-            android:textSize="21dp"
+            android:textSize="18dp"
             app:layout_heightPercent="@fraction/articlePercentItem"
             app:layout_widthPercent="@fraction/articleTitleItem"
             />
@@ -27,7 +27,7 @@
             android:id="@+id/tvPercentacionArticuloItem"
             android:text="percentacion"
             android:layout_alignParentRight="true"
-            android:textSize="20dp"
+            android:textSize="16dp"
             app:layout_heightPercent="@fraction/articlePercentItem"
             app:layout_widthPercent="@fraction/asideTitleItem"
             />
@@ -36,14 +36,14 @@
             android:text="Cantidad: "
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:textSize="18dp"
+            android:textSize="16dp"
             app:layout_heightPercent="@fraction/asidePercentbItem"
             app:layout_widthPercent="@fraction/asideCountItem"
             />
         <TextView
             android:id="@+id/tvPriceArticuloItem"
-            android:text="Precio: "
-            android:textSize="18dp"
+            android:text="$: "
+            android:textSize="16dp"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/tvCountArticuloItem"
             app:layout_heightPercent="@fraction/asidePercentbItem"
@@ -51,8 +51,8 @@
             />
         <TextView
             android:id="@+id/tvSubArticuloItem"
-            android:text="Sub: "
-            android:textSize="18dp"
+            android:text="Importe: "
+            android:textSize="16dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             app:layout_heightPercent="@fraction/asidePercentbItem"

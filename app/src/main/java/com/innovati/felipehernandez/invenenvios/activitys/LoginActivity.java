@@ -75,6 +75,7 @@ public class LoginActivity extends AppCompatActivity
                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                        startActivity(i);
                        guardarPreferencias(usuario, password);
+
                    }
                    else
                        conectado.Alerta(R.string.error, R.string.noValido);
@@ -118,6 +119,10 @@ public class LoginActivity extends AppCompatActivity
             editor.commit(); // empieza a guardar los put*
             editor.apply(); //guarda todos los cambios aunque no se guarden todos
         }
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("agente", email);
+        editor.commit(); // empieza a guardar los put*
+        editor.apply(); //guarda todos los cambios aunque no se guarden todos
     }
 
     public static VwUsuariosDao getVwUsuariosDao() {

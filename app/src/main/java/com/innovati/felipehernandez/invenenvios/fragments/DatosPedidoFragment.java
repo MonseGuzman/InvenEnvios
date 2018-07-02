@@ -23,11 +23,10 @@ import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
  * A simple {@link Fragment} subclass.
  */
 public class DatosPedidoFragment extends Fragment {
-    private RecyclerView recyclerArticulos;
+    private static RecyclerView recyclerArticulos;
 
     public DatosPedidoFragment() {
         // Required empty public constructor
-
     }
 
 
@@ -63,6 +62,7 @@ public class DatosPedidoFragment extends Fragment {
                     adapter.articulosPedidos.set(position,articulosPedido);
                 }
                 updateAdapter();
+                EntregasActivity.calTotal();
             }
 
         };
@@ -74,11 +74,11 @@ public class DatosPedidoFragment extends Fragment {
     }
 
 
-    private void updateAdapter(){
+    public static void updateAdapter(){
         recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(EntregasActivity.articulosPedidoList, new RecycleViewOnItemClickListener() {
                     @Override
                     public void onClick(View view, int position) {
-                    Log.d("si------","si entro");
+
                     }
                 }));
     }
