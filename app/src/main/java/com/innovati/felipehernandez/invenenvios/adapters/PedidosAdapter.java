@@ -9,16 +9,16 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.innovati.felipehernandez.invenenvios.R;
-import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
+import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 
 public class PedidosAdapter extends BaseAdapter
 {
     private Context context;
-    private VwClientes lista[];// editar
+    private Pedidos lista[];
     private int layout;
 
     //editar
-    public PedidosAdapter(Context context, int layout, VwClientes lista[])
+    public PedidosAdapter(Context context, int layout, Pedidos lista[])
     {
         this.context = context;
         this.layout = layout;
@@ -59,13 +59,17 @@ public class PedidosAdapter extends BaseAdapter
         else
             vh = (PedidosAdapter.ViewHolder) convertView.getTag();
 
-        //editar
-        VwClientes clientes = lista[position];
-        vh.FolioTextView_P.setText(clientes.getNombre());
-        vh.FechaTextView_P.setText(clientes.getRfc());
-        vh.EstatusCheckbox_P.setText(clientes.getTelefono());
-        vh.TotalTextView_P.setText(clientes.getRfc());
-        vh.ClienteTextView_P.setText(clientes.getTelefono());
+        Pedidos pedidos = lista[position];
+        vh.FolioTextView_P.setText(pedidos.getFolio());
+        vh.FechaTextView_P.setText(pedidos.getFecha().toString());
+
+        if(pedidos.getEstatus() == 1)
+            vh.EstatusCheckbox_P.setSelected(true);
+        else
+            vh.EstatusCheckbox_P.setSelected(false);
+
+        vh.TotalTextView_P.setText((int) pedidos.getTotal());
+        vh.ClienteTextView_P.setText(pedidos.getIdUsuario());
 
         return convertView;
     }

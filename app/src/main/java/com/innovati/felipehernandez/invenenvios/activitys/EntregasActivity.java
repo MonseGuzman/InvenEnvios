@@ -1,45 +1,27 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
-import android.app.FragmentManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.TabsAdapter;
 import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
-import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
-import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwUsuarios;
 import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
-import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFactory;
-import com.innovati.felipehernandez.invenenvios.fragments.BusquedaArticulosFragment;
-import com.innovati.felipehernandez.invenenvios.fragments.BusquedaClienteFragment;
 import com.innovati.felipehernandez.invenenvios.fragments.DatosPedidoFragment;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
@@ -48,30 +30,28 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.UUID;
 import java.util.Locale;
+import java.util.UUID;
 
 public class EntregasActivity extends AppCompatActivity
 {
     public static List<ArticulosPedido> articulosPedidoList = new ArrayList<ArticulosPedido>();
-    MetodosInternos metodosInternos = new MetodosInternos(this);
-    String[] result;
     private SharedPreferences preferences;
+
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private static TextView fechaTextView, tvTotal;
     public static TextView ClienteEntTextView, tvAgente;
+
     public static String clave = "";
     public static String nombreC = "No elegido";
     public static String agente;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entregas);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         inicializacion();
 
@@ -111,6 +91,7 @@ public class EntregasActivity extends AppCompatActivity
 
             }
         });
+        viewPager.setOffscreenPageLimit(3); //mantener las tabs en vista
         calTotal();
     }
 
