@@ -201,7 +201,6 @@ public class ClientesActivity extends AppCompatActivity
                     result = _dao.findAll();
                     adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
                     datitosListView.setAdapter(adaptador);
-
                 }
                 catch(Exception e)
                 {
