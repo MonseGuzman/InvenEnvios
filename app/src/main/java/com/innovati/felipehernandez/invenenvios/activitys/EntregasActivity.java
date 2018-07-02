@@ -204,14 +204,19 @@ public class EntregasActivity extends AppCompatActivity
 
     public static void addPedidoDb(){
         VwUsuarios result[] = null;
+        Pedidos pedidosResult[] = null;
         String idUsuario = "";
         VwUsuariosDao _dao = getVwUsuariosDao();
+        PedidosDao daoPedidos = getPedidosDao();
         try{
             result = _dao.findWhereNickNameEquals(agente);
             idUsuario = result.toString();
+
+            pedidosResult = daoPedidos.findByDynamicSelect("SELECT Folio FROM Pedidos", null);
         }catch (Exception e){}
 
         String idPedido = UUID.randomUUID().toString();
+
         Date date = new Date();
         insertar(idPedido,idUsuario,clave,date,Short.valueOf("R"),getSub(),getIva(),getTotal(),"ff");
 
