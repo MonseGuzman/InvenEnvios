@@ -42,4 +42,7 @@
 
     <!--Pedidos-->
     <string name="tituloEntregas">Consulta de entregas</string>
+
+    <!--Abastecimiento-->
+    <string name="tituloAbastecimiento">Consulta de abastecimiento</string>
 </resources>

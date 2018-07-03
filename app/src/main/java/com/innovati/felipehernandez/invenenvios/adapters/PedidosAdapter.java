@@ -68,7 +68,7 @@ public class PedidosAdapter extends BaseAdapter
         else
             vh.EstatusCheckbox_P.setSelected(false);
 
-        vh.TotalTextView_P.setText((int) pedidos.getTotal());
+        vh.TotalTextView_P.setText("10");
         vh.ClienteTextView_P.setText(pedidos.getIdUsuario());
 
         return convertView;

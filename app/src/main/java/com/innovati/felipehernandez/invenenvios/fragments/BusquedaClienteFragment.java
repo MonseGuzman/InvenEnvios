@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
-import com.innovati.felipehernandez.invenenvios.activitys.EntregasActivity;
 import com.innovati.felipehernandez.invenenvios.activitys.PedidoActivity;
 import com.innovati.felipehernandez.invenenvios.adapters.EntregasRecycleViewAdaptador;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
@@ -111,7 +110,7 @@ public class BusquedaClienteFragment extends Fragment
 
                             PedidoActivity.clave = result[posicion].getClave();
                             PedidoActivity.nombreC = result[posicion].getNombre();
-                            PedidoActivity.ClienteEntTextView.setText("Cliente: "+ EntregasActivity.nombreC);
+                            PedidoActivity.ClienteEntTextView.setText("Cliente: "+ PedidoActivity.nombreC);
                         }
                     });
                     //efectos en recycle view
@@ -169,7 +168,7 @@ public class BusquedaClienteFragment extends Fragment
 
                 PedidoActivity.clave = result[posicion].getClave();
                 PedidoActivity.nombreC = result[posicion].getNombre();
-                PedidoActivity.ClienteEntTextView.setText("Cliente: "+ EntregasActivity.nombreC);
+                PedidoActivity.ClienteEntTextView.setText("Cliente: "+ PedidoActivity.nombreC);
                 //"desaparece" el layout
                 mRecyclerView.setLayoutManager(null);
                 //carga datos y hace visible

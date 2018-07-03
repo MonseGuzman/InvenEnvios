@@ -70,12 +70,10 @@ public class LoginActivity extends AppCompatActivity
                    result = _dao.findByDynamicWhere("NickName = ? AND Password = ? ", parametros);
                    if(result.length > 0)
                    {
-                       //calar mañana
                        Intent i = new Intent(this, MenuActivity.class);
                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                        startActivity(i);
-                       guardarPreferencias(usuario, password);
-
+                       guardarPreferencias(usuario, password, result[0].getIdUsuario());
                    }
                    else
                        conectado.Alerta(R.string.error, R.string.noValido);
@@ -108,7 +106,7 @@ public class LoginActivity extends AppCompatActivity
         }
     }
 
-    private void guardarPreferencias(String email, String contra)
+    private void guardarPreferencias(String email, String contra, String IdUsuario)
     {
         //cuando abre la actividad
         if (chRecordarme.isChecked())
@@ -116,6 +114,7 @@ public class LoginActivity extends AppCompatActivity
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("usuario", email);
             editor.putString("contraseña", contra);
+            editor.putString("idUsuario", IdUsuario);
             editor.commit(); // empieza a guardar los put*
             editor.apply(); //guarda todos los cambios aunque no se guarden todos
         }

@@ -77,6 +77,7 @@
                 android:drawableTop="@drawable/ic_levantamientos"
                 android:paddingTop="15dp"
                 android:text="Abastecimiento"
+                android:onClick="botones"
                 android:textAlignment="center"
                 android:textColor="#FFF" />
         </TableRow>
@@ -96,8 +97,7 @@
                 android:paddingTop="15dp"
                 android:text="Entrega"
                 android:textAlignment="center"
-                android:textColor="#FFF"
-                android:onClick="botones"/>
+                android:textColor="#FFF"/>
 
             <Button
                 android:id="@+id/SalirButton"
