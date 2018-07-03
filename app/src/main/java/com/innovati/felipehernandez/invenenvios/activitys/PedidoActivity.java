@@ -303,11 +303,11 @@ public class PedidoActivity extends AppCompatActivity
 
     public void geneFolio(){
         String  folioAux = "";
-        //"%05d%n", 5
+        //"%05d%n", 5ffff
         Pedidos pedidosResult[] = null;
         PedidosDao daoPedidos = getPedidosDao();
         try{
-            pedidosResult = daoPedidos.findByDynamicSelect("SELECT Folio FROM Pedidos", null);
+            pedidosResult = daoPedidos.findByDynamicSelect("SELECT NULL, NULL, Folio, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL FROM Pedidos", null);
         }catch (Exception e){}
 
         folioAux = String.format("%05d%n",pedidosResult.length+1);
