@@ -41,7 +41,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyMaterialTheme" />
         <activity
-            android:name=".activitys.PedidosActivity"
+            android:name=".activitys.EntregasActivity"
             android:screenOrientation="portrait"/>
     </application>
 
