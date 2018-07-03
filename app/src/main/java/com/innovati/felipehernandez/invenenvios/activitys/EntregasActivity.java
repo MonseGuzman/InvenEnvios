@@ -43,6 +43,7 @@ import com.innovati.felipehernandez.invenenvios.fragments.BusquedaClienteFragmen
 import com.innovati.felipehernandez.invenenvios.fragments.DatosPedidoFragment;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -61,7 +62,7 @@ public class EntregasActivity extends AppCompatActivity
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private static TextView fechaTextView, tvTotal;
-    public static TextView ClienteEntTextView, tvAgente;
+    public static TextView ClienteEntTextView, tvAgente, tvFolio;
     public static String clave = "";
     public static String nombreC = "No elegido";
     public static String agente;
@@ -74,7 +75,7 @@ public class EntregasActivity extends AppCompatActivity
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         inicializacion();
-
+        geneFolio();
         //fecha
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         Date date = new Date();
@@ -122,6 +123,7 @@ public class EntregasActivity extends AppCompatActivity
         tvTotal = findViewById(R.id.tvTotalEnt);
         ClienteEntTextView = (TextView)findViewById(R.id.ClienteEntTextView);
         tvAgente = (TextView)findViewById(R.id.tvAgente);
+        tvFolio = (TextView)findViewById(R.id.tvFolioEnt);
     }
 
     @Override
@@ -203,6 +205,7 @@ public class EntregasActivity extends AppCompatActivity
     }
 
     public static void addPedidoDb(){
+        //"%05d%n", 5
         VwUsuarios result[] = null;
         Pedidos pedidosResult[] = null;
         String idUsuario = "";
@@ -211,23 +214,26 @@ public class EntregasActivity extends AppCompatActivity
         try{
             result = _dao.findWhereNickNameEquals(agente);
             idUsuario = result.toString();
-
             pedidosResult = daoPedidos.findByDynamicSelect("SELECT Folio FROM Pedidos", null);
         }catch (Exception e){}
 
         String idPedido = UUID.randomUUID().toString();
-
         Date date = new Date();
-        insertar(idPedido,idUsuario,clave,date,Short.valueOf("R"),getSub(),getIva(),getTotal(),"ff");
-
+        String auxFolio = tvFolio.getText().toString();
+        insertar(idPedido,idUsuario,clave,date,Short.valueOf("1"),getSub(),getIva(),getTotal(),"No Hay", auxFolio);
         for (ArticulosPedido ar:articulosPedidoList){
             if (ar.isStatus()){
                 detPedido(idUsuario,idPedido,ar);
             }
         }
+        Log.d("------------ddd","si se pudo");
+        articulosPedidoList = null;
+        calTotal();
+        DatosPedidoFragment.updateAdapter();
+
     }
 
-    public static void insertar(String idPedido,String idUsuario, String claveCliente, Date fecha, short estatus, float subtotal, float iva, float total, String observaciones)
+    public static void insertar(String idPedido,String idUsuario, String claveCliente, Date fecha, short estatus, float subtotal, float iva, float total, String observaciones, String folio)
     {
         Pedidos pedidos = new Pedidos();
         pedidos.setIdPedido(idPedido);
@@ -238,7 +244,7 @@ public class EntregasActivity extends AppCompatActivity
         pedidos.setSubtotal(subtotal);
         pedidos.setIva(iva);
         pedidos.setTotal(total);
-
+        pedidos.setFolio(folio);
         pedidos.setObservaciones(observaciones);
         pedidos.setUltimoUsuarioActualizacion(idUsuario);
         pedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
@@ -313,5 +319,18 @@ public class EntregasActivity extends AppCompatActivity
     }
     public static VwUsuariosDao getVwUsuariosDao() {
         return VwUsuariosDaoFactory.create();
+    }
+
+    public void geneFolio(){
+        String  folioAux = "";
+        //"%05d%n", 5
+        Pedidos pedidosResult[] = null;
+        PedidosDao daoPedidos = getPedidosDao();
+        try{
+            pedidosResult = daoPedidos.findByDynamicSelect("SELECT Folio FROM Pedidos", null);
+        }catch (Exception e){}
+
+        folioAux = String.format("%05d%n",pedidosResult.length+1);
+        tvFolio.setText(folioAux);
     }
 }

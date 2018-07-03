@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.activitys.EntregasActivity;
@@ -22,8 +23,9 @@ import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DatosPedidoFragment extends Fragment {
+public class DatosPedidoFragment extends Fragment implements View.OnClickListener{
     private static RecyclerView recyclerArticulos;
+    private static Button btnReg;
 
     public DatosPedidoFragment() {
         // Required empty public constructor
@@ -38,7 +40,8 @@ public class DatosPedidoFragment extends Fragment {
         recyclerArticulos.setLayoutManager(manager);
         recyclerArticulos.setHasFixedSize(true);
         updateAdapter();
-
+        btnReg = v.findViewById(R.id.btnRegistrarPedido);
+        btnReg.setOnClickListener(this);
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -73,6 +76,13 @@ public class DatosPedidoFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onClick(View v)
+    {
+        if(v.getId() == R.id.btnRegistrarPedido){
+            EntregasActivity.addPedidoDb();
+        }
+    }
 
     public static void updateAdapter(){
         recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(EntregasActivity.articulosPedidoList, new RecycleViewOnItemClickListener() {
