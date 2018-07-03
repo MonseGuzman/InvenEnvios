@@ -10,54 +10,88 @@
     android:layout_height="80dp"
     android:orientation="vertical"
     android:layout_marginBottom="5dp">
-    <android.support.percent.PercentRelativeLayout
+
+    <RelativeLayout
+        android:id="@+id/view_foreground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="5dp"
+        android:background="@android:color/white"
         >
-        <TextView
-            android:id="@+id/tvNombreArticuloItem"
-            android:text="Nombre del Producto"
+
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvNombreArticuloItem"
+                android:layout_alignParentLeft="true"
+                android:text="Nombre del Producto"
+                android:textSize="16sp"
+                app:layout_heightPercent="@fraction/articlePercentItem"
+                app:layout_widthPercent="@fraction/articleTitleItem" />
+
+            <TextView
+                android:id="@+id/tvPercentacionArticuloItem"
+                android:layout_alignParentRight="true"
+                android:text="percentacion"
+                android:textSize="16sp"
+                app:layout_heightPercent="@fraction/articlePercentItem"
+                app:layout_widthPercent="@fraction/asideTitleItem" />
+
+            <TextView
+                android:id="@+id/tvCountArticuloItem"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:text="Cantidad: "
+                android:textSize="16sp"
+                app:layout_heightPercent="@fraction/asidePercentbItem"
+                app:layout_widthPercent="@fraction/asideCountItem" />
+
+            <TextView
+                android:id="@+id/tvPriceArticuloItem"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@id/tvCountArticuloItem"
+                android:text="$: "
+                android:textSize="16sp"
+                app:layout_heightPercent="@fraction/asidePercentbItem"
+                app:layout_widthPercent="@fraction/asidePriceItem" />
+
+            <TextView
+                android:id="@+id/tvSubArticuloItem"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:text="Importe: "
+                android:textSize="16sp"
+                app:layout_heightPercent="@fraction/asidePercentbItem"
+                app:layout_widthPercent="@fraction/asideSubItem" />
+        </android.support.percent.PercentRelativeLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/view_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_row_background">
+        <ImageView
+            android:id="@+id/delete_icon"
+            android:layout_width="@dimen/ic_delete"
+            android:layout_height="@dimen/ic_delete"
             android:layout_alignParentLeft="true"
-            android:textSize="18dp"
-            app:layout_heightPercent="@fraction/articlePercentItem"
-            app:layout_widthPercent="@fraction/articleTitleItem"
-            />
-        <TextView
-            android:id="@+id/tvPercentacionArticuloItem"
-            android:text="percentacion"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/padd_10"
+            android:src="@drawable/ic_delete_sweep" />
+        <ImageView
+            android:id="@+id/disable_icon"
+            android:layout_width="@dimen/ic_delete"
+            android:layout_height="@dimen/ic_delete"
             android:layout_alignParentRight="true"
-            android:textSize="16dp"
-            app:layout_heightPercent="@fraction/articlePercentItem"
-            app:layout_widthPercent="@fraction/asideTitleItem"
-            />
-        <TextView
-            android:id="@+id/tvCountArticuloItem"
-            android:text="Cantidad: "
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:textSize="16dp"
-            app:layout_heightPercent="@fraction/asidePercentbItem"
-            app:layout_widthPercent="@fraction/asideCountItem"
-            />
-        <TextView
-            android:id="@+id/tvPriceArticuloItem"
-            android:text="$: "
-            android:textSize="16dp"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@id/tvCountArticuloItem"
-            app:layout_heightPercent="@fraction/asidePercentbItem"
-            app:layout_widthPercent="@fraction/asidePriceItem"
-            />
-        <TextView
-            android:id="@+id/tvSubArticuloItem"
-            android:text="Importe: "
-            android:textSize="16dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            app:layout_heightPercent="@fraction/asidePercentbItem"
-            app:layout_widthPercent="@fraction/asideSubItem"
-            />
-    </android.support.percent.PercentRelativeLayout>
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/padd_10"
+            android:src="@drawable/ic_action_halt" />
+
+    </RelativeLayout>
+
+
+
 </LinearLayout>
 </android.support.v7.widget.CardView>

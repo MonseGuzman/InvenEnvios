@@ -10,6 +10,7 @@
     <color name="secondaryLightColor">#b085f5</color>
     <color name="secondaryDarkColor">#4d2c91</color>
     <color name="primaryTextColor">#ffffff</color>
+    <color name="bg_row_background">#fa315b</color>
 <!--
     <color name="secondaryTextColor">#f8f9f9</color>
 -->

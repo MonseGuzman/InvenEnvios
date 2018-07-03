@@ -203,7 +203,7 @@
         android:id="@+id/PerdidoslinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="8dp"
         android:orientation="vertical"
         android:background="@color/primaryTextColor"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -247,7 +247,7 @@
                 android:paddingTop="15dp" />
         </LinearLayout>
         <Button
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:id="@+id/addArticuloList"
             android:layout_width="match_parent"
             android:layout_height="50dp"

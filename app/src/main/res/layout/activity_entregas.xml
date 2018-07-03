@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:layout_below="@+id/linearLayout4"
-        android:elevation="4dp"
+        android:elevation="0dp"
         app:tabSelectedTextColor="#E6C229"
         app:tabTextColor="@color/primaryTextColor"
         app:tabMode="fixed"
