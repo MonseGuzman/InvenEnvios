@@ -147,7 +147,7 @@ public class BusquedaArticulosFragment extends Fragment
                 }
                 catch(Exception e)
                 {
-                    Toast.makeText(getActivity(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getActivity(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
                 }
             }
             else
@@ -165,7 +165,7 @@ public class BusquedaArticulosFragment extends Fragment
         switch (item.getItemId())
         {
             case android.R.id.home:
-                Toast.makeText(getActivity(), "homeeeeeeee", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "homeeeeeeee", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

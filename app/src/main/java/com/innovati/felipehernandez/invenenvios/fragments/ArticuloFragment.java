@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.activitys.ArticuloActivity;
 import com.innovati.felipehernandez.invenenvios.activitys.EntregasActivity;
+import com.innovati.felipehernandez.invenenvios.activitys.PedidoActivity;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 public class ArticuloFragment extends Fragment implements View.OnClickListener
@@ -152,15 +153,18 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
         switch (v.getId())
         {
             case R.id.MasButton_A:
-                cantidadPedido -=1;
+                if(cantidadPedido != 0){
+                    cantidadPedido -=1;
+                }
                 break;
             case R.id.MenosButton_A:
-                cantidadPedido +=1;
+                float exit = Float.valueOf(existencias.toString());
+                if(cantidadPedido < exit){
+                    cantidadPedido +=1;
+                }
                 break;
             case R.id.addArticuloList:
                 addArticuloList();
-                claveTextView_A.setText("nononono");
-
                 break;
         }
         cantidadEditText_A.setText(String.valueOf(cantidadPedido));
@@ -169,7 +173,7 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
         try{
             boolean ban = false;
             int position = -1;
-            for(ArticulosPedido ar: EntregasActivity.articulosPedidoList){
+            for(ArticulosPedido ar: PedidoActivity.articulosPedidoList){
                 position +=1;
                 if (ar.getIdArticulo() == clave){
                     ban = true;
@@ -177,7 +181,7 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
                 }
             }
             if (ban){
-                cantidadPedido = EntregasActivity.articulosPedidoList.get(position).getCantidad();
+                cantidadPedido = PedidoActivity.articulosPedidoList.get(position).getCantidad();
             }else{
                 cantidadPedido = 1;
             }
@@ -200,7 +204,7 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
         float ivaAux = (float) (articulosPedido.getTotal()*0.16);
         articulosPedido.setIva(ivaAux);
         articulosPedido.setTotal(articulosPedido.getSubTotal()+articulosPedido.getIva());
-        EntregasActivity.addArticulo(articulosPedido);
+        PedidoActivity.addArticulo(articulosPedido);
         getActivity().onBackPressed();
     }
 }

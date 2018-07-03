@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.activitys.EntregasActivity;
+import com.innovati.felipehernandez.invenenvios.activitys.PedidoActivity;
 import com.innovati.felipehernandez.invenenvios.adapters.EntregasRecycleViewAdaptador;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
@@ -108,9 +109,9 @@ public class BusquedaClienteFragment extends Fragment
                         public void onItemClick(VwClientes listita, int posicion) {
                             Log.i(result[posicion].getNombre(), "ERROR");
 
-                            EntregasActivity.clave = result[posicion].getClave();
-                            EntregasActivity.nombreC = result[posicion].getNombre();
-                            EntregasActivity.ClienteEntTextView.setText("Cliente: "+ EntregasActivity.nombreC);
+                            PedidoActivity.clave = result[posicion].getClave();
+                            PedidoActivity.nombreC = result[posicion].getNombre();
+                            PedidoActivity.ClienteEntTextView.setText("Cliente: "+ EntregasActivity.nombreC);
                         }
                     });
                     //efectos en recycle view
@@ -166,9 +167,9 @@ public class BusquedaClienteFragment extends Fragment
             public void onItemClick(VwClientes listita, int posicion)
             {
 
-                EntregasActivity.clave = result[posicion].getClave();
-                EntregasActivity.nombreC = result[posicion].getNombre();
-                EntregasActivity.ClienteEntTextView.setText("Cliente: "+ EntregasActivity.nombreC);
+                PedidoActivity.clave = result[posicion].getClave();
+                PedidoActivity.nombreC = result[posicion].getNombre();
+                PedidoActivity.ClienteEntTextView.setText("Cliente: "+ EntregasActivity.nombreC);
                 //"desaparece" el layout
                 mRecyclerView.setLayoutManager(null);
                 //carga datos y hace visible
