@@ -54,7 +54,7 @@
                 android:textColor="@color/primaryTextColor"/>
 
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -62,21 +62,22 @@
                 android:id="@+id/tvFolioEnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="00000"
+                android:paddingLeft="15dp"
+                android:text="Folio: 00000"
                 android:textSize="17sp"
                 android:textColor="@color/primaryTextColor"/>
+
             <TextView
                 android:id="@+id/tvTotalEnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text="Total 52"
-                android:paddingLeft="15dp"
-                android:textSize="17sp"
                 android:layout_gravity="right"
-                android:textColor="@color/primaryTextColor"/>
-        </LinearLayout>
+                android:layout_alignParentRight="true"
+                android:text="Total 52"
+                android:paddingRight="15dp"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="17sp" />
+        </RelativeLayout>
     </LinearLayout>
 
     <android.support.design.widget.TabLayout
@@ -85,7 +86,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:layout_below="@+id/linearLayout4"
-        android:elevation="0dp"
+        android:elevation="4dp"
         app:tabSelectedTextColor="#E6C229"
         app:tabTextColor="@color/primaryTextColor"
         app:tabMode="fixed"

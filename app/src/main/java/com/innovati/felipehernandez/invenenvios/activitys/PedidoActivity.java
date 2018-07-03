@@ -308,7 +308,7 @@ public class PedidoActivity extends AppCompatActivity
         PedidosDao daoPedidos = getPedidosDao();
         try{
             pedidosResult = daoPedidos.findByDynamicSelect("SELECT Folio FROM Pedidos", null);
-            folioAux = String.format("%05d%n",pedidosResult.length+1);
+            folioAux = "Folio: " + String.format("%05d%n",pedidosResult.length+1);
 
         }catch (Exception e){}
 
