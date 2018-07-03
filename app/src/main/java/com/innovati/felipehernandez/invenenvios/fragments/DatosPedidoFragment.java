@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.innovati.felipehernandez.invenenvios.R;
-import com.innovati.felipehernandez.invenenvios.activitys.EntregasActivity;
+import com.innovati.felipehernandez.invenenvios.activitys.PedidoActivity;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticulosPedidosAdapter;
 import com.innovati.felipehernandez.invenenvios.adapters.RecycleViewOnItemClickListener;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
@@ -52,7 +52,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int  position = viewHolder.getAdapterPosition();
                 if (direction == ItemTouchHelper.RIGHT){
-                    EntregasActivity.articulosPedidoList.remove(position);
+                    PedidoActivity.articulosPedidoList.remove(position);
                 }else if (direction == ItemTouchHelper.LEFT){
                     ArticulosPedidosAdapter adapter = (ArticulosPedidosAdapter) recyclerArticulos.getAdapter();
                     ArticulosPedido articulosPedido = new ArticulosPedido();
@@ -65,7 +65,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
                     adapter.articulosPedidos.set(position,articulosPedido);
                 }
                 updateAdapter();
-                EntregasActivity.calTotal();
+                PedidoActivity.calTotal();
             }
 
         };
@@ -80,12 +80,12 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
     public void onClick(View v)
     {
         if(v.getId() == R.id.btnRegistrarPedido){
-            EntregasActivity.addPedidoDb();
+            PedidoActivity.addPedidoDb();
         }
     }
 
     public static void updateAdapter(){
-        recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(EntregasActivity.articulosPedidoList, new RecycleViewOnItemClickListener() {
+        recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(PedidoActivity.articulosPedidoList, new RecycleViewOnItemClickListener() {
                     @Override
                     public void onClick(View view, int position) {
 

@@ -193,7 +193,7 @@ public class PedidoActivity extends AppCompatActivity
         PedidosDao daoPedidos = getPedidosDao();
         try{
             result = _dao.findWhereNickNameEquals(agente);
-            idUsuario = result.toString();
+            idUsuario = result[0].getIdUsuario();
             pedidosResult = daoPedidos.findByDynamicSelect("SELECT Folio FROM Pedidos", null);
         }catch (Exception e){}
 
@@ -302,15 +302,16 @@ public class PedidoActivity extends AppCompatActivity
     }
 
     public void geneFolio(){
-        String  folioAux = "";
+        String  folioAux = "00000";
         //"%05d%n", 5
         Pedidos pedidosResult[] = null;
         PedidosDao daoPedidos = getPedidosDao();
         try{
             pedidosResult = daoPedidos.findByDynamicSelect("SELECT Folio FROM Pedidos", null);
+            folioAux = String.format("%05d%n",pedidosResult.length+1);
+
         }catch (Exception e){}
 
-        folioAux = String.format("%05d%n",pedidosResult.length+1);
         tvFolio.setText(folioAux);
     }
 }
