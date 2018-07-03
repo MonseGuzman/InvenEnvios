@@ -114,14 +114,14 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		// declare variables
 		final boolean isConnSupplied = (userConn != null);
 		Connection conn = null;
-		CallableStatement stmt = null;
+		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
 		try {
 			// get the user-specified connection or get a connection from the ResourceManager
 			conn = isConnSupplied ? userConn : ResourceManager.getConnection();
 		
-			stmt = conn.prepareCall( SQL_INSERT );
+			stmt = conn.prepareStatement( SQL_INSERT );
 			stmt.setString( COLUMN_ID_DETALLE_PEDIDO, dto.getIdDetallePedido() );
 			stmt.setString( COLUMN_ID_PEDIDO, dto.getIdPedido() );
 			stmt.setString( COLUMN_CLAVE_ARTICULO, dto.getClaveArticulo() );
