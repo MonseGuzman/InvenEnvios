@@ -193,7 +193,7 @@ public class EntregasActivity extends AppCompatActivity
         PedidosDao daoPedidos = getPedidosDao();
         try{
             result = _dao.findWhereNickNameEquals(agente);
-            idUsuario = result.toString();
+            idUsuario = result[0].getIdUsuario();
             pedidosResult = daoPedidos.findByDynamicSelect("SELECT Folio FROM Pedidos", null);
         }catch (Exception e){}
 
