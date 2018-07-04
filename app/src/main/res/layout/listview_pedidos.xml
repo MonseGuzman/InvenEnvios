@@ -44,6 +44,7 @@
                     android:layout_marginLeft="50dp"
                     android:textSize="15dp"
                     android:text="Entregado"
+                    android:visibility="visible"
                     android:textColor="@color/colorPrimaryDark"
                     android:textStyle="bold"/>
             </LinearLayout>

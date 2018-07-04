@@ -76,11 +76,13 @@ public class PedidosAdapter extends BaseAdapter
         else
             vh.EstatusCheckbox_P.setSelected(false);
 
-        vh.TotalTextView_P.setText("Total: " + String.valueOf(pedidos.getTotal()));
-        vh.ClienteTextView_P.setText(pedidos.getIdUsuario());
+        vh.TotalTextView_P.setText("Total: $" + String.valueOf(pedidos.getTotal()));
+        //vh.ClienteTextView_P.setText(pedidos.getIdUsuario());
 
         if(tipo == 2) //si es una entrega
         {
+            vh.EstatusCheckbox_P.setVisibility(View.VISIBLE);
+
             if (pedidos.getEstatus() == 1)
                 vh.EstatusCheckbox_P.setSelected(true);
             else
