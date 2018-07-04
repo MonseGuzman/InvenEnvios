@@ -16,6 +16,9 @@ import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.activitys.PedidoActivity;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticulosPedidosAdapter;
 import com.innovati.felipehernandez.invenenvios.adapters.RecycleViewOnItemClickListener;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 
@@ -88,9 +91,40 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(PedidoActivity.articulosPedidoList, new RecycleViewOnItemClickListener() {
                     @Override
                     public void onClick(View view, int position) {
-
+                        updateAr(position);
                     }
                 }));
+    }
+
+    public static void updateAr(int x){
+        DatosPedidoFragment datosPedidoFragment = new DatosPedidoFragment();
+        datosPedidoFragment.updateArticle(x);
+    }
+
+    public void updateArticle(int position){
+        VwArticulos result[] = null;
+        Bundle args;
+        ArticuloFragment fragment = new ArticuloFragment();
+        VwArticulosDao _dao = getVwArticulosDao();
+         String  paramns[]={PedidoActivity.articulosPedidoList.get(position).getIdArticulo().toString()};
+        try{
+            result = _dao.findByDynamicWhere("WHERE CLAVE = ?" , paramns);
+            args = new Bundle();
+            args.putString("clave", result[position].getClave());
+            args.putString("nombre", result[position].getNombre());
+            args.putString("activo", result[position].getActivo());
+            args.putDouble("tiempoSurtido", result[position].getTiempoSurtido());
+            args.putDouble("existencias", result[position].getExistenciaTotal());
+            args.putDouble("precio", result[position].getPrecio1());
+            args.putString("unidad", result[position].getUnidadPrimaria());
+            fragment.setArguments(args);
+            getFragmentManager().beginTransaction().replace(R.id.ArticuloFrameLayout, fragment).addToBackStack(null).commit();
+        }catch (Exception e){}
+
+    }
+    public  VwArticulosDao getVwArticulosDao()
+    {
+        return VwArticulosDaoFactory.create();
     }
 
 }
