@@ -1,4 +1,4 @@
-package com.innovati.felipehernandez.invenenvios;
+package com.innovati.felipehernandez.invenenvios.activitys;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.innovati.felipehernandez.invenenvios.MetodosInternos;
+import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.activitys.PedidoActivity;
 import com.innovati.felipehernandez.invenenvios.adapters.PedidosAdapter;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
@@ -20,6 +22,7 @@ public class AbastecimientosActivity extends AppCompatActivity {
     MetodosInternos metodosInternos = new MetodosInternos(this);
     private PedidosAdapter adaptador;
     Pedidos result[];
+    int tipo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,7 @@ public class AbastecimientosActivity extends AppCompatActivity {
         inicializar();
 
         this.setTitle(R.string.tituloAbastecimiento);
+        //tipo = getIntent().getExtras().getInt("tipo", 0);
 
         cargarDatos();
     }
@@ -46,7 +50,7 @@ public class AbastecimientosActivity extends AppCompatActivity {
             {
                 PedidosDao _dao = getPedidosDao();
                 result = _dao.findAll();
-                adaptador = new PedidosAdapter(this,  R.layout.listview_pedidos, result);
+                adaptador = new PedidosAdapter(this,  R.layout.listview_pedidos, result, 1);
                 AbastecimientoListView.setAdapter(adaptador);
             }
             catch(Exception e)
@@ -85,13 +89,13 @@ public class AbastecimientosActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed()
-    {//cantidad de fragmentos que estan actualmente apilados.
+    {
+        //cantidad de fragmentos que estan actualmente apilados.
         if(getSupportFragmentManager().getBackStackEntryCount() != 0)
         {
             //regresa
             super.onBackPressed();
-            getSupportFragmentManager().popBackStack();
-
+            //getSupportFragmentManager().popBackStack();
         }
         else
             finish();

@@ -20,13 +20,15 @@ public class PedidosAdapter extends BaseAdapter
     private Context context;
     private Pedidos lista[];
     private int layout;
+    private int tipo; //CONSULTA - 1 ENTREGA 2
 
     //editar
-    public PedidosAdapter(Context context, int layout, Pedidos lista[])
+    public PedidosAdapter(Context context, int layout, Pedidos lista[], int tipo)
     {
         this.context = context;
         this.layout = layout;
         this.lista = lista;
+        this.tipo = tipo;
     }
 
     @Override
@@ -76,6 +78,16 @@ public class PedidosAdapter extends BaseAdapter
 
         vh.TotalTextView_P.setText("Total: " + String.valueOf(pedidos.getTotal()));
         vh.ClienteTextView_P.setText(pedidos.getIdUsuario());
+
+        if(tipo == 2) //si es una entrega
+        {
+            if (pedidos.getEstatus() == 1)
+                vh.EstatusCheckbox_P.setSelected(true);
+            else
+                vh.EstatusCheckbox_P.setSelected(false);
+        }
+        else
+            vh.EstatusCheckbox_P.setVisibility(View.INVISIBLE);
 
         return convertView;
     }

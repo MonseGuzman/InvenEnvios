@@ -25,7 +25,6 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFact
 import com.innovati.felipehernandez.invenenvios.fragments.DatosPedidoFragment;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,7 +49,7 @@ public class PedidoActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_entregas);
+        setContentView(R.layout.activity_pedido);
 
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         inicializacion();
