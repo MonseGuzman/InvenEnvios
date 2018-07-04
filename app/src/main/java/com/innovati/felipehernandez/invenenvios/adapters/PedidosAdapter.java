@@ -71,6 +71,12 @@ public class PedidosAdapter extends BaseAdapter
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         vh.FechaTextView_P.setText(dateFormat.format(pedidos.getFecha()));
 
+        if(pedidos.getEstatus() == 1)
+            vh.EstatusCheckbox_P.setSelected(true);
+        else
+            vh.EstatusCheckbox_P.setSelected(false);
+
+        vh.TotalTextView_P.setText("Total: " + String.valueOf(pedidos.getTotal()));
         vh.ClienteTextView_P.setText(pedidos.getIdUsuario());
 
         if(tipo == 2) //si es una entrega
