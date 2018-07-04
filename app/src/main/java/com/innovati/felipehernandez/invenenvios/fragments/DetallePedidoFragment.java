@@ -1,6 +1,9 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -58,12 +61,17 @@ public class DetallePedidoFragment extends Fragment
     }
 
     public void loadData(){
-        try{
-            DetallesPedidosDao detallesPedidos = getDetalleDao();
+        try
+        {
+            articulosPedidos.clear();
 
+            DetallesPedidosDao detallesPedidos = getDetalleDao();
             result = detallesPedidos.findWhereIdPedidoEquals(clavePedido);
+
             for(DetallesPedidos pedidos: result){
                 ArticulosPedido articulo = new ArticulosPedido();
+
+                //articulo.setNombre(pedidos.getN);
                 articulo.setIdArticulo(pedidos.getClaveArticulo());
                 articulo.setPresentacion("persentacion");
                 articulo.setCantidad(pedidos.getCantidad());

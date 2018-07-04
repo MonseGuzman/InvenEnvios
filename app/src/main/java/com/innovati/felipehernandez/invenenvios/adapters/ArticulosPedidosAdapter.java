@@ -13,10 +13,12 @@ import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 import java.util.List;
+
 public class ArticulosPedidosAdapter extends RecyclerView.Adapter<ArticulosPedidosAdapter.ViewHolder>{
     private RecycleViewOnItemClickListener recyclerViewOnItemClickListener;
     public static List<ArticulosPedido> articulosPedidos;
     public Context context;
+
     public ArticulosPedidosAdapter( List<ArticulosPedido> articulosPedidos,@NonNull RecycleViewOnItemClickListener recyclerViewOnItemClickListener)
     {
         this.recyclerViewOnItemClickListener = recyclerViewOnItemClickListener;
