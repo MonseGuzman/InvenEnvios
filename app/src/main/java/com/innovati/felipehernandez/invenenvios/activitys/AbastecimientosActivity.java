@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -14,6 +16,8 @@ import com.innovati.felipehernandez.invenenvios.adapters.PedidosAdapter;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.fragments.DatosPedidoFragment;
+import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
 
 public class AbastecimientosActivity extends AppCompatActivity {
 
@@ -31,8 +35,30 @@ public class AbastecimientosActivity extends AppCompatActivity {
 
         inicializar();
 
-        this.setTitle(R.string.tituloAbastecimiento);
-        //tipo = getIntent().getExtras().getInt("tipo", 0);
+        tipo = getIntent().getExtras().getInt("Tipo", 0); //CONSULTA - 1 ENTREGA 2
+
+        switch (tipo)
+        {
+            case 1:
+                this.setTitle(R.string.tituloAbastecimiento);
+                break;
+            case 2:
+                this.setTitle(R.string.tituloEntregas);
+                break;
+        }
+
+        AbastecimientoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                DetallePedidoFragment datosPedidoFragment = new DetallePedidoFragment();
+
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.detallePedidoConsulta, datosPedidoFragment).addToBackStack(null).commit();
+            }
+        });
 
         cargarDatos();
     }
@@ -50,7 +76,7 @@ public class AbastecimientosActivity extends AppCompatActivity {
             {
                 PedidosDao _dao = getPedidosDao();
                 result = _dao.findAll();
-                adaptador = new PedidosAdapter(this,  R.layout.listview_pedidos, result, 1);
+                adaptador = new PedidosAdapter(this,  R.layout.listview_pedidos, result, tipo);
                 AbastecimientoListView.setAdapter(adaptador);
             }
             catch(Exception e)
@@ -79,9 +105,9 @@ public class AbastecimientosActivity extends AppCompatActivity {
             case R.id.menu_home:
                 finish();
                 return true;
-            /*case android.R.id.home:
+            case android.R.id.home:
                 onBackPressed();
-                return true;*/
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

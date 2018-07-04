@@ -45,4 +45,5 @@
 
     <!--Abastecimiento-->
     <string name="tituloAbastecimiento">Consulta de abastecimiento</string>
+    <string name="guardado">¡Pedido guardado!</string>
 </resources>
