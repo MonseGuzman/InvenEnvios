@@ -3,17 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.DetallePedidoFragment"
-    android:id="@+id/detallePedidoConsulta">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/listaDetalleRecycle"
+    tools:context=".fragments.DetallePedidoFragment">
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</RelativeLayout>
-
-
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:background="@color/primaryTextColor"
+            android:id="@+id/listaDetalleRecycle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
 
 </FrameLayout>

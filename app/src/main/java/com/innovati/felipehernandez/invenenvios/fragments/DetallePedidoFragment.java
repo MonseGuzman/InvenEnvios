@@ -20,12 +20,14 @@ import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetallePedidoFragment extends Fragment {
+public class DetallePedidoFragment extends Fragment
+{
     static List<ArticulosPedido> articulosPedidos = new ArrayList<ArticulosPedido>();
     DetallesPedidos result[];
     String clavePedido = "";
     private static RecyclerView recyclerArticulos;
     private Button btnReg;
+
     public DetallePedidoFragment() {
         // Required empty public constructor
     }
@@ -36,17 +38,25 @@ public class DetallePedidoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_detalle_pedido, container, false);
-        recyclerArticulos = (RecyclerView) v.findViewById(R.id.listaDetalleRecycle);
+
+        inicializar(v);
+
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         recyclerArticulos.setLayoutManager(manager);
         recyclerArticulos.setHasFixedSize(true);
-        btnReg = v.findViewById(R.id.btnRegistrarPedido);
-        btnReg.setVisibility(View.INVISIBLE);
+        //btnReg.setVisibility(View.INVISIBLE);  ARREGLAR DESPUÉS
         Bundle args = getArguments();
         clavePedido = args.getString("pedido", "");
         loadData();
         return v;
     }
+
+    private void inicializar(View v)
+    {
+        recyclerArticulos = (RecyclerView) v.findViewById(R.id.listaDetalleRecycle);
+        btnReg = (Button)v.findViewById(R.id.btnRegistrarPedido);
+    }
+
     public void loadData(){
         try{
             DetallesPedidosDao detallesPedidos = getDetalleDao();

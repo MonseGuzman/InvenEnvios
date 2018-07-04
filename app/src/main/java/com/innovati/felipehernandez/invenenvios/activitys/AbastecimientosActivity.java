@@ -58,7 +58,7 @@ public class AbastecimientosActivity extends AppCompatActivity {
                 args = new Bundle();
                 args.putString("pedido", result[position].getIdPedido());
                 datosPedidoFragment.setArguments(args);
-                getSupportFragmentManager().beginTransaction().replace(R.id.detallePedidoConsulta, datosPedidoFragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.abastecimientoConsulta, datosPedidoFragment).addToBackStack(null).commit();
             }
         });
 
