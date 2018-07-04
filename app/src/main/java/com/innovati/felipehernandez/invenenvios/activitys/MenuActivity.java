@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.innovati.felipehernandez.invenenvios.AbastecimientosActivity;
 import com.innovati.felipehernandez.invenenvios.R;
 
 public class MenuActivity extends AppCompatActivity
@@ -41,6 +40,11 @@ public class MenuActivity extends AppCompatActivity
                 break;
             case R.id.AbastecimientoButton:
                 i = new Intent(this, AbastecimientosActivity.class);
+                i.putExtra("Tipo", 1); //CONSULTA
+                break;
+            case R.id.EntregaButton:
+                i = new Intent(this, AbastecimientosActivity.class);
+                i.putExtra("Tipo", 2); //ENTREGA
                 break;
         }
         startActivity(i);
