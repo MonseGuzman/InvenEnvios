@@ -96,6 +96,7 @@
                 android:drawableTop="@drawable/ic_entrega"
                 android:paddingTop="15dp"
                 android:text="Entrega"
+                android:onClick="botones"
                 android:textAlignment="center"
                 android:textColor="#FFF"/>
 

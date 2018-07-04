@@ -11,18 +11,24 @@ import android.widget.TextView;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class PedidosAdapter extends BaseAdapter
 {
     private Context context;
     private Pedidos lista[];
     private int layout;
+    private int tipo; //CONSULTA - 1 ENTREGA 2
 
     //editar
-    public PedidosAdapter(Context context, int layout, Pedidos lista[])
+    public PedidosAdapter(Context context, int layout, Pedidos lista[], int tipo)
     {
         this.context = context;
         this.layout = layout;
         this.lista = lista;
+        this.tipo = tipo;
     }
 
     @Override
@@ -61,15 +67,27 @@ public class PedidosAdapter extends BaseAdapter
 
         Pedidos pedidos = lista[position];
         vh.FolioTextView_P.setText(pedidos.getFolio());
-        vh.FechaTextView_P.setText(pedidos.getFecha().toString());
+        //fecha
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        vh.FechaTextView_P.setText(dateFormat.format(pedidos.getFecha()));
 
         if(pedidos.getEstatus() == 1)
             vh.EstatusCheckbox_P.setSelected(true);
         else
             vh.EstatusCheckbox_P.setSelected(false);
 
-        vh.TotalTextView_P.setText("10");
+        vh.TotalTextView_P.setText("Total: " + String.valueOf(pedidos.getTotal()));
         vh.ClienteTextView_P.setText(pedidos.getIdUsuario());
+
+        if(tipo == 2) //si es una entrega
+        {
+            if (pedidos.getEstatus() == 1)
+                vh.EstatusCheckbox_P.setSelected(true);
+            else
+                vh.EstatusCheckbox_P.setSelected(false);
+        }
+        else
+            vh.EstatusCheckbox_P.setVisibility(View.INVISIBLE);
 
         return convertView;
     }
