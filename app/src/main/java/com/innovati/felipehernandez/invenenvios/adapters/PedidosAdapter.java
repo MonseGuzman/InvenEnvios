@@ -9,7 +9,10 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.innovati.felipehernandez.invenenvios.R;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -66,6 +69,17 @@ public class PedidosAdapter extends BaseAdapter
             vh = (PedidosAdapter.ViewHolder) convertView.getTag();
 
         Pedidos pedidos = lista[position];
+        VwClientesDao busqueda = getVwClientesDao();
+        VwClientes cliente = null;
+        try
+        {
+            VwClientes clientes[] = busqueda.findWhereClaveEquals(pedidos.getClaveCliente());
+             cliente = clientes[0];
+        }
+        catch(Exception e)
+        {
+
+        }
         vh.FolioTextView_P.setText(pedidos.getFolio());
         //fecha
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
@@ -77,7 +91,7 @@ public class PedidosAdapter extends BaseAdapter
             vh.EstatusCheckbox_P.setSelected(false);
 
         vh.TotalTextView_P.setText("Total: $" + String.valueOf(pedidos.getTotal()));
-        //vh.ClienteTextView_P.setText(pedidos.getIdUsuario());
+        vh.ClienteTextView_P.setText(cliente.getNombre());
 
         if(tipo == 2) //si es una entrega
         {
@@ -98,5 +112,10 @@ public class PedidosAdapter extends BaseAdapter
     {
         TextView FolioTextView_P, FechaTextView_P, TotalTextView_P, ClienteTextView_P;
         CheckBox EstatusCheckbox_P;
+    }
+
+    public static VwClientesDao getVwClientesDao()
+    {
+        return VwClientesDaoFactory.create();
     }
 }
