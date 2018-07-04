@@ -5,11 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".fragments.DetallePedidoFragment"
     android:id="@+id/detallePedidoConsulta">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listaDetalleRecycle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent" />
+</RelativeLayout>
+
+
 
 </FrameLayout>

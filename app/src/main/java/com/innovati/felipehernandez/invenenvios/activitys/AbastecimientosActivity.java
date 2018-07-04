@@ -52,10 +52,12 @@ public class AbastecimientosActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 DetallePedidoFragment datosPedidoFragment = new DetallePedidoFragment();
-
+                Bundle args;
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
-
+                args = new Bundle();
+                args.putString("pedido", result[position].getIdPedido());
+                datosPedidoFragment.setArguments(args);
                 getSupportFragmentManager().beginTransaction().replace(R.id.detallePedidoConsulta, datosPedidoFragment).addToBackStack(null).commit();
             }
         });

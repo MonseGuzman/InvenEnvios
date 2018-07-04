@@ -41,6 +41,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         recyclerArticulos.setHasFixedSize(true);
         updateAdapter();
         btnReg = v.findViewById(R.id.btnRegistrarPedido);
+        btnReg.setVisibility(View.VISIBLE);
         btnReg.setOnClickListener(this);
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
             @Override
