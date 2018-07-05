@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.DatosPedidoFragment"
+    android:id="@+id/CarritoListaFrameLayout"
     android:background="@color/primaryTextColor">
 
     <android.support.constraint.ConstraintLayout

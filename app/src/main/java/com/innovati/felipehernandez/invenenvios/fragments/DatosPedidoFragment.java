@@ -104,22 +104,26 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
     public void updateArticle(int position){
         VwArticulos result[] = null;
         Bundle args;
-        ArticuloFragment fragment = new ArticuloFragment();
         VwArticulosDao _dao = getVwArticulosDao();
          String  paramns[]={PedidoActivity.articulosPedidoList.get(position).getIdArticulo().toString()};
         try{
-            result = _dao.findByDynamicWhere("WHERE CLAVE = ?" , paramns);
-            args = new Bundle();
-            args.putString("clave", result[position].getClave());
-            args.putString("nombre", result[position].getNombre());
-            args.putString("activo", result[position].getActivo());
-            args.putDouble("tiempoSurtido", result[position].getTiempoSurtido());
-            args.putDouble("existencias", result[position].getExistenciaTotal());
-            args.putDouble("precio", result[position].getPrecio1());
-            args.putString("unidad", result[position].getUnidadPrimaria());
-            fragment.setArguments(args);
-            getFragmentManager().beginTransaction().replace(R.id.ArticuloFrameLayout, fragment).addToBackStack(null).commit();
+            Log.d("dsds----------",PedidoActivity.articulosPedidoList.get(position).getIdArticulo());
+            result = _dao.findByDynamicWhere("CLAVE = ?" , paramns);
+            Log.d("dsds-e---------",result[0].toString());
         }catch (Exception e){}
+        ArticuloFragment fragment = new ArticuloFragment();
+
+        //AGREGAR ARTICULOS A PERDIDO
+        args = new Bundle();
+        args.putString("clave", result[0].getClave());
+        args.putString("nombre", result[0].getNombre());
+        args.putString("activo", result[0].getActivo());
+        args.putDouble("tiempoSurtido", result[0].getTiempoSurtido());
+        args.putDouble("existencias", result[0].getExistenciaTotal());
+        args.putDouble("precio", result[0].getPrecio1());
+        args.putString("unidad", result[0].getUnidadPrimaria());
+        fragment.setArguments(args);
+        getFragmentManager().beginTransaction().replace(R.id.CarritoListaFrameLayout, fragment).addToBackStack(null).commit();
 
     }
     public  VwArticulosDao getVwArticulosDao()
