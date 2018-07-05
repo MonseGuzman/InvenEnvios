@@ -195,7 +195,7 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
         articulosPedido.setNombre(nombre);
         articulosPedido.setPrecio(precioAux);
         articulosPedido.setCantidad(cantidadPedido);
-        articulosPedido.setSubTotal((precioAux*cantidadPedido));
+        articulosPedido.setSubTotal((float) (precioAux*cantidadPedido));
         articulosPedido.setPresentacion(unidad);
         articulosPedido.setStatus(true);
         float ivaAux = (float) (articulosPedido.getTotal()*0.16);

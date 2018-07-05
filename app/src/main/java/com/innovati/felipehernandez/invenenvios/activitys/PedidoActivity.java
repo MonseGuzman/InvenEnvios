@@ -240,6 +240,8 @@ public class PedidoActivity extends AppCompatActivity
     }
     public static void detPedido(String idUsuario,String idPedido,ArticulosPedido a){
         DetallesPedidos detalle = new DetallesPedidos();
+        String idDetallePedido = UUID.randomUUID().toString();
+        detalle.setIdDetallePedido(idDetallePedido);
         detalle.setIdPedido(idPedido);
         detalle.setClaveArticulo(a.getIdArticulo());
         detalle.setCantidad(a.getCantidad());

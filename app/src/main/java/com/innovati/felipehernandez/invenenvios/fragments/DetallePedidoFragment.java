@@ -16,8 +16,11 @@ import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticulosPedidosAdapter;
 import com.innovati.felipehernandez.invenenvios.adapters.RecycleViewOnItemClickListener;
 import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDaoFactory;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 import java.util.ArrayList;
@@ -26,7 +29,7 @@ import java.util.List;
 public class DetallePedidoFragment extends Fragment
 {
     static List<ArticulosPedido> articulosPedidos = new ArrayList<ArticulosPedido>();
-    DetallesPedidos result[];
+    VwDetallePedido result[];
     String clavePedido = "";
     private static RecyclerView recyclerArticulos;
     private Button btnReg;
@@ -65,16 +68,16 @@ public class DetallePedidoFragment extends Fragment
         {
             articulosPedidos.clear();
 
-            DetallesPedidosDao detallesPedidos = getDetalleDao();
+            VwDetallePedidoDao detallesPedidos = getVwDetallePedidoDao();
             result = detallesPedidos.findWhereIdPedidoEquals(clavePedido);
 
-            for(DetallesPedidos pedidos: result){
+            for(VwDetallePedido pedidos: result){
                 ArticulosPedido articulo = new ArticulosPedido();
 
-                //articulo.setNombre(pedidos.getN);
+                articulo.setNombre(pedidos.getNombre());
                 articulo.setIdArticulo(pedidos.getClaveArticulo());
-                articulo.setPresentacion("persentacion");
-                articulo.setCantidad(pedidos.getCantidad());
+                articulo.setPresentacion(pedidos.getUnidadPrimaria());
+                articulo.setCantidad((float) pedidos.getCantidad());
                 articulo.setIva(pedidos.getIva());
                 articulo.setPrecio(pedidos.getPrecio());
                 articulo.setTotal(pedidos.getTotal());
@@ -87,9 +90,9 @@ public class DetallePedidoFragment extends Fragment
 
         }catch (Exception e){}
     }
-    public static DetallesPedidosDao getDetalleDao()
+    public static VwDetallePedidoDao getVwDetallePedidoDao()
     {
-        return DetallesPedidosDaoFactory.create();
+        return VwDetallePedidoDaoFactory.create();
     }
 
     public static void updateAdapter(){
