@@ -84,6 +84,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
             PedidoActivity.addPedidoDb();
 
             Snackbar.make(v, R.string.guardado, Snackbar.LENGTH_SHORT).show();
+            this.getActivity().finish();
         }
     }
 
