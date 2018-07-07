@@ -133,8 +133,7 @@ public class ArticuloActivity extends AppCompatActivity
                 {
                     VwArticulosDao _dao = getVwArticulosDao();
                     result = _dao.findAll();
-                    adaptador = new ArticuloAdapter(this,  R.layout.listview_articulos, result);
-                    datitosListView.setAdapter(adaptador);
+                    cargarDatos(result);
                 }
                 catch(Exception e)
                 {
@@ -144,6 +143,7 @@ public class ArticuloActivity extends AppCompatActivity
             else
             {
                 //código para buscar en la bd interna
+                metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
             }
         }
         else
@@ -157,8 +157,7 @@ public class ArticuloActivity extends AppCompatActivity
                     nombre += "%";
                     VwArticulosDao _dao = getVwArticulosDao();
                     result = _dao.findWhereNombreEquals(nombre);
-                    adaptador = new ArticuloAdapter(this,  R.layout.listview_articulos, result);
-                    datitosListView.setAdapter(adaptador);
+                    cargarDatos(result);
                 }
                 catch(Exception e)
                 {
@@ -168,8 +167,15 @@ public class ArticuloActivity extends AppCompatActivity
             else
             {
                 //código para buscar en la bd interna
+                metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
             }
         }
+    }
+
+    private void cargarDatos(VwArticulos[] result)
+    {
+        adaptador = new ArticuloAdapter(this,  R.layout.listview_articulos, result);
+        datitosListView.setAdapter(adaptador);
     }
 
     public void agregarFAB(View v)
