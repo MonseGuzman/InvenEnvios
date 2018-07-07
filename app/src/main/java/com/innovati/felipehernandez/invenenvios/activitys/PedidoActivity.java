@@ -142,7 +142,6 @@ public class PedidoActivity extends AppCompatActivity
         int position = -1;
         if(articulosPedidoList != null){
             for(ArticulosPedido ar: articulosPedidoList){
-                Log.e("no ---", ar.getNombre().toString());
                 position +=1;
                 if (ar.getIdArticulo() == a.getIdArticulo()){
                     ban = true;
@@ -205,7 +204,6 @@ public class PedidoActivity extends AppCompatActivity
                 detPedido(idUsuario,idPedido,ar);
             }
         }
-        Log.d("------------ddd","si se pudo");
         articulosPedidoList = null;
         calTotal();
         DatosPedidoFragment.updateAdapter();
