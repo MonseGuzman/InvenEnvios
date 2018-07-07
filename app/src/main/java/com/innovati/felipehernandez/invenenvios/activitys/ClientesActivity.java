@@ -198,8 +198,7 @@ public class ClientesActivity extends AppCompatActivity
                 {
                     VwClientesDao _dao = getVwClientesDao();
                     result = _dao.findAll();
-                    adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
-                    datitosListView.setAdapter(adaptador);
+                    cargarDatos(result);
                 }
                 catch(Exception e)
                 {
@@ -209,6 +208,7 @@ public class ClientesActivity extends AppCompatActivity
             else
             {
                 //bd interna
+                metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
             }
         }
         else
@@ -222,8 +222,7 @@ public class ClientesActivity extends AppCompatActivity
                     nombre += "%";
                     VwClientesDao _dao = getVwClientesDao();
                     result = _dao.findWhereNombreEquals(nombre);
-                    adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
-                    datitosListView.setAdapter(adaptador);
+                    cargarDatos(result);
                 }
                 catch(Exception e)
                 {
@@ -233,8 +232,15 @@ public class ClientesActivity extends AppCompatActivity
             else
             {
                 //bd interna
+                metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
             }
         }
+    }
+
+    private void cargarDatos(VwClientes[] result)
+    {
+        adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
+        datitosListView.setAdapter(adaptador);
     }
 
     public boolean checkPermission(){

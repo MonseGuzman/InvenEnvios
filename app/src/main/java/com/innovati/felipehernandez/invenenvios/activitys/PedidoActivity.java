@@ -137,6 +137,7 @@ public class PedidoActivity extends AppCompatActivity
                 return super.onOptionsItemSelected(item);
         }
     }
+
     public static void addArticulo(ArticulosPedido a){
         boolean ban = false;
         int position = -1;
@@ -157,8 +158,6 @@ public class PedidoActivity extends AppCompatActivity
         calTotal();
         DatosPedidoFragment.updateAdapter();
     }
-
-
 
     public static PedidosDao getPedidosDao()
     {
