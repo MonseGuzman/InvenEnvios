@@ -2,8 +2,12 @@ package com.innovati.felipehernandez.invenenvios.fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.activitys.PedidoActivity;
@@ -23,10 +28,20 @@ import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
 public class DatosPedidoFragment extends Fragment implements View.OnClickListener{
     private static RecyclerView recyclerArticulos;
-    private static Button btnReg;
-
+    private Button btnReg, btnMas, btnMeno, btnAceptar, btnCancelar;
+    private EditText editCantida;
+    private ConstraintLayout datosEditArticle;
+    private float exitArticul = 0, cantidaNum;
+    private static int positionList;
+    List<ArticulosPedido> articuloEdit = new ArrayList<ArticulosPedido>();
     public DatosPedidoFragment() {
         // Required empty public constructor
     }
@@ -35,14 +50,16 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_datos_pedido, container, false);
-        recyclerArticulos = (RecyclerView) v.findViewById(R.id.listaCarritoRecycle);
+        inicialize(v);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         recyclerArticulos.setLayoutManager(manager);
         recyclerArticulos.setHasFixedSize(true);
         updateAdapter();
-        btnReg = v.findViewById(R.id.btnRegistrarPedido);
         btnReg.setVisibility(View.VISIBLE);
         btnReg.setOnClickListener(this);
+        btnMas.setOnClickListener(this);
+        btnMeno.setOnClickListener(this);
+        editCantida.setOnClickListener(this);
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -76,6 +93,16 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         // Inflate the layout for this fragment
         return v;
     }
+    private void inicialize(View v){
+        recyclerArticulos = (RecyclerView) v.findViewById(R.id.listaCarritoRecycle);
+        datosEditArticle = v.findViewById(R.id.includeEditoArticlePedido);
+        btnReg = v.findViewById(R.id.btnRegistrarPedido);
+        btnMas = v.findViewById(R.id.MasButton_AEdit);
+        btnMeno = v.findViewById(R.id.MenosButton_AEdit);
+        btnAceptar = v.findViewById(R.id.editArticuloListCancelar);
+        btnCancelar = v.findViewById(R.id.editArticuloListAceptar);
+        editCantida = v.findViewById(R.id.cantidadEditText_AEdit);
+    }
 
     @Override
     public void onClick(View v)
@@ -85,7 +112,36 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
 
             Snackbar.make(v, R.string.guardado, Snackbar.LENGTH_SHORT).show();
             this.getActivity().finish();
+        }else{
+            cantidaNum = Float.valueOf(editCantida.getText().toString());
+            switch (v.getId())
+            {
+                case R.id.MasButton_AEdit:
+                    if(cantidaNum != 0){
+                        cantidaNum -=1;
+                    }
+                    Log.d("dfds-----------", "mas");
+                    break;
+                case R.id.MenosButton_AEdit:
+                    float exit = exitArticul;
+                    if(cantidaNum < exit){
+                        cantidaNum +=1;
+                    }
+                    Log.d("dfds-----------", "menos");
+                    break;
+                case R.id.editArticuloListCancelar:
+                    updateArticleList(false);
+                    Log.d("dfds-----------", "can");
+                    break;
+                case R.id.editArticuloListAceptar:
+                    updateArticleList(true);
+                    Log.d("dfds-----------", "acep");
+                    break;
+
+            }
+            editCantida.setText(String.valueOf(cantidaNum));
         }
+        Log.d("dfds-----------", "ya que");
     }
 
     public static void updateAdapter(){
@@ -93,6 +149,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
                     @Override
                     public void onClick(View view, int position) {
                         updateAr(position);
+                        positionList =position;
                     }
                 }));
     }
@@ -102,34 +159,60 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         datosPedidoFragment.updateArticle(x);
     }
 
-    public void updateArticle(int position){
-        VwArticulos result[] = null;
-        Bundle args;
-        VwArticulosDao _dao = getVwArticulosDao();
-         String  paramns[]={PedidoActivity.articulosPedidoList.get(position).getIdArticulo().toString()};
-        try{
-            Log.d("dsds----------",PedidoActivity.articulosPedidoList.get(position).getIdArticulo());
-            result = _dao.findByDynamicWhere("CLAVE = ?" , paramns);
-            Log.d("dsds-e---------",result[0].toString());
-        }catch (Exception e){}
-        ArticuloFragment fragment = new ArticuloFragment();
+    public  void updateArticle(int position){
+        articuloEdit.add(PedidoActivity.articulosPedidoList.get(position));
+        updateAdapterArt(articuloEdit);
+        exitArticul = getCountArticle(articuloEdit.get(0).getIdArticulo());
+        editCantida.setText("1");
+       editCantida.setText(String.valueOf(PedidoActivity.articulosPedidoList.get(position).getCantidad()));
 
-        //AGREGAR ARTICULOS A PERDIDO
-        args = new Bundle();
-        args.putString("clave", result[0].getClave());
-        args.putString("nombre", result[0].getNombre());
-        args.putString("activo", result[0].getActivo());
-        args.putDouble("tiempoSurtido", result[0].getTiempoSurtido());
-        args.putDouble("existencias", result[0].getExistenciaTotal());
-        args.putDouble("precio", result[0].getPrecio1());
-        args.putString("unidad", result[0].getUnidadPrimaria());
-        fragment.setArguments(args);
-        getFragmentManager().beginTransaction().replace(R.id.CarritoListaFrameLayout, fragment).addToBackStack(null).commit();
-
+        //datosEditArticle.setVisibility(View.VISIBLE);
+    }
+    public  void updateAdapterArt(List<ArticulosPedido> articuloEdit){
+        recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(articuloEdit, new RecycleViewOnItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                updateAr(position);
+            }
+        }));
     }
     public  VwArticulosDao getVwArticulosDao()
     {
         return VwArticulosDaoFactory.create();
+    }
+
+    public float getCountArticle(String c){
+        String[] clave = {c};
+        float count = 0;
+        VwArticulos result[];
+        try{
+            VwArticulosDao _dao = getVwArticulosDao();
+            result = _dao.findByDynamicWhere("CLAVE = ?", clave);
+            c = String.valueOf(result[0].getExistenciaTotal());
+            count = Float.valueOf(c);
+        }catch (Exception e){}
+
+        return count;
+    }
+    public void updateArticleList(boolean ban){
+        if (ban){
+            float precioAux = Float.valueOf(PedidoActivity.articulosPedidoList.get(positionList).getPrecio());
+            ArticulosPedido articulosPedido = new ArticulosPedido();
+            articulosPedido.setIdArticulo(PedidoActivity.articulosPedidoList.get(positionList).getIdArticulo());
+            articulosPedido.setNombre(PedidoActivity.articulosPedidoList.get(positionList).getNombre());
+            articulosPedido.setPrecio(precioAux);
+            articulosPedido.setCantidad(cantidaNum);
+            articulosPedido.setSubTotal((float) (precioAux*cantidaNum));
+            articulosPedido.setPresentacion(PedidoActivity.articulosPedidoList.get(positionList).getPresentacion());
+            articulosPedido.setStatus(true);
+            float ivaAux = (float) (articulosPedido.getTotal()*0.16);
+            articulosPedido.setIva(ivaAux);
+            articulosPedido.setTotal(articulosPedido.getSubTotal()+articulosPedido.getIva());
+            PedidoActivity.addArticulo(articulosPedido);
+        }
+        datosEditArticle.setVisibility(View.INVISIBLE);
+        /*updateAdapter();
+        PedidoActivity.calTotal();*/
     }
 
 }

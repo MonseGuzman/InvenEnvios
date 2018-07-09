@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/edit_articulo_item">
+    <LinearLayout
+        android:id="@+id/PerdidoslinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        android:background="@color/primaryTextColor">
+
+        <TextView
+            android:layout_width="85dp"
+            android:layout_marginLeft="5dp"
+            android:layout_height="wrap_content"
+            android:text="Cantidad"
+            android:textColor="#000"
+            android:textSize="18dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/MasButton_AEdit"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="50"
+                android:background="@color/colorPrimary"
+                android:drawableTop="@drawable/ic_menos"
+                android:paddingTop="15dp" />
+
+            <EditText
+                android:id="@+id/cantidadEditText_AEdit"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:hint="0000"
+                android:inputType="numberDecimal"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/MenosButton_AEdit"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="50"
+                android:background="@color/colorPrimary"
+                android:drawableTop="@drawable/ic_suma"
+                android:paddingTop="15dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+            <Button
+                android:layout_margin="5dp"
+                android:id="@+id/editArticuloListCancelar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="50"
+                android:textSize="24dp"
+                android:background="@color/bg_row_background"
+                android:textColor="@color/primaryTextColor"
+                android:text="Cancelar"
+                />
+            <Button
+                android:id="@+id/editArticuloListAceptar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="50"
+                android:textSize="24dp"
+                android:layout_margin="5dp"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/primaryTextColor"
+                android:text="Aceptar"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
