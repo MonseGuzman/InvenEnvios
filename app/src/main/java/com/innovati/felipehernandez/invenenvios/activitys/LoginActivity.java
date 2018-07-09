@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -65,18 +66,12 @@ public class LoginActivity extends AppCompatActivity
                 //login
                try
                {
-                   String parametros[] = {usuario,password};
+
                    VwUsuariosDao _dao = getVwUsuariosDao();
-                   result = _dao.findByDynamicWhere("NickName = ? AND Password = ? ", parametros);
-                   if(result.length > 0)
-                   {
-                       Intent i = new Intent(this, MenuActivity.class);
-                       i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                       startActivity(i);
-                       guardarPreferencias(usuario, password, result[0].getIdUsuario());
-                   }
-                   else
-                       conectado.Alerta(R.string.error, R.string.noValido);
+                   String parametros[] = {usuario,password};
+                   dbManager consulta = new dbManager(parametros);
+                   consulta.execute(_dao);
+
 
                }
                catch(Exception e)
@@ -122,6 +117,51 @@ public class LoginActivity extends AppCompatActivity
         editor.putString("agente", email);
         editor.commit(); // empieza a guardar los put*
         editor.apply(); //guarda todos los cambios aunque no se guarden todos
+    }
+
+    public class dbManager extends AsyncTask<VwUsuariosDao, Void, VwUsuarios[]>
+    {
+        String[] parametros;
+
+        public dbManager(String[] parametros)
+        {
+            this.parametros = parametros;
+        }
+
+        @Override
+        protected VwUsuarios[] doInBackground(VwUsuariosDao... strings)
+        {
+            VwUsuarios result[] = null;
+            try
+            {
+                result =  strings[0].findByDynamicWhere("NickName = ? AND Password = ? ", parametros);
+
+            }
+            catch(Exception e)
+            {
+
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(VwUsuarios[] vwUsuarios) {
+
+            super.onPostExecute(vwUsuarios);
+            String usuario, password;
+            usuario = etUsuario.getText().toString();
+            password = etPassword.getText().toString();
+
+            if(vwUsuarios.length > 0)
+            {
+                Intent i = new Intent(LoginActivity.this, MenuActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+                guardarPreferencias(usuario, password, vwUsuarios[0].getIdUsuario());
+            }
+            else
+                Toast.makeText(LoginActivity.this, "Si se está ejecutando aca", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static VwUsuariosDao getVwUsuariosDao() {
