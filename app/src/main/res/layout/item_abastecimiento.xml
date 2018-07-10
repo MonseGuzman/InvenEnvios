@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/NombreArticuloTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:clickable="true"
+        android:onClick="toggle_contents"
+        android:padding="10dp"
+        android:text="Titulo"
+        android:textColor="@android:color/white" />
+
+    <!--content to hide/show -->
+    <TextView
+        android:id="@+id/DescripcionTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_dark"
+        android:padding="10dp"
+        android:text="un contenido muy largo como para que se llene esa cosa de muchas cosas y así, tu sabes solo para que sirva el ejemplo de esta cosa."
+        android:textColor="@android:color/white" />
+</LinearLayout>
