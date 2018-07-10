@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,7 +25,9 @@ import android.widget.Toast;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ClientesAdaptador;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
 import com.innovati.felipehernandez.invenenvios.fragments.ClienteFragment;
@@ -197,8 +200,8 @@ public class ClientesActivity extends AppCompatActivity
                 try
                 {
                     VwClientesDao _dao = getVwClientesDao();
-                    result = _dao.findAll();
-                    cargarDatos(result);
+                    ConsultaClientes c = new ConsultaClientes(nombre);
+                    c.execute(_dao);
                 }
                 catch(Exception e)
                 {
@@ -221,8 +224,8 @@ public class ClientesActivity extends AppCompatActivity
                     nombre = "%" + nombre;
                     nombre += "%";
                     VwClientesDao _dao = getVwClientesDao();
-                    result = _dao.findWhereNombreEquals(nombre);
-                    cargarDatos(result);
+                    ConsultaClientes c = new ConsultaClientes(nombre);
+                    c.execute(_dao);
                 }
                 catch(Exception e)
                 {
@@ -269,6 +272,40 @@ public class ClientesActivity extends AppCompatActivity
                     //Aquí lo que se hace si no lo aceptan
                 }
                 break;
+        }
+    }
+
+    public class ConsultaClientes extends AsyncTask<VwClientesDao, VwClientes[], VwClientes[]>
+    {
+        String nombre;
+
+        public ConsultaClientes(String nombre)
+        {
+            this.nombre = nombre;
+        }
+
+        @Override
+        protected VwClientes[] doInBackground(VwClientesDao... vwClientesDaos)
+        {
+            try
+            {
+                if(nombre.equals(""))
+                    result = vwClientesDaos[0].findAll();
+                else
+                    result = vwClientesDaos[0].findWhereNombreEquals(nombre);
+
+            }
+            catch (Exception e){
+
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(VwClientes[] vwArticulos)
+        {
+            super.onPostExecute(vwArticulos);
+            cargarDatos(result);
         }
     }
 }
