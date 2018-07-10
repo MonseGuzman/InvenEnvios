@@ -183,17 +183,7 @@ public class PedidoActivity extends AppCompatActivity
 
     public static void addPedidoDb(){
         //"%05d%n", 5
-        VwUsuarios result[] = null;
-        Pedidos pedidosResult[] = null;
         String idUsuario = "";
-        VwUsuariosDao _dao = getVwUsuariosDao();
-        PedidosDao daoPedidos = getPedidosDao();
-        try{
-            result = _dao.findWhereNickNameEquals(agente);
-            idUsuario = result[0].getIdUsuario();
-            pedidosResult = daoPedidos.findByDynamicSelect("SELECT Folio FROM Pedidos", null);
-        }catch (Exception e){}
-
         String idPedido = UUID.randomUUID().toString();
         Date date = new Date();
         String auxFolio = tvFolio.getText().toString();
