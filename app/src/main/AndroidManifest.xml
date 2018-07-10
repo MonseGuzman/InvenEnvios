@@ -39,8 +39,10 @@
         <activity
             android:name=".activitys.PedidoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activitys.AbastecimientosActivity"
+        <activity
+            android:name=".activitys.AbastecimientosActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activitys.AbastecimientoAhoraSiActivity"></activity>
     </application>
 
 </manifest>
