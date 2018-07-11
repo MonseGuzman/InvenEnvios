@@ -1,8 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -32,15 +30,15 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
     private static RecyclerView recyclerArticulos;
     private Button btnReg, btnMas, btnMeno, btnAceptar, btnCancelar;
     private static EditText editCantida;
-    private ConstraintLayout datosEditArticle;
+    private static ConstraintLayout datosEditArticle;
     private static float exitArticul = 0, cantidaNum;
     private static int positionList;
+    private static boolean ban = false;
 
     static List<ArticulosPedido> articuloEdit = new ArrayList<ArticulosPedido>();
     public DatosPedidoFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -128,11 +126,11 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
                     Log.d("dfds-----------", "menos");
                     break;
                 case R.id.editArticuloListCancelar:
-                    //updateArticleList(false);
+                    updateArticleList(false);
                     Log.d("dfds-----------", "can");
                     break;
                 case R.id.editArticuloListAceptar:
-                    //updateArticleList(true);
+                    updateArticleList(true);
                     Log.d("dfds-----------", "acep");
                     break;
 
@@ -154,7 +152,17 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
     }
 
     public static void updateAr(int x){
-        updateArticle(x);
+        if (!ban){
+            ban  = true;
+            updateArticle(x);
+        }else{
+            articuloEdit = null;
+            datosEditArticle.setVisibility(View.INVISIBLE);
+            updateAdapter();
+            PedidoActivity.calTotal();
+            ban = false;
+        }
+
     }
 
     public static   void updateArticle(int position){
