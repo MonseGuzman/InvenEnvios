@@ -4,14 +4,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
+import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ListaArticulosAdapter;
+import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
+import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDaoFactory;
 
 public class AbastecimientoAhoraSiActivity extends AppCompatActivity
 {
@@ -20,8 +29,9 @@ public class AbastecimientoAhoraSiActivity extends AppCompatActivity
     private MenuItem menu_cambia;
 
     private ListaArticulosAdapter listaArticulosAdapter;
-    private DetallesPedidos detallesPedidos[];
+    private VwDetallePedido result[];
     private boolean ban = false;
+    private MetodosInternos metodosInternos = new MetodosInternos(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +45,10 @@ public class AbastecimientoAhoraSiActivity extends AppCompatActivity
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView2.setLayoutManager(linearLayoutManager);
 
-        animationUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
-        animationDown = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
+        animationUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        animationDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
 
-        listaArticulosAdapter = new ListaArticulosAdapter(animationUp, animationDown, this, detallesPedidos);
-        recyclerView2.setAdapter(listaArticulosAdapter);
+        filtar();
     }
 
     private void inicializacion()
@@ -67,7 +76,7 @@ public class AbastecimientoAhoraSiActivity extends AppCompatActivity
                 onBackPressed();
                 return true;*/
             case R.id.menu_cambia:
-                if(ban == false)
+                if(!ban)
                     menu_cambia.setIcon(R.drawable.ic_contenido);
                 else
                     menu_cambia.setIcon(R.drawable.ic_detalle);
@@ -78,5 +87,35 @@ public class AbastecimientoAhoraSiActivity extends AppCompatActivity
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public static VwDetallePedidoDao getVwDetallePedidoDao()
+    {
+        return VwDetallePedidoDaoFactory.create();
+    }
+
+    public void filtar()
+    {
+            if(metodosInternos.conexionRed())
+            {
+                //sin filtro = todos
+                try
+                {
+                    VwDetallePedidoDao _dao = getVwDetallePedidoDao();
+                    result = _dao.findAll();
+
+                    listaArticulosAdapter = new ListaArticulosAdapter(this, animationUp, animationDown, result);
+                    recyclerView2.setAdapter(listaArticulosAdapter);
+                }
+                catch(Exception e)
+                {
+                    Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+            else
+            {
+                //código para buscar en la bd interna
+                metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
+            }
     }
 }

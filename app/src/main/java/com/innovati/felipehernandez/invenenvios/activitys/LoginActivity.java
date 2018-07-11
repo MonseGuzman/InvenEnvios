@@ -54,7 +54,6 @@ public class LoginActivity extends AppCompatActivity
         //si la conexion wifi/datos es conectada
         MetodosInternos conectado = new MetodosInternos(this);
         String usuario, password;
-        VwUsuarios result[] = null;
 
         usuario = etUsuario.getText().toString();
         password = etPassword.getText().toString();
@@ -66,13 +65,10 @@ public class LoginActivity extends AppCompatActivity
                 //login
                try
                {
-
                    VwUsuariosDao _dao = getVwUsuariosDao();
                    String parametros[] = {usuario,password};
                    dbManager consulta = new dbManager(parametros);
                    consulta.execute(_dao);
-
-
                }
                catch(Exception e)
                {
