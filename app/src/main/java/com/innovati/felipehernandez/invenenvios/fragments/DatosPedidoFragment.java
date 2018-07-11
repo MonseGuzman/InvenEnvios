@@ -6,9 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -29,19 +26,17 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFac
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class DatosPedidoFragment extends Fragment implements View.OnClickListener{
     private static RecyclerView recyclerArticulos;
     private Button btnReg, btnMas, btnMeno, btnAceptar, btnCancelar;
-    private EditText editCantida;
+    private static EditText editCantida;
     private ConstraintLayout datosEditArticle;
-    private float exitArticul = 0, cantidaNum;
+    private static float exitArticul = 0, cantidaNum;
     private static int positionList;
-    List<ArticulosPedido> articuloEdit = new ArrayList<ArticulosPedido>();
+
+    static List<ArticulosPedido> articuloEdit = new ArrayList<ArticulosPedido>();
     public DatosPedidoFragment() {
         // Required empty public constructor
     }
@@ -59,6 +54,8 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         btnReg.setOnClickListener(this);
         btnMas.setOnClickListener(this);
         btnMeno.setOnClickListener(this);
+        btnAceptar.setOnClickListener(this);
+        btnCancelar.setOnClickListener(this);
         editCantida.setOnClickListener(this);
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
             @Override
@@ -102,6 +99,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         btnAceptar = v.findViewById(R.id.editArticuloListCancelar);
         btnCancelar = v.findViewById(R.id.editArticuloListAceptar);
         editCantida = v.findViewById(R.id.cantidadEditText_AEdit);
+        datosEditArticle.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -130,11 +128,11 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
                     Log.d("dfds-----------", "menos");
                     break;
                 case R.id.editArticuloListCancelar:
-                    updateArticleList(false);
+                    //updateArticleList(false);
                     Log.d("dfds-----------", "can");
                     break;
                 case R.id.editArticuloListAceptar:
-                    updateArticleList(true);
+                    //updateArticleList(true);
                     Log.d("dfds-----------", "acep");
                     break;
 
@@ -142,6 +140,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
             editCantida.setText(String.valueOf(cantidaNum));
         }
         Log.d("dfds-----------", "ya que");
+        PedidoActivity.calTotal();
     }
 
     public static void updateAdapter(){
@@ -155,20 +154,17 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
     }
 
     public static void updateAr(int x){
-        DatosPedidoFragment datosPedidoFragment = new DatosPedidoFragment();
-        datosPedidoFragment.updateArticle(x);
+        updateArticle(x);
     }
 
-    public  void updateArticle(int position){
+    public static   void updateArticle(int position){
         articuloEdit.add(PedidoActivity.articulosPedidoList.get(position));
         updateAdapterArt(articuloEdit);
         exitArticul = getCountArticle(articuloEdit.get(0).getIdArticulo());
-        editCantida.setText("1");
        editCantida.setText(String.valueOf(PedidoActivity.articulosPedidoList.get(position).getCantidad()));
-
-        //datosEditArticle.setVisibility(View.VISIBLE);
+        editCantida.setVisibility(View.VISIBLE);
     }
-    public  void updateAdapterArt(List<ArticulosPedido> articuloEdit){
+    public static void updateAdapterArt(List<ArticulosPedido> articuloEdit){
         recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(articuloEdit, new RecycleViewOnItemClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -176,12 +172,12 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
             }
         }));
     }
-    public  VwArticulosDao getVwArticulosDao()
+    public static VwArticulosDao getVwArticulosDao()
     {
         return VwArticulosDaoFactory.create();
     }
 
-    public float getCountArticle(String c){
+    public static float getCountArticle(String c){
         String[] clave = {c};
         float count = 0;
         VwArticulos result[];
@@ -211,8 +207,8 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
             PedidoActivity.addArticulo(articulosPedido);
         }
         datosEditArticle.setVisibility(View.INVISIBLE);
-        /*updateAdapter();
-        PedidoActivity.calTotal();*/
+        updateAdapter();
+        PedidoActivity.calTotal();
     }
 
 }
