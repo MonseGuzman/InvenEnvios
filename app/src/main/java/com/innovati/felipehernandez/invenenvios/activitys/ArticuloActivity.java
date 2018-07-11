@@ -243,6 +243,8 @@ public class ArticuloActivity extends AppCompatActivity
              this.nombre = nombre;
          }
 
+
+
          @Override
          protected VwArticulos[] doInBackground(VwArticulosDao... vwArticulosDaos)
          {
@@ -252,7 +254,6 @@ public class ArticuloActivity extends AppCompatActivity
                      result = vwArticulosDaos[0].findAll();
                  else
                      result = vwArticulosDaos[0].findWhereNombreEquals(nombre);
-
              }
              catch (Exception e){
 

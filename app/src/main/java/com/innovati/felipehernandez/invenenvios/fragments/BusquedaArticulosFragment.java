@@ -1,6 +1,7 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -114,17 +115,10 @@ public class BusquedaArticulosFragment extends Fragment
             if(metodosInternos.conexionRed())
             {
                 //sin filtro = todos
-                try
-                {
-                    VwArticulosDao _dao = getVwArticulosDao();
-                    result = _dao.findAll();
-                    adaptador = new ArticuloAdapter(getActivity(),  R.layout.listview_articulos, result);
-                    datitosListView.setAdapter(adaptador);
-                }
-                catch(Exception e)
-                {
-                    Toast.makeText(getActivity(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
-                }
+                VwArticulosDao _dao = getVwArticulosDao();
+                ConsultaArticulos c = new ConsultaArticulos(nombre);
+                c.execute(_dao);
+
             }
             else
             {
@@ -141,9 +135,8 @@ public class BusquedaArticulosFragment extends Fragment
                     nombre = "%" + nombre;
                     nombre += "%";
                     VwArticulosDao _dao = getVwArticulosDao();
-                    result = _dao.findWhereNombreEquals(nombre);
-                    adaptador = new ArticuloAdapter(getActivity(),  R.layout.listview_articulos, result);
-                    datitosListView.setAdapter(adaptador);
+                    ConsultaArticulos c = new ConsultaArticulos(nombre);
+                    c.execute(_dao);
                 }
                 catch(Exception e)
                 {
@@ -172,6 +165,40 @@ public class BusquedaArticulosFragment extends Fragment
         }
     }
 
+    public class ConsultaArticulos extends AsyncTask<VwArticulosDao, VwArticulos, VwArticulos[]>
+    {
+        String nombre;
 
+        public ConsultaArticulos(String nombre)
+        {
+            this.nombre = nombre;
+        }
+
+
+
+        @Override
+        protected VwArticulos[] doInBackground(VwArticulosDao... vwArticulosDaos)
+        {
+            try
+            {
+                if(nombre.equals(""))
+                    result = vwArticulosDaos[0].findAll();
+                else
+                    result = vwArticulosDaos[0].findWhereNombreEquals(nombre);
+            }
+            catch (Exception e){
+
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(VwArticulos[] vwArticulos)
+        {
+            super.onPostExecute(vwArticulos);
+            adaptador = new ArticuloAdapter(getActivity(),  R.layout.listview_articulos, result);
+            datitosListView.setAdapter(adaptador);
+        }
+    }
 
 }

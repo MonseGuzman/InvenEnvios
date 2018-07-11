@@ -1,5 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
@@ -101,7 +102,8 @@ public class BusquedaClienteFragment extends Fragment
                 try
                 {
                     VwClientesDao _dao = getVwClientesDao();
-                    result = _dao.findAll();
+                    ConsultaClientes c = new ConsultaClientes(nombre);
+                    c.execute(_dao);
 
                     mAdapter = new EntregasRecycleViewAdaptador(result, R.layout.recycleview_clientes_item, new EntregasRecycleViewAdaptador.OnItemClickListener() {
                         @Override
@@ -140,7 +142,8 @@ public class BusquedaClienteFragment extends Fragment
                     nombre = "%" + nombre;
                     nombre += "%";
                     VwClientesDao _dao = getVwClientesDao();
-                    result = _dao.findWhereNombreEquals(nombre);
+                    ConsultaClientes c = new ConsultaClientes(nombre);
+                    c.execute(_dao);
 
                     cargarDatos();
                 }
@@ -192,6 +195,33 @@ public class BusquedaClienteFragment extends Fragment
     public static VwClientesDao getVwClientesDao()
     {
         return VwClientesDaoFactory.create();
+    }
+
+    public class ConsultaClientes extends AsyncTask<VwClientesDao, VwClientes[], VwClientes[]>
+    {
+        String nombre;
+
+        public ConsultaClientes(String nombre)
+        {
+            this.nombre = nombre;
+        }
+
+        @Override
+        protected VwClientes[] doInBackground(VwClientesDao... vwClientesDaos)
+        {
+            try
+            {
+                if(nombre.equals(""))
+                    result = vwClientesDaos[0].findAll();
+                else
+                    result = vwClientesDaos[0].findWhereNombreEquals(nombre);
+
+            }
+            catch (Exception e){
+
+            }
+            return result;
+        }
     }
 
 }
