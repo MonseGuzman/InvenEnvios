@@ -1,6 +1,7 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -43,6 +44,7 @@ public class ArticuloActivity extends AppCompatActivity
     Bundle args;
     private static boolean ban = false;
     static String fragmento = "";
+    String nombre = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -123,7 +125,7 @@ public class ArticuloActivity extends AppCompatActivity
 
     public void filtar(View v)
     {
-        String nombre = buscarEditText.getText().toString();
+        nombre = buscarEditText.getText().toString();
         if(TextUtils.isEmpty(nombre))
         {
             if(metodosInternos.conexionRed())
@@ -132,8 +134,8 @@ public class ArticuloActivity extends AppCompatActivity
                 try
                 {
                     VwArticulosDao _dao = getVwArticulosDao();
-                    result = _dao.findAll();
-                    cargarDatos(result);
+                    ConsultaArticulos c = new ConsultaArticulos(nombre);
+                    c.execute(_dao);
                 }
                 catch(Exception e)
                 {
@@ -156,8 +158,9 @@ public class ArticuloActivity extends AppCompatActivity
                     nombre = "%" + nombre;
                     nombre += "%";
                     VwArticulosDao _dao = getVwArticulosDao();
-                    result = _dao.findWhereNombreEquals(nombre);
-                    cargarDatos(result);
+                    ConsultaArticulos c = new ConsultaArticulos(nombre);
+                    c.execute(_dao);
+
                 }
                 catch(Exception e)
                 {
@@ -230,4 +233,38 @@ public class ArticuloActivity extends AppCompatActivity
     public static void addArticuloList(ArticulosPedido a){
         ListCarritoPedido.add(a);
     }*/
+
+     public class ConsultaArticulos extends AsyncTask<VwArticulosDao, VwArticulos, VwArticulos[]>
+     {
+         String nombre;
+
+         public ConsultaArticulos(String nombre)
+         {
+             this.nombre = nombre;
+         }
+
+         @Override
+         protected VwArticulos[] doInBackground(VwArticulosDao... vwArticulosDaos)
+         {
+             try
+             {
+                 if(nombre.equals(""))
+                     result = vwArticulosDaos[0].findAll();
+                 else
+                     result = vwArticulosDaos[0].findWhereNombreEquals(nombre);
+
+             }
+             catch (Exception e){
+
+             }
+             return result;
+         }
+
+         @Override
+         protected void onPostExecute(VwArticulos[] vwArticulos)
+         {
+             super.onPostExecute(vwArticulos);
+             cargarDatos(result);
+         }
+     }
 }
