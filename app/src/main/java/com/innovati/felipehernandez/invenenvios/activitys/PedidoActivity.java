@@ -2,6 +2,8 @@ package com.innovati.felipehernandez.invenenvios.activitys;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaRecorder;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -45,6 +47,7 @@ public class PedidoActivity extends AppCompatActivity
     public static String clave = "";
     public static String nombreC = "No elegido";
     public static String agente;
+    private static String idUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,7 @@ public class PedidoActivity extends AppCompatActivity
         Date date = new Date();
         fechaTextView.setText("Fecha: "+dateFormat.format(date));
         agente = preferences.getString("agente", " Falta Dato");
+        idUsuario = preferences.getString("idUsuario", null);
         tvAgente.setText("Agente: " + agente);
         //crea tab y darle una gravedad
         tabLayout.addTab(tabLayout.newTab().setText("Seleccione cliente"));
@@ -183,10 +187,10 @@ public class PedidoActivity extends AppCompatActivity
 
     public static void addPedidoDb(){
         //"%05d%n", 5
-        String idUsuario = "";
         String idPedido = UUID.randomUUID().toString();
         Date date = new Date();
         String auxFolio = tvFolio.getText().toString();
+
         insertar(idPedido,idUsuario,clave,date,Short.valueOf("1"),getSub(),getIva(),getTotal(),"No Hay", auxFolio);
         for (ArticulosPedido ar:articulosPedidoList){
             if (ar.isStatus()){
@@ -214,16 +218,9 @@ public class PedidoActivity extends AppCompatActivity
         pedidos.setObservaciones(observaciones);
         pedidos.setUltimoUsuarioActualizacion(idUsuario);
         pedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
+        InsertarPedido insertar = new InsertarPedido();
+        insertar.execute(pedidos);
 
-        try
-        {
-            PedidosDao dao = getPedidosDao();
-            dao.insert(pedidos);
-        }
-        catch (Exception e)
-        {
-
-        }
     }
     public static void detPedido(String idUsuario,String idPedido,ArticulosPedido a){
         DetallesPedidos detalle = new DetallesPedidos();
@@ -238,16 +235,8 @@ public class PedidoActivity extends AppCompatActivity
         detalle.setTotal(a.getTotal());
         detalle.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
         detalle.setUltimoUsuarioActualizacion(idUsuario);
-
-        try
-        {
-            DetallesPedidosDao dao = getDetallesPedidosDao();
-            dao.insert(detalle);
-        }
-        catch (Exception e)
-        {
-
-        }
+        InsertarDetalle detalleInsertar = new InsertarDetalle();
+        detalleInsertar.execute(detalle);
     }
     public static float getTotal(){
         float total = 0;
@@ -289,19 +278,82 @@ public class PedidoActivity extends AppCompatActivity
         return VwUsuariosDaoFactory.create();
     }
 
-    public void geneFolio(){
-        String  folioAux = "";
+    public void geneFolio()
+    {
+
         //"%05d%n", 5ffff
         Pedidos pedidosResult[] = null;
         PedidosDao daoPedidos = getPedidosDao();
-        try{
-            pedidosResult = daoPedidos.findByDynamicSelect("SELECT NULL, NULL, Folio, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL FROM Pedidos", null);
-            folioAux = String.format("%05d%n",pedidosResult.length+1);
-        }catch (Exception e){}
-
-
-        tvFolio.setText(folioAux);
+        Consulta c = new Consulta();
+        c.execute(daoPedidos, daoPedidos);
     }
+
+    public class Consulta extends AsyncTask<PedidosDao, PedidosDao, Pedidos[]>
+    {
+
+        @Override
+        protected Pedidos[] doInBackground(PedidosDao... pedidosDaos)
+        {
+            Pedidos result[] = null;
+            try
+            {
+                String folioAux;
+                result = pedidosDaos[0].findByDynamicSelect("SELECT NULL, NULL, Folio, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL FROM Pedidos", null);
+            }
+            catch (Exception e)
+            {
+
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Pedidos[] pedidos)
+        {
+            super.onPostExecute(pedidos);
+            String folioAux = String.format("%05d%n",pedidos.length+1);
+            tvFolio.setText(folioAux);
+        }
+    }
+
+    private static class InsertarPedido extends AsyncTask<Pedidos, Void, Void>
+    {
+
+        @Override
+        protected Void doInBackground(Pedidos... pedidos)
+        {
+            PedidosDao _dao = getPedidosDao();
+            try
+            {
+                _dao.insert(pedidos[0]);
+            }
+            catch(Exception e)
+            {
+
+            }
+            return null;
+        }
+    }
+
+    private static class InsertarDetalle extends AsyncTask<DetallesPedidos, Void, Void>
+    {
+
+        @Override
+        protected Void doInBackground(DetallesPedidos... detallesPedidos)
+        {
+            DetallesPedidosDao _dao = getDetallesPedidosDao();
+            try
+            {
+                _dao.insert(detallesPedidos[0]);
+            }
+            catch (Exception e)
+            {
+
+            }
+            return null;
+        }
+    }
+
 }
 //consulta del pedidio junto con sus detalles
 //este pedidio es para las entregas jajaja
