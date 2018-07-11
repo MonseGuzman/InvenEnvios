@@ -11,7 +11,9 @@
     <color name="secondaryDarkColor">#4d2c91</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="bg_row_background">#fa315b</color>
+
 <!--
+    android:background="@android:color/holo_blue_dark"
     <color name="secondaryTextColor">#f8f9f9</color>
 -->
 </resources>

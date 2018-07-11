@@ -2,10 +2,7 @@ package com.innovati.felipehernandez.invenenvios.adapters;
 
 import android.content.Context;
 import android.os.CountDownTimer;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,19 +10,17 @@ import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.innovati.felipehernandez.invenenvios.R;
-import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
-import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 
-public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAdapter.ViewHolder> {
-    private LayoutInflater layoutInflater;
+public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAdapter.ViewHolder>
+{
     private Animation animationUp, animationDown;
     private Context context;
     private final int COUNTDOWN_RUNNING_TIME = 500;
-    private DetallesPedidos lista[]; //por resolver
+    private VwDetallePedido lista[];
 
-    public ListaArticulosAdapter(Animation animationUp, Animation animationDown, Context context, DetallesPedidos[] lista)
+    public ListaArticulosAdapter(Context context, Animation animationUp, Animation animationDown, VwDetallePedido[] lista)
     {
-        this.layoutInflater = LayoutInflater.from(context);
         this.animationUp = animationUp;
         this.animationDown = animationDown;
         this.context = context;
@@ -35,7 +30,8 @@ public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAd
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View v = layoutInflater.inflate(R.layout.item_abastecimiento, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_abastecimiento, parent, false);
+        context = parent.getContext();
 
         return new ViewHolder(v);
     }
@@ -65,7 +61,7 @@ public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAd
             NombreArticuloTextView = (TextView) itemView.findViewById(R.id.NombreArticuloTextView);
         }
 
-        public void bind(final DetallesPedidos datos)
+        public void bind(final VwDetallePedido datos)
         {
             //creo que añades cosas ?
             NombreArticuloTextView.setText(datos.getClaveArticulo());

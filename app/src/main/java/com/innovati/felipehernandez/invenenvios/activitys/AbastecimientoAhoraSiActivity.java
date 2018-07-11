@@ -16,8 +16,11 @@ import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ListaArticulosAdapter;
 import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDaoFactory;
 
 public class AbastecimientoAhoraSiActivity extends AppCompatActivity
 {
@@ -26,7 +29,7 @@ public class AbastecimientoAhoraSiActivity extends AppCompatActivity
     private MenuItem menu_cambia;
 
     private ListaArticulosAdapter listaArticulosAdapter;
-    private DetallesPedidos result[];
+    private VwDetallePedido result[];
     private boolean ban = false;
     private MetodosInternos metodosInternos = new MetodosInternos(this);
 
@@ -42,8 +45,8 @@ public class AbastecimientoAhoraSiActivity extends AppCompatActivity
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView2.setLayoutManager(linearLayoutManager);
 
-        animationUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
-        animationDown = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
+        animationUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        animationDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
 
         filtar();
     }
@@ -86,9 +89,9 @@ public class AbastecimientoAhoraSiActivity extends AppCompatActivity
         }
     }
 
-    public static DetallesPedidosDao getVwArticulosDao()
+    public static VwDetallePedidoDao getVwDetallePedidoDao()
     {
-        return DetallesPedidosDaoFactory.create();
+        return VwDetallePedidoDaoFactory.create();
     }
 
     public void filtar()
@@ -98,10 +101,10 @@ public class AbastecimientoAhoraSiActivity extends AppCompatActivity
                 //sin filtro = todos
                 try
                 {
-                    DetallesPedidosDao _dao = getVwArticulosDao();
+                    VwDetallePedidoDao _dao = getVwDetallePedidoDao();
                     result = _dao.findAll();
 
-                    listaArticulosAdapter = new ListaArticulosAdapter(animationUp, animationDown, this, result);
+                    listaArticulosAdapter = new ListaArticulosAdapter(this, animationUp, animationDown, result);
                     recyclerView2.setAdapter(listaArticulosAdapter);
                 }
                 catch(Exception e)
