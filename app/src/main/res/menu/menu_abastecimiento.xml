@@ -4,7 +4,7 @@
     <item
         android:id="@+id/menu_cambia"
         android:title="Cambiar"
-        android:icon="@drawable/ic_detalles_abastecimiento"
-        app:showAsAction="ifRoom" />
-
+        android:icon="@drawable/ic_cambios_menu"
+        app:showAsAction="ifRoom"
+        android:visible="true"/>
 </menu>
