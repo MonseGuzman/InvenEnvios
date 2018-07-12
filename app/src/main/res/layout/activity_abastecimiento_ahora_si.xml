@@ -4,16 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activitys.AbastecimientoAhoraSiActivity">
+    tools:context=".activitys.EntregasActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycleView3"
+    <ListView
+        android:id="@+id/EntregasListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:scrollbars="vertical" />
+        android:layout_height="wrap_content">
+    </ListView>
 
 </RelativeLayout>

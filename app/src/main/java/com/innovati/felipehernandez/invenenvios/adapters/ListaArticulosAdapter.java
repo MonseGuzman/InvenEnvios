@@ -90,11 +90,13 @@ public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAd
                             }
                         };
                         countDownTimer.start();
+                        NombreArticuloTextView.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.ic_keyboard_arrow_down, 0);
                     }
                     else
                     {
                         DescripcionTextView.setVisibility(View.VISIBLE);
                         DescripcionTextView.startAnimation(animationDown);
+                        NombreArticuloTextView.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.ic_keyboard_arrow_up, 0);
                     }
                 }
             });

@@ -47,9 +47,7 @@ public class MenuActivity extends AppCompatActivity
                 i.putExtra("Tipo", 2);
                 break;
             case R.id.EntregaButton:
-                /*i = new Intent(this, AbastecimientosActivity.class);
-                i.putExtra("Tipo", 2); //ENTREGA*/
-                i = new Intent (this, AbastecimientoAhoraSiActivity.class);
+                i = new Intent (this, EntregasActivity.class);
                 break;
         }
         startActivity(i);

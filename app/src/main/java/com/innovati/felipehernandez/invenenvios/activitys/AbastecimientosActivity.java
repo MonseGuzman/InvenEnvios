@@ -1,7 +1,7 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -15,17 +15,14 @@ import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
-import com.innovati.felipehernandez.invenenvios.activitys.PedidoActivity;
 import com.innovati.felipehernandez.invenenvios.adapters.ListaArticulosAdapter;
 import com.innovati.felipehernandez.invenenvios.adapters.PedidosAdapter;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwAbastecimientoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwAbastecimiento;
-import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwAbastecimientoDaoFactory;
-import com.innovati.felipehernandez.invenenvios.fragments.DatosPedidoFragment;
 import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
 
 public class AbastecimientosActivity extends AppCompatActivity {
@@ -155,14 +152,14 @@ public class AbastecimientosActivity extends AppCompatActivity {
             case R.id.menu_cambia:
                 if(!ban)
                 {
-                    menu_cambia.setIcon(R.drawable.ic_contenido); //da error aquí
+                    menu_cambia.setIcon(R.drawable.ic_lista_abastecimiento); //da error aquí
 
                     recyclerView2.setVisibility(View.INVISIBLE);
                     AbastecimientoListView.setVisibility(View.VISIBLE);
                 }
                 else
                 {
-                    menu_cambia.setIcon(R.drawable.ic_detalle);
+                    menu_cambia.setIcon(R.drawable.ic_detalles_abastecimiento);
 
                     recyclerView2.setVisibility(View.VISIBLE);
                     AbastecimientoListView.setVisibility(View.INVISIBLE);
