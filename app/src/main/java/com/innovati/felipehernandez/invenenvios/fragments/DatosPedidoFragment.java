@@ -1,5 +1,7 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
+import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
@@ -33,6 +35,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
     private static ConstraintLayout datosEditArticle;
     private static float exitArticul = 0, cantidaNum;
     private static int positionList;
+    private static float count = 0;
     static List<ArticulosPedido> articuloEdit = new ArrayList<ArticulosPedido>();
     public DatosPedidoFragment() {
         // Required empty public constructor
@@ -181,15 +184,9 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
 
     public static float getCountArticle(String c){
         String[] clave = {c};
-        float count = 0;
-        VwArticulos result[];
-        try{
-            VwArticulosDao _dao = getVwArticulosDao();
-            result = _dao.findByDynamicWhere("CLAVE = ?", clave);
-            c = String.valueOf(result[0].getExistenciaTotal());
-            count = Float.valueOf(c);
-        }catch (Exception e){}
-
+        VwArticulosDao _dao = getVwArticulosDao();
+        Consulta consulta = new Consulta(clave);
+        consulta.execute(_dao);
         return count;
     }
     public void updateArticleList(boolean ban){
@@ -213,4 +210,36 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         PedidoActivity.calTotal();
     }
 
+    private static class Consulta extends AsyncTask<VwArticulosDao, VwArticulosDao, VwArticulos[]>
+    {
+        String[] clave;
+
+        public Consulta(String[] clave)
+        {
+            this.clave = clave;
+        }
+
+        @Override
+        protected VwArticulos[] doInBackground(VwArticulosDao... vwArticulosDaos)
+        {
+            VwArticulos result[] = null;
+            try
+            {
+                result = vwArticulosDaos[0].findByDynamicWhere("CLAVE = ?", clave);
+            }
+            catch (Exception e)
+            {
+
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(VwArticulos[] vwArticulos)
+        {
+            super.onPostExecute(vwArticulos);
+            count = (float)vwArticulos[0].getExistenciaTotal();
+
+        }
+    }
 }
