@@ -28,7 +28,7 @@ public class EntregasActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_abastecimiento_ahora_si);
+        setContentView(R.layout.activity_entregas);
 
         this.setTitle(R.string.tituloEntregas);
         inicializacion();
