@@ -28,13 +28,11 @@ import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
 public class AbastecimientosActivity extends AppCompatActivity {
 
     private ListView AbastecimientoListView;
-    private RecyclerView recyclerView2;
+    private RecyclerView AbastecimientoRecycleView;
     private Animation animationUp, animationDown;
-    private MenuItem menu_cambia;
 
     private ListaArticulosAdapter listaArticulosAdapter;
     private VwAbastecimiento lista[];
-    private boolean ban = false;
     private MetodosInternos metodosInternos = new MetodosInternos(this);
 
     private PedidosAdapter adaptador;
@@ -51,48 +49,41 @@ public class AbastecimientosActivity extends AppCompatActivity {
         tipo = getIntent().getExtras().getInt("Tipo", 0);
         this.setTitle(R.string.tituloAbastecimiento);
 
-        switch (tipo)
-        {
-            case 1:
-                AbastecimientoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                    {
-                        DetallePedidoFragment datosPedidoFragment = new DetallePedidoFragment();
-                        Bundle args;
-                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
-                        args = new Bundle();
-                        args.putString("pedido", result[position].getIdPedido());
-                        datosPedidoFragment.setArguments(args);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.abastecimientoConsulta, datosPedidoFragment).addToBackStack(null).commit();
-                    }
-                });
-                break;
-            case 2:
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-                recyclerView2.setLayoutManager(linearLayoutManager);
+        AbastecimientoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                DetallePedidoFragment datosPedidoFragment = new DetallePedidoFragment();
+                Bundle args;
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
+                args = new Bundle();
+                args.putString("pedido", result[position].getIdPedido());
+                datosPedidoFragment.setArguments(args);
+                getSupportFragmentManager().beginTransaction().replace(R.id.abastecimientoConsulta, datosPedidoFragment).addToBackStack(null).commit();
+            }
+        });
 
-                animationUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
-                animationDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
-                break;
-        }
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        AbastecimientoRecycleView.setLayoutManager(linearLayoutManager);
 
-        cargarDatos();
+        animationUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        animationDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+
+        cargarDatos(tipo);
     }
 
     private void inicializar()
     {
         AbastecimientoListView = (ListView)findViewById(R.id.AbastecimientoListView);
-        recyclerView2 = (RecyclerView) findViewById(R.id.recycleView2);
-        menu_cambia = (MenuItem) findViewById(R.id.menu_cambia);
+        AbastecimientoRecycleView = (RecyclerView) findViewById(R.id.AbastecimientoRecycleView);
     }
 
-    private void cargarDatos()
+    private void cargarDatos(int item)
     {
         if(metodosInternos.conexionRed())
         {
-            switch (tipo)
+            switch (item)
             {
                 case 1:
                     try
@@ -114,7 +105,7 @@ public class AbastecimientosActivity extends AppCompatActivity {
                         lista = _dao.findAll();
 
                         listaArticulosAdapter = new ListaArticulosAdapter(this, animationUp, animationDown, lista);
-                        recyclerView2.setAdapter(listaArticulosAdapter);
+                        AbastecimientoRecycleView.setAdapter(listaArticulosAdapter);
                     }
                     catch(Exception e)
                     {
@@ -150,20 +141,21 @@ public class AbastecimientosActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.menu_cambia:
-                if(!ban)
+                int menu = 0;
+                if(AbastecimientoRecycleView.getVisibility() == View.VISIBLE)
                 {
-                    menu_cambia.setIcon(R.drawable.ic_lista_abastecimiento); //da error aquí
-
-                    recyclerView2.setVisibility(View.INVISIBLE);
+                    AbastecimientoRecycleView.setVisibility(View.INVISIBLE);
                     AbastecimientoListView.setVisibility(View.VISIBLE);
+                    menu = 1;
                 }
                 else
                 {
-                    menu_cambia.setIcon(R.drawable.ic_detalles_abastecimiento);
-
-                    recyclerView2.setVisibility(View.VISIBLE);
+                    AbastecimientoRecycleView.setVisibility(View.VISIBLE);
                     AbastecimientoListView.setVisibility(View.INVISIBLE);
+                    menu = 2;
                 }
+
+                cargarDatos(menu);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -178,7 +170,9 @@ public class AbastecimientosActivity extends AppCompatActivity {
         {
             //regresa
             super.onBackPressed();
-            //getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager().popBackStack();
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
         else
             finish();
