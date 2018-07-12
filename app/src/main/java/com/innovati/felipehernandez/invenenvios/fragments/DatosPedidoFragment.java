@@ -33,8 +33,6 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
     private static ConstraintLayout datosEditArticle;
     private static float exitArticul = 0, cantidaNum;
     private static int positionList;
-    private static boolean ban = false;
-
     static List<ArticulosPedido> articuloEdit = new ArrayList<ArticulosPedido>();
     public DatosPedidoFragment() {
         // Required empty public constructor
@@ -97,7 +95,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         btnAceptar = v.findViewById(R.id.editArticuloListCancelar);
         btnCancelar = v.findViewById(R.id.editArticuloListAceptar);
         editCantida = v.findViewById(R.id.cantidadEditText_AEdit);
-        datosEditArticle.setVisibility(View.VISIBLE);
+        datosEditArticle.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -116,28 +114,23 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
                     if(cantidaNum != 0){
                         cantidaNum -=1;
                     }
-                    Log.d("dfds-----------", "mas");
                     break;
                 case R.id.MenosButton_AEdit:
                     float exit = exitArticul;
                     if(cantidaNum < exit){
                         cantidaNum +=1;
                     }
-                    Log.d("dfds-----------", "menos");
                     break;
                 case R.id.editArticuloListCancelar:
                     updateArticleList(false);
-                    Log.d("dfds-----------", "can");
                     break;
                 case R.id.editArticuloListAceptar:
                     updateArticleList(true);
-                    Log.d("dfds-----------", "acep");
                     break;
 
             }
             editCantida.setText(String.valueOf(cantidaNum));
         }
-        Log.d("dfds-----------", "ya que");
         PedidoActivity.calTotal();
     }
 
@@ -145,32 +138,33 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(PedidoActivity.articulosPedidoList, new RecycleViewOnItemClickListener() {
                     @Override
                     public void onClick(View view, int position) {
-                        updateAr(position);
+                        Log.d("punto post---:", String.valueOf(position));
                         positionList =position;
+                            updateAr(position);
+
                     }
                 }));
     }
 
     public static void updateAr(int x){
-        if (!ban){
-            ban  = true;
-            updateArticle(x);
-        }else{
-            articuloEdit = null;
-            datosEditArticle.setVisibility(View.INVISIBLE);
-            updateAdapter();
-            PedidoActivity.calTotal();
-            ban = false;
-        }
+        updateArticle(x);
+            try{
 
+            }catch (Exception e){
+                //updateArticle(0);
+            }
     }
 
     public static   void updateArticle(int position){
-        articuloEdit.add(PedidoActivity.articulosPedidoList.get(position));
+        try{
+            articuloEdit.set(0,PedidoActivity.articulosPedidoList.get(position));
+        }catch (Exception e){
+            articuloEdit.add(PedidoActivity.articulosPedidoList.get(position));
+        }
         updateAdapterArt(articuloEdit);
         exitArticul = getCountArticle(articuloEdit.get(0).getIdArticulo());
        editCantida.setText(String.valueOf(PedidoActivity.articulosPedidoList.get(position).getCantidad()));
-        editCantida.setVisibility(View.VISIBLE);
+        datosEditArticle.setVisibility(View.VISIBLE);
     }
     public static void updateAdapterArt(List<ArticulosPedido> articuloEdit){
         recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(articuloEdit, new RecycleViewOnItemClickListener() {

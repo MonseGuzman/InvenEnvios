@@ -180,7 +180,11 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
             if (ban){
                 cantidadPedido = PedidoActivity.articulosPedidoList.get(position).getCantidad();
             }else{
-                cantidadPedido = 1;
+                if(existencias != 0){
+                    cantidadPedido = 1;
+                }else{
+                    cantidadPedido = 0;
+                }
             }
             cantidadEditText_A.setText(String.valueOf(cantidadPedido));
         }catch (Exception e){

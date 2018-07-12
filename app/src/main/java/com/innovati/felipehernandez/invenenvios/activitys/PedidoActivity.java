@@ -178,7 +178,7 @@ public class PedidoActivity extends AppCompatActivity
             for(ArticulosPedido ar: articulosPedidoList){
                 if (ar.isStatus()){
                     total += ar.getTotal();
-                    Log.d("test----", String.valueOf(ar.getTotal()));
+
                 }
             }
         }
@@ -244,7 +244,6 @@ public class PedidoActivity extends AppCompatActivity
             for(ArticulosPedido ar: articulosPedidoList){
                 if (ar.isStatus()){
                     total += ar.getTotal();
-                    Log.d("test----", String.valueOf(ar.getTotal()));
                 }
             }
         }
@@ -256,7 +255,6 @@ public class PedidoActivity extends AppCompatActivity
             for(ArticulosPedido ar: articulosPedidoList){
                 if (ar.isStatus()){
                     sub += ar.getSubTotal();
-                    Log.d("test----", String.valueOf(ar.getTotal()));
                 }
             }
         }
@@ -268,7 +266,6 @@ public class PedidoActivity extends AppCompatActivity
             for(ArticulosPedido ar: articulosPedidoList){
                 if (ar.isStatus()){
                     iva += ar.getIva();
-                    Log.d("test----", String.valueOf(ar.getTotal()));
                 }
             }
         }

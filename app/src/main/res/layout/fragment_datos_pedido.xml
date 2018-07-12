@@ -11,20 +11,22 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primaryTextColor">
+        android:background="@color/primaryTextColor"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_alignEnd="@id/btnRegistrarPedido"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/includeEditoArticlePedido"
+            app:layout_constraintBottom_toTopOf="@+id/btnRegistrarPedido"
             app:layout_constraintTop_toTopOf="parent">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/listaCarritoRecycle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="369dp" />
         </RelativeLayout>
 
         <include
@@ -32,26 +34,26 @@
             layout="@layout/edit_articulo_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="70dp"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/btnRegistrarPedido"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btnRegistrarPedido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
             android:background="@color/colorPrimaryDark"
             android:text="Registrar Pedido"
             android:textColor="@color/primaryTextColor"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

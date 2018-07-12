@@ -42,7 +42,7 @@ public class ArticulosPedidosAdapter extends RecyclerView.Adapter<ArticulosPedid
         holder.tvPercentacionArticuloItem.setText(articulosPedidos.get(position).getPresentacion());
         holder.tvCountArticuloItem.setText("Cantidad: " + articulosPedidos.get(position).getCantidad());
         holder.tvPriceArticuloItem.setText("precio: "+articulosPedidos.get(position).getPrecio());
-        holder.tvSubArticuloItem.setText("Sub: "+articulosPedidos.get(position).getSubTotal());
+        holder.tvSubArticuloItem.setText("$: "+articulosPedidos.get(position).getSubTotal());
         if (articulosPedidos.get(position).isStatus()){
             holder.cardView.setCardBackgroundColor(Color.WHITE);
         }else{
