@@ -16,10 +16,13 @@ import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ListaArticulosAdapter;
 import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwAbastecimientoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwAbastecimiento;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwAbastecimientoDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDaoFactory;
 
 public class AbastecimientoAhoraSiActivity extends AppCompatActivity
@@ -29,7 +32,7 @@ public class AbastecimientoAhoraSiActivity extends AppCompatActivity
     private MenuItem menu_cambia;
 
     private ListaArticulosAdapter listaArticulosAdapter;
-    private VwDetallePedido result[];
+    private VwAbastecimiento result[];
     private boolean ban = false;
     private MetodosInternos metodosInternos = new MetodosInternos(this);
 
@@ -89,9 +92,9 @@ public class AbastecimientoAhoraSiActivity extends AppCompatActivity
         }
     }
 
-    public static VwDetallePedidoDao getVwDetallePedidoDao()
+    public static VwAbastecimientoDao getVwAbastecimientoDao()
     {
-        return VwDetallePedidoDaoFactory.create();
+        return VwAbastecimientoDaoFactory.create();
     }
 
     public void filtar()
@@ -101,7 +104,7 @@ public class AbastecimientoAhoraSiActivity extends AppCompatActivity
                 //sin filtro = todos
                 try
                 {
-                    VwDetallePedidoDao _dao = getVwDetallePedidoDao();
+                    VwAbastecimientoDao _dao = getVwAbastecimientoDao();
                     result = _dao.findAll();
 
                     listaArticulosAdapter = new ListaArticulosAdapter(this, animationUp, animationDown, result);

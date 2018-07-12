@@ -23,6 +23,10 @@ public class MenuActivity extends AppCompatActivity
     }
 
 
+    //              |NUM | TIPO
+    //----------------------------------------
+    //ABASTECIMIENTO|  1 | VISTA NORMAL
+    //              |  2 | VISTA CON DETALLES
     public void botones(View v)
     {
         Intent i = new Intent();
@@ -40,7 +44,7 @@ public class MenuActivity extends AppCompatActivity
                 break;
             case R.id.AbastecimientoButton:
                 i = new Intent(this, AbastecimientosActivity.class);
-                i.putExtra("Tipo", 1); //CONSULTA
+                i.putExtra("Tipo", 2);
                 break;
             case R.id.EntregaButton:
                 /*i = new Intent(this, AbastecimientosActivity.class);

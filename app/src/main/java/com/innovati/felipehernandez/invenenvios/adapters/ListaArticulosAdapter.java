@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.innovati.felipehernandez.invenenvios.R;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwAbastecimiento;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 
 public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAdapter.ViewHolder>
@@ -17,9 +18,9 @@ public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAd
     private Animation animationUp, animationDown;
     private Context context;
     private final int COUNTDOWN_RUNNING_TIME = 500;
-    private VwDetallePedido lista[];
+    private VwAbastecimiento lista[];
 
-    public ListaArticulosAdapter(Context context, Animation animationUp, Animation animationDown, VwDetallePedido[] lista)
+    public ListaArticulosAdapter(Context context, Animation animationUp, Animation animationDown, VwAbastecimiento[] lista)
     {
         this.animationUp = animationUp;
         this.animationDown = animationDown;
@@ -61,11 +62,12 @@ public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAd
             NombreArticuloTextView = (TextView) itemView.findViewById(R.id.NombreArticuloTextView);
         }
 
-        public void bind(final VwDetallePedido datos)
+        public void bind(final VwAbastecimiento datos)
         {
-            //creo que añades cosas ?
-            NombreArticuloTextView.setText(datos.getClaveArticulo());
-            DescripcionTextView.setText(String.valueOf(datos.getTotal()));
+            String descripcion = String.valueOf(datos.getTotal()) + " " + datos.getUnidadPrimaria();
+
+            NombreArticuloTextView.setText(datos.getNombre());
+            DescripcionTextView.setText(descripcion);
 
             NombreArticuloTextView.setOnClickListener(new View.OnClickListener()
             {
@@ -88,8 +90,6 @@ public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAd
                             }
                         };
                         countDownTimer.start();
-
-                        //holder.NombreArticuloTextView.setCom
                     }
                     else
                     {
