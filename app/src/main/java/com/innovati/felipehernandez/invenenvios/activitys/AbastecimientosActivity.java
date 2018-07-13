@@ -1,5 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +26,7 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwAbastecimientoDaoFactory;
 import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
 
-public class AbastecimientosActivity extends AppCompatActivity {
+public class AbastecimientosActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     private ListView AbastecimientoListView;
     private RecyclerView AbastecimientoRecycleView;
@@ -49,20 +50,7 @@ public class AbastecimientosActivity extends AppCompatActivity {
         tipo = getIntent().getExtras().getInt("Tipo", 0);
         this.setTitle(R.string.tituloAbastecimiento);
 
-        AbastecimientoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                DetallePedidoFragment datosPedidoFragment = new DetallePedidoFragment();
-                Bundle args;
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
-                args = new Bundle();
-                args.putString("pedido", result[position].getIdPedido());
-                datosPedidoFragment.setArguments(args);
-                getSupportFragmentManager().beginTransaction().replace(R.id.abastecimientoConsulta, datosPedidoFragment).addToBackStack(null).commit();
-            }
-        });
+        AbastecimientoListView.setOnItemClickListener(this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         AbastecimientoRecycleView.setLayoutManager(linearLayoutManager);
@@ -86,31 +74,15 @@ public class AbastecimientosActivity extends AppCompatActivity {
             switch (item)
             {
                 case 1:
-                    try
-                    {
-                        PedidosDao _dao = getPedidosDao();
-                        result = _dao.findAll();
-                        adaptador = new PedidosAdapter(this,  R.layout.listview_pedidos, result, 1);
-                        AbastecimientoListView.setAdapter(adaptador);
-                    }
-                    catch(Exception e)
-                    {
-                        Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
-                    }
+                        PedidosDao _daoP = getPedidosDao();
+                        ConsultaPedidos conP = new ConsultaPedidos();
+                        conP.execute(_daoP);
+
                     break;
                 case 2:
-                    try
-                    {
-                        VwAbastecimientoDao _dao = getVwAbastecimientoDao();
-                        lista = _dao.findAll();
-
-                        listaArticulosAdapter = new ListaArticulosAdapter(this, animationUp, animationDown, lista);
-                        AbastecimientoRecycleView.setAdapter(listaArticulosAdapter);
-                    }
-                    catch(Exception e)
-                    {
-                        Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
-                    }
+                        VwAbastecimientoDao _daoA = getVwAbastecimientoDao();
+                        ConsultaAbastecimientos conA = new ConsultaAbastecimientos();
+                        conA.execute(_daoA);
                     break;
             }
         }
@@ -186,5 +158,68 @@ public class AbastecimientosActivity extends AppCompatActivity {
     public static PedidosDao getPedidosDao()
     {
         return PedidosDaoFactory.create();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        DetallePedidoFragment datosPedidoFragment = new DetallePedidoFragment();
+        Bundle args;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
+        args = new Bundle();
+        args.putString("pedido", result[position].getIdPedido());
+        datosPedidoFragment.setArguments(args);
+        getSupportFragmentManager().beginTransaction().replace(R.id.abastecimientoConsulta, datosPedidoFragment).addToBackStack(null).commit();
+    }
+
+    private class ConsultaPedidos extends AsyncTask<PedidosDao,Void, Pedidos[]>
+    {
+
+        @Override
+        protected Pedidos[] doInBackground(PedidosDao... pedidosDaos) {
+            try
+            {
+                result = pedidosDaos[0].findAll();
+            }
+            catch (Exception e){
+
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Pedidos[] pedidos) {
+            super.onPostExecute(pedidos);
+
+            adaptador = new PedidosAdapter(AbastecimientosActivity.this,  R.layout.listview_pedidos, result, 1);
+            AbastecimientoListView.setAdapter(adaptador);
+        }
+    }
+
+    private class ConsultaAbastecimientos extends AsyncTask<VwAbastecimientoDao, Void, VwAbastecimiento[]>
+    {
+
+        @Override
+        protected VwAbastecimiento[] doInBackground(VwAbastecimientoDao... vwAbastecimientoDaos)
+        {
+            try
+            {
+                lista = vwAbastecimientoDaos[0].findAll();
+            }
+            catch (Exception e){
+
+            }
+
+            return lista;
+        }
+
+        @Override
+        protected void onPostExecute(VwAbastecimiento[] vwAbastecimientos)
+        {
+            super.onPostExecute(vwAbastecimientos);
+            listaArticulosAdapter = new ListaArticulosAdapter(AbastecimientosActivity.this, animationUp, animationDown, lista);
+            AbastecimientoRecycleView.setAdapter(listaArticulosAdapter);
+        }
     }
 }

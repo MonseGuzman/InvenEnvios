@@ -1,5 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -100,23 +101,39 @@ public class EntregasActivity extends AppCompatActivity
     {
         if(metodosInternos.conexionRed())
         {
-            //sin filtro = todos
-            try
-            {
-                PedidosDao _dao = getPedidosDao();
-                result = _dao.findAll();
-                adaptador = new PedidosAdapter(this,  R.layout.listview_pedidos, result, 2);
-                EntregasListView.setAdapter(adaptador);
-            }
-            catch(Exception e)
-            {
-                Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
-            }
+            PedidosDao _dao = getPedidosDao();
+            ConsultaPedidos conP = new ConsultaPedidos();
+            conP.execute(_dao);
         }
         else
         {
             //código para buscar en la bd interna
             metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
+        }
+    }
+
+    private class ConsultaPedidos extends AsyncTask<PedidosDao,Void, Pedidos[]>
+    {
+
+        @Override
+        protected Pedidos[] doInBackground(PedidosDao... pedidosDaos) {
+            try
+            {
+                result = pedidosDaos[0].findAll();
+            }
+            catch (Exception e){
+
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Pedidos[] pedidos) {
+            super.onPostExecute(pedidos);
+
+            adaptador = new PedidosAdapter(EntregasActivity.this,  R.layout.listview_pedidos, result, 2);
+            EntregasListView.setAdapter(adaptador);
         }
     }
 }

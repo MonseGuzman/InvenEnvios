@@ -1,6 +1,7 @@
 package com.innovati.felipehernandez.invenenvios.adapters;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ public class PedidosAdapter extends BaseAdapter
     private Pedidos lista[];
     private int layout;
     private int tipo; //CONSULTA - 1 ENTREGA 2
-
+    private String nombre = "";
     //editar
     public PedidosAdapter(Context context, int layout, Pedidos lista[], int tipo)
     {
@@ -70,16 +71,8 @@ public class PedidosAdapter extends BaseAdapter
 
         Pedidos pedidos = lista[position];
         VwClientesDao busqueda = getVwClientesDao();
-        VwClientes cliente = null;
-        try
-        {
-            VwClientes clientes[] = busqueda.findWhereClaveEquals(pedidos.getClaveCliente());
-             cliente = clientes[0];
-        }
-        catch(Exception e)
-        {
 
-        }
+
         vh.FolioTextView_P.setText(pedidos.getFolio());
         //fecha
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
@@ -91,7 +84,7 @@ public class PedidosAdapter extends BaseAdapter
             vh.EstatusCheckbox_P.setSelected(false);
 
         vh.TotalTextView_P.setText("Total: $" + String.valueOf(pedidos.getTotal()));
-        vh.ClienteTextView_P.setText(cliente.getNombre());
+        vh.ClienteTextView_P.setText(nombre);
 
         if(tipo == 2) //si es una entrega
         {
@@ -117,5 +110,36 @@ public class PedidosAdapter extends BaseAdapter
     public static VwClientesDao getVwClientesDao()
     {
         return VwClientesDaoFactory.create();
+    }
+
+    public class Consulta extends AsyncTask<VwClientesDao, Void, VwClientes>
+    {
+        String clave;
+        public Consulta(String clave)
+        {
+            this.clave = clave;
+        }
+        @Override
+        protected VwClientes doInBackground(VwClientesDao... vwClientesDaos)
+        {
+            VwClientes cliente = null;
+            try
+            {
+                VwClientes clientes[] = vwClientesDaos[0].findWhereClaveEquals(clave);
+                cliente = clientes[0];
+            }
+            catch(Exception e)
+            {
+
+            }
+            return cliente;
+        }
+
+        @Override
+        protected void onPostExecute(VwClientes vwClientes)
+        {
+            super.onPostExecute(vwClientes);
+            nombre = vwClientes.getNombre();
+        }
     }
 }
