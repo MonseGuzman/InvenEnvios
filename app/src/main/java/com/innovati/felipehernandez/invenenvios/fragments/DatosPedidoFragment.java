@@ -195,6 +195,8 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
             articulosPedido.setStatus(true);
             float ivaAux = (float) (articulosPedido.getTotal()*0.16);
             articulosPedido.setIva(ivaAux);
+            ivaAux = PedidoActivity.articulosPedidoList.get(positionList).getExits();
+            articulosPedido.setExits(ivaAux);
             articulosPedido.setTotal(articulosPedido.getSubTotal()+articulosPedido.getIva());
             PedidoActivity.addArticulo(articulosPedido);
         }
