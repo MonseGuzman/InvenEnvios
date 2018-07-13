@@ -90,6 +90,7 @@ public class BusquedaArticulosFragment extends Fragment
 
 
         return v;
+
     }
 
     private void inicializacion(View view)
