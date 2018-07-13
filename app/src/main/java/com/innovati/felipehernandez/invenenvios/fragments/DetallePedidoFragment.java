@@ -1,6 +1,7 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -63,32 +64,13 @@ public class DetallePedidoFragment extends Fragment
         btnReg = (Button)v.findViewById(R.id.btnRegistrarPedido);
     }
 
-    public void loadData(){
-        try
-        {
-            articulosPedidos.clear();
+    public void loadData()
+    {
 
             VwDetallePedidoDao detallesPedidos = getVwDetallePedidoDao();
-            result = detallesPedidos.findWhereIdPedidoEquals(clavePedido);
+            Consulta c = new Consulta();
+            c.execute(detallesPedidos);
 
-            for(VwDetallePedido pedidos: result){
-                ArticulosPedido articulo = new ArticulosPedido();
-
-                articulo.setNombre(pedidos.getNombre());
-                articulo.setIdArticulo(pedidos.getClaveArticulo());
-                articulo.setPresentacion(pedidos.getUnidadPrimaria());
-                articulo.setCantidad((float) pedidos.getCantidad());
-                articulo.setIva(pedidos.getIva());
-                articulo.setPrecio(pedidos.getPrecio());
-                articulo.setTotal(pedidos.getTotal());
-                articulo.setSubTotal(pedidos.getSubtotal());
-                articulo.setStatus(true);
-                articulosPedidos.add(articulo);
-            }
-
-            updateAdapter();
-
-        }catch (Exception e){}
     }
     public static VwDetallePedidoDao getVwDetallePedidoDao()
     {
@@ -102,5 +84,50 @@ public class DetallePedidoFragment extends Fragment
 
             }
         }));
+    }
+
+    private class Consulta extends AsyncTask<VwDetallePedidoDao, Void, VwDetallePedido>
+    {
+
+        @Override
+        protected VwDetallePedido doInBackground(VwDetallePedidoDao... vwDetallePedidoDaos)
+        {
+          try
+          {
+              result = vwDetallePedidoDaos[0].findWhereIdPedidoEquals(clavePedido);
+
+          }
+          catch (Exception e)
+          {
+
+          }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(VwDetallePedido vwDetallePedido)
+        {
+            super.onPostExecute(vwDetallePedido);
+
+            articulosPedidos.clear();
+
+            for(VwDetallePedido pedidos: result)
+            {
+                ArticulosPedido articulo = new ArticulosPedido();
+
+                articulo.setNombre(pedidos.getNombre());
+                articulo.setIdArticulo(pedidos.getClaveArticulo());
+                articulo.setPresentacion(pedidos.getUnidadPrimaria());
+                articulo.setCantidad((float) pedidos.getCantidad());
+                articulo.setIva(pedidos.getIva());
+                articulo.setPrecio(pedidos.getPrecio());
+                articulo.setTotal(pedidos.getTotal());
+                articulo.setSubTotal(pedidos.getSubtotal());
+                articulo.setStatus(true);
+                articulosPedidos.add(articulo);
+            }
+            updateAdapter();
+
+        }
     }
 }
