@@ -76,8 +76,4 @@ public class ArticuloAdapter extends BaseAdapter
         TextView nombreArticulo, existencia, IDArticulo;
     }
 
-    public static VwArticulosDao getVwArticulosDao()
-    {
-        return VwArticulosDaoFactory.create();
-    }
 }
