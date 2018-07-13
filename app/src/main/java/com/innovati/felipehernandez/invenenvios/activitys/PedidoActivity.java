@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.TabsAdapter;
@@ -70,7 +71,7 @@ public class PedidoActivity extends AppCompatActivity
         tabLayout.addTab(tabLayout.newTab().setText("Detalles del pedido"));
         //tabLayout.setSelectedTabIndicatorColor(getColor(R.color.primaryTextColor));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
+        ClienteEntTextView.setText("Cliente: " + nombreC);
         //viewpager
         TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
@@ -80,8 +81,14 @@ public class PedidoActivity extends AppCompatActivity
             public void onTabSelected(TabLayout.Tab tab)
             {
                 //cuando se selecciona un tab
+
                 int posicion = tab.getPosition();
-                viewPager.setCurrentItem(posicion);
+                if(siPasa()){
+                    viewPager.setCurrentItem(posicion);
+                }else{
+                    Log.i("test","Falta Elegir un Cliente");
+                }
+
             }
 
             @Override
@@ -349,6 +356,9 @@ public class PedidoActivity extends AppCompatActivity
             }
             return null;
         }
+    }
+    private boolean siPasa(){
+        return ((nombreC == "No elegido")? false: true);
     }
 
 }
