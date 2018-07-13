@@ -14,7 +14,7 @@
     <RelativeLayout
         android:id="@+id/view_foreground"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="80dp"
         android:background="@android:color/white"
         >
 
@@ -70,7 +70,7 @@
     <RelativeLayout
         android:id="@+id/view_background"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="80dp"
         android:background="@color/bg_row_background">
         <ImageView
             android:id="@+id/delete_icon"

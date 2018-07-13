@@ -165,7 +165,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
             articuloEdit.add(PedidoActivity.articulosPedidoList.get(position));
         }
         updateAdapterArt(articuloEdit);
-        exitArticul = getCountArticle(articuloEdit.get(0).getIdArticulo());
+        exitArticul = articuloEdit.get(0).getExits();
        editCantida.setText(String.valueOf(PedidoActivity.articulosPedidoList.get(position).getCantidad()));
         datosEditArticle.setVisibility(View.VISIBLE);
     }
@@ -182,13 +182,6 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         return VwArticulosDaoFactory.create();
     }
 
-    public static float getCountArticle(String c){
-        String[] clave = {c};
-        VwArticulosDao _dao = getVwArticulosDao();
-        Consulta consulta = new Consulta(clave);
-        consulta.execute(_dao);
-        return count;
-    }
     public void updateArticleList(boolean ban){
         if (ban){
             float precioAux = Float.valueOf(PedidoActivity.articulosPedidoList.get(positionList).getPrecio());
@@ -210,36 +203,5 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         PedidoActivity.calTotal();
     }
 
-    private static class Consulta extends AsyncTask<VwArticulosDao, VwArticulosDao, VwArticulos[]>
-    {
-        String[] clave;
 
-        public Consulta(String[] clave)
-        {
-            this.clave = clave;
-        }
-
-        @Override
-        protected VwArticulos[] doInBackground(VwArticulosDao... vwArticulosDaos)
-        {
-            VwArticulos result[] = null;
-            try
-            {
-                result = vwArticulosDaos[0].findByDynamicWhere("CLAVE = ?", clave);
-            }
-            catch (Exception e)
-            {
-
-            }
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(VwArticulos[] vwArticulos)
-        {
-            super.onPostExecute(vwArticulos);
-            count = (float)vwArticulos[0].getExistenciaTotal();
-
-        }
-    }
 }
