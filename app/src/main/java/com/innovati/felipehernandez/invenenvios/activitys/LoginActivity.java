@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwUsuarios;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.security.EncryptionAndDecryption;
 
 public class LoginActivity extends AppCompatActivity
 {
@@ -27,7 +29,7 @@ public class LoginActivity extends AppCompatActivity
     private CheckBox chRecordarme;
     private EditText etUsuario, etPassword;
     MetodosInternos metodosInternos = new MetodosInternos(this);
-
+    private EncryptionAndDecryption EaD= new EncryptionAndDecryption();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -56,8 +58,7 @@ public class LoginActivity extends AppCompatActivity
         String usuario, password;
 
         usuario = etUsuario.getText().toString();
-        password = etPassword.getText().toString();
-
+        password = EaD.encryp(etPassword.getText().toString());
         if(conectado.conexionRed())
         {
             if(conectado.validacion(usuario, password))
