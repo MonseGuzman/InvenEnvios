@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
 public class EntregasActivity extends AppCompatActivity
 {
     private ListView EntregasListView;
+    private Button GuardarButton_E;
 
     private PedidosAdapter adaptador;
     private Pedidos result[];
@@ -46,6 +48,8 @@ public class EntregasActivity extends AppCompatActivity
                 args.putString("pedido", result[position].getIdPedido());
                 datosPedidoFragment.setArguments(args);
                 getSupportFragmentManager().beginTransaction().replace(R.id.EntregasRelativeLayout, datosPedidoFragment).addToBackStack(null).commit();
+
+                GuardarButton_E.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -55,6 +59,7 @@ public class EntregasActivity extends AppCompatActivity
     private void inicializacion()
     {
         EntregasListView = (ListView)findViewById(R.id.EntregasListView);
+        GuardarButton_E = (Button)findViewById(R.id.GuardarButton_E);
     }
 
     @Override
@@ -67,6 +72,7 @@ public class EntregasActivity extends AppCompatActivity
             getSupportFragmentManager().popBackStack();
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            GuardarButton_E.setVisibility(View.VISIBLE);
         }
         else
             finish();
@@ -86,6 +92,9 @@ public class EntregasActivity extends AppCompatActivity
         {
             case R.id.menu_home:
                 finish();
+                return true;
+            case android.R.id.home:
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
