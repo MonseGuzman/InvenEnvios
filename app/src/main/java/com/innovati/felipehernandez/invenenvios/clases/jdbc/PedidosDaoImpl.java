@@ -188,7 +188,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	public Pedidos[] findAll() throws PedidosDaoException
 	{
-		return findByDynamicSelect( SQL_SELECT, null );
+		return findByDynamicSelect( SQL_SELECT + " ORDER BY FOLIO", null );
 	}
 
 	/** 
