@@ -45,6 +45,8 @@
                     android:textSize="15dp"
                     android:text="Entregado"
                     android:visibility="visible"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:textColor="@color/colorPrimaryDark"
                     android:textStyle="bold"/>
             </LinearLayout>
