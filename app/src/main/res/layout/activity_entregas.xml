@@ -2,15 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/EntregasRelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activitys.EntregasActivity"
-    android:id="@+id/EntregasRelativeLayout">
+    tools:context=".activitys.EntregasActivity">
 
     <ListView
         android:id="@+id/EntregasListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="530dp">
     </ListView>
+
+    <Button
+        android:id="@+id/GuardarButton_E"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/guardar"
+        android:textColor="@color/primaryTextColor"
+        android:background="@color/colorPrimaryDark"
+        android:layout_below="@+id/EntregasListView"
+        android:visibility="visible"/>
 
 </RelativeLayout>
