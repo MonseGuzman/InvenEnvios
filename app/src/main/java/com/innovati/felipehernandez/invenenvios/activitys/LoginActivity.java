@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity
     private EditText etUsuario, etPassword;
     MetodosInternos metodosInternos = new MetodosInternos(this);
     private EncryptionAndDecryption EaD= new EncryptionAndDecryption();
+    private MetodosInternos conectado = new MetodosInternos(this);
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -54,7 +55,7 @@ public class LoginActivity extends AppCompatActivity
     public void login(View v)
     {
         //si la conexion wifi/datos es conectada
-        MetodosInternos conectado = new MetodosInternos(this);
+
         String usuario, password;
 
         usuario = etUsuario.getText().toString();
@@ -157,7 +158,7 @@ public class LoginActivity extends AppCompatActivity
                 guardarPreferencias(usuario, password, vwUsuarios[0].getIdUsuario());
             }
             else
-                Toast.makeText(LoginActivity.this, "Si se está ejecutando aca", Toast.LENGTH_SHORT).show();
+                conectado.Alerta(R.string.error,R.string.sinDatos);
         }
     }
 
