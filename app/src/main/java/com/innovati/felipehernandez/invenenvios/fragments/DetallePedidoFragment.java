@@ -21,10 +21,13 @@ import com.innovati.felipehernandez.invenenvios.activitys.PedidoActivity;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticulosPedidosAdapter;
 import com.innovati.felipehernandez.invenenvios.adapters.RecycleViewOnItemClickListener;
 import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDaoFactory;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
@@ -37,7 +40,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     VwDetallePedido result[];
     String clavePedido = "";
     private  RecyclerView recyclerArticulos;
-    private Button btnReg;
     private Button btnMas, btnMeno, btnAceptar, btnCancelar;
     private  EditText editCantida;
     private  ConstraintLayout datosEditArticle;
@@ -75,7 +77,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     {
         recyclerArticulos = (RecyclerView) v.findViewById(R.id.listaDetalleRecycle);
         datosEditArticle = v.findViewById(R.id.includeEditoArticleDetalle);
-        btnReg = (Button)v.findViewById(R.id.btnRegistrarPedido);
         btnMas = v.findViewById(R.id.MasButton_AEdit);
         btnMeno = v.findViewById(R.id.MenosButton_AEdit);
         btnAceptar = v.findViewById(R.id.editArticuloListCancelar);
@@ -95,6 +96,11 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     public static VwDetallePedidoDao getVwDetallePedidoDao()
     {
         return VwDetallePedidoDaoFactory.create();
+    }
+
+    public static VwArticulosDao getVwArticulosDao()
+    {
+        return VwArticulosDaoFactory.create();
     }
 
     public void updateAdapter(){
@@ -171,6 +177,33 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
           try
           {
               result = vwDetallePedidoDaos[0].findWhereIdPedidoEquals(clavePedido);
+              articulosPedidos.clear();
+
+              for(VwDetallePedido pedidos: result)
+              {
+                  ArticulosPedido articulo = new ArticulosPedido();
+                  articulo.setNombre(pedidos.getNombre());
+                  articulo.setIdArticulo(pedidos.getClaveArticulo());
+                  articulo.setPresentacion(pedidos.getUnidadPrimaria());
+                  articulo.setCantidad((float) pedidos.getCantidad());
+                  articulo.setIva(pedidos.getIva());
+                  articulo.setPrecio(pedidos.getPrecio());
+                  articulo.setTotal(pedidos.getTotal());
+                  articulo.setSubTotal(pedidos.getSubtotal());
+                  articulo.setStatus(true);
+                  articulosPedidos.add(articulo);
+              }
+
+              VwArticulos vwArticulos[];
+              int x = 0;
+              for(ArticulosPedido articulosPedido: articulosPedidos)
+              {
+                  vwArticulos = getVwArticulosDao().findWhereClaveEquals(articulosPedido.getIdArticulo());
+                  Double tem = vwArticulos[0].getExistenciaTotal();
+                  articulosPedido.setExits(Float.valueOf(tem.toString()));
+                  articulosPedidos.set(x,articulosPedido);
+                  x++;
+              }
 
           }
           catch (Exception e)
@@ -185,23 +218,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         {
             super.onPostExecute(vwDetallePedido);
 
-            articulosPedidos.clear();
 
-            for(VwDetallePedido pedidos: result)
-            {
-                ArticulosPedido articulo = new ArticulosPedido();
-
-                articulo.setNombre(pedidos.getNombre());
-                articulo.setIdArticulo(pedidos.getClaveArticulo());
-                articulo.setPresentacion(pedidos.getUnidadPrimaria());
-                articulo.setCantidad((float) pedidos.getCantidad());
-                articulo.setIva(pedidos.getIva());
-                articulo.setPrecio(pedidos.getPrecio());
-                articulo.setTotal(pedidos.getTotal());
-                articulo.setSubTotal(pedidos.getSubtotal());
-                articulo.setStatus(true);
-                articulosPedidos.add(articulo);
-            }
             updateAdapter();
 
         }

@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--COLORES PARA LTH-->
     <color name="colorPrimary">#1976d2</color>
     <color name="colorPrimaryDark">#004ba0</color>
-
-    <!-- quitar -->
-    <color name="colorAccent">#63a4ff</color>
-
     <color name="secondaryColor">#7e57c2</color>
+
+
+    <!-- COLORES PARA CARMENTA
+    <color name="colorPrimary">#E73229</color>
+    <color name="colorPrimaryDark">#CF130A</color>
+    <color name="secondaryColor">#EDBB99</color>-->
+
+    <color name="colorAccent">#63a4ff</color>
     <color name="secondaryLightColor">#b085f5</color>
     <color name="secondaryDarkColor">#4d2c91</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="bg_row_background">#fa315b</color>
 
-<!--
-    android:background="@android:color/holo_blue_dark"
-    <color name="secondaryTextColor">#f8f9f9</color>
--->
 </resources>
