@@ -45,6 +45,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     private  ConstraintLayout datosEditArticle;
     private static float exitArticul = 0, cantidaNum;
     private static int positionList;
+    private boolean bandera = true;
     static List<ArticulosPedido> articuloEdit = new ArrayList<ArticulosPedido>();
     public DetallePedidoFragment() {
         // Required empty public constructor
@@ -69,6 +70,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         //btnReg.setVisibility(View.INVISIBLE);  ARREGLAR DESPUÉS
         Bundle args = getArguments();
         clavePedido = args.getString("pedido", "");
+        bandera = args.getBoolean("bandera",true);
         loadData();
         return v;
     }
@@ -107,8 +109,10 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(articulosPedidos, new RecycleViewOnItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                positionList =position;
-                updateAr(position);
+                if(bandera){
+                    positionList =position;
+                    updateAr(position);
+                }
             }
         }));
     }

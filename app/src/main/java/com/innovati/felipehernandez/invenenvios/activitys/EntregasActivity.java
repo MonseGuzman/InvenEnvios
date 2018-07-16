@@ -46,6 +46,7 @@ public class EntregasActivity extends AppCompatActivity
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
                 args = new Bundle();
                 args.putString("pedido", result[position].getIdPedido());
+                args.putBoolean("bandera",false);
                 datosPedidoFragment.setArguments(args);
                 getSupportFragmentManager().beginTransaction().replace(R.id.EntregasRelativeLayout, datosPedidoFragment).addToBackStack(null).commit();
 
