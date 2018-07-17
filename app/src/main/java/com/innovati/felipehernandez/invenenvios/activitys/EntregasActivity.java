@@ -1,13 +1,17 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -46,10 +50,31 @@ public class EntregasActivity extends AppCompatActivity
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
                 args = new Bundle();
                 args.putString("pedido", result[position].getIdPedido());
+                args.putBoolean("bandera",false);
                 datosPedidoFragment.setArguments(args);
                 getSupportFragmentManager().beginTransaction().replace(R.id.EntregasRelativeLayout, datosPedidoFragment).addToBackStack(null).commit();
 
                 GuardarButton_E.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        EntregasListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id)
+            {
+                //codigo de Diego para actualizar
+                Snackbar.make(view, "¿Desea cambiar el estado a 'Entregado' sobre este pedido?", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Pedidos pedidos = new Pedidos();
+                        pedidos.setEstatus((short) 1); //no sé que se manda aquí
+                        //método update
+                    }
+                }).show();
+
+                return false;
             }
         });
 

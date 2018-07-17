@@ -168,6 +168,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
         args = new Bundle();
         args.putString("pedido", result[position].getIdPedido());
+        args.putBoolean("bandera",true);
         datosPedidoFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction().replace(R.id.abastecimientoConsulta, datosPedidoFragment).addToBackStack(null).commit();
     }

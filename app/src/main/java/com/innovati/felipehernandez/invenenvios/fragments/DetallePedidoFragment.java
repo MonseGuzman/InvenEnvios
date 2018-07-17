@@ -45,6 +45,8 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     private  ConstraintLayout datosEditArticle;
     private static float exitArticul = 0, cantidaNum;
     private static int positionList;
+    private boolean bandera = true;
+    private List<String> listDet = new ArrayList<>();
     static List<ArticulosPedido> articuloEdit = new ArrayList<ArticulosPedido>();
     public DetallePedidoFragment() {
         // Required empty public constructor
@@ -69,6 +71,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         //btnReg.setVisibility(View.INVISIBLE);  ARREGLAR DESPUÉS
         Bundle args = getArguments();
         clavePedido = args.getString("pedido", "");
+        bandera = args.getBoolean("bandera",true);
         loadData();
         return v;
     }
@@ -87,7 +90,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
     public void loadData()
     {
-
             VwDetallePedidoDao detallesPedidos = getVwDetallePedidoDao();
             Consulta c = new Consulta();
             c.execute(detallesPedidos);
@@ -107,13 +109,14 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(articulosPedidos, new RecycleViewOnItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                positionList =position;
-                updateAr(position);
+                if(bandera){
+                    positionList =position;
+                    updateAr(position);
+                }
             }
         }));
     }
     public  void updateAr(int x){
-        Log.d("test--------------:",""+x);
         try{
             updateArticle(x);
         }catch (Exception e){
@@ -192,6 +195,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                   articulo.setSubTotal(pedidos.getSubtotal());
                   articulo.setStatus(true);
                   articulosPedidos.add(articulo);
+                  listDet.add(pedidos.getIdDetallePedido());
               }
 
               VwArticulos vwArticulos[];
@@ -273,30 +277,15 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         }
         return total;
     }
-
-    public void modificarExistencias(String idDetallePedido, float existencias)
-    {
-        DetallesPedidosDao _daoDetalle = getDetallesPedidosDao();
-
-
-    }
-
-    public static DetallesPedidosDao getDetallesPedidosDao()
-    {
-        return DetallesPedidosDaoFactory.create();
-    }
-
-
-    public class modificar extends AsyncTask<DetallesPedidosDao, Void, DetallesPedidos[]>
-    {
-
-
-        @Override
-        protected DetallesPedidos[] doInBackground(DetallesPedidosDao... detallesPedidosDaos)
-        {
-
-            //detallesPedidosDaos[0].update();
-            return new DetallesPedidos[0];
+    public void uptadeExits(){
+        int x = 0;
+        for (ArticulosPedido ar: articulosPedidos){
+            uptadeExits(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal());
+            x++;
         }
     }
+    public void uptadeExits(String idDet, String idPedido, String Clave,float cantidad, float precio, float subTotal, float iva, float total){
+
+    }
+
 }
