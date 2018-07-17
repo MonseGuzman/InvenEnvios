@@ -1,13 +1,17 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -51,6 +55,26 @@ public class EntregasActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.EntregasRelativeLayout, datosPedidoFragment).addToBackStack(null).commit();
 
                 GuardarButton_E.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        EntregasListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id)
+            {
+                //codigo de Diego para actualizar
+                Snackbar.make(view, "¿Desea cambiar el estado a 'Entregado' sobre este pedido?", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Pedidos pedidos = new Pedidos();
+                        pedidos.setEstatus((short) 1); //no sé que se manda aquí
+                        //método update
+                    }
+                }).show();
+
+                return false;
             }
         });
 
@@ -119,6 +143,16 @@ public class EntregasActivity extends AppCompatActivity
         {
             //código para buscar en la bd interna
             metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
+        }
+    }
+
+    public void guardar(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.EstatusCheckbox_P:
+                Toast.makeText(getApplicationContext(), "prueba" ,Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 

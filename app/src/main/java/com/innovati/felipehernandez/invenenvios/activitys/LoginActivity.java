@@ -1,16 +1,13 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -28,9 +25,10 @@ public class LoginActivity extends AppCompatActivity
     private SharedPreferences preferences;
     private CheckBox chRecordarme;
     private EditText etUsuario, etPassword;
-    MetodosInternos metodosInternos = new MetodosInternos(this);
+
     private EncryptionAndDecryption EaD= new EncryptionAndDecryption();
     private MetodosInternos conectado = new MetodosInternos(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -38,7 +36,7 @@ public class LoginActivity extends AppCompatActivity
         setContentView(R.layout.activity_login);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_logo_lth_bar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.logo_carmenta);
 
         inicializacion();
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
@@ -60,6 +58,7 @@ public class LoginActivity extends AppCompatActivity
 
         usuario = etUsuario.getText().toString();
         password = EaD.encry(etPassword.getText().toString());
+        password = /*EaD.encry(*/etPassword.getText().toString()/*)*/;
         if(conectado.conexionRed())
         {
             if(conectado.validacion(usuario, password))
@@ -83,7 +82,7 @@ public class LoginActivity extends AppCompatActivity
         else
         {
             //cuando no esta conectado a ninguna red
-            metodosInternos.Alerta(R.string.sinInternet, R.string.conectarse);
+            conectado.Alerta(R.string.sinInternet, R.string.conectarse);
         }
     }
 
