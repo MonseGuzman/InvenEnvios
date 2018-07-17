@@ -58,7 +58,6 @@ public class LoginActivity extends AppCompatActivity
 
         usuario = etUsuario.getText().toString();
         password = EaD.encry(etPassword.getText().toString());
-        password = /*EaD.encry(*/etPassword.getText().toString()/*)*/;
         if(conectado.conexionRed())
         {
             if(conectado.validacion(usuario, password))

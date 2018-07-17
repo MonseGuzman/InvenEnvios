@@ -146,16 +146,6 @@ public class EntregasActivity extends AppCompatActivity
         }
     }
 
-    public void guardar(View v)
-    {
-        switch (v.getId())
-        {
-            case R.id.EstatusCheckbox_P:
-                Toast.makeText(getApplicationContext(), "prueba" ,Toast.LENGTH_SHORT).show();
-                break;
-        }
-    }
-
     private class ConsultaPedidos extends AsyncTask<PedidosDao,Void, Pedidos[]>
     {
 
