@@ -3,6 +3,7 @@ package com.innovati.felipehernandez.invenenvios.activitys;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -18,6 +19,8 @@ import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwUsuarios;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.database.DaoMaster;
+import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.security.EncryptionAndDecryption;
 
 public class LoginActivity extends AppCompatActivity
@@ -32,6 +35,11 @@ public class LoginActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "inven_e", null);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(db);
+        DaoSession daoSession = daoMaster.newSession();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
