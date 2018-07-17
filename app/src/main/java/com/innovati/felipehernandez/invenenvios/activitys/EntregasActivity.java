@@ -1,13 +1,17 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -50,6 +54,24 @@ public class EntregasActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.EntregasRelativeLayout, datosPedidoFragment).addToBackStack(null).commit();
 
                 GuardarButton_E.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        EntregasListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                //codigo de Diego para actualizar
+                String p = result[position].getIdPedido();
+
+                Snackbar.make(view, p, Snackbar.LENGTH_LONG).setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }).show();
+                //Toast.makeText(EntregasActivity.this, p, Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
 
@@ -118,6 +140,16 @@ public class EntregasActivity extends AppCompatActivity
         {
             //código para buscar en la bd interna
             metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
+        }
+    }
+
+    public void guardar(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.EstatusCheckbox_P:
+                Toast.makeText(getApplicationContext(), "prueba" ,Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 

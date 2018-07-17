@@ -104,11 +104,18 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v)
     {
-        if(v.getId() == R.id.btnRegistrarPedido){
+        if(v.getId() == R.id.btnRegistrarPedido)
+        {
             PedidoActivity.addPedidoDb();
 
-            Snackbar.make(v, R.string.guardado, Snackbar.LENGTH_SHORT).show();
-            this.getActivity().finish();
+            Snackbar.make(v, R.string.guardado, Snackbar.LENGTH_INDEFINITE).setAction("Ok", new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    getActivity().finish();
+                }
+            }).show();
+            //this.getActivity().finish();
         }else{
             cantidaNum = Float.valueOf(editCantida.getText().toString());
             switch (v.getId())
