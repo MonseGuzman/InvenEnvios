@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import com.innovati.felipehernandez.invenenvios.R;
 
@@ -18,6 +19,7 @@ public class ClienteFragment extends Fragment
     private EditText numeroInteriorEditText_C;
     private EditText coloniaEditText_C;
     private EditText telefonoEditText_C;
+
 
     private String nombre, rfc, calle, numeroExterior, numeroInterior, colonia, telefono;
 
@@ -63,6 +65,8 @@ public class ClienteFragment extends Fragment
         numeroInteriorEditText_C = v.findViewById(R.id.NumeroInteriorEditText_C);
         coloniaEditText_C = v.findViewById(R.id.ColoniaEditText_C);
         telefonoEditText_C = v.findViewById(R.id.TelefonoEditText_C);
+
     }
+
 
 }

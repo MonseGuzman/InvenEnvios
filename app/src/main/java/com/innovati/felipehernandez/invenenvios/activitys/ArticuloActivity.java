@@ -209,30 +209,6 @@ public class ArticuloActivity extends AppCompatActivity
         }
     }
 
-     /*public static void disableLista(String s){
-        ArticuloActivity.disableListaPedido(s);
-    }
-    public static void disableListaPedido(String s){
-        datitosListView.setEnabled(true);
-        buscarEditText.setEnabled(true);
-        BuscarImageButton.setEnabled(true);
-        fragmento = s;
-    }
-    private void disableControl(){
-        datitosListView.setEnabled(false);
-        buscarEditText.setEnabled(false);
-        BuscarImageButton.setEnabled(false);
-    }
-
-   public static void addArticulo(ArticulosPedido a){
-        if (ban){
-            ArticuloActivity.addArticuloList(a);
-        }
-
-    }
-    public static void addArticuloList(ArticulosPedido a){
-        ListCarritoPedido.add(a);
-    }*/
 
      public class ConsultaArticulos extends AsyncTask<VwArticulosDao, VwArticulos, VwArticulos[]>
      {

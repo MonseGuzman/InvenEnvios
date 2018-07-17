@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
@@ -42,7 +43,6 @@ public class BusquedaClienteFragment extends Fragment
     private EditText numeroInteriorEditText_C;
     private EditText coloniaEditText_C;
     private EditText telefonoEditText_C;
-
 
     MetodosInternos metodosInternos;
     VwClientes result[];
@@ -161,8 +161,11 @@ public class BusquedaClienteFragment extends Fragment
 
     private void cargarDatos()
     {
-        if(fragment_Datos.getVisibility() == View.VISIBLE)
+        if(fragment_Datos.getVisibility() == View.VISIBLE){
+            mRecyclerView.setEnabled(true);
             fragment_Datos.setVisibility(View.INVISIBLE);
+        }
+
 
         mAdapter = new EntregasRecycleViewAdaptador(result, R.layout.recycleview_clientes_item, new EntregasRecycleViewAdaptador.OnItemClickListener() {
             @Override
@@ -184,6 +187,8 @@ public class BusquedaClienteFragment extends Fragment
                 numeroInteriorEditText_C.setText(result[posicion].getNumeroInterior());
                 coloniaEditText_C.setText(result[posicion].getColonia());
                 telefonoEditText_C.setText(result[posicion].getTelefono());
+                mRecyclerView.setEnabled(false);
+
             }
         });
         //efectos en recycle view
@@ -191,6 +196,7 @@ public class BusquedaClienteFragment extends Fragment
         mRecyclerView.setLayoutManager(mLayour);
         mRecyclerView.setAdapter(mAdapter);
     }
+
 
     public static VwClientesDao getVwClientesDao()
     {

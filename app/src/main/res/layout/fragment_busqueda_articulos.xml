@@ -6,7 +6,10 @@
     tools:context=".fragments.BusquedaArticulosFragment"
     android:id="@+id/ArticuloFrameLayout"
     android:background="@color/primaryTextColor">
-
+<RelativeLayout
+    android:id="@+id/ArticuloBlock"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <include
         android:id="@+id/busquedaArticulos"
         android:layout_height="match_parent"
@@ -15,4 +18,5 @@
         android:layout_marginLeft="10dp"
         layout="@layout/buscar"
         android:layout_gravity="center"/>
+</RelativeLayout>
 </FrameLayout>

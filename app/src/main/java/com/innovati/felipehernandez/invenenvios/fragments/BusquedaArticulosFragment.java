@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
@@ -41,7 +42,7 @@ public class BusquedaArticulosFragment extends Fragment
     String actividad, clave, nombre;
     Bundle args;
     static String fragmento = "";
-
+    private static RelativeLayout ArticuloBlock;
     public BusquedaArticulosFragment()
     {
         // Required empty public constructor
@@ -61,7 +62,7 @@ public class BusquedaArticulosFragment extends Fragment
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 ArticuloFragment fragment = new ArticuloFragment();
-
+                ArticuloBlock.setEnabled(false);
                     //AGREGAR ARTICULOS A PERDIDO
                     args = new Bundle();
                     args.putString("clave", result[position].getClave());
@@ -99,6 +100,7 @@ public class BusquedaArticulosFragment extends Fragment
         buscarEditText = (EditText) view.findViewById(R.id.buscarEditText);
         BuscarImageButton = (ImageButton) view.findViewById(R.id.BuscarImageButton);
         AgregarFAB_A = (FloatingActionButton) view.findViewById(R.id.AgregarFAB_A);
+        ArticuloBlock = (RelativeLayout)view.findViewById(R.id.ArticuloBlock);
     }
 
 
@@ -200,6 +202,9 @@ public class BusquedaArticulosFragment extends Fragment
             adaptador = new ArticuloAdapter(getActivity(),  R.layout.listview_articulos, result);
             datitosListView.setAdapter(adaptador);
         }
+    }
+    public static void blockeo(){
+        ArticuloBlock.setEnabled(true);
     }
 
 }

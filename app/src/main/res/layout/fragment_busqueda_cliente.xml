@@ -6,9 +6,14 @@
     tools:context=".fragments.BusquedaClienteFragment"
     android:background="@color/primaryTextColor">
 
-    <include
+    <RelativeLayout
+        android:id="@+id/busClienteBlock"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        layout="@layout/buscar_recycleview" />
+        android:layout_height="match_parent">
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/buscar_recycleview" />
+    </RelativeLayout>
 
 </FrameLayout>

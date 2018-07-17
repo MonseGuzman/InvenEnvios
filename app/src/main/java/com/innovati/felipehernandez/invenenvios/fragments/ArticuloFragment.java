@@ -140,7 +140,11 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        try{
+            BusquedaArticulosFragment.blockeo();
+        }catch (Exception e){
 
+        }
     }
 
     @Override

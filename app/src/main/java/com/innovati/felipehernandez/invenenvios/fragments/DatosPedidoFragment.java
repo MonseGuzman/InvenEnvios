@@ -106,15 +106,19 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
     {
         if(v.getId() == R.id.btnRegistrarPedido)
         {
-            PedidoActivity.addPedidoDb();
+            if(!PedidoActivity.articulosPedidoList.isEmpty()){
+                PedidoActivity.addPedidoDb();
 
-            Snackbar.make(v, R.string.guardado, Snackbar.LENGTH_INDEFINITE).setAction("Ok", new View.OnClickListener() {
-                @Override
-                public void onClick(View v)
-                {
-                    getActivity().finish();
-                }
-            }).show();
+                Snackbar.make(v, R.string.guardado, Snackbar.LENGTH_INDEFINITE).setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        getActivity().finish();
+                    }
+                }).show();
+            }else{
+                Snackbar.make(v, "Faltan añadir articulos", Snackbar.LENGTH_INDEFINITE).show();
+            }
             //this.getActivity().finish();
         }else{
             cantidaNum = Float.valueOf(editCantida.getText().toString());
