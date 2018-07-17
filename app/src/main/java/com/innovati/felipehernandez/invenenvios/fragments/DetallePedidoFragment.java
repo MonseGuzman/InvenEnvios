@@ -273,4 +273,30 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         }
         return total;
     }
+
+    public void modificarExistencias(String idDetallePedido, float existencias)
+    {
+        DetallesPedidosDao _daoDetalle = getDetallesPedidosDao();
+
+
+    }
+
+    public static DetallesPedidosDao getDetallesPedidosDao()
+    {
+        return DetallesPedidosDaoFactory.create();
+    }
+
+
+    public class modificar extends AsyncTask<DetallesPedidosDao, Void, DetallesPedidos[]>
+    {
+
+
+        @Override
+        protected DetallesPedidos[] doInBackground(DetallesPedidosDao... detallesPedidosDaos)
+        {
+
+            //detallesPedidosDaos[0].update();
+            return new DetallesPedidos[0];
+        }
+    }
 }

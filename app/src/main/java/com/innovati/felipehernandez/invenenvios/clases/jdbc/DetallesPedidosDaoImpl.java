@@ -50,6 +50,8 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	protected final String SQL_INSERT = "INSERT INTO " + getTableName() + " ( IdDetallePedido, IdPedido, ClaveArticulo, Cantidad, Precio, Subtotal, IVA, Total, UltimaFechaActualizacion, UltimoUsuarioActualizacion ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
+	protected final String SQL_UPDATE = "UPDATE " + getTableName() + "SET IdDetallePedido = ?, IdPedido = ?, ClaveArticulo = ?, Cantidad = ?, Precio = ?, Subtotal = ?, IVA = ?, Total = ?, UltimaFechaActualizacion = ?, UltimoUsuarioActualizacion = ?";
+
 	/** 
 	 * Index of column IdDetallePedido
 	 */
@@ -174,6 +176,79 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		
 		}
 		
+	}
+
+	public void update(DetallesPedidos dto, String sql, String[] sqlParams) throws DetallesPedidosDaoException
+	{
+		long t1 = System.currentTimeMillis();
+		// declare variables
+		final boolean isConnSupplied = (userConn != null);
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			// get the user-specified connection or get a connection from the ResourceManager
+			conn = isConnSupplied ? userConn : ResourceManager.getConnection();
+			final String SQL = SQL_SELECT + " WHERE " + sql;
+			stmt = conn.prepareStatement( SQL );
+			stmt.setString( COLUMN_ID_DETALLE_PEDIDO, dto.getIdDetallePedido() );
+			stmt.setString( COLUMN_ID_PEDIDO, dto.getIdPedido() );
+			stmt.setString( COLUMN_CLAVE_ARTICULO, dto.getClaveArticulo() );
+			if (dto.isCantidadNull()) {
+				stmt.setNull( COLUMN_CANTIDAD, java.sql.Types.FLOAT );
+			} else {
+				stmt.setFloat( COLUMN_CANTIDAD, dto.getCantidad() );
+			}
+
+			if (dto.isPrecioNull()) {
+				stmt.setNull( COLUMN_PRECIO, java.sql.Types.FLOAT );
+			} else {
+				stmt.setFloat( COLUMN_PRECIO, dto.getPrecio() );
+			}
+
+			if (dto.isSubtotalNull()) {
+				stmt.setNull( COLUMN_SUBTOTAL, java.sql.Types.FLOAT );
+			} else {
+				stmt.setFloat( COLUMN_SUBTOTAL, dto.getSubtotal() );
+			}
+
+			if (dto.isIvaNull()) {
+				stmt.setNull( COLUMN_IVA, java.sql.Types.FLOAT );
+			} else {
+				stmt.setFloat( COLUMN_IVA, dto.getIva() );
+			}
+
+			if (dto.isTotalNull()) {
+				stmt.setNull( COLUMN_TOTAL, java.sql.Types.FLOAT );
+			} else {
+				stmt.setFloat( COLUMN_TOTAL, dto.getTotal() );
+			}
+
+			stmt.setTimestamp(COLUMN_ULTIMA_FECHA_ACTUALIZACION, dto.getUltimaFechaActualizacion()==null ? null : new java.sql.Timestamp( dto.getUltimaFechaActualizacion().getTime() ) );
+			stmt.setString( COLUMN_ULTIMO_USUARIO_ACTUALIZACION, dto.getUltimoUsuarioActualizacion() );
+
+			for (int i=12; sqlParams!=null && i<sqlParams.length +12; i++ ) {
+				stmt.setObject( i+1, sqlParams[i] );
+			}
+
+			System.out.println( "Executing " + SQL);
+			stmt.execute();
+			int rows = stmt.getUpdateCount();
+			System.out.println( rows + " rows affected" );
+		}
+		catch (Exception _e) {
+			_e.printStackTrace();
+			throw new DetallesPedidosDaoException( "Exception: " + _e.getMessage(), _e );
+		}
+		finally {
+			ResourceManager.close(stmt);
+			if (!isConnSupplied) {
+				ResourceManager.close(conn);
+			}
+
+		}
+
 	}
 
 	/** 
