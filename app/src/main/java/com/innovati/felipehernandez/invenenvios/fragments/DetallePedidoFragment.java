@@ -46,6 +46,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     private static float exitArticul = 0, cantidaNum;
     private static int positionList;
     private boolean bandera = true;
+    private List<String> listDet = new ArrayList<>();
     static List<ArticulosPedido> articuloEdit = new ArrayList<ArticulosPedido>();
     public DetallePedidoFragment() {
         // Required empty public constructor
@@ -89,7 +90,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
     public void loadData()
     {
-
             VwDetallePedidoDao detallesPedidos = getVwDetallePedidoDao();
             Consulta c = new Consulta();
             c.execute(detallesPedidos);
@@ -117,7 +117,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         }));
     }
     public  void updateAr(int x){
-        Log.d("test--------------:",""+x);
         try{
             updateArticle(x);
         }catch (Exception e){
@@ -196,6 +195,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                   articulo.setSubTotal(pedidos.getSubtotal());
                   articulo.setStatus(true);
                   articulosPedidos.add(articulo);
+                  listDet.add(pedidos.getIdDetallePedido());
               }
 
               VwArticulos vwArticulos[];
@@ -277,4 +277,15 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         }
         return total;
     }
+    public void uptadeExits(){
+        int x = 0;
+        for (ArticulosPedido ar: articulosPedidos){
+            uptadeExits(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal());
+            x++;
+        }
+    }
+    public void uptadeExits(String idDet, String idPedido, String Clave,float cantidad, float precio, float subTotal, float iva, float total){
+
+    }
+
 }
