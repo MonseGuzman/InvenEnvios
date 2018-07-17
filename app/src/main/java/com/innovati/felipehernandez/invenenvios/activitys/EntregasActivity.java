@@ -59,18 +59,20 @@ public class EntregasActivity extends AppCompatActivity
 
         EntregasListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id)
             {
                 //codigo de Diego para actualizar
-                String p = result[position].getIdPedido();
-
-                Snackbar.make(view, p, Snackbar.LENGTH_LONG).setAction("Ok", new View.OnClickListener() {
+                Snackbar.make(view, "¿Desea cambiar el estado a 'Entregado' sobre este pedido?", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Ok", new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-
+                    public void onClick(View v)
+                    {
+                        Pedidos pedidos = new Pedidos();
+                        pedidos.setEstatus((short) 1); //no sé que se manda aquí
+                        //método update
                     }
                 }).show();
-                //Toast.makeText(EntregasActivity.this, p, Toast.LENGTH_SHORT).show();
+
                 return false;
             }
         });
