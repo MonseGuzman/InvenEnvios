@@ -207,7 +207,7 @@ public class PedidoActivity extends AppCompatActivity
         articulosPedidoList = null;
         calTotal();
         DatosPedidoFragment.updateAdapter();
-
+        nombreC = "No elegido";
     }
 
     public static void insertar(String idPedido,String idUsuario, String claveCliente, Date fecha, short estatus, float subtotal, float iva, float total, String observaciones, String folio)
@@ -244,6 +244,7 @@ public class PedidoActivity extends AppCompatActivity
         detalle.setUltimoUsuarioActualizacion(idUsuario);
         InsertarDetalle detalleInsertar = new InsertarDetalle();
         detalleInsertar.execute(detalle);
+
     }
     public static float getTotal(){
         float total = 0;
