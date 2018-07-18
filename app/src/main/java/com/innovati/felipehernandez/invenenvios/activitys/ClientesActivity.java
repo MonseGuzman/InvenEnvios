@@ -30,11 +30,7 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
-import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.fragments.ClienteFragment;
-
-import java.util.List;
-import java.util.Properties;
 
 public class ClientesActivity extends AppCompatActivity
 {
@@ -47,10 +43,9 @@ public class ClientesActivity extends AppCompatActivity
     VwClientes result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
     String fragment ="";
+    Intent i = new Intent();
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int posicion;
-    DaoSession daoSession;
-    com.innovati.felipehernandez.invenenvios.database.VwClientesDao cliente = daoSession.getVwClientesDao();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,17 +238,6 @@ public class ClientesActivity extends AppCompatActivity
                 metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
             }
         }
-    }
-
-    private void internaBD()
-    {
-        //solo hice la lista da flojera hacer el for
-        List<com.innovati.felipehernandez.invenenvios.database.VwClientes> vwClientesList = cliente.queryBuilder()
-                .where(com.innovati.felipehernandez.invenenvios.database.VwClientesDao.Properties.Nombre.eq(buscarEditText.getText().toString()))
-                .list();
-
-        adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
-        datitosListView.setAdapter(adaptador);
     }
 
     private void cargarDatos(VwClientes[] result)

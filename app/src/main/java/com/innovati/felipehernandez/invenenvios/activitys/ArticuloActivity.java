@@ -210,10 +210,6 @@ public class ArticuloActivity extends AppCompatActivity
     }
 
 
-     public void interna()
-     {
-     }
-
      public class ConsultaArticulos extends AsyncTask<VwArticulosDao, VwArticulos, VwArticulos[]>
      {
          String nombre;

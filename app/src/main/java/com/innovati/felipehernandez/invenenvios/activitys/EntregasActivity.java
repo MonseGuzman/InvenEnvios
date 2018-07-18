@@ -69,7 +69,7 @@ public class EntregasActivity extends AppCompatActivity
                     public void onClick(View v)
                     {
                         Pedidos pedidos = new Pedidos();
-                        pedidos.setEstatus((short) 2); //0: Ninguno, 1:En proceso, 2:Entregado, 3:En envío
+                        pedidos.setEstatus((short) 1); //no sé que se manda aquí
                         //método update
                     }
                 }).show();
