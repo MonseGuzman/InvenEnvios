@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/ClienteConstraintLayout"
-    tools:context=".activitys.ClientesActivity">
+    tools:context=".activitys.ClientesActivity"
+    android:saveEnabled="false">
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/AgregarFAB_C"
@@ -18,6 +19,7 @@
         android:background="@color/secondaryColor"
         android:src="@drawable/ic_agregar"
         app:backgroundTint="@color/secondaryColor"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.933"
