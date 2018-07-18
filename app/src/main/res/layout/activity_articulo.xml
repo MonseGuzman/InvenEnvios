@@ -18,6 +18,7 @@
         android:background="@color/secondaryColor"
         android:src="@drawable/ic_suma"
         app:backgroundTint="@color/secondaryColor"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.942"
