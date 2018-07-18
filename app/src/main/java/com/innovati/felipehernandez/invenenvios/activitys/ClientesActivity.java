@@ -31,11 +31,7 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
-import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.fragments.ClienteFragment;
-
-import java.util.List;
-import java.util.Properties;
 
 public class ClientesActivity extends AppCompatActivity
 {
@@ -48,6 +44,7 @@ public class ClientesActivity extends AppCompatActivity
     VwClientes result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
     String fragment ="";
+    Intent i = new Intent();
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int posicion;
     //DaoSession daoSession;
