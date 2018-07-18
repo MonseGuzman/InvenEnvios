@@ -62,7 +62,7 @@ public class BusquedaArticulosFragment extends Fragment
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 ArticuloFragment fragment = new ArticuloFragment();
-                ArticuloBlock.setEnabled(false);
+                ArticuloBlock.setVisibility(View.INVISIBLE);
                     //AGREGAR ARTICULOS A PERDIDO
                     args = new Bundle();
                     args.putString("clave", result[position].getClave());
@@ -204,7 +204,7 @@ public class BusquedaArticulosFragment extends Fragment
         }
     }
     public static void blockeo(){
-        ArticuloBlock.setEnabled(true);
+        ArticuloBlock.setVisibility(View.VISIBLE);
     }
 
 }

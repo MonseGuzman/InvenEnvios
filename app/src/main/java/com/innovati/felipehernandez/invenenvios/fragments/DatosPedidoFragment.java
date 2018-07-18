@@ -117,7 +117,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
                     }
                 }).show();
             }else{
-                Snackbar.make(v, "Faltan añadir articulos", Snackbar.LENGTH_INDEFINITE).show();
+                Snackbar.make(v, "Faltan añadir articulos", Snackbar.LENGTH_SHORT).show();
             }
             //this.getActivity().finish();
         }else{
