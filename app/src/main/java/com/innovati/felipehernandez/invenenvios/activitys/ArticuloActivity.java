@@ -234,6 +234,10 @@ public class ArticuloActivity extends AppCompatActivity
         ListCarritoPedido.add(a);
     }*/
 
+     public void interna()
+     {
+     }
+
      public class ConsultaArticulos extends AsyncTask<VwArticulosDao, VwArticulos, VwArticulos[]>
      {
          String nombre;
