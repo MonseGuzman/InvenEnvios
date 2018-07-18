@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.innovati.felipehernandez.invenenvios.R;
+import com.innovati.felipehernandez.invenenvios.activitys.ClientesActivity;
 
 public class ClienteFragment extends Fragment
 {
@@ -68,5 +69,9 @@ public class ClienteFragment extends Fragment
 
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ClientesActivity.bloqueo();
+    }
 }

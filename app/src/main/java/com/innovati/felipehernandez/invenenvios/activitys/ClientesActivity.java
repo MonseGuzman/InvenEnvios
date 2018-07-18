@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +39,7 @@ import java.util.Properties;
 
 public class ClientesActivity extends AppCompatActivity
 {
-    private ListView datitosListView;
+    private static ListView datitosListView;
     private EditText buscarEditText;
     private ImageButton BuscarImageButton;
     private Bundle args;
@@ -49,8 +50,8 @@ public class ClientesActivity extends AppCompatActivity
     String fragment ="";
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int posicion;
-    DaoSession daoSession;
-    com.innovati.felipehernandez.invenenvios.database.VwClientesDao cliente = daoSession.getVwClientesDao();
+    //DaoSession daoSession;
+    //com.innovati.felipehernandez.invenenvios.database.VwClientesDao cliente = daoSession.getVwClientesDao();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,7 @@ public class ClientesActivity extends AppCompatActivity
             {
                 ClienteFragment clienteFragment = new ClienteFragment();
                 args = new Bundle();
-
+                datitosListView.setVisibility(View.INVISIBLE);
                 fragment = "Agregar";
 
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -245,7 +246,7 @@ public class ClientesActivity extends AppCompatActivity
         }
     }
 
-    private void internaBD()
+    /*private void internaBD()
     {
         //solo hice la lista da flojera hacer el for
         List<com.innovati.felipehernandez.invenenvios.database.VwClientes> vwClientesList = cliente.queryBuilder()
@@ -254,12 +255,16 @@ public class ClientesActivity extends AppCompatActivity
 
         adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
         datitosListView.setAdapter(adaptador);
-    }
+    }*/
 
     private void cargarDatos(VwClientes[] result)
     {
         adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
         datitosListView.setAdapter(adaptador);
+    }
+
+    public static void bloqueo(){
+        datitosListView.setVisibility(View.VISIBLE);
     }
 
     public boolean checkPermission(){

@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.innovati.felipehernandez.invenenvios.R;
+import com.innovati.felipehernandez.invenenvios.activitys.ArticuloActivity;
 import com.innovati.felipehernandez.invenenvios.activitys.PedidoActivity;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
@@ -145,11 +146,17 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
         }catch (Exception e){
 
         }
+        try{
+            ArticuloActivity.blockeo();
+        }catch (Exception e){
+
+        }
     }
 
     @Override
     public void onClick(View v)
     {
+        cantidadEditText_A.setText(String.valueOf(cantidadPedido));
         cantidadPedido = Float.valueOf(cantidadEditText_A.getText().toString());
         switch (v.getId())
         {
@@ -194,6 +201,7 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
         }catch (Exception e){
 
         }
+        cantidadEditText_A.setText(String.valueOf(cantidadPedido));
     }
 
     public void addArticuloList(){

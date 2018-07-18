@@ -3,6 +3,7 @@ package com.innovati.felipehernandez.invenenvios.activitys;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
@@ -45,7 +47,6 @@ public class ArticuloActivity extends AppCompatActivity
     private static boolean ban = false;
     static String fragmento = "";
     String nombre = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -62,7 +63,7 @@ public class ArticuloActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 ArticuloFragment fragment = new ArticuloFragment();
-
+                datitosListView.setVisibility(View.INVISIBLE);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
                 fragmento = "Agregar";
@@ -78,7 +79,6 @@ public class ArticuloActivity extends AppCompatActivity
                 args.putString("unidad", result[position].getUnidadPrimaria());
                 fragment.setArguments(args);
 
-                //disableControl();
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.ArticuloConstraintLayout, fragment).addToBackStack(null).commit();
             }
@@ -247,5 +247,8 @@ public class ArticuloActivity extends AppCompatActivity
              super.onPostExecute(vwArticulos);
              cargarDatos(result);
          }
+     }
+     public static void blockeo(){
+         datitosListView.setVisibility(View.VISIBLE);
      }
 }
