@@ -7,15 +7,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
+import com.innovati.felipehernandez.invenenvios.SettingActivity;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwUsuarios;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFactory;
@@ -28,7 +31,7 @@ public class LoginActivity extends AppCompatActivity
     private SharedPreferences preferences;
     private CheckBox chRecordarme;
     private EditText etUsuario, etPassword;
-
+    private int touch= 0;
     private EncryptionAndDecryption EaD= new EncryptionAndDecryption();
     private MetodosInternos conectado = new MetodosInternos(this);
 
@@ -49,6 +52,7 @@ public class LoginActivity extends AppCompatActivity
         inicializacion();
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         verificaCredenciales();
+        touch = 0;
     }
 
     private void inicializacion()
@@ -170,6 +174,15 @@ public class LoginActivity extends AppCompatActivity
 
     public static VwUsuariosDao getVwUsuariosDao() {
         return VwUsuariosDaoFactory.create();
+    }
+
+    public void runSeting(View view){
+        touch ++;
+        if(touch == 10){
+            touch = 0;
+            Intent intent = new Intent(this, SettingActivity.class);
+            startActivity(intent);
+        }
     }
 
 }

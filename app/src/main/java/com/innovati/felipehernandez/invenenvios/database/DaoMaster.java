@@ -24,11 +24,12 @@ public class DaoMaster extends AbstractDaoMaster {
         PedidosDao.createTable(db, ifNotExists);
         DetallesPedidosDao.createTable(db, ifNotExists);
         UsuariosDao.createTable(db, ifNotExists);
-        VwAgenteDao.createTable(db, ifNotExists);
-        VwArticulosDao.createTable(db, ifNotExists);
+        DetallesPedidosDao.createTable(db, ifNotExists);
         VwClientesDao.createTable(db, ifNotExists);
-        VwDetallePedidoDao.createTable(db, ifNotExists);
+        VwArticulosDao.createTable(db, ifNotExists);
         VwUsuariosDao.createTable(db, ifNotExists);
+        PedidosDao.createTable(db, ifNotExists);
+        VwAgenteDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -36,11 +37,12 @@ public class DaoMaster extends AbstractDaoMaster {
         PedidosDao.dropTable(db, ifExists);
         DetallesPedidosDao.dropTable(db, ifExists);
         UsuariosDao.dropTable(db, ifExists);
-        VwAgenteDao.dropTable(db, ifExists);
-        VwArticulosDao.dropTable(db, ifExists);
+        DetallesPedidosDao.dropTable(db, ifExists);
         VwClientesDao.dropTable(db, ifExists);
-        VwDetallePedidoDao.dropTable(db, ifExists);
+        VwArticulosDao.dropTable(db, ifExists);
         VwUsuariosDao.dropTable(db, ifExists);
+        PedidosDao.dropTable(db, ifExists);
+        VwAgenteDao.dropTable(db, ifExists);
     }
 
     /**
@@ -62,11 +64,12 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(PedidosDao.class);
         registerDaoClass(DetallesPedidosDao.class);
         registerDaoClass(UsuariosDao.class);
-        registerDaoClass(VwAgenteDao.class);
-        registerDaoClass(VwArticulosDao.class);
+        registerDaoClass(DetallesPedidosDao.class);
         registerDaoClass(VwClientesDao.class);
-        registerDaoClass(VwDetallePedidoDao.class);
+        registerDaoClass(VwArticulosDao.class);
         registerDaoClass(VwUsuariosDao.class);
+        registerDaoClass(PedidosDao.class);
+        registerDaoClass(VwAgenteDao.class);
     }
 
     public DaoSession newSession() {

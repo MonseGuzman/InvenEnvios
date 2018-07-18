@@ -44,7 +44,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.EntregasActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity android:name=".SettingActivity"></activity>
     </application>
 
 </manifest>

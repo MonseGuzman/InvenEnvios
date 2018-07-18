@@ -162,7 +162,7 @@ public class BusquedaClienteFragment extends Fragment
     private void cargarDatos()
     {
         if(fragment_Datos.getVisibility() == View.VISIBLE){
-            mRecyclerView.setEnabled(true);
+            mRecyclerView.setVisibility(View.VISIBLE);
             fragment_Datos.setVisibility(View.INVISIBLE);
         }
 
@@ -187,7 +187,7 @@ public class BusquedaClienteFragment extends Fragment
                 numeroInteriorEditText_C.setText(result[posicion].getNumeroInterior());
                 coloniaEditText_C.setText(result[posicion].getColonia());
                 telefonoEditText_C.setText(result[posicion].getTelefono());
-                mRecyclerView.setEnabled(false);
+                mRecyclerView.setVisibility(View.INVISIBLE);
 
             }
         });
