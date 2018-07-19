@@ -35,8 +35,8 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
     private static ConstraintLayout datosEditArticle;
     private static float exitArticul = 0, cantidaNum;
     private static int positionList;
-    private static float count = 0;
     static List<ArticulosPedido> articuloEdit = new ArrayList<ArticulosPedido>();
+
     public DatosPedidoFragment() {
         // Required empty public constructor
     }
@@ -86,7 +86,6 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerArticulos);
 
-        // Inflate the layout for this fragment
         return v;
     }
     private void inicialize(View v){

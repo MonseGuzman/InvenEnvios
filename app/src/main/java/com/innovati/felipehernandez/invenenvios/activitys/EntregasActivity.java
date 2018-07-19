@@ -63,13 +63,13 @@ public class EntregasActivity extends AppCompatActivity
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id)
             {
                 //codigo de Diego para actualizar
-                Snackbar.make(view, "¿Desea cambiar el estado a 'Entregado' sobre este pedido?", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("Ok", new View.OnClickListener() {
+                Snackbar.make(view, "¿Desea cambiar el estado a 'Entregado' sobre el pedido con folio "+ result[position].getFolio() +"?", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Si", new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
                     {
                         Pedidos pedidos = new Pedidos();
-                        pedidos.setEstatus((short) 1); //no sé que se manda aquí
+                        pedidos.setEstatus((short) 2); //no sé que se manda aquí
                         //método update
                     }
                 }).show();
