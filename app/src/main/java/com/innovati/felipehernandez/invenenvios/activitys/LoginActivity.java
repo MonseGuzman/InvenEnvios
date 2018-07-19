@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity
             super.onPostExecute(vwUsuarios);
             String usuario, password;
             usuario = etUsuario.getText().toString();
-            password = etPassword.getText().toString();
+            password = EaD.encry(etPassword.getText().toString());
             if(vwUsuarios != null)
             {
                 if(vwUsuarios.length > 0)
