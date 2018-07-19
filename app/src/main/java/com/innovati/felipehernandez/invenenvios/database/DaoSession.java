@@ -8,8 +8,7 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
-import com.innovati.felipehernandez.invenenvios.database.Pedidos;
-import com.innovati.felipehernandez.invenenvios.database.DetallesPedidos;
+import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido;
 import com.innovati.felipehernandez.invenenvios.database.Usuarios;
 import com.innovati.felipehernandez.invenenvios.database.DetallesPedidos;
 import com.innovati.felipehernandez.invenenvios.database.VwClientes;
@@ -18,8 +17,7 @@ import com.innovati.felipehernandez.invenenvios.database.VwUsuarios;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos;
 import com.innovati.felipehernandez.invenenvios.database.VwAgente;
 
-import com.innovati.felipehernandez.invenenvios.database.PedidosDao;
-import com.innovati.felipehernandez.invenenvios.database.DetallesPedidosDao;
+import com.innovati.felipehernandez.invenenvios.database.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.database.UsuariosDao;
 import com.innovati.felipehernandez.invenenvios.database.DetallesPedidosDao;
 import com.innovati.felipehernandez.invenenvios.database.VwClientesDao;
@@ -37,8 +35,7 @@ import com.innovati.felipehernandez.invenenvios.database.VwAgenteDao;
  */
 public class DaoSession extends AbstractDaoSession {
 
-    private final DaoConfig pedidosDaoConfig;
-    private final DaoConfig detallesPedidosDaoConfig;
+    private final DaoConfig vwDetallePedidoDaoConfig;
     private final DaoConfig usuariosDaoConfig;
     private final DaoConfig detallesPedidosDaoConfig;
     private final DaoConfig vwClientesDaoConfig;
@@ -47,8 +44,7 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig pedidosDaoConfig;
     private final DaoConfig vwAgenteDaoConfig;
 
-    private final PedidosDao pedidosDao;
-    private final DetallesPedidosDao detallesPedidosDao;
+    private final VwDetallePedidoDao vwDetallePedidoDao;
     private final UsuariosDao usuariosDao;
     private final DetallesPedidosDao detallesPedidosDao;
     private final VwClientesDao vwClientesDao;
@@ -61,11 +57,8 @@ public class DaoSession extends AbstractDaoSession {
             daoConfigMap) {
         super(db);
 
-        pedidosDaoConfig = daoConfigMap.get(PedidosDao.class).clone();
-        pedidosDaoConfig.initIdentityScope(type);
-
-        detallesPedidosDaoConfig = daoConfigMap.get(DetallesPedidosDao.class).clone();
-        detallesPedidosDaoConfig.initIdentityScope(type);
+        vwDetallePedidoDaoConfig = daoConfigMap.get(VwDetallePedidoDao.class).clone();
+        vwDetallePedidoDaoConfig.initIdentityScope(type);
 
         usuariosDaoConfig = daoConfigMap.get(UsuariosDao.class).clone();
         usuariosDaoConfig.initIdentityScope(type);
@@ -82,8 +75,13 @@ public class DaoSession extends AbstractDaoSession {
         vwUsuariosDaoConfig = daoConfigMap.get(VwUsuariosDao.class).clone();
         vwUsuariosDaoConfig.initIdentityScope(type);
 
-        pedidosDao = new PedidosDao(pedidosDaoConfig, this);
-        detallesPedidosDao = new DetallesPedidosDao(detallesPedidosDaoConfig, this);
+        pedidosDaoConfig = daoConfigMap.get(PedidosDao.class).clone();
+        pedidosDaoConfig.initIdentityScope(type);
+
+        vwAgenteDaoConfig = daoConfigMap.get(VwAgenteDao.class).clone();
+        vwAgenteDaoConfig.initIdentityScope(type);
+
+        vwDetallePedidoDao = new VwDetallePedidoDao(vwDetallePedidoDaoConfig, this);
         usuariosDao = new UsuariosDao(usuariosDaoConfig, this);
         detallesPedidosDao = new DetallesPedidosDao(detallesPedidosDaoConfig, this);
         vwClientesDao = new VwClientesDao(vwClientesDaoConfig, this);
@@ -92,8 +90,7 @@ public class DaoSession extends AbstractDaoSession {
         pedidosDao = new PedidosDao(pedidosDaoConfig, this);
         vwAgenteDao = new VwAgenteDao(vwAgenteDaoConfig, this);
 
-        registerDao(Pedidos.class, pedidosDao);
-        registerDao(DetallesPedidos.class, detallesPedidosDao);
+        registerDao(VwDetallePedido.class, vwDetallePedidoDao);
         registerDao(Usuarios.class, usuariosDao);
         registerDao(DetallesPedidos.class, detallesPedidosDao);
         registerDao(VwClientes.class, vwClientesDao);
@@ -104,8 +101,7 @@ public class DaoSession extends AbstractDaoSession {
     }
     
     public void clear() {
-        pedidosDaoConfig.clearIdentityScope();
-        detallesPedidosDaoConfig.clearIdentityScope();
+        vwDetallePedidoDaoConfig.clearIdentityScope();
         usuariosDaoConfig.clearIdentityScope();
         detallesPedidosDaoConfig.clearIdentityScope();
         vwClientesDaoConfig.clearIdentityScope();
@@ -115,12 +111,8 @@ public class DaoSession extends AbstractDaoSession {
         vwAgenteDaoConfig.clearIdentityScope();
     }
 
-    public PedidosDao getPedidosDao() {
-        return pedidosDao;
-    }
-
-    public DetallesPedidosDao getDetallesPedidosDao() {
-        return detallesPedidosDao;
+    public VwDetallePedidoDao getVwDetallePedidoDao() {
+        return vwDetallePedidoDao;
     }
 
     public UsuariosDao getUsuariosDao() {
