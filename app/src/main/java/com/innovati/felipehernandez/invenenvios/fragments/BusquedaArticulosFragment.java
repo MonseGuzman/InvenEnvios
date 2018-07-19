@@ -36,13 +36,12 @@ public class BusquedaArticulosFragment extends Fragment
     private static EditText buscarEditText;
     private static ImageButton BuscarImageButton;
     private FloatingActionButton AgregarFAB_A;
-    ArticuloFragment fragment = new ArticuloFragment();
+
     VwArticulos result[];
     MetodosInternos metodosInternos;
-    String actividad, clave, nombre;
     Bundle args;
-    static String fragmento = "";
     private static RelativeLayout ArticuloBlock;
+
     public BusquedaArticulosFragment()
     {
         // Required empty public constructor
@@ -75,8 +74,6 @@ public class BusquedaArticulosFragment extends Fragment
                     fragment.setArguments(args);
                     getFragmentManager().beginTransaction().replace(R.id.ArticuloFrameLayout, fragment).addToBackStack(null).commit();
 
-
-
             }
         });
 
@@ -87,11 +84,7 @@ public class BusquedaArticulosFragment extends Fragment
             }
         });
 
-
-
-
         return v;
-
     }
 
     private void inicializacion(View view)

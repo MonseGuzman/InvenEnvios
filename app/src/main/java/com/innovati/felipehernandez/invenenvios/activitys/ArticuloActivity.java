@@ -1,21 +1,17 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
@@ -25,11 +21,6 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.fragments.ArticuloFragment;
-import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ArticuloActivity extends AppCompatActivity
 {
@@ -39,14 +30,12 @@ public class ArticuloActivity extends AppCompatActivity
     private static ImageButton BuscarImageButton;
     private FloatingActionButton AgregarFAB_A;
 
-    private static ArrayList<ArticulosPedido> ListCarritoPedido = new ArrayList<>();
-    ArticuloFragment fragment = new ArticuloFragment();
     VwArticulos result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
     Bundle args;
-    private static boolean ban = false;
     static String fragmento = "";
     String nombre = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

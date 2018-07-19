@@ -44,7 +44,6 @@ public class ClientesActivity extends AppCompatActivity
     VwClientes result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
     String fragment ="";
-    Intent i = new Intent();
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int posicion;
     //DaoSession daoSession;
