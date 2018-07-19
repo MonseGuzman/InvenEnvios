@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/ClienteConstraintLayout"
-    tools:context=".activitys.ClientesActivity"
-    android:saveEnabled="false">
+    tools:context=".activitys.ClientesActivity">
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/AgregarFAB_C"

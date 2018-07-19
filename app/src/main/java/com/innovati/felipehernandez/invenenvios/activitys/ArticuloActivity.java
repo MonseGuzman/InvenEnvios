@@ -1,13 +1,11 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,11 +21,6 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.fragments.ArticuloFragment;
-import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ArticuloActivity extends AppCompatActivity
 {
@@ -37,12 +30,9 @@ public class ArticuloActivity extends AppCompatActivity
     private static ImageButton BuscarImageButton;
     private FloatingActionButton AgregarFAB_A;
 
-    private static ArrayList<ArticulosPedido> ListCarritoPedido = new ArrayList<>();
-    ArticuloFragment fragment = new ArticuloFragment();
     VwArticulos result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
     Bundle args;
-    private static boolean ban = false;
     static String fragmento = "";
     String nombre = "";
 
@@ -62,7 +52,7 @@ public class ArticuloActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 ArticuloFragment fragment = new ArticuloFragment();
-
+                datitosListView.setVisibility(View.INVISIBLE);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
                 fragmento = "Agregar";
@@ -78,7 +68,6 @@ public class ArticuloActivity extends AppCompatActivity
                 args.putString("unidad", result[position].getUnidadPrimaria());
                 fragment.setArguments(args);
 
-                //disableControl();
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.ArticuloConstraintLayout, fragment).addToBackStack(null).commit();
             }
@@ -210,10 +199,6 @@ public class ArticuloActivity extends AppCompatActivity
     }
 
 
-     public void interna()
-     {
-     }
-
      public class ConsultaArticulos extends AsyncTask<VwArticulosDao, VwArticulos, VwArticulos[]>
      {
          String nombre;
@@ -247,5 +232,8 @@ public class ArticuloActivity extends AppCompatActivity
              super.onPostExecute(vwArticulos);
              cargarDatos(result);
          }
+     }
+     public static void blockeo(){
+         datitosListView.setVisibility(View.VISIBLE);
      }
 }

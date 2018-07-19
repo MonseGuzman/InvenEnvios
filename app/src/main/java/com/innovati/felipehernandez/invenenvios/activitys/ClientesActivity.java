@@ -37,7 +37,7 @@ import java.util.List;
 
 public class ClientesActivity extends AppCompatActivity
 {
-    private ListView datitosListView;
+    private static ListView datitosListView;
     private EditText buscarEditText;
     private ImageButton BuscarImageButton;
     private Bundle args;
@@ -244,21 +244,25 @@ public class ClientesActivity extends AppCompatActivity
         }
     }
 
-    private void internaBD()
+    /*private void internaBD()
     {
         //solo hice la lista da flojera hacer el for
-        List<VwClientes_I> vwClientesList = cliente.queryBuilder()
-                .where(VwClientesDao_I.Properties.Nombre.eq(buscarEditText.getText().toString()))
+        List<com.innovati.felipehernandez.invenenvios.database.VwClientes> vwClientesList = cliente.queryBuilder()
+                .where(com.innovati.felipehernandez.invenenvios.database.VwClientesDao.Properties.Nombre.eq(buscarEditText.getText().toString()))
                 .list();
 
         adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
         datitosListView.setAdapter(adaptador);
-    }
+    }*/
 
     private void cargarDatos(VwClientes[] result)
     {
         adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
         datitosListView.setAdapter(adaptador);
+    }
+
+    public static void bloqueo(){
+        datitosListView.setVisibility(View.VISIBLE);
     }
 
     public boolean checkPermission(){

@@ -51,8 +51,8 @@
             android:layout_marginBottom="8dp"
             android:background="@color/colorPrimaryDark"
             android:text="Registrar Pedido"
-            android:textColor="@color/primaryTextColor"
             android:textSize="24dp"
+            android:textColor="@color/primaryTextColor"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent" />
     </android.support.constraint.ConstraintLayout>
