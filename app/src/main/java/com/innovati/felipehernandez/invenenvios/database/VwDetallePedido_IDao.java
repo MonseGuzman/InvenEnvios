@@ -23,14 +23,16 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "Id", true, "_id");
-        public final static Property IdUsuario = new Property(1, String.class, "idUsuario", false, "ID_USUARIO");
-        public final static Property Clave = new Property(2, String.class, "clave", false, "CLAVE");
-        public final static Property NickName = new Property(3, String.class, "nickName", false, "NICK_NAME");
-        public final static Property Password = new Property(4, String.class, "password", false, "PASSWORD");
-        public final static Property Status = new Property(5, short.class, "status", false, "STATUS");
-        public final static Property FechaActualizacion = new Property(6, java.util.Date.class, "fechaActualizacion", false, "FECHA_ACTUALIZACION");
-        public final static Property IdUsuarioActualizacion = new Property(7, String.class, "idUsuarioActualizacion", false, "ID_USUARIO_ACTUALIZACION");
-        public final static Property Sucursal = new Property(8, String.class, "sucursal", false, "SUCURSAL");
+        public final static Property IdDetallePedido = new Property(1, String.class, "idDetallePedido", false, "ID_DETALLE_PEDIDO");
+        public final static Property IdPedido = new Property(2, String.class, "idPedido", false, "ID_PEDIDO");
+        public final static Property ClaveArticulo = new Property(3, String.class, "claveArticulo", false, "CLAVE_ARTICULO");
+        public final static Property Cantidad = new Property(4, float.class, "cantidad", false, "CANTIDAD");
+        public final static Property Precio = new Property(5, float.class, "precio", false, "PRECIO");
+        public final static Property Subtotal = new Property(6, float.class, "subtotal", false, "SUBTOTAL");
+        public final static Property Iva = new Property(7, float.class, "iva", false, "IVA");
+        public final static Property Total = new Property(8, float.class, "total", false, "TOTAL");
+        public final static Property FechaActualizacion = new Property(9, java.util.Date.class, "fechaActualizacion", false, "FECHA_ACTUALIZACION");
+        public final static Property UsuarioActualizacion = new Property(10, String.class, "usuarioActualizacion", false, "USUARIO_ACTUALIZACION");
     }
 
 
@@ -47,14 +49,16 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"VW_DETALLE_PEDIDO__I\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: Id
-                "\"ID_USUARIO\" TEXT," + // 1: idUsuario
-                "\"CLAVE\" TEXT," + // 2: clave
-                "\"NICK_NAME\" TEXT," + // 3: nickName
-                "\"PASSWORD\" TEXT," + // 4: password
-                "\"STATUS\" INTEGER NOT NULL ," + // 5: status
-                "\"FECHA_ACTUALIZACION\" INTEGER," + // 6: fechaActualizacion
-                "\"ID_USUARIO_ACTUALIZACION\" TEXT," + // 7: idUsuarioActualizacion
-                "\"SUCURSAL\" TEXT);"); // 8: sucursal
+                "\"ID_DETALLE_PEDIDO\" TEXT," + // 1: idDetallePedido
+                "\"ID_PEDIDO\" TEXT," + // 2: idPedido
+                "\"CLAVE_ARTICULO\" TEXT," + // 3: claveArticulo
+                "\"CANTIDAD\" REAL NOT NULL ," + // 4: cantidad
+                "\"PRECIO\" REAL NOT NULL ," + // 5: precio
+                "\"SUBTOTAL\" REAL NOT NULL ," + // 6: subtotal
+                "\"IVA\" REAL NOT NULL ," + // 7: iva
+                "\"TOTAL\" REAL NOT NULL ," + // 8: total
+                "\"FECHA_ACTUALIZACION\" INTEGER," + // 9: fechaActualizacion
+                "\"USUARIO_ACTUALIZACION\" TEXT);"); // 10: usuarioActualizacion
     }
 
     /** Drops the underlying database table. */
@@ -72,40 +76,34 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
             stmt.bindLong(1, Id);
         }
  
-        String idUsuario = entity.getIdUsuario();
-        if (idUsuario != null) {
-            stmt.bindString(2, idUsuario);
+        String idDetallePedido = entity.getIdDetallePedido();
+        if (idDetallePedido != null) {
+            stmt.bindString(2, idDetallePedido);
         }
  
-        String clave = entity.getClave();
-        if (clave != null) {
-            stmt.bindString(3, clave);
+        String idPedido = entity.getIdPedido();
+        if (idPedido != null) {
+            stmt.bindString(3, idPedido);
         }
  
-        String nickName = entity.getNickName();
-        if (nickName != null) {
-            stmt.bindString(4, nickName);
+        String claveArticulo = entity.getClaveArticulo();
+        if (claveArticulo != null) {
+            stmt.bindString(4, claveArticulo);
         }
- 
-        String password = entity.getPassword();
-        if (password != null) {
-            stmt.bindString(5, password);
-        }
-        stmt.bindLong(6, entity.getStatus());
+        stmt.bindDouble(5, entity.getCantidad());
+        stmt.bindDouble(6, entity.getPrecio());
+        stmt.bindDouble(7, entity.getSubtotal());
+        stmt.bindDouble(8, entity.getIva());
+        stmt.bindDouble(9, entity.getTotal());
  
         java.util.Date fechaActualizacion = entity.getFechaActualizacion();
         if (fechaActualizacion != null) {
-            stmt.bindLong(7, fechaActualizacion.getTime());
+            stmt.bindLong(10, fechaActualizacion.getTime());
         }
  
-        String idUsuarioActualizacion = entity.getIdUsuarioActualizacion();
-        if (idUsuarioActualizacion != null) {
-            stmt.bindString(8, idUsuarioActualizacion);
-        }
- 
-        String sucursal = entity.getSucursal();
-        if (sucursal != null) {
-            stmt.bindString(9, sucursal);
+        String usuarioActualizacion = entity.getUsuarioActualizacion();
+        if (usuarioActualizacion != null) {
+            stmt.bindString(11, usuarioActualizacion);
         }
     }
 
@@ -118,40 +116,34 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
             stmt.bindLong(1, Id);
         }
  
-        String idUsuario = entity.getIdUsuario();
-        if (idUsuario != null) {
-            stmt.bindString(2, idUsuario);
+        String idDetallePedido = entity.getIdDetallePedido();
+        if (idDetallePedido != null) {
+            stmt.bindString(2, idDetallePedido);
         }
  
-        String clave = entity.getClave();
-        if (clave != null) {
-            stmt.bindString(3, clave);
+        String idPedido = entity.getIdPedido();
+        if (idPedido != null) {
+            stmt.bindString(3, idPedido);
         }
  
-        String nickName = entity.getNickName();
-        if (nickName != null) {
-            stmt.bindString(4, nickName);
+        String claveArticulo = entity.getClaveArticulo();
+        if (claveArticulo != null) {
+            stmt.bindString(4, claveArticulo);
         }
- 
-        String password = entity.getPassword();
-        if (password != null) {
-            stmt.bindString(5, password);
-        }
-        stmt.bindLong(6, entity.getStatus());
+        stmt.bindDouble(5, entity.getCantidad());
+        stmt.bindDouble(6, entity.getPrecio());
+        stmt.bindDouble(7, entity.getSubtotal());
+        stmt.bindDouble(8, entity.getIva());
+        stmt.bindDouble(9, entity.getTotal());
  
         java.util.Date fechaActualizacion = entity.getFechaActualizacion();
         if (fechaActualizacion != null) {
-            stmt.bindLong(7, fechaActualizacion.getTime());
+            stmt.bindLong(10, fechaActualizacion.getTime());
         }
  
-        String idUsuarioActualizacion = entity.getIdUsuarioActualizacion();
-        if (idUsuarioActualizacion != null) {
-            stmt.bindString(8, idUsuarioActualizacion);
-        }
- 
-        String sucursal = entity.getSucursal();
-        if (sucursal != null) {
-            stmt.bindString(9, sucursal);
+        String usuarioActualizacion = entity.getUsuarioActualizacion();
+        if (usuarioActualizacion != null) {
+            stmt.bindString(11, usuarioActualizacion);
         }
     }
 
@@ -164,14 +156,16 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
     public VwDetallePedido_I readEntity(Cursor cursor, int offset) {
         VwDetallePedido_I entity = new VwDetallePedido_I( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // Id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // idUsuario
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // clave
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // nickName
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // password
-            cursor.getShort(offset + 5), // status
-            cursor.isNull(offset + 6) ? null : new java.util.Date(cursor.getLong(offset + 6)), // fechaActualizacion
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // idUsuarioActualizacion
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // sucursal
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // idDetallePedido
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // idPedido
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // claveArticulo
+            cursor.getFloat(offset + 4), // cantidad
+            cursor.getFloat(offset + 5), // precio
+            cursor.getFloat(offset + 6), // subtotal
+            cursor.getFloat(offset + 7), // iva
+            cursor.getFloat(offset + 8), // total
+            cursor.isNull(offset + 9) ? null : new java.util.Date(cursor.getLong(offset + 9)), // fechaActualizacion
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10) // usuarioActualizacion
         );
         return entity;
     }
@@ -179,14 +173,16 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
     @Override
     public void readEntity(Cursor cursor, VwDetallePedido_I entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setIdUsuario(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setClave(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setNickName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setPassword(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setStatus(cursor.getShort(offset + 5));
-        entity.setFechaActualizacion(cursor.isNull(offset + 6) ? null : new java.util.Date(cursor.getLong(offset + 6)));
-        entity.setIdUsuarioActualizacion(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setSucursal(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setIdDetallePedido(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setIdPedido(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setClaveArticulo(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setCantidad(cursor.getFloat(offset + 4));
+        entity.setPrecio(cursor.getFloat(offset + 5));
+        entity.setSubtotal(cursor.getFloat(offset + 6));
+        entity.setIva(cursor.getFloat(offset + 7));
+        entity.setTotal(cursor.getFloat(offset + 8));
+        entity.setFechaActualizacion(cursor.isNull(offset + 9) ? null : new java.util.Date(cursor.getLong(offset + 9)));
+        entity.setUsuarioActualizacion(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
      }
     
     @Override

@@ -27,27 +27,10 @@ public class VwArticulos_IDao extends AbstractDao<VwArticulos_I, Long> {
         public final static Property Nombre = new Property(2, String.class, "nombre", false, "NOMBRE");
         public final static Property UnidadPrimaria = new Property(3, String.class, "unidadPrimaria", false, "UNIDAD_PRIMARIA");
         public final static Property Precio1 = new Property(4, float.class, "precio1", false, "PRECIO1");
-        public final static Property Precio2 = new Property(5, float.class, "precio2", false, "PRECIO2");
-        public final static Property Precio3 = new Property(6, float.class, "precio3", false, "PRECIO3");
-        public final static Property Precio4 = new Property(7, float.class, "precio4", false, "PRECIO4");
-        public final static Property Precio5 = new Property(8, float.class, "precio5", false, "PRECIO5");
-        public final static Property TipoImpuesto = new Property(9, String.class, "tipoImpuesto", false, "TIPO_IMPUESTO");
-        public final static Property Grupo = new Property(10, String.class, "grupo", false, "GRUPO");
-        public final static Property Tipo = new Property(11, String.class, "tipo", false, "TIPO");
-        public final static Property Status = new Property(12, String.class, "status", false, "STATUS");
-        public final static Property Ubicacion = new Property(13, String.class, "ubicacion", false, "UBICACION");
-        public final static Property Moneda = new Property(14, String.class, "moneda", false, "MONEDA");
-        public final static Property TiempoSurtido = new Property(15, String.class, "tiempoSurtido", false, "TIEMPO_SURTIDO");
-        public final static Property Pedido = new Property(16, String.class, "pedido", false, "PEDIDO");
-        public final static Property CostoPromedio = new Property(17, float.class, "costoPromedio", false, "COSTO_PROMEDIO");
-        public final static Property UltimoCosto = new Property(18, float.class, "ultimoCosto", false, "ULTIMO_COSTO");
-        public final static Property CostoReposicion = new Property(19, float.class, "costoReposicion", false, "COSTO_REPOSICION");
-        public final static Property ExistenciaTotal = new Property(20, float.class, "existenciaTotal", false, "EXISTENCIA_TOTAL");
-        public final static Property Activo = new Property(21, String.class, "activo", false, "ACTIVO");
-        public final static Property Clase = new Property(22, String.class, "clase", false, "CLASE");
-        public final static Property Cubicaje = new Property(23, String.class, "cubicaje", false, "CUBICAJE");
-        public final static Property Peso = new Property(24, String.class, "peso", false, "PESO");
-        public final static Property Equivalencia = new Property(25, String.class, "equivalencia", false, "EQUIVALENCIA");
+        public final static Property Status = new Property(5, String.class, "status", false, "STATUS");
+        public final static Property TiempoSurtido = new Property(6, String.class, "tiempoSurtido", false, "TIEMPO_SURTIDO");
+        public final static Property ExistenciaTotal = new Property(7, float.class, "existenciaTotal", false, "EXISTENCIA_TOTAL");
+        public final static Property Cubicaje = new Property(8, String.class, "cubicaje", false, "CUBICAJE");
     }
 
 
@@ -68,27 +51,10 @@ public class VwArticulos_IDao extends AbstractDao<VwArticulos_I, Long> {
                 "\"NOMBRE\" TEXT," + // 2: nombre
                 "\"UNIDAD_PRIMARIA\" TEXT," + // 3: unidadPrimaria
                 "\"PRECIO1\" REAL NOT NULL ," + // 4: precio1
-                "\"PRECIO2\" REAL NOT NULL ," + // 5: precio2
-                "\"PRECIO3\" REAL NOT NULL ," + // 6: precio3
-                "\"PRECIO4\" REAL NOT NULL ," + // 7: precio4
-                "\"PRECIO5\" REAL NOT NULL ," + // 8: precio5
-                "\"TIPO_IMPUESTO\" TEXT," + // 9: tipoImpuesto
-                "\"GRUPO\" TEXT," + // 10: grupo
-                "\"TIPO\" TEXT," + // 11: tipo
-                "\"STATUS\" TEXT," + // 12: status
-                "\"UBICACION\" TEXT," + // 13: ubicacion
-                "\"MONEDA\" TEXT," + // 14: moneda
-                "\"TIEMPO_SURTIDO\" TEXT," + // 15: tiempoSurtido
-                "\"PEDIDO\" TEXT," + // 16: pedido
-                "\"COSTO_PROMEDIO\" REAL NOT NULL ," + // 17: costoPromedio
-                "\"ULTIMO_COSTO\" REAL NOT NULL ," + // 18: ultimoCosto
-                "\"COSTO_REPOSICION\" REAL NOT NULL ," + // 19: costoReposicion
-                "\"EXISTENCIA_TOTAL\" REAL NOT NULL ," + // 20: existenciaTotal
-                "\"ACTIVO\" TEXT," + // 21: activo
-                "\"CLASE\" TEXT," + // 22: clase
-                "\"CUBICAJE\" TEXT," + // 23: cubicaje
-                "\"PESO\" TEXT," + // 24: peso
-                "\"EQUIVALENCIA\" TEXT);"); // 25: equivalencia
+                "\"STATUS\" TEXT," + // 5: status
+                "\"TIEMPO_SURTIDO\" TEXT," + // 6: tiempoSurtido
+                "\"EXISTENCIA_TOTAL\" REAL NOT NULL ," + // 7: existenciaTotal
+                "\"CUBICAJE\" TEXT);"); // 8: cubicaje
     }
 
     /** Drops the underlying database table. */
@@ -121,78 +87,21 @@ public class VwArticulos_IDao extends AbstractDao<VwArticulos_I, Long> {
             stmt.bindString(4, unidadPrimaria);
         }
         stmt.bindDouble(5, entity.getPrecio1());
-        stmt.bindDouble(6, entity.getPrecio2());
-        stmt.bindDouble(7, entity.getPrecio3());
-        stmt.bindDouble(8, entity.getPrecio4());
-        stmt.bindDouble(9, entity.getPrecio5());
- 
-        String tipoImpuesto = entity.getTipoImpuesto();
-        if (tipoImpuesto != null) {
-            stmt.bindString(10, tipoImpuesto);
-        }
- 
-        String grupo = entity.getGrupo();
-        if (grupo != null) {
-            stmt.bindString(11, grupo);
-        }
- 
-        String tipo = entity.getTipo();
-        if (tipo != null) {
-            stmt.bindString(12, tipo);
-        }
  
         String status = entity.getStatus();
         if (status != null) {
-            stmt.bindString(13, status);
-        }
- 
-        String ubicacion = entity.getUbicacion();
-        if (ubicacion != null) {
-            stmt.bindString(14, ubicacion);
-        }
- 
-        String moneda = entity.getMoneda();
-        if (moneda != null) {
-            stmt.bindString(15, moneda);
+            stmt.bindString(6, status);
         }
  
         String tiempoSurtido = entity.getTiempoSurtido();
         if (tiempoSurtido != null) {
-            stmt.bindString(16, tiempoSurtido);
+            stmt.bindString(7, tiempoSurtido);
         }
- 
-        String pedido = entity.getPedido();
-        if (pedido != null) {
-            stmt.bindString(17, pedido);
-        }
-        stmt.bindDouble(18, entity.getCostoPromedio());
-        stmt.bindDouble(19, entity.getUltimoCosto());
-        stmt.bindDouble(20, entity.getCostoReposicion());
-        stmt.bindDouble(21, entity.getExistenciaTotal());
- 
-        String activo = entity.getActivo();
-        if (activo != null) {
-            stmt.bindString(22, activo);
-        }
- 
-        String clase = entity.getClase();
-        if (clase != null) {
-            stmt.bindString(23, clase);
-        }
+        stmt.bindDouble(8, entity.getExistenciaTotal());
  
         String cubicaje = entity.getCubicaje();
         if (cubicaje != null) {
-            stmt.bindString(24, cubicaje);
-        }
- 
-        String peso = entity.getPeso();
-        if (peso != null) {
-            stmt.bindString(25, peso);
-        }
- 
-        String equivalencia = entity.getEquivalencia();
-        if (equivalencia != null) {
-            stmt.bindString(26, equivalencia);
+            stmt.bindString(9, cubicaje);
         }
     }
 
@@ -220,78 +129,21 @@ public class VwArticulos_IDao extends AbstractDao<VwArticulos_I, Long> {
             stmt.bindString(4, unidadPrimaria);
         }
         stmt.bindDouble(5, entity.getPrecio1());
-        stmt.bindDouble(6, entity.getPrecio2());
-        stmt.bindDouble(7, entity.getPrecio3());
-        stmt.bindDouble(8, entity.getPrecio4());
-        stmt.bindDouble(9, entity.getPrecio5());
- 
-        String tipoImpuesto = entity.getTipoImpuesto();
-        if (tipoImpuesto != null) {
-            stmt.bindString(10, tipoImpuesto);
-        }
- 
-        String grupo = entity.getGrupo();
-        if (grupo != null) {
-            stmt.bindString(11, grupo);
-        }
- 
-        String tipo = entity.getTipo();
-        if (tipo != null) {
-            stmt.bindString(12, tipo);
-        }
  
         String status = entity.getStatus();
         if (status != null) {
-            stmt.bindString(13, status);
-        }
- 
-        String ubicacion = entity.getUbicacion();
-        if (ubicacion != null) {
-            stmt.bindString(14, ubicacion);
-        }
- 
-        String moneda = entity.getMoneda();
-        if (moneda != null) {
-            stmt.bindString(15, moneda);
+            stmt.bindString(6, status);
         }
  
         String tiempoSurtido = entity.getTiempoSurtido();
         if (tiempoSurtido != null) {
-            stmt.bindString(16, tiempoSurtido);
+            stmt.bindString(7, tiempoSurtido);
         }
- 
-        String pedido = entity.getPedido();
-        if (pedido != null) {
-            stmt.bindString(17, pedido);
-        }
-        stmt.bindDouble(18, entity.getCostoPromedio());
-        stmt.bindDouble(19, entity.getUltimoCosto());
-        stmt.bindDouble(20, entity.getCostoReposicion());
-        stmt.bindDouble(21, entity.getExistenciaTotal());
- 
-        String activo = entity.getActivo();
-        if (activo != null) {
-            stmt.bindString(22, activo);
-        }
- 
-        String clase = entity.getClase();
-        if (clase != null) {
-            stmt.bindString(23, clase);
-        }
+        stmt.bindDouble(8, entity.getExistenciaTotal());
  
         String cubicaje = entity.getCubicaje();
         if (cubicaje != null) {
-            stmt.bindString(24, cubicaje);
-        }
- 
-        String peso = entity.getPeso();
-        if (peso != null) {
-            stmt.bindString(25, peso);
-        }
- 
-        String equivalencia = entity.getEquivalencia();
-        if (equivalencia != null) {
-            stmt.bindString(26, equivalencia);
+            stmt.bindString(9, cubicaje);
         }
     }
 
@@ -308,27 +160,10 @@ public class VwArticulos_IDao extends AbstractDao<VwArticulos_I, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // nombre
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // unidadPrimaria
             cursor.getFloat(offset + 4), // precio1
-            cursor.getFloat(offset + 5), // precio2
-            cursor.getFloat(offset + 6), // precio3
-            cursor.getFloat(offset + 7), // precio4
-            cursor.getFloat(offset + 8), // precio5
-            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // tipoImpuesto
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // grupo
-            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // tipo
-            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // status
-            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // ubicacion
-            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // moneda
-            cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15), // tiempoSurtido
-            cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16), // pedido
-            cursor.getFloat(offset + 17), // costoPromedio
-            cursor.getFloat(offset + 18), // ultimoCosto
-            cursor.getFloat(offset + 19), // costoReposicion
-            cursor.getFloat(offset + 20), // existenciaTotal
-            cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21), // activo
-            cursor.isNull(offset + 22) ? null : cursor.getString(offset + 22), // clase
-            cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23), // cubicaje
-            cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24), // peso
-            cursor.isNull(offset + 25) ? null : cursor.getString(offset + 25) // equivalencia
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // status
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // tiempoSurtido
+            cursor.getFloat(offset + 7), // existenciaTotal
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // cubicaje
         );
         return entity;
     }
@@ -340,27 +175,10 @@ public class VwArticulos_IDao extends AbstractDao<VwArticulos_I, Long> {
         entity.setNombre(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setUnidadPrimaria(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setPrecio1(cursor.getFloat(offset + 4));
-        entity.setPrecio2(cursor.getFloat(offset + 5));
-        entity.setPrecio3(cursor.getFloat(offset + 6));
-        entity.setPrecio4(cursor.getFloat(offset + 7));
-        entity.setPrecio5(cursor.getFloat(offset + 8));
-        entity.setTipoImpuesto(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setGrupo(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setTipo(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
-        entity.setStatus(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
-        entity.setUbicacion(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
-        entity.setMoneda(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
-        entity.setTiempoSurtido(cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15));
-        entity.setPedido(cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16));
-        entity.setCostoPromedio(cursor.getFloat(offset + 17));
-        entity.setUltimoCosto(cursor.getFloat(offset + 18));
-        entity.setCostoReposicion(cursor.getFloat(offset + 19));
-        entity.setExistenciaTotal(cursor.getFloat(offset + 20));
-        entity.setActivo(cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21));
-        entity.setClase(cursor.isNull(offset + 22) ? null : cursor.getString(offset + 22));
-        entity.setCubicaje(cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23));
-        entity.setPeso(cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24));
-        entity.setEquivalencia(cursor.isNull(offset + 25) ? null : cursor.getString(offset + 25));
+        entity.setStatus(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setTiempoSurtido(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setExistenciaTotal(cursor.getFloat(offset + 7));
+        entity.setCubicaje(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
      }
     
     @Override

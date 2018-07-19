@@ -10,27 +10,32 @@ public class VwDetallePedido_I
 {
     @org.greenrobot.greendao.annotation.Id(autoincrement = true)
     private Long Id;
-    private String idUsuario;
-    private String clave;
-    private String nickName;
-    private String password;
-    private short status;
+    private String idDetallePedido;
+    private String idPedido;
+    private String claveArticulo;
+    private float cantidad;
+    private float precio;
+    private float subtotal;
+    private float iva;
+    private float total;
     private Date fechaActualizacion;
-    private String idUsuarioActualizacion;
-    private String sucursal;
-    @Generated(hash = 509181283)
-    public VwDetallePedido_I(Long Id, String idUsuario, String clave,
-            String nickName, String password, short status, Date fechaActualizacion,
-            String idUsuarioActualizacion, String sucursal) {
+    private String usuarioActualizacion;
+    @Generated(hash = 157371043)
+    public VwDetallePedido_I(Long Id, String idDetallePedido, String idPedido,
+            String claveArticulo, float cantidad, float precio, float subtotal,
+            float iva, float total, Date fechaActualizacion,
+            String usuarioActualizacion) {
         this.Id = Id;
-        this.idUsuario = idUsuario;
-        this.clave = clave;
-        this.nickName = nickName;
-        this.password = password;
-        this.status = status;
+        this.idDetallePedido = idDetallePedido;
+        this.idPedido = idPedido;
+        this.claveArticulo = claveArticulo;
+        this.cantidad = cantidad;
+        this.precio = precio;
+        this.subtotal = subtotal;
+        this.iva = iva;
+        this.total = total;
         this.fechaActualizacion = fechaActualizacion;
-        this.idUsuarioActualizacion = idUsuarioActualizacion;
-        this.sucursal = sucursal;
+        this.usuarioActualizacion = usuarioActualizacion;
     }
     @Generated(hash = 1716617429)
     public VwDetallePedido_I() {
@@ -41,35 +46,53 @@ public class VwDetallePedido_I
     public void setId(Long Id) {
         this.Id = Id;
     }
-    public String getIdUsuario() {
-        return this.idUsuario;
+    public String getIdDetallePedido() {
+        return this.idDetallePedido;
     }
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdDetallePedido(String idDetallePedido) {
+        this.idDetallePedido = idDetallePedido;
     }
-    public String getClave() {
-        return this.clave;
+    public String getIdPedido() {
+        return this.idPedido;
     }
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setIdPedido(String idPedido) {
+        this.idPedido = idPedido;
     }
-    public String getNickName() {
-        return this.nickName;
+    public String getClaveArticulo() {
+        return this.claveArticulo;
     }
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setClaveArticulo(String claveArticulo) {
+        this.claveArticulo = claveArticulo;
     }
-    public String getPassword() {
-        return this.password;
+    public float getCantidad() {
+        return this.cantidad;
     }
-    public void setPassword(String password) {
-        this.password = password;
+    public void setCantidad(float cantidad) {
+        this.cantidad = cantidad;
     }
-    public short getStatus() {
-        return this.status;
+    public float getPrecio() {
+        return this.precio;
     }
-    public void setStatus(short status) {
-        this.status = status;
+    public void setPrecio(float precio) {
+        this.precio = precio;
+    }
+    public float getSubtotal() {
+        return this.subtotal;
+    }
+    public void setSubtotal(float subtotal) {
+        this.subtotal = subtotal;
+    }
+    public float getIva() {
+        return this.iva;
+    }
+    public void setIva(float iva) {
+        this.iva = iva;
+    }
+    public float getTotal() {
+        return this.total;
+    }
+    public void setTotal(float total) {
+        this.total = total;
     }
     public Date getFechaActualizacion() {
         return this.fechaActualizacion;
@@ -77,17 +100,11 @@ public class VwDetallePedido_I
     public void setFechaActualizacion(Date fechaActualizacion) {
         this.fechaActualizacion = fechaActualizacion;
     }
-    public String getIdUsuarioActualizacion() {
-        return this.idUsuarioActualizacion;
+    public String getUsuarioActualizacion() {
+        return this.usuarioActualizacion;
     }
-    public void setIdUsuarioActualizacion(String idUsuarioActualizacion) {
-        this.idUsuarioActualizacion = idUsuarioActualizacion;
-    }
-    public String getSucursal() {
-        return this.sucursal;
-    }
-    public void setSucursal(String sucursal) {
-        this.sucursal = sucursal;
+    public void setUsuarioActualizacion(String usuarioActualizacion) {
+        this.usuarioActualizacion = usuarioActualizacion;
     }
 
 }
