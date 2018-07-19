@@ -23,11 +23,11 @@ public class Pedidos_I
     private String observaciones;
     private Date ultimaFechaActualizacion;
     private String ultimoUsuarioActualizacion;
-    @Generated(hash = 1571932122)
+    @Generated(hash = 545283679)
     public Pedidos_I(Long Id, String idPedido, String idUsuario, String folio,
-                     String claveCliente, Date fecha, short estatus, float subtotal,
-                     float iva, float total, String observaciones,
-                     Date ultimaFechaActualizacion, String ultimoUsuarioActualizacion) {
+            String claveCliente, Date fecha, short estatus, float subtotal,
+            float iva, float total, String observaciones,
+            Date ultimaFechaActualizacion, String ultimoUsuarioActualizacion) {
         this.Id = Id;
         this.idPedido = idPedido;
         this.idUsuario = idUsuario;
@@ -42,7 +42,7 @@ public class Pedidos_I
         this.ultimaFechaActualizacion = ultimaFechaActualizacion;
         this.ultimoUsuarioActualizacion = ultimoUsuarioActualizacion;
     }
-    @Generated(hash = 1164981422)
+    @Generated(hash = 1028724488)
     public Pedidos_I() {
     }
     public Long getId() {
@@ -123,4 +123,5 @@ public class Pedidos_I
     public void setUltimoUsuarioActualizacion(String ultimoUsuarioActualizacion) {
         this.ultimoUsuarioActualizacion = ultimoUsuarioActualizacion;
     }
+
 }

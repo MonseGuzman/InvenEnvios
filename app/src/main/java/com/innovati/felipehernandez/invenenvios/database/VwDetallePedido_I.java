@@ -18,10 +18,10 @@ public class VwDetallePedido_I
     private Date fechaActualizacion;
     private String idUsuarioActualizacion;
     private String sucursal;
-    @Generated(hash = 1030152931)
-    public VwDetallePedido_I(Long Id, String idUsuario, String clave, String nickName,
-                             String password, short status, Date fechaActualizacion,
-                             String idUsuarioActualizacion, String sucursal) {
+    @Generated(hash = 509181283)
+    public VwDetallePedido_I(Long Id, String idUsuario, String clave,
+            String nickName, String password, short status, Date fechaActualizacion,
+            String idUsuarioActualizacion, String sucursal) {
         this.Id = Id;
         this.idUsuario = idUsuario;
         this.clave = clave;
@@ -32,7 +32,7 @@ public class VwDetallePedido_I
         this.idUsuarioActualizacion = idUsuarioActualizacion;
         this.sucursal = sucursal;
     }
-    @Generated(hash = 292960178)
+    @Generated(hash = 1716617429)
     public VwDetallePedido_I() {
     }
     public Long getId() {
@@ -89,4 +89,5 @@ public class VwDetallePedido_I
     public void setSucursal(String sucursal) {
         this.sucursal = sucursal;
     }
+
 }

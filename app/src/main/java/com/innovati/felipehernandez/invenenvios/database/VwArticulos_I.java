@@ -34,14 +34,15 @@ public class VwArticulos_I
     private String cubicaje;
     private String peso;
     private String equivalencia;
-    @Generated(hash = 1777988601)
-    public VwArticulos_I(Long Id, String clave, String nombre, String unidadPrimaria,
-                         float precio1, float precio2, float precio3, float precio4,
-                         float precio5, String tipoImpuesto, String grupo, String tipo,
-                         String status, String ubicacion, String moneda, String tiempoSurtido,
-                         String pedido, float costoPromedio, float ultimoCosto,
-                         float costoReposicion, float existenciaTotal, String activo,
-                         String clase, String cubicaje, String peso, String equivalencia) {
+    @Generated(hash = 988988148)
+    public VwArticulos_I(Long Id, String clave, String nombre,
+            String unidadPrimaria, float precio1, float precio2, float precio3,
+            float precio4, float precio5, String tipoImpuesto, String grupo,
+            String tipo, String status, String ubicacion, String moneda,
+            String tiempoSurtido, String pedido, float costoPromedio,
+            float ultimoCosto, float costoReposicion, float existenciaTotal,
+            String activo, String clase, String cubicaje, String peso,
+            String equivalencia) {
         this.Id = Id;
         this.clave = clave;
         this.nombre = nombre;
@@ -69,7 +70,7 @@ public class VwArticulos_I
         this.peso = peso;
         this.equivalencia = equivalencia;
     }
-    @Generated(hash = 256815245)
+    @Generated(hash = 122281887)
     public VwArticulos_I() {
     }
     public Long getId() {
@@ -228,4 +229,5 @@ public class VwArticulos_I
     public void setEquivalencia(String equivalencia) {
         this.equivalencia = equivalencia;
     }
+
 }

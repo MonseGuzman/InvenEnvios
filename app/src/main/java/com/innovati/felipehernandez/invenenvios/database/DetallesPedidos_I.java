@@ -21,11 +21,11 @@ public class DetallesPedidos_I
     private float total;
     private Date ultimaFechaActualizacion;
     private String ultimoUsuarioActualizacion;
-    @Generated(hash = 388740536)
+    @Generated(hash = 46730074)
     public DetallesPedidos_I(Long Id, String idDetallePedido, String idPedido,
-                             String claveArticulo, float cantidad, float precio, float subtotal,
-                             float iva, float total, Date ultimaFechaActualizacion,
-                             String ultimoUsuarioActualizacion) {
+            String claveArticulo, float cantidad, float precio, float subtotal,
+            float iva, float total, Date ultimaFechaActualizacion,
+            String ultimoUsuarioActualizacion) {
         this.Id = Id;
         this.idDetallePedido = idDetallePedido;
         this.idPedido = idPedido;
@@ -38,7 +38,7 @@ public class DetallesPedidos_I
         this.ultimaFechaActualizacion = ultimaFechaActualizacion;
         this.ultimoUsuarioActualizacion = ultimoUsuarioActualizacion;
     }
-    @Generated(hash = 356426221)
+    @Generated(hash = 1389178408)
     public DetallesPedidos_I() {
     }
     public Long getId() {
@@ -107,4 +107,5 @@ public class DetallesPedidos_I
     public void setUltimoUsuarioActualizacion(String ultimoUsuarioActualizacion) {
         this.ultimoUsuarioActualizacion = ultimoUsuarioActualizacion;
     }
+
 }

@@ -16,10 +16,10 @@ public class VwClientes_I
     private String numeroInterior;
     private String colonia;
     private String telefono;
-    @Generated(hash = 324675601)
+    @Generated(hash = 112107426)
     public VwClientes_I(Long Id, String clave, String nombre, String rfc,
-                        String calle, String numeroExterior, String numeroInterior,
-                        String colonia, String telefono) {
+            String calle, String numeroExterior, String numeroInterior,
+            String colonia, String telefono) {
         this.Id = Id;
         this.clave = clave;
         this.nombre = nombre;
@@ -30,7 +30,7 @@ public class VwClientes_I
         this.colonia = colonia;
         this.telefono = telefono;
     }
-    @Generated(hash = 963916258)
+    @Generated(hash = 1651940936)
     public VwClientes_I() {
     }
     public Long getId() {
@@ -87,4 +87,5 @@ public class VwClientes_I
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
 }

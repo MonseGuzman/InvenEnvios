@@ -10,21 +10,18 @@ import android.view.View;
 
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.app.MyApp;
-import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwAgenteDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
-import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwAgente;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwUsuarios;
-import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwAgenteDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
@@ -32,25 +29,20 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFact
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
-import com.innovati.felipehernandez.invenenvios.database.DetallesPedidosDao_I;
 import com.innovati.felipehernandez.invenenvios.database.DetallesPedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
-import com.innovati.felipehernandez.invenenvios.database.PedidosDao_I;
-import com.innovati.felipehernandez.invenenvios.database.VwAgenteDao_I;
+import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwAgente_I;
-import com.innovati.felipehernandez.invenenvios.database.VwArticulos_I;
-import com.innovati.felipehernandez.invenenvios.database.VwArticulosDao_I;
-import com.innovati.felipehernandez.invenenvios.database.VwClientesDao_I;
-import com.innovati.felipehernandez.invenenvios.database.VwClientes_I;
+import com.innovati.felipehernandez.invenenvios.database.VwAgente_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwUsuarios_I;
-import com.innovati.felipehernandez.invenenvios.database.VwUsuariosDao_I;
+import com.innovati.felipehernandez.invenenvios.database.VwUsuarios_IDao;
 
 import java.util.List;
 
 public class MenuActivity extends AppCompatActivity
 {
     private SharedPreferences preferences;
-    DaoSession daoSession = ((MyApp) getApplication()).getDaoSession();
+    DaoSession daoSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +51,7 @@ public class MenuActivity extends AppCompatActivity
 
         this.setTitle("Menú");
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+        daoSession = ((MyApp) getApplication()).getDaoSession();
     }
 
 
@@ -101,14 +94,17 @@ public class MenuActivity extends AppCompatActivity
         startActivity(i);
     }
 
-    public void actualizar()
+    public void actualizarDBInterna()
     {
-        PedidosDao_I daoPedidos = daoSession.getPedidosDaoI();
+        Pedidos_IDao daoPedidos = daoSession.getPedidos_IDao();
         List<Pedidos_I> pedidos = daoPedidos.loadAll();
 
+    }
 
-        DetallesPedidosDao_I detallesPedidosDaoI = daoSession.getDetallesPedidosDaoI();
-        List<DetallesPedidos_I> detallesPedidoIS = detallesPedidosDaoI.loadAll();
+    public void actualizarDBServidor(View v)
+    {
+        InsertarAInterna insertar = new InsertarAInterna();
+        insertar.execute();
     }
 
     private class insertarAServidor extends AsyncTask<List<Object>,Void, Void>
@@ -134,7 +130,7 @@ public class MenuActivity extends AppCompatActivity
             return null;
         }
     }
-    private class insertarAInterna extends AsyncTask<Void, Void, Void>
+    private class InsertarAInterna extends AsyncTask<Void, Void, Void>
     {
         private PedidosDao _daoPedidos;
         private VwDetallePedidoDao _daoDetallesPedidos;
@@ -155,14 +151,14 @@ public class MenuActivity extends AppCompatActivity
             try
             {
 
-                VwAgente[] agentes = _daoAgente.findAll();
+              /*  VwAgente[] agentes = _daoAgente.findAll();
                 Pedidos[] pedidos = _daoPedidos.findAll();
                 VwDetallePedido[] detallesPedidos = _daoDetallesPedidos.findAll();
                 VwClientes[] clientes = _daoVwClientes.findAll();
-                VwArticulos[] articulos = _daoVwArticulos.findAll();
+                VwArticulos[] articulos = _daoVwArticulos.findAll();*/
                 VwUsuarios[] usuarios = _daoVwUsuarios.findAll();
 
-                for(VwAgente agente: agentes)
+              /*  for(VwAgente agente: agentes)
                 {
                     VwAgente_I agente_i = new VwAgente_I();
                     if(agente.getClave() != null)
@@ -179,9 +175,9 @@ public class MenuActivity extends AppCompatActivity
                     if(agente.getSucursal() != null)
                         agente_i.setEmail(agente.getEmail());
 
-                    VwAgenteDao_I metodo = daoSession.getVwAgenteDaoI();
+                    VwAgente_IDao metodo = daoSession.getVwAgente_IDao();
                     metodo.insert(agente_i);
-                }
+                }*/
 
                 for(VwUsuarios usuario: usuarios)
                 {
@@ -195,6 +191,9 @@ public class MenuActivity extends AppCompatActivity
                     vwUsuarios_i.setFechaActualizacion(usuario.getFechaActualizacion());
                     vwUsuarios_i.setIdUsuarioActualizacion(usuario.getIdUsuarioActualizacion());
                     vwUsuarios_i.setSucursal(usuario.getSucursal());
+
+                    VwUsuarios_IDao metodo = daoSession.getVwUsuarios_IDao();
+                    metodo.insertOrReplace(vwUsuarios_i);
                 }
             }
             catch (Exception e)

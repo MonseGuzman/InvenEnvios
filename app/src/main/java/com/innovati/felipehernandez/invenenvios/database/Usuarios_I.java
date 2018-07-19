@@ -18,10 +18,10 @@ public class Usuarios_I
     private short estatus;
     private Date ultimaFechaActualizacion;
     private String ultimoUsuarioActualizacion;
-    @Generated(hash = 1679109034)
+    @Generated(hash = 2014641596)
     public Usuarios_I(Long Id, String idUsuario, int clave, String nickname,
-                      String password, short estatus, Date ultimaFechaActualizacion,
-                      String ultimoUsuarioActualizacion) {
+            String password, short estatus, Date ultimaFechaActualizacion,
+            String ultimoUsuarioActualizacion) {
         this.Id = Id;
         this.idUsuario = idUsuario;
         this.clave = clave;
@@ -31,7 +31,7 @@ public class Usuarios_I
         this.ultimaFechaActualizacion = ultimaFechaActualizacion;
         this.ultimoUsuarioActualizacion = ultimoUsuarioActualizacion;
     }
-    @Generated(hash = 225815021)
+    @Generated(hash = 772493483)
     public Usuarios_I() {
     }
     public Long getId() {
@@ -82,4 +82,5 @@ public class Usuarios_I
     public void setUltimoUsuarioActualizacion(String ultimoUsuarioActualizacion) {
         this.ultimoUsuarioActualizacion = ultimoUsuarioActualizacion;
     }
+
 }

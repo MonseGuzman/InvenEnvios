@@ -18,9 +18,9 @@ public class VwAgente_I
     private String comision;
     private String email;
     private String sucursal;
-    @Generated(hash = 215783339)
+    @Generated(hash = 909918166)
     public VwAgente_I(Long Id, String clave, String nombre, String telefono,
-                      String celular, String comision, String email, String sucursal) {
+            String celular, String comision, String email, String sucursal) {
         this.Id = Id;
         this.clave = clave;
         this.nombre = nombre;
@@ -30,7 +30,7 @@ public class VwAgente_I
         this.email = email;
         this.sucursal = sucursal;
     }
-    @Generated(hash = 2109765552)
+    @Generated(hash = 133451248)
     public VwAgente_I() {
     }
     public Long getId() {

@@ -3,17 +3,14 @@ package com.innovati.felipehernandez.invenenvios.activitys;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
@@ -22,8 +19,6 @@ import com.innovati.felipehernandez.invenenvios.SettingActivity;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwUsuarios;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFactory;
-import com.innovati.felipehernandez.invenenvios.database.DaoMaster;
-import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.security.EncryptionAndDecryption;
 
 public class LoginActivity extends AppCompatActivity
@@ -155,16 +150,20 @@ public class LoginActivity extends AppCompatActivity
             String usuario, password;
             usuario = etUsuario.getText().toString();
             password = etPassword.getText().toString();
-
-            if(vwUsuarios.length > 0)
+            if(vwUsuarios != null)
             {
-                Intent i = new Intent(LoginActivity.this, MenuActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(i);
-                guardarPreferencias(usuario, password, vwUsuarios[0].getIdUsuario());
+                if(vwUsuarios.length > 0)
+                {
+                    Intent i = new Intent(LoginActivity.this, MenuActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(i);
+                    guardarPreferencias(usuario, password, vwUsuarios[0].getIdUsuario());
+                }
+                else
+                    conectado.Alerta(R.string.error,R.string.sinDatos);
             }
             else
-                conectado.Alerta(R.string.error,R.string.sinDatos);
+                conectado.Alerta(R.string.error, R.string.sinDatos);
         }
     }
 

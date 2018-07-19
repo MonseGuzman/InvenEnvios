@@ -4,13 +4,13 @@ import android.app.Application;
 import org.greenrobot.greendao.database.Database;
 
 import com.innovati.felipehernandez.invenenvios.database.DaoMaster;
-import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.database.DaoMaster.DevOpenHelper;
-import com.innovati.felipehernandez.invenenvios.security.EncryptionAndDecryption;
+import com.innovati.felipehernandez.invenenvios.database.DaoSession;
+
 
 public class MyApp extends Application
 {
-    public static final boolean ENCRYPTED = true;
+    public static final boolean ENCRYPTED = false;
     private DaoSession daoSession;
     @Override
     public void onCreate()

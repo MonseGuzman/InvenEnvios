@@ -25,15 +25,13 @@ import android.widget.Toast;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ClientesAdaptador;
+import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
-import com.innovati.felipehernandez.invenenvios.database.VwClientesDao_I;
-import com.innovati.felipehernandez.invenenvios.database.VwClientes_I;
+import com.innovati.felipehernandez.invenenvios.database.VwClientes_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.ClienteFragment;
-
-import java.util.List;
 
 public class ClientesActivity extends AppCompatActivity
 {
@@ -49,7 +47,7 @@ public class ClientesActivity extends AppCompatActivity
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int posicion;
     DaoSession daoSession;
-    VwClientesDao_I cliente = daoSession.getVwClientesDaoI();
+    VwClientes_IDao cliente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +59,7 @@ public class ClientesActivity extends AppCompatActivity
         this.setTitle(R.string.tituloClientes);
         buscarEditText.setHint(R.string.seleccionarCliente);
 
+        cliente = daoSession.getVwClientes_IDao();
         datitosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
