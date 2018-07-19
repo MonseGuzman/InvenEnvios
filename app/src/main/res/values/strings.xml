@@ -42,7 +42,7 @@
     <string name="title_activity_articulos_pedido">ArticulosPedidoActivity</string>
     <string name="fecha">Fecha</string>
 
-    <!--Pedidos-->
+    <!--Pedidos_I-->
     <string name="tituloEntregas">Consulta de entregas</string>
 
     <!--Abastecimiento-->

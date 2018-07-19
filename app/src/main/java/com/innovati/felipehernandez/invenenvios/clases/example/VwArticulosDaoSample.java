@@ -602,9 +602,9 @@ public class VwArticulosDaoSample
    }
 
 	/**
-	 * Method 'getVwArticulosDao'
+	 * Method 'getVwArticulosDaoI'
 	 * 
-	 * @return VwArticulosDao
+	 * @return VwArticulosDao_I
 	 */
    public static VwArticulosDao getVwArticulosDao()
    {

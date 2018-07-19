@@ -316,9 +316,9 @@ public class VwDetallePedidoDaoSample
 	}
 
 	/**
-	 * Method 'getVwDetallePedidoDao'
+	 * Method 'getVwDetallePedidoDaoI'
 	 * 
-	 * @return VwDetallePedidoDao
+	 * @return VwDetallePedidoDao_I
 	 */
 	public static VwDetallePedidoDao getVwDetallePedidoDao()
 	{

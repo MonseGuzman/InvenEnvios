@@ -103,7 +103,7 @@ public class VwDetallePedido implements Serializable
 	protected String ultimoUsuarioActualizacion;
 
 	/**
-	 * Method 'VwDetallePedido'
+	 * Method 'VwDetallePedido_I'
 	 * 
 	 */
 	public VwDetallePedido()
@@ -605,7 +605,7 @@ public class VwDetallePedido implements Serializable
 	public String toString()
 	{
 		StringBuffer ret = new StringBuffer();
-		ret.append( "com.innovati.felipehernandez.clases.dto.VwDetallePedido: " );
+		ret.append( "com.innovati.felipehernandez.clases.dto.VwDetallePedido_I: " );
 		ret.append( "idPedido=" + idPedido );
 		ret.append( ", idDetallePedido=" + idDetallePedido );
 		ret.append( ", claveArticulo=" + claveArticulo );

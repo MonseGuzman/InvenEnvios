@@ -7,7 +7,7 @@ import java.util.Date;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public class VwAgente
+public class VwAgente_I
 {
     @org.greenrobot.greendao.annotation.Id(autoincrement = true)
     private Long Id;
@@ -19,8 +19,8 @@ public class VwAgente
     private String email;
     private String sucursal;
     @Generated(hash = 215783339)
-    public VwAgente(Long Id, String clave, String nombre, String telefono,
-            String celular, String comision, String email, String sucursal) {
+    public VwAgente_I(Long Id, String clave, String nombre, String telefono,
+                      String celular, String comision, String email, String sucursal) {
         this.Id = Id;
         this.clave = clave;
         this.nombre = nombre;
@@ -31,7 +31,7 @@ public class VwAgente
         this.sucursal = sucursal;
     }
     @Generated(hash = 2109765552)
-    public VwAgente() {
+    public VwAgente_I() {
     }
     public Long getId() {
         return this.Id;

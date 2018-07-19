@@ -13,12 +13,12 @@ import org.greenrobot.greendao.database.DatabaseStatement;
 /** 
  * DAO for table "USUARIOS".
 */
-public class UsuariosDao extends AbstractDao<Usuarios, Long> {
+public class UsuariosDao_I extends AbstractDao<Usuarios_I, Long> {
 
     public static final String TABLENAME = "USUARIOS";
 
     /**
-     * Properties of entity Usuarios.<br/>
+     * Properties of entity Usuarios_I.<br/>
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
@@ -33,11 +33,11 @@ public class UsuariosDao extends AbstractDao<Usuarios, Long> {
     }
 
 
-    public UsuariosDao(DaoConfig config) {
+    public UsuariosDao_I(DaoConfig config) {
         super(config);
     }
     
-    public UsuariosDao(DaoConfig config, DaoSession daoSession) {
+    public UsuariosDao_I(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
     }
 
@@ -62,7 +62,7 @@ public class UsuariosDao extends AbstractDao<Usuarios, Long> {
     }
 
     @Override
-    protected final void bindValues(DatabaseStatement stmt, Usuarios entity) {
+    protected final void bindValues(DatabaseStatement stmt, Usuarios_I entity) {
         stmt.clearBindings();
  
         Long Id = entity.getId();
@@ -99,7 +99,7 @@ public class UsuariosDao extends AbstractDao<Usuarios, Long> {
     }
 
     @Override
-    protected final void bindValues(SQLiteStatement stmt, Usuarios entity) {
+    protected final void bindValues(SQLiteStatement stmt, Usuarios_I entity) {
         stmt.clearBindings();
  
         Long Id = entity.getId();
@@ -141,8 +141,8 @@ public class UsuariosDao extends AbstractDao<Usuarios, Long> {
     }    
 
     @Override
-    public Usuarios readEntity(Cursor cursor, int offset) {
-        Usuarios entity = new Usuarios( //
+    public Usuarios_I readEntity(Cursor cursor, int offset) {
+        Usuarios_I entity = new Usuarios_I( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // Id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // idUsuario
             cursor.getInt(offset + 2), // clave
@@ -156,7 +156,7 @@ public class UsuariosDao extends AbstractDao<Usuarios, Long> {
     }
      
     @Override
-    public void readEntity(Cursor cursor, Usuarios entity, int offset) {
+    public void readEntity(Cursor cursor, Usuarios_I entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setIdUsuario(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setClave(cursor.getInt(offset + 2));
@@ -168,13 +168,13 @@ public class UsuariosDao extends AbstractDao<Usuarios, Long> {
      }
     
     @Override
-    protected final Long updateKeyAfterInsert(Usuarios entity, long rowId) {
+    protected final Long updateKeyAfterInsert(Usuarios_I entity, long rowId) {
         entity.setId(rowId);
         return rowId;
     }
     
     @Override
-    public Long getKey(Usuarios entity) {
+    public Long getKey(Usuarios_I entity) {
         if(entity != null) {
             return entity.getId();
         } else {
@@ -183,7 +183,7 @@ public class UsuariosDao extends AbstractDao<Usuarios, Long> {
     }
 
     @Override
-    public boolean hasKey(Usuarios entity) {
+    public boolean hasKey(Usuarios_I entity) {
         return entity.getId() != null;
     }
 

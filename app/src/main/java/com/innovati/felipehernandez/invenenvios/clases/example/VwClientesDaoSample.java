@@ -228,9 +228,9 @@ public class VwClientesDaoSample
 	}
 
 	/**
-	 * Method 'getVwClientesDao'
+	 * Method 'getVwClientesDaoI'
 	 * 
-	 * @return VwClientesDao
+	 * @return VwClientesDao_I
 	 */
 	public static VwClientesDao getVwClientesDao()
 	{

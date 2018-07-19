@@ -17,7 +17,7 @@ public class VwDetallePedidoDaoFactory
 	/**
 	 * Method 'create'
 	 * 
-	 * @return VwDetallePedidoDao
+	 * @return VwDetallePedidoDao_I
 	 */
 	public static VwDetallePedidoDao create()
 	{
@@ -28,7 +28,7 @@ public class VwDetallePedidoDaoFactory
 	 * Method 'create'
 	 * 
 	 * @param conn
-	 * @return VwDetallePedidoDao
+	 * @return VwDetallePedidoDao_I
 	 */
 	public static VwDetallePedidoDao create(Connection conn)
 	{

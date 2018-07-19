@@ -116,7 +116,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	protected static final int NUMBER_OF_COLUMNS = 12;
 
 	/** 
-	 * Inserts a new row in the Pedidos table.
+	 * Inserts a new row in the Pedidos_I table.
 	 */
 	public void insert(Pedidos dto) throws PedidosDaoException
 	{
@@ -184,7 +184,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the Pedidos table that match the criteria ''.
+	 * Returns all rows from the Pedidos_I table that match the criteria ''.
 	 */
 	public Pedidos[] findAll() throws PedidosDaoException
 	{
@@ -192,7 +192,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the Pedidos table that match the criteria 'IdPedido = :idPedido'.
+	 * Returns all rows from the Pedidos_I table that match the criteria 'IdPedido = :idPedido'.
 	 */
 	public Pedidos[] findWhereIdPedidoEquals(String idPedido) throws PedidosDaoException
 	{
@@ -200,7 +200,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the Pedidos table that match the criteria 'IdUsuario = :idUsuario'.
+	 * Returns all rows from the Pedidos_I table that match the criteria 'IdUsuario = :idUsuario'.
 	 */
 	public Pedidos[] findWhereIdUsuarioEquals(String idUsuario) throws PedidosDaoException
 	{
@@ -208,7 +208,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the Pedidos table that match the criteria 'Folio = :folio'.
+	 * Returns all rows from the Pedidos_I table that match the criteria 'Folio = :folio'.
 	 */
 	public Pedidos[] findWhereFolioEquals(String folio) throws PedidosDaoException
 	{
@@ -216,7 +216,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the Pedidos table that match the criteria 'ClaveCliente = :claveCliente'.
+	 * Returns all rows from the Pedidos_I table that match the criteria 'ClaveCliente = :claveCliente'.
 	 */
 	public Pedidos[] findWhereClaveClienteEquals(String claveCliente) throws PedidosDaoException
 	{
@@ -224,7 +224,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the Pedidos table that match the criteria 'Fecha = :fecha'.
+	 * Returns all rows from the Pedidos_I table that match the criteria 'Fecha = :fecha'.
 	 */
 	public Pedidos[] findWhereFechaEquals(Date fecha) throws PedidosDaoException
 	{
@@ -232,7 +232,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the Pedidos table that match the criteria 'Estatus = :estatus'.
+	 * Returns all rows from the Pedidos_I table that match the criteria 'Estatus = :estatus'.
 	 */
 	public Pedidos[] findWhereEstatusEquals(short estatus) throws PedidosDaoException
 	{
@@ -240,7 +240,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the Pedidos table that match the criteria 'Subtotal = :subtotal'.
+	 * Returns all rows from the Pedidos_I table that match the criteria 'Subtotal = :subtotal'.
 	 */
 	public Pedidos[] findWhereSubtotalEquals(float subtotal) throws PedidosDaoException
 	{
@@ -248,7 +248,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the Pedidos table that match the criteria 'IVA = :iva'.
+	 * Returns all rows from the Pedidos_I table that match the criteria 'IVA = :iva'.
 	 */
 	public Pedidos[] findWhereIvaEquals(float iva) throws PedidosDaoException
 	{
@@ -256,7 +256,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the Pedidos table that match the criteria 'Total = :total'.
+	 * Returns all rows from the Pedidos_I table that match the criteria 'Total = :total'.
 	 */
 	public Pedidos[] findWhereTotalEquals(float total) throws PedidosDaoException
 	{
@@ -264,7 +264,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the Pedidos table that match the criteria 'Observaciones = :observaciones'.
+	 * Returns all rows from the Pedidos_I table that match the criteria 'Observaciones = :observaciones'.
 	 */
 	public Pedidos[] findWhereObservacionesEquals(String observaciones) throws PedidosDaoException
 	{
@@ -272,7 +272,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the Pedidos table that match the criteria 'UltimaFechaActualizacion = :ultimaFechaActualizacion'.
+	 * Returns all rows from the Pedidos_I table that match the criteria 'UltimaFechaActualizacion = :ultimaFechaActualizacion'.
 	 */
 	public Pedidos[] findWhereUltimaFechaActualizacionEquals(Date ultimaFechaActualizacion) throws PedidosDaoException
 	{
@@ -280,7 +280,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the Pedidos table that match the criteria 'UltimoUsuarioActualizacion = :ultimoUsuarioActualizacion'.
+	 * Returns all rows from the Pedidos_I table that match the criteria 'UltimoUsuarioActualizacion = :ultimoUsuarioActualizacion'.
 	 */
 	public Pedidos[] findWhereUltimoUsuarioActualizacionEquals(String ultimoUsuarioActualizacion) throws PedidosDaoException
 	{
@@ -328,7 +328,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	public String getTableName()
 	{
-		return "Inven_E..Pedidos";
+		return "Inven_E..Pedidos_I";
 	}
 
 	/** 
@@ -406,7 +406,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the Pedidos table that match the specified arbitrary SQL statement
+	 * Returns all rows from the Pedidos_I table that match the specified arbitrary SQL statement
 	 */
 	public Pedidos[] findByDynamicSelect(String sql, Object[] sqlParams) throws PedidosDaoException
 	{
@@ -456,7 +456,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the Pedidos table that match the specified arbitrary SQL statement
+	 * Returns all rows from the Pedidos_I table that match the specified arbitrary SQL statement
 	 */
 	public Pedidos[] findByDynamicWhere(String sql, Object[] sqlParams) throws PedidosDaoException
 	{

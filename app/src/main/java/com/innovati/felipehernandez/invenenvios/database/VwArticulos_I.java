@@ -5,7 +5,7 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public class VwArticulos
+public class VwArticulos_I
 {
     @org.greenrobot.greendao.annotation.Id(autoincrement = true)
     private Long Id;
@@ -35,13 +35,13 @@ public class VwArticulos
     private String peso;
     private String equivalencia;
     @Generated(hash = 1777988601)
-    public VwArticulos(Long Id, String clave, String nombre, String unidadPrimaria,
-            float precio1, float precio2, float precio3, float precio4,
-            float precio5, String tipoImpuesto, String grupo, String tipo,
-            String status, String ubicacion, String moneda, String tiempoSurtido,
-            String pedido, float costoPromedio, float ultimoCosto,
-            float costoReposicion, float existenciaTotal, String activo,
-            String clase, String cubicaje, String peso, String equivalencia) {
+    public VwArticulos_I(Long Id, String clave, String nombre, String unidadPrimaria,
+                         float precio1, float precio2, float precio3, float precio4,
+                         float precio5, String tipoImpuesto, String grupo, String tipo,
+                         String status, String ubicacion, String moneda, String tiempoSurtido,
+                         String pedido, float costoPromedio, float ultimoCosto,
+                         float costoReposicion, float existenciaTotal, String activo,
+                         String clase, String cubicaje, String peso, String equivalencia) {
         this.Id = Id;
         this.clave = clave;
         this.nombre = nombre;
@@ -70,7 +70,7 @@ public class VwArticulos
         this.equivalencia = equivalencia;
     }
     @Generated(hash = 256815245)
-    public VwArticulos() {
+    public VwArticulos_I() {
     }
     public Long getId() {
         return this.Id;

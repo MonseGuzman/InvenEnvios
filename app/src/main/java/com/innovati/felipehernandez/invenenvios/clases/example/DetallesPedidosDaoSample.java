@@ -272,9 +272,9 @@ public class DetallesPedidosDaoSample
 	}
 
 	/**
-	 * Method 'getDetallesPedidosDao'
+	 * Method 'getDetallesPedidosDaoI'
 	 * 
-	 * @return DetallesPedidosDao
+	 * @return DetallesPedidosDao_I
 	 */
 	public static DetallesPedidosDao getDetallesPedidosDao()
 	{

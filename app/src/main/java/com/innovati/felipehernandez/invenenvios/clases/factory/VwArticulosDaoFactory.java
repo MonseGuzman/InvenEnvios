@@ -17,7 +17,7 @@ public class VwArticulosDaoFactory
 	/**
 	 * Method 'create'
 	 * 
-	 * @return VwArticulosDao
+	 * @return VwArticulosDao_I
 	 */
 	public static VwArticulosDao create()
 	{
@@ -28,7 +28,7 @@ public class VwArticulosDaoFactory
 	 * Method 'create'
 	 * 
 	 * @param conn
-	 * @return VwArticulosDao
+	 * @return VwArticulosDao_I
 	 */
 	public static VwArticulosDao create(Connection conn)
 	{

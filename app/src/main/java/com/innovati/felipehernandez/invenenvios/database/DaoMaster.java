@@ -21,28 +21,26 @@ public class DaoMaster extends AbstractDaoMaster {
 
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
-        DetallesPedidosDao.createTable(db, ifNotExists);
-        PedidosDao.createTable(db, ifNotExists);
-        UsuariosDao.createTable(db, ifNotExists);
-        DetallesPedidosDao.createTable(db, ifNotExists);
-        VwClientesDao.createTable(db, ifNotExists);
-        VwArticulosDao.createTable(db, ifNotExists);
-        VwUsuariosDao.createTable(db, ifNotExists);
-        PedidosDao.createTable(db, ifNotExists);
-        VwAgenteDao.createTable(db, ifNotExists);
+        PedidosDao_I.createTable(db, ifNotExists);
+        DetallesPedidosDao_I.createTable(db, ifNotExists);
+        UsuariosDao_I.createTable(db, ifNotExists);
+        VwAgenteDao_I.createTable(db, ifNotExists);
+        VwArticulosDao_I.createTable(db, ifNotExists);
+        VwClientesDao_I.createTable(db, ifNotExists);
+        VwDetallePedidoDao_I.createTable(db, ifNotExists);
+        VwUsuariosDao_I.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
-        DetallesPedidosDao.dropTable(db, ifExists);
-        PedidosDao.dropTable(db, ifExists);
-        UsuariosDao.dropTable(db, ifExists);
-        DetallesPedidosDao.dropTable(db, ifExists);
-        VwClientesDao.dropTable(db, ifExists);
-        VwArticulosDao.dropTable(db, ifExists);
-        VwUsuariosDao.dropTable(db, ifExists);
-        PedidosDao.dropTable(db, ifExists);
-        VwAgenteDao.dropTable(db, ifExists);
+        PedidosDao_I.dropTable(db, ifExists);
+        DetallesPedidosDao_I.dropTable(db, ifExists);
+        UsuariosDao_I.dropTable(db, ifExists);
+        VwAgenteDao_I.dropTable(db, ifExists);
+        VwArticulosDao_I.dropTable(db, ifExists);
+        VwClientesDao_I.dropTable(db, ifExists);
+        VwDetallePedidoDao_I.dropTable(db, ifExists);
+        VwUsuariosDao_I.dropTable(db, ifExists);
     }
 
     /**
@@ -61,15 +59,14 @@ public class DaoMaster extends AbstractDaoMaster {
 
     public DaoMaster(Database db) {
         super(db, SCHEMA_VERSION);
-        registerDaoClass(DetallesPedidosDao.class);
-        registerDaoClass(PedidosDao.class);
-        registerDaoClass(UsuariosDao.class);
-        registerDaoClass(DetallesPedidosDao.class);
-        registerDaoClass(VwClientesDao.class);
-        registerDaoClass(VwArticulosDao.class);
-        registerDaoClass(VwUsuariosDao.class);
-        registerDaoClass(PedidosDao.class);
-        registerDaoClass(VwAgenteDao.class);
+        registerDaoClass(PedidosDao_I.class);
+        registerDaoClass(DetallesPedidosDao_I.class);
+        registerDaoClass(UsuariosDao_I.class);
+        registerDaoClass(VwAgenteDao_I.class);
+        registerDaoClass(VwArticulosDao_I.class);
+        registerDaoClass(VwClientesDao_I.class);
+        registerDaoClass(VwDetallePedidoDao_I.class);
+        registerDaoClass(VwUsuariosDao_I.class);
     }
 
     public DaoSession newSession() {

@@ -57,7 +57,7 @@ public class VwUsuarios implements Serializable
 	protected String sucursal;
 
 	/**
-	 * Method 'VwUsuarios'
+	 * Method 'VwUsuarios_I'
 	 * 
 	 */
 	public VwUsuarios()
@@ -328,7 +328,7 @@ public class VwUsuarios implements Serializable
 	public String toString()
 	{
 		StringBuffer ret = new StringBuffer();
-		ret.append( "com.innovati.felipehernandez.invenenvios.dto.VwUsuarios: " );
+		ret.append( "com.innovati.felipehernandez.invenenvios.dto.VwUsuarios_I: " );
 		ret.append( "idUsuario=" + idUsuario );
 		ret.append( ", clave=" + clave );
 		ret.append( ", nickName=" + nickName );

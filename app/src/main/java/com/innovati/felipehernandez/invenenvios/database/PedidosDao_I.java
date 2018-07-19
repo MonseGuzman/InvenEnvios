@@ -13,12 +13,12 @@ import org.greenrobot.greendao.database.DatabaseStatement;
 /** 
  * DAO for table "PEDIDOS".
 */
-public class PedidosDao extends AbstractDao<Pedidos, Long> {
+public class PedidosDao_I extends AbstractDao<Pedidos_I, Long> {
 
     public static final String TABLENAME = "PEDIDOS";
 
     /**
-     * Properties of entity Pedidos.<br/>
+     * Properties of entity Pedidos_I.<br/>
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
@@ -38,11 +38,11 @@ public class PedidosDao extends AbstractDao<Pedidos, Long> {
     }
 
 
-    public PedidosDao(DaoConfig config) {
+    public PedidosDao_I(DaoConfig config) {
         super(config);
     }
     
-    public PedidosDao(DaoConfig config, DaoSession daoSession) {
+    public PedidosDao_I(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
     }
 
@@ -72,7 +72,7 @@ public class PedidosDao extends AbstractDao<Pedidos, Long> {
     }
 
     @Override
-    protected final void bindValues(DatabaseStatement stmt, Pedidos entity) {
+    protected final void bindValues(DatabaseStatement stmt, Pedidos_I entity) {
         stmt.clearBindings();
  
         Long Id = entity.getId();
@@ -126,7 +126,7 @@ public class PedidosDao extends AbstractDao<Pedidos, Long> {
     }
 
     @Override
-    protected final void bindValues(SQLiteStatement stmt, Pedidos entity) {
+    protected final void bindValues(SQLiteStatement stmt, Pedidos_I entity) {
         stmt.clearBindings();
  
         Long Id = entity.getId();
@@ -185,8 +185,8 @@ public class PedidosDao extends AbstractDao<Pedidos, Long> {
     }    
 
     @Override
-    public Pedidos readEntity(Cursor cursor, int offset) {
-        Pedidos entity = new Pedidos( //
+    public Pedidos_I readEntity(Cursor cursor, int offset) {
+        Pedidos_I entity = new Pedidos_I( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // Id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // idPedido
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // idUsuario
@@ -205,7 +205,7 @@ public class PedidosDao extends AbstractDao<Pedidos, Long> {
     }
      
     @Override
-    public void readEntity(Cursor cursor, Pedidos entity, int offset) {
+    public void readEntity(Cursor cursor, Pedidos_I entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setIdPedido(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setIdUsuario(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
@@ -222,13 +222,13 @@ public class PedidosDao extends AbstractDao<Pedidos, Long> {
      }
     
     @Override
-    protected final Long updateKeyAfterInsert(Pedidos entity, long rowId) {
+    protected final Long updateKeyAfterInsert(Pedidos_I entity, long rowId) {
         entity.setId(rowId);
         return rowId;
     }
     
     @Override
-    public Long getKey(Pedidos entity) {
+    public Long getKey(Pedidos_I entity) {
         if(entity != null) {
             return entity.getId();
         } else {
@@ -237,7 +237,7 @@ public class PedidosDao extends AbstractDao<Pedidos, Long> {
     }
 
     @Override
-    public boolean hasKey(Pedidos entity) {
+    public boolean hasKey(Pedidos_I entity) {
         return entity.getId() != null;
     }
 

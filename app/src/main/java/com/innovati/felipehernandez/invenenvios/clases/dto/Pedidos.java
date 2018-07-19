@@ -18,32 +18,32 @@ import java.util.Date;
 public class Pedidos implements Serializable
 {
 	/** 
-	 * This attribute maps to the column IdPedido in the Pedidos table.
+	 * This attribute maps to the column IdPedido in the Pedidos_I table.
 	 */
 	protected String idPedido;
 
 	/** 
-	 * This attribute maps to the column IdUsuario in the Pedidos table.
+	 * This attribute maps to the column IdUsuario in the Pedidos_I table.
 	 */
 	protected String idUsuario;
 
 	/** 
-	 * This attribute maps to the column Folio in the Pedidos table.
+	 * This attribute maps to the column Folio in the Pedidos_I table.
 	 */
 	protected String folio;
 
 	/** 
-	 * This attribute maps to the column ClaveCliente in the Pedidos table.
+	 * This attribute maps to the column ClaveCliente in the Pedidos_I table.
 	 */
 	protected String claveCliente;
 
 	/** 
-	 * This attribute maps to the column Fecha in the Pedidos table.
+	 * This attribute maps to the column Fecha in the Pedidos_I table.
 	 */
 	protected Date fecha;
 
 	/** 
-	 * This attribute maps to the column Estatus in the Pedidos table.
+	 * This attribute maps to the column Estatus in the Pedidos_I table.
 	 */
 	protected short estatus;
 
@@ -53,7 +53,7 @@ public class Pedidos implements Serializable
 	protected boolean estatusNull = true;
 
 	/** 
-	 * This attribute maps to the column Subtotal in the Pedidos table.
+	 * This attribute maps to the column Subtotal in the Pedidos_I table.
 	 */
 	protected float subtotal;
 
@@ -63,7 +63,7 @@ public class Pedidos implements Serializable
 	protected boolean subtotalNull = true;
 
 	/** 
-	 * This attribute maps to the column IVA in the Pedidos table.
+	 * This attribute maps to the column IVA in the Pedidos_I table.
 	 */
 	protected float iva;
 
@@ -73,7 +73,7 @@ public class Pedidos implements Serializable
 	protected boolean ivaNull = true;
 
 	/** 
-	 * This attribute maps to the column Total in the Pedidos table.
+	 * This attribute maps to the column Total in the Pedidos_I table.
 	 */
 	protected float total;
 
@@ -83,22 +83,22 @@ public class Pedidos implements Serializable
 	protected boolean totalNull = true;
 
 	/** 
-	 * This attribute maps to the column Observaciones in the Pedidos table.
+	 * This attribute maps to the column Observaciones in the Pedidos_I table.
 	 */
 	protected String observaciones;
 
 	/** 
-	 * This attribute maps to the column UltimaFechaActualizacion in the Pedidos table.
+	 * This attribute maps to the column UltimaFechaActualizacion in the Pedidos_I table.
 	 */
 	protected Date ultimaFechaActualizacion;
 
 	/** 
-	 * This attribute maps to the column UltimoUsuarioActualizacion in the Pedidos table.
+	 * This attribute maps to the column UltimoUsuarioActualizacion in the Pedidos_I table.
 	 */
 	protected String ultimoUsuarioActualizacion;
 
 	/**
-	 * Method 'Pedidos'
+	 * Method 'Pedidos_I'
 	 * 
 	 */
 	public Pedidos()
@@ -576,7 +576,7 @@ public class Pedidos implements Serializable
 	public String toString()
 	{
 		StringBuffer ret = new StringBuffer();
-		ret.append( "com.innovati.felipehernandez.invenenvios.dto.Pedidos: " );
+		ret.append( "com.innovati.felipehernandez.invenenvios.dto.Pedidos_I: " );
 		ret.append( "idPedido=" + idPedido );
 		ret.append( ", idUsuario=" + idUsuario );
 		ret.append( ", folio=" + folio );

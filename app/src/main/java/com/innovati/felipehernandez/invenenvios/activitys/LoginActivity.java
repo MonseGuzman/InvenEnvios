@@ -38,10 +38,6 @@ public class LoginActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "inven_e", null);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(db);
-        DaoSession daoSession = daoMaster.newSession();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);

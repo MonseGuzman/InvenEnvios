@@ -13,12 +13,12 @@ import org.greenrobot.greendao.database.DatabaseStatement;
 /** 
  * DAO for table "DETALLES_PEDIDOS".
 */
-public class DetallesPedidosDao extends AbstractDao<DetallesPedidos, Long> {
+public class DetallesPedidosDao_I extends AbstractDao<DetallesPedidos_I, Long> {
 
     public static final String TABLENAME = "DETALLES_PEDIDOS";
 
     /**
-     * Properties of entity DetallesPedidos.<br/>
+     * Properties of entity DetallesPedidos_I.<br/>
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
@@ -36,11 +36,11 @@ public class DetallesPedidosDao extends AbstractDao<DetallesPedidos, Long> {
     }
 
 
-    public DetallesPedidosDao(DaoConfig config) {
+    public DetallesPedidosDao_I(DaoConfig config) {
         super(config);
     }
     
-    public DetallesPedidosDao(DaoConfig config, DaoSession daoSession) {
+    public DetallesPedidosDao_I(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
     }
 
@@ -68,7 +68,7 @@ public class DetallesPedidosDao extends AbstractDao<DetallesPedidos, Long> {
     }
 
     @Override
-    protected final void bindValues(DatabaseStatement stmt, DetallesPedidos entity) {
+    protected final void bindValues(DatabaseStatement stmt, DetallesPedidos_I entity) {
         stmt.clearBindings();
  
         Long Id = entity.getId();
@@ -108,7 +108,7 @@ public class DetallesPedidosDao extends AbstractDao<DetallesPedidos, Long> {
     }
 
     @Override
-    protected final void bindValues(SQLiteStatement stmt, DetallesPedidos entity) {
+    protected final void bindValues(SQLiteStatement stmt, DetallesPedidos_I entity) {
         stmt.clearBindings();
  
         Long Id = entity.getId();
@@ -153,8 +153,8 @@ public class DetallesPedidosDao extends AbstractDao<DetallesPedidos, Long> {
     }    
 
     @Override
-    public DetallesPedidos readEntity(Cursor cursor, int offset) {
-        DetallesPedidos entity = new DetallesPedidos( //
+    public DetallesPedidos_I readEntity(Cursor cursor, int offset) {
+        DetallesPedidos_I entity = new DetallesPedidos_I( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // Id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // idDetallePedido
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // idPedido
@@ -171,7 +171,7 @@ public class DetallesPedidosDao extends AbstractDao<DetallesPedidos, Long> {
     }
      
     @Override
-    public void readEntity(Cursor cursor, DetallesPedidos entity, int offset) {
+    public void readEntity(Cursor cursor, DetallesPedidos_I entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setIdDetallePedido(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setIdPedido(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
@@ -186,13 +186,13 @@ public class DetallesPedidosDao extends AbstractDao<DetallesPedidos, Long> {
      }
     
     @Override
-    protected final Long updateKeyAfterInsert(DetallesPedidos entity, long rowId) {
+    protected final Long updateKeyAfterInsert(DetallesPedidos_I entity, long rowId) {
         entity.setId(rowId);
         return rowId;
     }
     
     @Override
-    public Long getKey(DetallesPedidos entity) {
+    public Long getKey(DetallesPedidos_I entity) {
         if(entity != null) {
             return entity.getId();
         } else {
@@ -201,7 +201,7 @@ public class DetallesPedidosDao extends AbstractDao<DetallesPedidos, Long> {
     }
 
     @Override
-    public boolean hasKey(DetallesPedidos entity) {
+    public boolean hasKey(DetallesPedidos_I entity) {
         return entity.getId() != null;
     }
 

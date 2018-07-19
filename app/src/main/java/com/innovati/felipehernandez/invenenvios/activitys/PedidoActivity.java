@@ -303,7 +303,7 @@ public class PedidoActivity extends AppCompatActivity
             try
             {
                 String folioAux;
-                result = pedidosDaos[0].findByDynamicSelect("SELECT NULL, NULL, Folio, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL FROM Pedidos", null);
+                result = pedidosDaos[0].findByDynamicSelect("SELECT NULL, NULL, Folio, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL FROM Pedidos_I", null);
             }
             catch (Exception e)
             {

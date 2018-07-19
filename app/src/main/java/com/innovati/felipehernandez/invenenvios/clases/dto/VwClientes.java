@@ -56,7 +56,7 @@ public class VwClientes implements Serializable
 	protected String telefono;
 
 	/**
-	 * Method 'VwClientes'
+	 * Method 'VwClientes_I'
 	 * 
 	 */
 	public VwClientes()
@@ -330,7 +330,7 @@ public class VwClientes implements Serializable
 	public String toString()
 	{
 		StringBuffer ret = new StringBuffer();
-		ret.append( "com.innovati.felipehernandez.invenenvios.dto.VwClientes: " );
+		ret.append( "com.innovati.felipehernandez.invenenvios.dto.VwClientes_I: " );
 		ret.append( "clave=" + clave );
 		ret.append( ", nombre=" + nombre );
 		ret.append( ", rfc=" + rfc );

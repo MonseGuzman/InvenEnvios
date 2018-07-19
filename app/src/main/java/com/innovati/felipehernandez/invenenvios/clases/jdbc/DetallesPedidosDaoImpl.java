@@ -108,7 +108,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	protected static final int NUMBER_OF_COLUMNS = 10;
 
 	/** 
-	 * Inserts a new row in the DetallesPedidos table.
+	 * Inserts a new row in the DetallesPedidos_I table.
 	 */
 	public void insert(DetallesPedidos dto) throws DetallesPedidosDaoException
 	{
@@ -252,7 +252,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos table that match the criteria ''.
+	 * Returns all rows from the DetallesPedidos_I table that match the criteria ''.
 	 */
 	public DetallesPedidos[] findAll() throws DetallesPedidosDaoException
 	{
@@ -260,7 +260,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos table that match the criteria 'IdDetallePedido = :idDetallePedido'.
+	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'IdDetallePedido = :idDetallePedido'.
 	 */
 	public DetallesPedidos[] findWhereIdDetallePedidoEquals(String idDetallePedido) throws DetallesPedidosDaoException
 	{
@@ -268,7 +268,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos table that match the criteria 'IdPedido = :idPedido'.
+	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'IdPedido = :idPedido'.
 	 */
 	public DetallesPedidos[] findWhereIdPedidoEquals(String idPedido) throws DetallesPedidosDaoException
 	{
@@ -276,7 +276,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos table that match the criteria 'ClaveArticulo = :claveArticulo'.
+	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'ClaveArticulo = :claveArticulo'.
 	 */
 	public DetallesPedidos[] findWhereClaveArticuloEquals(String claveArticulo) throws DetallesPedidosDaoException
 	{
@@ -284,7 +284,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos table that match the criteria 'Cantidad = :cantidad'.
+	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'Cantidad = :cantidad'.
 	 */
 	public DetallesPedidos[] findWhereCantidadEquals(double cantidad) throws DetallesPedidosDaoException
 	{
@@ -292,7 +292,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos table that match the criteria 'Precio = :precio'.
+	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'Precio = :precio'.
 	 */
 	public DetallesPedidos[] findWherePrecioEquals(float precio) throws DetallesPedidosDaoException
 	{
@@ -300,7 +300,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos table that match the criteria 'Subtotal = :subtotal'.
+	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'Subtotal = :subtotal'.
 	 */
 	public DetallesPedidos[] findWhereSubtotalEquals(float subtotal) throws DetallesPedidosDaoException
 	{
@@ -308,7 +308,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos table that match the criteria 'IVA = :iva'.
+	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'IVA = :iva'.
 	 */
 	public DetallesPedidos[] findWhereIvaEquals(float iva) throws DetallesPedidosDaoException
 	{
@@ -316,7 +316,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos table that match the criteria 'Total = :total'.
+	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'Total = :total'.
 	 */
 	public DetallesPedidos[] findWhereTotalEquals(float total) throws DetallesPedidosDaoException
 	{
@@ -324,7 +324,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos table that match the criteria 'UltimaFechaActualizacion = :ultimaFechaActualizacion'.
+	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'UltimaFechaActualizacion = :ultimaFechaActualizacion'.
 	 */
 	public DetallesPedidos[] findWhereUltimaFechaActualizacionEquals(Date ultimaFechaActualizacion) throws DetallesPedidosDaoException
 	{
@@ -332,7 +332,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos table that match the criteria 'UltimoUsuarioActualizacion = :ultimoUsuarioActualizacion'.
+	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'UltimoUsuarioActualizacion = :ultimoUsuarioActualizacion'.
 	 */
 	public DetallesPedidos[] findWhereUltimoUsuarioActualizacionEquals(String ultimoUsuarioActualizacion) throws DetallesPedidosDaoException
 	{
@@ -380,7 +380,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	public String getTableName()
 	{
-		return "Inven_E..DetallesPedidos";
+		return "Inven_E..DetallesPedidos_I";
 	}
 
 	/** 
@@ -460,7 +460,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos table that match the specified arbitrary SQL statement
+	 * Returns all rows from the DetallesPedidos_I table that match the specified arbitrary SQL statement
 	 */
 	public DetallesPedidos[] findByDynamicSelect(String sql, Object[] sqlParams) throws DetallesPedidosDaoException
 	{
@@ -510,7 +510,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos table that match the specified arbitrary SQL statement
+	 * Returns all rows from the DetallesPedidos_I table that match the specified arbitrary SQL statement
 	 */
 	public DetallesPedidos[] findByDynamicWhere(String sql, Object[] sqlParams) throws DetallesPedidosDaoException
 	{

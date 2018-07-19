@@ -212,7 +212,7 @@ public class VwArticulos implements Serializable
    protected boolean equivalenciaNull = true;
 
 	/**
-	 * Method 'VwArticulos'
+	 * Method 'VwArticulos_I'
 	 * 
 	 */
    public VwArticulos()
@@ -1298,7 +1298,7 @@ public class VwArticulos implements Serializable
    public String toString()
    {
       StringBuffer ret = new StringBuffer();
-      ret.append( "com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos: " );
+      ret.append( "com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos_I: " );
       ret.append( "clave=" + clave );
       ret.append( ", nombre=" + nombre );
       ret.append( ", unidadPrimaria=" + unidadPrimaria );

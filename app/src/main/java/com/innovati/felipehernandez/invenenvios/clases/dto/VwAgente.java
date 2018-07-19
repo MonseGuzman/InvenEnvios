@@ -56,7 +56,7 @@ public class VwAgente implements Serializable
 	protected String sucursal;
 
 	/**
-	 * Method 'VwAgente'
+	 * Method 'VwAgente_I'
 	 * 
 	 */
 	public VwAgente()
@@ -326,7 +326,7 @@ public class VwAgente implements Serializable
 	public String toString()
 	{
 		StringBuffer ret = new StringBuffer();
-		ret.append( "com.innovati.felipehernandez.invenenvios.dto.VwAgente: " );
+		ret.append( "com.innovati.felipehernandez.invenenvios.dto.VwAgente_I: " );
 		ret.append( "clave=" + clave );
 		ret.append( ", nombre=" + nombre );
 		ret.append( ", telefono=" + telefono );

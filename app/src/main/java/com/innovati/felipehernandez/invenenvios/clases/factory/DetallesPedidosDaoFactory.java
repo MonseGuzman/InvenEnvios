@@ -17,7 +17,7 @@ public class DetallesPedidosDaoFactory
 	/**
 	 * Method 'create'
 	 * 
-	 * @return DetallesPedidosDao
+	 * @return DetallesPedidosDao_I
 	 */
 	public static DetallesPedidosDao create()
 	{
@@ -28,7 +28,7 @@ public class DetallesPedidosDaoFactory
 	 * Method 'create'
 	 * 
 	 * @param conn
-	 * @return DetallesPedidosDao
+	 * @return DetallesPedidosDao_I
 	 */
 	public static DetallesPedidosDao create(Connection conn)
 	{

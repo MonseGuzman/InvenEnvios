@@ -4,7 +4,7 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public class VwClientes
+public class VwClientes_I
 {
     @org.greenrobot.greendao.annotation.Id(autoincrement = true)
     private Long Id;
@@ -17,9 +17,9 @@ public class VwClientes
     private String colonia;
     private String telefono;
     @Generated(hash = 324675601)
-    public VwClientes(Long Id, String clave, String nombre, String rfc,
-            String calle, String numeroExterior, String numeroInterior,
-            String colonia, String telefono) {
+    public VwClientes_I(Long Id, String clave, String nombre, String rfc,
+                        String calle, String numeroExterior, String numeroInterior,
+                        String colonia, String telefono) {
         this.Id = Id;
         this.clave = clave;
         this.nombre = nombre;
@@ -31,7 +31,7 @@ public class VwClientes
         this.telefono = telefono;
     }
     @Generated(hash = 963916258)
-    public VwClientes() {
+    public VwClientes_I() {
     }
     public Long getId() {
         return this.Id;

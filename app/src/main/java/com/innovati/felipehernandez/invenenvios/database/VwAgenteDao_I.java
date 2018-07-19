@@ -13,12 +13,12 @@ import org.greenrobot.greendao.database.DatabaseStatement;
 /** 
  * DAO for table "VW_AGENTE".
 */
-public class VwAgenteDao extends AbstractDao<VwAgente, Long> {
+public class VwAgenteDao_I extends AbstractDao<VwAgente_I, Long> {
 
     public static final String TABLENAME = "VW_AGENTE";
 
     /**
-     * Properties of entity VwAgente.<br/>
+     * Properties of entity VwAgente_I.<br/>
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
@@ -33,11 +33,11 @@ public class VwAgenteDao extends AbstractDao<VwAgente, Long> {
     }
 
 
-    public VwAgenteDao(DaoConfig config) {
+    public VwAgenteDao_I(DaoConfig config) {
         super(config);
     }
     
-    public VwAgenteDao(DaoConfig config, DaoSession daoSession) {
+    public VwAgenteDao_I(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
     }
 
@@ -62,7 +62,7 @@ public class VwAgenteDao extends AbstractDao<VwAgente, Long> {
     }
 
     @Override
-    protected final void bindValues(DatabaseStatement stmt, VwAgente entity) {
+    protected final void bindValues(DatabaseStatement stmt, VwAgente_I entity) {
         stmt.clearBindings();
  
         Long Id = entity.getId();
@@ -107,7 +107,7 @@ public class VwAgenteDao extends AbstractDao<VwAgente, Long> {
     }
 
     @Override
-    protected final void bindValues(SQLiteStatement stmt, VwAgente entity) {
+    protected final void bindValues(SQLiteStatement stmt, VwAgente_I entity) {
         stmt.clearBindings();
  
         Long Id = entity.getId();
@@ -157,8 +157,8 @@ public class VwAgenteDao extends AbstractDao<VwAgente, Long> {
     }    
 
     @Override
-    public VwAgente readEntity(Cursor cursor, int offset) {
-        VwAgente entity = new VwAgente( //
+    public VwAgente_I readEntity(Cursor cursor, int offset) {
+        VwAgente_I entity = new VwAgente_I( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // Id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // clave
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // nombre
@@ -172,7 +172,7 @@ public class VwAgenteDao extends AbstractDao<VwAgente, Long> {
     }
      
     @Override
-    public void readEntity(Cursor cursor, VwAgente entity, int offset) {
+    public void readEntity(Cursor cursor, VwAgente_I entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setClave(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setNombre(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
@@ -184,13 +184,13 @@ public class VwAgenteDao extends AbstractDao<VwAgente, Long> {
      }
     
     @Override
-    protected final Long updateKeyAfterInsert(VwAgente entity, long rowId) {
+    protected final Long updateKeyAfterInsert(VwAgente_I entity, long rowId) {
         entity.setId(rowId);
         return rowId;
     }
     
     @Override
-    public Long getKey(VwAgente entity) {
+    public Long getKey(VwAgente_I entity) {
         if(entity != null) {
             return entity.getId();
         } else {
@@ -199,7 +199,7 @@ public class VwAgenteDao extends AbstractDao<VwAgente, Long> {
     }
 
     @Override
-    public boolean hasKey(VwAgente entity) {
+    public boolean hasKey(VwAgente_I entity) {
         return entity.getId() != null;
     }
 

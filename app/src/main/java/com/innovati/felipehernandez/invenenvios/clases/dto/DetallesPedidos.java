@@ -18,22 +18,22 @@ import java.util.Date;
 public class DetallesPedidos implements Serializable
 {
 	/** 
-	 * This attribute maps to the column IdDetallePedido in the DetallesPedidos table.
+	 * This attribute maps to the column IdDetallePedido in the DetallesPedidos_I table.
 	 */
 	protected String idDetallePedido;
 
 	/** 
-	 * This attribute maps to the column IdPedido in the DetallesPedidos table.
+	 * This attribute maps to the column IdPedido in the DetallesPedidos_I table.
 	 */
 	protected String idPedido;
 
 	/** 
-	 * This attribute maps to the column ClaveArticulo in the DetallesPedidos table.
+	 * This attribute maps to the column ClaveArticulo in the DetallesPedidos_I table.
 	 */
 	protected String claveArticulo;
 
 	/** 
-	 * This attribute maps to the column Cantidad in the DetallesPedidos table.
+	 * This attribute maps to the column Cantidad in the DetallesPedidos_I table.
 	 */
 	protected float cantidad;
 
@@ -43,7 +43,7 @@ public class DetallesPedidos implements Serializable
 	protected boolean cantidadNull = true;
 
 	/** 
-	 * This attribute maps to the column Precio in the DetallesPedidos table.
+	 * This attribute maps to the column Precio in the DetallesPedidos_I table.
 	 */
 	protected float precio;
 
@@ -53,7 +53,7 @@ public class DetallesPedidos implements Serializable
 	protected boolean precioNull = true;
 
 	/** 
-	 * This attribute maps to the column Subtotal in the DetallesPedidos table.
+	 * This attribute maps to the column Subtotal in the DetallesPedidos_I table.
 	 */
 	protected float subtotal;
 
@@ -63,7 +63,7 @@ public class DetallesPedidos implements Serializable
 	protected boolean subtotalNull = true;
 
 	/** 
-	 * This attribute maps to the column IVA in the DetallesPedidos table.
+	 * This attribute maps to the column IVA in the DetallesPedidos_I table.
 	 */
 	protected float iva;
 
@@ -73,7 +73,7 @@ public class DetallesPedidos implements Serializable
 	protected boolean ivaNull = true;
 
 	/** 
-	 * This attribute maps to the column Total in the DetallesPedidos table.
+	 * This attribute maps to the column Total in the DetallesPedidos_I table.
 	 */
 	protected float total;
 
@@ -83,17 +83,17 @@ public class DetallesPedidos implements Serializable
 	protected boolean totalNull = true;
 
 	/** 
-	 * This attribute maps to the column UltimaFechaActualizacion in the DetallesPedidos table.
+	 * This attribute maps to the column UltimaFechaActualizacion in the DetallesPedidos_I table.
 	 */
 	protected Date ultimaFechaActualizacion;
 
 	/** 
-	 * This attribute maps to the column UltimoUsuarioActualizacion in the DetallesPedidos table.
+	 * This attribute maps to the column UltimoUsuarioActualizacion in the DetallesPedidos_I table.
 	 */
 	protected String ultimoUsuarioActualizacion;
 
 	/**
-	 * Method 'DetallesPedidos'
+	 * Method 'DetallesPedidos_I'
 	 * 
 	 */
 	public DetallesPedidos()
@@ -538,7 +538,7 @@ public class DetallesPedidos implements Serializable
 	public String toString()
 	{
 		StringBuffer ret = new StringBuffer();
-		ret.append( "com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos: " );
+		ret.append( "com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos_I: " );
 		ret.append( "idDetallePedido=" + idDetallePedido );
 		ret.append( ", idPedido=" + idPedido );
 		ret.append( ", claveArticulo=" + claveArticulo );

@@ -7,39 +7,43 @@ import java.util.Date;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public class DetallesPedidos
+public class Pedidos_I
 {
-    @org.greenrobot.greendao.annotation.Id(autoincrement = true)
+    @Id(autoincrement = true)
     private Long Id;
-    private String idDetallePedido;
     private String idPedido;
-    private String claveArticulo;
-    private float cantidad;
-    private float precio;
+    private String idUsuario;
+    private String folio;
+    private String claveCliente;
+    private Date fecha;
+    private short estatus;
     private float subtotal;
     private float iva;
     private float total;
+    private String observaciones;
     private Date ultimaFechaActualizacion;
     private String ultimoUsuarioActualizacion;
-    @Generated(hash = 388740536)
-    public DetallesPedidos(Long Id, String idDetallePedido, String idPedido,
-            String claveArticulo, float cantidad, float precio, float subtotal,
-            float iva, float total, Date ultimaFechaActualizacion,
-            String ultimoUsuarioActualizacion) {
+    @Generated(hash = 1571932122)
+    public Pedidos_I(Long Id, String idPedido, String idUsuario, String folio,
+                     String claveCliente, Date fecha, short estatus, float subtotal,
+                     float iva, float total, String observaciones,
+                     Date ultimaFechaActualizacion, String ultimoUsuarioActualizacion) {
         this.Id = Id;
-        this.idDetallePedido = idDetallePedido;
         this.idPedido = idPedido;
-        this.claveArticulo = claveArticulo;
-        this.cantidad = cantidad;
-        this.precio = precio;
+        this.idUsuario = idUsuario;
+        this.folio = folio;
+        this.claveCliente = claveCliente;
+        this.fecha = fecha;
+        this.estatus = estatus;
         this.subtotal = subtotal;
         this.iva = iva;
         this.total = total;
+        this.observaciones = observaciones;
         this.ultimaFechaActualizacion = ultimaFechaActualizacion;
         this.ultimoUsuarioActualizacion = ultimoUsuarioActualizacion;
     }
-    @Generated(hash = 356426221)
-    public DetallesPedidos() {
+    @Generated(hash = 1164981422)
+    public Pedidos_I() {
     }
     public Long getId() {
         return this.Id;
@@ -47,35 +51,41 @@ public class DetallesPedidos
     public void setId(Long Id) {
         this.Id = Id;
     }
-    public String getIdDetallePedido() {
-        return this.idDetallePedido;
-    }
-    public void setIdDetallePedido(String idDetallePedido) {
-        this.idDetallePedido = idDetallePedido;
-    }
     public String getIdPedido() {
         return this.idPedido;
     }
     public void setIdPedido(String idPedido) {
         this.idPedido = idPedido;
     }
-    public String getClaveArticulo() {
-        return this.claveArticulo;
+    public String getIdUsuario() {
+        return this.idUsuario;
     }
-    public void setClaveArticulo(String claveArticulo) {
-        this.claveArticulo = claveArticulo;
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
     }
-    public float getCantidad() {
-        return this.cantidad;
+    public String getFolio() {
+        return this.folio;
     }
-    public void setCantidad(float cantidad) {
-        this.cantidad = cantidad;
+    public void setFolio(String folio) {
+        this.folio = folio;
     }
-    public float getPrecio() {
-        return this.precio;
+    public String getClaveCliente() {
+        return this.claveCliente;
     }
-    public void setPrecio(float precio) {
-        this.precio = precio;
+    public void setClaveCliente(String claveCliente) {
+        this.claveCliente = claveCliente;
+    }
+    public Date getFecha() {
+        return this.fecha;
+    }
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+    public short getEstatus() {
+        return this.estatus;
+    }
+    public void setEstatus(short estatus) {
+        this.estatus = estatus;
     }
     public float getSubtotal() {
         return this.subtotal;
@@ -94,6 +104,12 @@ public class DetallesPedidos
     }
     public void setTotal(float total) {
         this.total = total;
+    }
+    public String getObservaciones() {
+        return this.observaciones;
+    }
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
     public Date getUltimaFechaActualizacion() {
         return this.ultimaFechaActualizacion;

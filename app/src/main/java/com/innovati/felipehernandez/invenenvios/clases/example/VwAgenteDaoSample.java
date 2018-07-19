@@ -209,7 +209,7 @@ public class VwAgenteDaoSample
 	/**
 	 * Method 'getVwAgenteDao'
 	 * 
-	 * @return VwAgenteDao
+	 * @return VwAgenteDao_I
 	 */
 	public static VwAgenteDao getVwAgenteDao()
 	{

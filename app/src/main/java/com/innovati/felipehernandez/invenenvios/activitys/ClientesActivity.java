@@ -25,16 +25,15 @@ import android.widget.Toast;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ClientesAdaptador;
-import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
-import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
+import com.innovati.felipehernandez.invenenvios.database.VwClientesDao_I;
+import com.innovati.felipehernandez.invenenvios.database.VwClientes_I;
 import com.innovati.felipehernandez.invenenvios.fragments.ClienteFragment;
 
 import java.util.List;
-import java.util.Properties;
 
 public class ClientesActivity extends AppCompatActivity
 {
@@ -50,7 +49,7 @@ public class ClientesActivity extends AppCompatActivity
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int posicion;
     DaoSession daoSession;
-    com.innovati.felipehernandez.invenenvios.database.VwClientesDao cliente = daoSession.getVwClientesDao();
+    VwClientesDao_I cliente = daoSession.getVwClientesDaoI();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -248,8 +247,8 @@ public class ClientesActivity extends AppCompatActivity
     private void internaBD()
     {
         //solo hice la lista da flojera hacer el for
-        List<com.innovati.felipehernandez.invenenvios.database.VwClientes> vwClientesList = cliente.queryBuilder()
-                .where(com.innovati.felipehernandez.invenenvios.database.VwClientesDao.Properties.Nombre.eq(buscarEditText.getText().toString()))
+        List<VwClientes_I> vwClientesList = cliente.queryBuilder()
+                .where(VwClientesDao_I.Properties.Nombre.eq(buscarEditText.getText().toString()))
                 .list();
 
         adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);

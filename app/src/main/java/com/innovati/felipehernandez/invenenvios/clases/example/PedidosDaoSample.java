@@ -294,9 +294,9 @@ public class PedidosDaoSample
 	}
 
 	/**
-	 * Method 'getPedidosDao'
+	 * Method 'getPedidosDaoI'
 	 * 
-	 * @return PedidosDao
+	 * @return PedidosDao_I
 	 */
 	public static PedidosDao getPedidosDao()
 	{

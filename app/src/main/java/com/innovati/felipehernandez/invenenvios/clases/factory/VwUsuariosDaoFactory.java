@@ -17,7 +17,7 @@ public class VwUsuariosDaoFactory
 	/**
 	 * Method 'create'
 	 * 
-	 * @return VwUsuariosDao
+	 * @return VwUsuariosDao_I
 	 */
 	public static VwUsuariosDao create()
 	{
@@ -28,7 +28,7 @@ public class VwUsuariosDaoFactory
 	 * Method 'create'
 	 * 
 	 * @param conn
-	 * @return VwUsuariosDao
+	 * @return VwUsuariosDao_I
 	 */
 	public static VwUsuariosDao create(Connection conn)
 	{

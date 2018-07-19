@@ -17,7 +17,7 @@ public class VwClientesDaoFactory
 	/**
 	 * Method 'create'
 	 * 
-	 * @return VwClientesDao
+	 * @return VwClientesDao_I
 	 */
 	public static VwClientesDao create()
 	{
@@ -28,7 +28,7 @@ public class VwClientesDaoFactory
 	 * Method 'create'
 	 * 
 	 * @param conn
-	 * @return VwClientesDao
+	 * @return VwClientesDao_I
 	 */
 	public static VwClientesDao create(Connection conn)
 	{
