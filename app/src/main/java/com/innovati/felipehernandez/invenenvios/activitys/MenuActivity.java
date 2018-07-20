@@ -16,7 +16,6 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
-import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwAgente;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
@@ -31,7 +30,6 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDa
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.database.DetallesPedidos_I;
-import com.innovati.felipehernandez.invenenvios.database.DetallesPedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwAgente_I;
@@ -46,7 +44,6 @@ import com.innovati.felipehernandez.invenenvios.database.VwUsuarios_I;
 import com.innovati.felipehernandez.invenenvios.database.VwUsuarios_IDao;
 
 import java.util.List;
-import java.util.function.DoubleUnaryOperator;
 
 public class MenuActivity extends AppCompatActivity
 {
@@ -181,10 +178,11 @@ public class MenuActivity extends AppCompatActivity
                     if(agente.getEmail() != null)
                         agente_i.setEmail(agente.getEmail());
                     if(agente.getSucursal() != null)
-                        agente_i.setEmail(agente.getEmail());
+                        agente_i.setSucursal(agente.getSucursal());
 
                     VwAgente_IDao metodo = daoSession.getVwAgente_IDao();
-                    metodo.insert(agente_i);
+
+                    metodo.insertOrReplace(agente_i);
                 }
 
                 for(VwUsuarios usuario: usuarios)
@@ -221,7 +219,7 @@ public class MenuActivity extends AppCompatActivity
                     pedidos_i.setUltimoUsuarioActualizacion(pedido.getUltimoUsuarioActualizacion());
 
                     Pedidos_IDao metodo = daoSession.getPedidos_IDao();
-                    metodo.insert(pedidos_i);
+                    metodo.insertOrReplace(pedidos_i);
                 }
 
                 for(VwDetallePedido detallePedido: detallesPedidos)
@@ -238,7 +236,7 @@ public class MenuActivity extends AppCompatActivity
                     detallePedido_i.setUsuarioActualizacion(detallePedido.getUltimoUsuarioActualizacion());
 
                     VwDetallePedido_IDao metodo = daoSession.getVwDetallePedido_IDao();
-                    metodo.insert(detallePedido_i);
+                    metodo.insertOrReplace(detallePedido_i);
                 }
 
                 for(VwClientes cliente: clientes)
@@ -253,7 +251,7 @@ public class MenuActivity extends AppCompatActivity
                     cliente_i.setTelefono(cliente.getTelefono());
 
                     VwClientes_IDao metodo = daoSession.getVwClientes_IDao();
-                    metodo.insert(cliente_i);
+                    metodo.insertOrReplace(cliente_i);
                 }
 
                 for(VwArticulos articulo : articulos)
@@ -268,13 +266,13 @@ public class MenuActivity extends AppCompatActivity
                     articulo_i.setCubicaje(String.valueOf(articulo.getCubicaje()));
 
                     VwArticulos_IDao metodo = daoSession.getVwArticulos_IDao();
-                    metodo.insert(articulo_i);
+                    metodo.insertOrReplace(articulo_i);
                 }
 
             }
             catch (Exception e)
             {
-
+                System.out.println(e.getMessage());
             }
 
 

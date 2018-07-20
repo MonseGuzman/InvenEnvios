@@ -328,7 +328,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	public String getTableName()
 	{
-		return "Inven_E..Pedidos_I";
+		return "Inven_E..Pedidos";
 	}
 
 	/** 

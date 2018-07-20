@@ -46,9 +46,6 @@ public class ClientesActivity extends AppCompatActivity
     String fragment ="";
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int posicion;
-    DaoSession daoSession;
-    VwClientes_IDao cliente;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +56,6 @@ public class ClientesActivity extends AppCompatActivity
         this.setTitle(R.string.tituloClientes);
         buscarEditText.setHint(R.string.seleccionarCliente);
 
-        cliente = daoSession.getVwClientes_IDao();
         datitosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
