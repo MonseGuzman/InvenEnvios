@@ -93,11 +93,10 @@ public class LoginActivity extends AppCompatActivity
         }
         else
         {
-
             VwUsuarios_IDao vwUsuarios_iDao = daoSession.getVwUsuarios_IDao();
 
             QueryBuilder<VwUsuarios_I> qb = vwUsuarios_iDao.queryBuilder();
-            qb.and(VwUsuarios_IDao.Properties.Password.eq(password), VwUsuarios_IDao.Properties.NickName.eq(usuario));
+            qb.where(VwUsuarios_IDao.Properties.Password.eq(password), VwUsuarios_IDao.Properties.NickName.eq(usuario));
             List<VwUsuarios_I> usuarios = qb.list();
             if(!usuarios.isEmpty())
             {
