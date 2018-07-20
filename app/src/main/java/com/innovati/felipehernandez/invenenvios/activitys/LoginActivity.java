@@ -16,10 +16,18 @@ import android.widget.Toast;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.SettingActivity;
+import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwUsuarios;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.database.DaoSession;
+import com.innovati.felipehernandez.invenenvios.database.VwUsuarios_I;
+import com.innovati.felipehernandez.invenenvios.database.VwUsuarios_IDao;
 import com.innovati.felipehernandez.invenenvios.security.EncryptionAndDecryption;
+
+import org.greenrobot.greendao.query.QueryBuilder;
+
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity
 {
@@ -29,6 +37,7 @@ public class LoginActivity extends AppCompatActivity
     private int touch= 0;
     private EncryptionAndDecryption EaD= new EncryptionAndDecryption();
     private MetodosInternos conectado = new MetodosInternos(this);
+    private DaoSession daoSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -44,6 +53,7 @@ public class LoginActivity extends AppCompatActivity
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         verificaCredenciales();
         touch = 0;
+        daoSession = ((MyApp) getApplication()).getDaoSession();
     }
 
     private void inicializacion()
@@ -83,8 +93,21 @@ public class LoginActivity extends AppCompatActivity
         }
         else
         {
-            //cuando no esta conectado a ninguna red
-            conectado.Alerta(R.string.sinInternet, R.string.conectarse);
+
+            VwUsuarios_IDao vwUsuarios_iDao = daoSession.getVwUsuarios_IDao();
+
+            QueryBuilder<VwUsuarios_I> qb = vwUsuarios_iDao.queryBuilder();
+            qb.and(VwUsuarios_IDao.Properties.Password.eq(password), VwUsuarios_IDao.Properties.NickName.eq(usuario));
+            List<VwUsuarios_I> usuarios = qb.list();
+            if(!usuarios.isEmpty())
+            {
+                Intent i = new Intent(LoginActivity.this, MenuActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+                guardarPreferencias(usuario, password, usuarios.get(1).getIdUsuario());
+            }
+            else
+                conectado.Alerta(R.string.error,R.string.sinDatos);
         }
     }
 
@@ -144,7 +167,8 @@ public class LoginActivity extends AppCompatActivity
         }
 
         @Override
-        protected void onPostExecute(VwUsuarios[] vwUsuarios) {
+        protected void onPostExecute(VwUsuarios[] vwUsuarios)
+        {
 
             super.onPostExecute(vwUsuarios);
             String usuario, password;
@@ -163,7 +187,9 @@ public class LoginActivity extends AppCompatActivity
                     conectado.Alerta(R.string.error,R.string.sinDatos);
             }
             else
-                conectado.Alerta(R.string.error, R.string.sinDatos);
+            {
+                conectado.Alerta(R.string.error,R.string.sinDatos);
+            }
         }
     }
 
