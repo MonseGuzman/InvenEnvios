@@ -158,18 +158,28 @@ public class ArticuloActivity extends AppCompatActivity
             }
         }
         else //código para buscar en la bd interna
-            internaBD();
+            try
+            {
+                internaBD();
+            } catch (Exception e)
+            {
+                metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
+                e.printStackTrace();
+            }
     }
 
     private void internaBD()
     {
         String nombre = buscarEditText.getText().toString();
         VwArticulos_IDao vwArticulosIDao = daoSession.getVwArticulos_IDao();
+        List<VwArticulos_I> articulos;
 
         //si esta vacio
         if(TextUtils.isEmpty(nombre))
         {
-            metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
+            QueryBuilder<VwArticulos_I> qb = vwArticulosIDao.queryBuilder();
+            articulos = qb.list();
+            result = new VwArticulos[articulos.size()];
         }
         else
         {
@@ -178,24 +188,25 @@ public class ArticuloActivity extends AppCompatActivity
 
             QueryBuilder<VwArticulos_I> qb = vwArticulosIDao.queryBuilder();
             qb.where(VwArticulos_IDao.Properties.Nombre.like(nombre));
+            articulos = qb.list();
 
-            List<VwArticulos_I> articulos = qb.list();
             result = new VwArticulos[articulos.size()];
+        }
 
-            for(int x=0; x<articulos.size(); x++)
-            {
-                VwArticulos objetoArticulos = new VwArticulos();
+        for(int x=0; x<articulos.size(); x++)
+        {
+            VwArticulos objetoArticulos = new VwArticulos();
 
-                objetoArticulos.setClave(articulos.get(x).getClave());
-                objetoArticulos.setNombre(articulos.get(x).getNombre());
-                objetoArticulos.setStatus(articulos.get(x).getStatus());
-                objetoArticulos.setTiempoSurtido(Float.parseFloat(articulos.get(x).getTiempoSurtido()));
-                objetoArticulos.setExistenciaTotal(articulos.get(x).getExistenciaTotal());
-                objetoArticulos.setPrecio1(articulos.get(x).getPrecio1());
-                objetoArticulos.setUnidadPrimaria(articulos.get(x).getUnidadPrimaria());
+            objetoArticulos.setClave(articulos.get(x).getClave());
+            objetoArticulos.setNombre(articulos.get(x).getNombre());
+            //RESOLVER ESTO EL LUNES (¿SERÁ ESTATUS O ACTIVO?) 🤔
+            objetoArticulos.setStatus(articulos.get(x).getStatus());
+            objetoArticulos.setTiempoSurtido(Float.parseFloat(articulos.get(x).getTiempoSurtido()));
+            objetoArticulos.setExistenciaTotal(articulos.get(x).getExistenciaTotal());
+            objetoArticulos.setPrecio1(articulos.get(x).getPrecio1());
+            objetoArticulos.setUnidadPrimaria(articulos.get(x).getUnidadPrimaria());
 
-                result[x] = objetoArticulos;
-            }
+            result[x] = objetoArticulos;
         }
 
         cargarDatos(result);

@@ -230,20 +230,28 @@ public class ClientesActivity extends AppCompatActivity
             }
         }
         else
-        {
-            internaBD();
-        }
+            try
+            {
+                internaBD();
+            } catch (Exception e)
+            {
+                metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
+                e.printStackTrace();
+            }
     }
 
     private void internaBD()
     {
         String nombre = buscarEditText.getText().toString();
         VwClientes_IDao vwClientes_iDao = daoSession.getVwClientes_IDao();
+        List<VwClientes_I> clientes;
 
         //si esta vacio
         if(TextUtils.isEmpty(nombre))
         {
-            metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
+            QueryBuilder<VwClientes_I> qb = vwClientes_iDao.queryBuilder();
+            clientes = qb.list();
+            result = new VwClientes[clientes.size()];
         }
         else
         {
@@ -253,24 +261,24 @@ public class ClientesActivity extends AppCompatActivity
             QueryBuilder<VwClientes_I> qb = vwClientes_iDao.queryBuilder();
             qb.where(VwClientes_IDao.Properties.Nombre.like(nombre));
 
-            List<VwClientes_I> clientes = qb.list();
+            clientes = qb.list();
             result = new VwClientes[clientes.size()];
+        }
 
-            for(int x=0; x<clientes.size(); x++)
-            {
-                VwClientes objetoCliente = new VwClientes();
+        for(int x=0; x<clientes.size(); x++)
+        {
+            VwClientes objetoCliente = new VwClientes();
 
-                objetoCliente.setClave(clientes.get(x).getClave());
-                objetoCliente.setNombre(clientes.get(x).getNombre());
-                objetoCliente.setRfc(clientes.get(x).getRfc());
-                objetoCliente.setCalle(clientes.get(x).getCalle());
-                objetoCliente.setNumeroExterior(clientes.get(x).getNumeroExterior());
-                objetoCliente.setNumeroInterior(clientes.get(x).getNumeroInterior());
-                objetoCliente.setColonia(clientes.get(x).getColonia());
-                objetoCliente.setTelefono(clientes.get(x).getTelefono());
+            objetoCliente.setClave(clientes.get(x).getClave());
+            objetoCliente.setNombre(clientes.get(x).getNombre());
+            objetoCliente.setRfc(clientes.get(x).getRfc());
+            objetoCliente.setCalle(clientes.get(x).getCalle());
+            objetoCliente.setNumeroExterior(clientes.get(x).getNumeroExterior());
+            objetoCliente.setNumeroInterior(clientes.get(x).getNumeroInterior());
+            objetoCliente.setColonia(clientes.get(x).getColonia());
+            objetoCliente.setTelefono(clientes.get(x).getTelefono());
 
-                result[x] = objetoCliente;
-            }
+            result[x] = objetoCliente;
         }
 
         cargarDatos(result);
