@@ -14,6 +14,8 @@
     <string name="noValido">Usuario y/o Contraseña no válidos</string>
     <string name="errorBDInterna">No se cuenta con la conexión a la base de datos interna</string>
     <string name="guardar">Guardar</string>
+    <string name="tituloBDI">¡Listo!</string>
+    <string name="mensajeBDI">Datos descargados correctamente</string>
 
     <!--Menú-->
     <string name="menuLlamar">Llamar</string>

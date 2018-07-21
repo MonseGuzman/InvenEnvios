@@ -79,6 +79,7 @@
                 android:id="@+id/EstatusCheckbox_A"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:enabled="false"
                 android:text="Activo"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"

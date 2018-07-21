@@ -35,7 +35,9 @@ public class ClienteFragment extends Fragment
                              Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.fragment_cliente, container, false);
+
         inicializar(v);
+
         Bundle args = getArguments();
         nombre = args.getString("nombre", "");
         rfc = args.getString("rfc", "");
@@ -66,7 +68,6 @@ public class ClienteFragment extends Fragment
         numeroInteriorEditText_C = v.findViewById(R.id.NumeroInteriorEditText_C);
         coloniaEditText_C = v.findViewById(R.id.ColoniaEditText_C);
         telefonoEditText_C = v.findViewById(R.id.TelefonoEditText_C);
-
     }
 
     @Override
