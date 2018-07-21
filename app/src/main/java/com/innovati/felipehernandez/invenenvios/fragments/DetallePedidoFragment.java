@@ -51,6 +51,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     private boolean bandera = true;
     private List<String> listDet = new ArrayList<>();
     static List<ArticulosPedido> articuloEdit = new ArrayList<ArticulosPedido>();
+    String idUsuario = "";
     public DetallePedidoFragment() {
         // Required empty public constructor
     }
@@ -198,6 +199,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                   articulo.setStatus(true);
                   articulosPedidos.add(articulo);
                   listDet.add(pedidos.getIdDetallePedido());
+                  idUsuario = pedidos.getIdDetallePedido();
               }
 
               VwArticulos vwArticulos[];
@@ -282,7 +284,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     public void uptadeExits(){
         int x = 0;
         for (ArticulosPedido ar: articulosPedidos){
-            uptadeExits(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), "Aqui debe ir el id del usuario");
+            uptadeExits(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario);
             x++;
         }
     }

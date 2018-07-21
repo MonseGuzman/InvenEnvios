@@ -196,7 +196,7 @@ public class PedidoActivity extends AppCompatActivity
         //"%05d%n", 5
         String idPedido = UUID.randomUUID().toString();
         Date date = new Date();
-        String auxFolio = tvFolio.getText().toString();
+        int auxFolio = Integer.valueOf(tvFolio.getText().toString());
 
         insertar(idPedido,idUsuario,clave,date,Short.valueOf("1"),getSub(),getIva(),getTotal(),"No Hay", auxFolio);
         for (ArticulosPedido ar:articulosPedidoList){
@@ -210,7 +210,7 @@ public class PedidoActivity extends AppCompatActivity
         nombreC = "No elegido";
     }
 
-    public static void insertar(String idPedido,String idUsuario, String claveCliente, Date fecha, short estatus, float subtotal, float iva, float total, String observaciones, String folio)
+    public static void insertar(String idPedido,String idUsuario, String claveCliente, Date fecha, short estatus, float subtotal, float iva, float total, String observaciones, int folio)
     {
         Pedidos pedidos = new Pedidos();
         pedidos.setIdPedido(idPedido);
@@ -285,8 +285,6 @@ public class PedidoActivity extends AppCompatActivity
 
     public void geneFolio()
     {
-
-        //"%05d%n", 5ffff
         Pedidos pedidosResult[] = null;
         PedidosDao daoPedidos = getPedidosDao();
         Consulta c = new Consulta();
@@ -316,8 +314,8 @@ public class PedidoActivity extends AppCompatActivity
         protected void onPostExecute(Pedidos[] pedidos)
         {
             super.onPostExecute(pedidos);
-            String folioAux = String.format("%05d%n",pedidos.length+1);
-            tvFolio.setText(folioAux);
+            int folioAux = pedidos.length+1;
+            tvFolio.setText(String.valueOf(folioAux));
         }
     }
 
