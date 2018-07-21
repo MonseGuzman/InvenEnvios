@@ -17,10 +17,18 @@ import android.widget.Toast;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticuloAdapter;
+import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.database.DaoSession;
+import com.innovati.felipehernandez.invenenvios.database.VwArticulos_I;
+import com.innovati.felipehernandez.invenenvios.database.VwArticulos_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.ArticuloFragment;
+
+import org.greenrobot.greendao.query.QueryBuilder;
+
+import java.util.List;
 
 public class ArticuloActivity extends AppCompatActivity
 {
@@ -34,7 +42,7 @@ public class ArticuloActivity extends AppCompatActivity
     MetodosInternos metodosInternos = new MetodosInternos(this);
     Bundle args;
     static String fragmento = "";
-    String nombre = "";
+    private DaoSession daoSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,6 +54,7 @@ public class ArticuloActivity extends AppCompatActivity
 
         this.setTitle(R.string.tituloArticulo);
         buscarEditText.setHint(R.string.seleccionarArticulos);
+        daoSession = ((MyApp) getApplication()).getDaoSession();
 
         datitosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -114,10 +123,10 @@ public class ArticuloActivity extends AppCompatActivity
 
     public void filtar(View v)
     {
-        nombre = buscarEditText.getText().toString();
-        if(TextUtils.isEmpty(nombre))
+        String nombre = buscarEditText.getText().toString();
+        if(metodosInternos.conexionRed())
         {
-            if(metodosInternos.conexionRed())
+            if(TextUtils.isEmpty(nombre))
             {
                 //sin filtro = todos
                 try
@@ -133,15 +142,6 @@ public class ArticuloActivity extends AppCompatActivity
             }
             else
             {
-                //código para buscar en la bd interna
-                metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
-            }
-        }
-        else
-        {
-            //todos los que se parecen con el where
-            if(metodosInternos.conexionRed())
-            {
                 try
                 {
                     nombre = "%" + nombre;
@@ -156,17 +156,65 @@ public class ArticuloActivity extends AppCompatActivity
                     Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
                 }
             }
-            else
-            {
-                //código para buscar en la bd interna
-                metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
-            }
         }
+        else //código para buscar en la bd interna
+            try
+            {
+                internaBD();
+            } catch (Exception e)
+            {
+                metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
+                e.printStackTrace();
+            }
     }
 
-    private void cargarDatos(VwArticulos[] result)
+    private void internaBD()
     {
-        adaptador = new ArticuloAdapter(this,  R.layout.listview_articulos, result);
+        String nombre = buscarEditText.getText().toString();
+        VwArticulos_IDao vwArticulosIDao = daoSession.getVwArticulos_IDao();
+        List<VwArticulos_I> articulos;
+
+        //si esta vacio
+        if(TextUtils.isEmpty(nombre))
+        {
+            QueryBuilder<VwArticulos_I> qb = vwArticulosIDao.queryBuilder();
+            articulos = qb.list();
+            result = new VwArticulos[articulos.size()];
+        }
+        else
+        {
+            nombre = "%" + nombre;
+            nombre += "%";
+
+            QueryBuilder<VwArticulos_I> qb = vwArticulosIDao.queryBuilder();
+            qb.where(VwArticulos_IDao.Properties.Nombre.like(nombre));
+            articulos = qb.list();
+
+            result = new VwArticulos[articulos.size()];
+        }
+
+        for(int x=0; x<articulos.size(); x++)
+        {
+            VwArticulos objetoArticulos = new VwArticulos();
+
+            objetoArticulos.setClave(articulos.get(x).getClave());
+            objetoArticulos.setNombre(articulos.get(x).getNombre());
+            //RESOLVER ESTO EL LUNES (¿SERÁ ESTATUS O ACTIVO?) 🤔
+            objetoArticulos.setStatus(articulos.get(x).getStatus());
+            objetoArticulos.setTiempoSurtido(Float.parseFloat(articulos.get(x).getTiempoSurtido()));
+            objetoArticulos.setExistenciaTotal(articulos.get(x).getExistenciaTotal());
+            objetoArticulos.setPrecio1(articulos.get(x).getPrecio1());
+            objetoArticulos.setUnidadPrimaria(articulos.get(x).getUnidadPrimaria());
+
+            result[x] = objetoArticulos;
+        }
+
+        cargarDatos(result);
+    }
+
+    private void cargarDatos(VwArticulos[] lista)
+    {
+        adaptador = new ArticuloAdapter(this,  R.layout.listview_articulos, lista);
         datitosListView.setAdapter(adaptador);
     }
 
@@ -198,7 +246,6 @@ public class ArticuloActivity extends AppCompatActivity
         }
     }
 
-
      public class ConsultaArticulos extends AsyncTask<VwArticulosDao, VwArticulos, VwArticulos[]>
      {
          String nombre;
@@ -207,8 +254,6 @@ public class ArticuloActivity extends AppCompatActivity
          {
              this.nombre = nombre;
          }
-
-
 
          @Override
          protected VwArticulos[] doInBackground(VwArticulosDao... vwArticulosDaos)
@@ -233,6 +278,7 @@ public class ArticuloActivity extends AppCompatActivity
              cargarDatos(result);
          }
      }
+
      public static void blockeo(){
          datitosListView.setVisibility(View.VISIBLE);
      }

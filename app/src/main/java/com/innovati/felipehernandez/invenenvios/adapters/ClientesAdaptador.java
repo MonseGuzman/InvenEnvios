@@ -25,7 +25,9 @@ public class ClientesAdaptador extends BaseAdapter
 
     @Override
     public int getCount() {
-        return lista.length;
+        if(lista != null)
+            return lista.length;
+        else return 0;
     }
 
     @Override

@@ -126,7 +126,7 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
         precioEditText_A.setText("");
         unidadEditText_A.setText("");
 
-        //INAVILITA
+        //INHABILITA
         nombreEditText_A.setFocusable(true);
 
         claveTextView_A.setEnabled(true);
