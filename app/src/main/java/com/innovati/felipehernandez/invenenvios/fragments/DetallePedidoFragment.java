@@ -1,6 +1,7 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -32,7 +33,9 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDa
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 public class DetallePedidoFragment extends Fragment implements View.OnClickListener
 {
@@ -279,12 +282,49 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     public void uptadeExits(){
         int x = 0;
         for (ArticulosPedido ar: articulosPedidos){
-            uptadeExits(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal());
+            uptadeExits(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), "Aqui debe ir el id del usuario");
             x++;
         }
     }
-    public void uptadeExits(String idDet, String idPedido, String Clave,float cantidad, float precio, float subTotal, float iva, float total){
+    public void uptadeExits(String idDet, String idPedido, String clave ,float cantidad, float precio, float subTotal, float iva, float total, String idUsuario)
+    {
+        DetallesPedidos detalle = new DetallesPedidos();
+        detalle.setIdDetallePedido(idDet);
+        detalle.setIdPedido(idPedido);
+        detalle.setClaveArticulo(clave);
+        detalle.setCantidad(cantidad);
+        detalle.setPrecio(precio);
+        detalle.setSubtotal(subTotal);
+        detalle.setIva(iva);
+        detalle.setTotal(total);
+        detalle.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
+        detalle.setUltimoUsuarioActualizacion(idPedido);
+        ActualizarDetalle detalleInsertar = new ActualizarDetalle();
+        detalleInsertar.execute(detalle);
+    }
 
+    private static class ActualizarDetalle extends AsyncTask<DetallesPedidos, Void, Void>
+    {
+
+        @Override
+        protected Void doInBackground(DetallesPedidos... detallesPedidos)
+        {
+            DetallesPedidosDao _dao = getDetallesPedidosDao();
+            try
+            {
+                Object[] objs = new  Object[]{detallesPedidos[0].getIdDetallePedido(), detallesPedidos[0].getClaveArticulo()};
+                _dao.update(detallesPedidos[0],"IdDetallePedido = ? AND ClaveArticulo = ?" , objs);
+            }
+            catch (Exception e)
+            {
+
+            }
+            return null;
+        }
+    }
+    public static DetallesPedidosDao getDetallesPedidosDao()
+    {
+        return DetallesPedidosDaoFactory.create();
     }
 
 }

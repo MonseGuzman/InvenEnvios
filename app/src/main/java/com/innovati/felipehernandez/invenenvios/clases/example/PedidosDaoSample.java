@@ -31,6 +31,7 @@ public class PedidosDaoSample
 		// findAll();
 		// findWhereIdPedidoEquals("");
 		// findWhereIdUsuarioEquals("");
+		// findWhereFolioEquals(0);
 		// findWhereClaveClienteEquals("");
 		// findWhereFechaEquals(null);
 		// findWhereEstatusEquals(0);
@@ -93,6 +94,27 @@ public class PedidosDaoSample
 		try {
 			PedidosDao _dao = getPedidosDao();
 			Pedidos _result[] = _dao.findWhereIdUsuarioEquals(idUsuario);
+			for (int i=0; i<_result.length; i++ ) {
+				display( _result[i] );
+			}
+		
+		}
+		catch (Exception _e) {
+			_e.printStackTrace();
+		}
+		
+	}
+
+	/**
+	 * Method 'findWhereFolioEquals'
+	 * 
+	 * @param folio
+	 */
+	public static void findWhereFolioEquals(int folio)
+	{
+		try {
+			PedidosDao _dao = getPedidosDao();
+			Pedidos _result[] = _dao.findWhereFolioEquals(folio);
 			for (int i=0; i<_result.length; i++ ) {
 				display( _result[i] );
 			}
@@ -294,9 +316,9 @@ public class PedidosDaoSample
 	}
 
 	/**
-	 * Method 'getPedidosDaoI'
+	 * Method 'getPedidosDao'
 	 * 
-	 * @return PedidosDao_I
+	 * @return PedidosDao
 	 */
 	public static PedidosDao getPedidosDao()
 	{
@@ -314,6 +336,8 @@ public class PedidosDaoSample
 		buf.append( dto.getIdPedido() );
 		buf.append( ", " );
 		buf.append( dto.getIdUsuario() );
+		buf.append( ", " );
+		buf.append( dto.getFolio() );
 		buf.append( ", " );
 		buf.append( dto.getClaveCliente() );
 		buf.append( ", " );

@@ -221,7 +221,7 @@ public class PedidoActivity extends AppCompatActivity
         pedidos.setSubtotal(subtotal);
         pedidos.setIva(iva);
         pedidos.setTotal(total);
-        pedidos.setFolio(folio);
+        pedidos.setFolio((folio));
         pedidos.setObservaciones(observaciones);
         pedidos.setUltimoUsuarioActualizacion(idUsuario);
         pedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
@@ -349,7 +349,7 @@ public class PedidoActivity extends AppCompatActivity
             DetallesPedidosDao _dao = getDetallesPedidosDao();
             try
             {
-                _dao.insert(detallesPedidos[0]);
+
             }
             catch (Exception e)
             {

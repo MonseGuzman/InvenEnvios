@@ -178,7 +178,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		
 	}
 
-	public void update(DetallesPedidos dto, String sql, String[] sqlParams) throws DetallesPedidosDaoException
+	public void update(DetallesPedidos dto, String sql, Object[] sqlParams) throws DetallesPedidosDaoException
 	{
 		long t1 = System.currentTimeMillis();
 		// declare variables
@@ -190,7 +190,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		try {
 			// get the user-specified connection or get a connection from the ResourceManager
 			conn = isConnSupplied ? userConn : ResourceManager.getConnection();
-			final String SQL = SQL_SELECT + " WHERE " + sql;
+			final String SQL = SQL_UPDATE + " WHERE " + sql;
 			stmt = conn.prepareStatement( SQL );
 			stmt.setString( COLUMN_ID_DETALLE_PEDIDO, dto.getIdDetallePedido() );
 			stmt.setString( COLUMN_ID_PEDIDO, dto.getIdPedido() );
@@ -228,7 +228,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 			stmt.setTimestamp(COLUMN_ULTIMA_FECHA_ACTUALIZACION, dto.getUltimaFechaActualizacion()==null ? null : new java.sql.Timestamp( dto.getUltimaFechaActualizacion().getTime() ) );
 			stmt.setString( COLUMN_ULTIMO_USUARIO_ACTUALIZACION, dto.getUltimoUsuarioActualizacion() );
 
-			for (int i=12; sqlParams!=null && i<sqlParams.length +12; i++ ) {
+			for (int i=10; sqlParams!=null && i<sqlParams.length +12; i++ ) {
 				stmt.setObject( i+1, sqlParams[i] );
 			}
 

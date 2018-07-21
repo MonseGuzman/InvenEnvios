@@ -17,7 +17,7 @@ public class PedidosDaoFactory
 	/**
 	 * Method 'create'
 	 * 
-	 * @return PedidosDao_I
+	 * @return PedidosDao
 	 */
 	public static PedidosDao create()
 	{
@@ -28,7 +28,7 @@ public class PedidosDaoFactory
 	 * Method 'create'
 	 * 
 	 * @param conn
-	 * @return PedidosDao_I
+	 * @return PedidosDao
 	 */
 	public static PedidosDao create(Connection conn)
 	{

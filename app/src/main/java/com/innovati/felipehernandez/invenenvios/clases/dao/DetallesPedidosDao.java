@@ -20,7 +20,7 @@ public interface DetallesPedidosDao
 	 */
 	public void insert(DetallesPedidos dto) throws DetallesPedidosDaoException;
 
-	public void update(DetallesPedidos dto, String sql, String[] sqlParams) throws DetallesPedidosDaoException;
+	public void update(DetallesPedidos dto, String sql, Object[] sqlParams) throws DetallesPedidosDaoException;
 
 	/** 
 	 * Returns all rows from the DetallesPedidos_I table that match the criteria ''.
