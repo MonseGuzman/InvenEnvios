@@ -50,7 +50,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	protected final String SQL_INSERT = "INSERT INTO " + getTableName() + " ( IdPedido, IdUsuario, Folio, ClaveCliente, Fecha, Estatus, Subtotal, IVA, Total, Observaciones, UltimaFechaActualizacion, UltimoUsuarioActualizacion ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
-	protected final String SQL_UPDATE = "UPDATE " + getTableName() + "SET IdPedido = ?, IdUsuario = ?, Folio = ?, ClaveCliente = ?, Fecha = ?, Estatus = ?,Subtotal = ?, IVA = ?, Total = ?, UltimaFechaActualizacion = ?, UltimoUsuarioActualizacion = ?";
+	protected final String SQL_UPDATE = "UPDATE " + getTableName() + " SET IdPedido = ?, IdUsuario = ?, Folio = ?, ClaveCliente = ?, Fecha = ?, Estatus = ?,Subtotal = ?, IVA = ?, Total = ?, Observaciones = ?, UltimaFechaActualizacion = ?, UltimoUsuarioActualizacion = ?";
 
 	/** 
 	 * Index of column IdPedido

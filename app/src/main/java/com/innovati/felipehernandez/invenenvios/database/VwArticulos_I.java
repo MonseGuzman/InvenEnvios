@@ -13,20 +13,20 @@ public class VwArticulos_I
     private String nombre;
     private String unidadPrimaria;
     private float precio1;
-    private String status;
+    private String activo;
     private String tiempoSurtido;
     private float existenciaTotal;
     private String cubicaje;
-    @Generated(hash = 1756860992)
+    @Generated(hash = 2096461592)
     public VwArticulos_I(Long Id, String clave, String nombre,
-            String unidadPrimaria, float precio1, String status,
+            String unidadPrimaria, float precio1, String activo,
             String tiempoSurtido, float existenciaTotal, String cubicaje) {
         this.Id = Id;
         this.clave = clave;
         this.nombre = nombre;
         this.unidadPrimaria = unidadPrimaria;
         this.precio1 = precio1;
-        this.status = status;
+        this.activo = activo;
         this.tiempoSurtido = tiempoSurtido;
         this.existenciaTotal = existenciaTotal;
         this.cubicaje = cubicaje;
@@ -64,11 +64,11 @@ public class VwArticulos_I
     public void setPrecio1(float precio1) {
         this.precio1 = precio1;
     }
-    public String getStatus() {
-        return this.status;
+    public String getActivo() {
+        return this.activo;
     }
-    public void setStatus(String status) {
-        this.status = status;
+    public void setActivo(String activo) {
+        this.activo = activo;
     }
     public String getTiempoSurtido() {
         return this.tiempoSurtido;
@@ -88,6 +88,5 @@ public class VwArticulos_I
     public void setCubicaje(String cubicaje) {
         this.cubicaje = cubicaje;
     }
-
 
 }

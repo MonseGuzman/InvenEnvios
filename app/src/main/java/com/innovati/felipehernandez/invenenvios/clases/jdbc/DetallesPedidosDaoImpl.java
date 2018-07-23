@@ -50,7 +50,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	protected final String SQL_INSERT = "INSERT INTO " + getTableName() + " ( IdDetallePedido, IdPedido, ClaveArticulo, Cantidad, Precio, Subtotal, IVA, Total, UltimaFechaActualizacion, UltimoUsuarioActualizacion ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
-	protected final String SQL_UPDATE = "UPDATE " + getTableName() + "SET IdDetallePedido = ?, IdPedido = ?, ClaveArticulo = ?, Cantidad = ?, Precio = ?, Subtotal = ?, IVA = ?, Total = ?, UltimaFechaActualizacion = ?, UltimoUsuarioActualizacion = ?";
+	protected final String SQL_UPDATE = "UPDATE " + getTableName() + " SET IdDetallePedido = ?, IdPedido = ?, ClaveArticulo = ?, Cantidad = ?, Precio = ?, Subtotal = ?, IVA = ?, Total = ?, UltimaFechaActualizacion = ?, UltimoUsuarioActualizacion = ?";
 
 	/** 
 	 * Index of column IdDetallePedido
@@ -228,8 +228,8 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 			stmt.setTimestamp(COLUMN_ULTIMA_FECHA_ACTUALIZACION, dto.getUltimaFechaActualizacion()==null ? null : new java.sql.Timestamp( dto.getUltimaFechaActualizacion().getTime() ) );
 			stmt.setString( COLUMN_ULTIMO_USUARIO_ACTUALIZACION, dto.getUltimoUsuarioActualizacion() );
 
-			for (int i=10; sqlParams!=null && i<sqlParams.length +12; i++ ) {
-				stmt.setObject( i+1, sqlParams[i] );
+			for (int i=0; sqlParams!=null && i<sqlParams.length; i++ ) {
+				stmt.setObject( i+11, sqlParams[i] );
 			}
 
 			System.out.println( "Executing " + SQL);

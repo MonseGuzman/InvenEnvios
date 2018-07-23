@@ -26,7 +26,6 @@ import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
 public class EntregasActivity extends AppCompatActivity
 {
     private ListView EntregasListView;
-    private Button GuardarButton_E;
 
     private PedidosAdapter adaptador;
     private Pedidos result[];
@@ -54,7 +53,6 @@ public class EntregasActivity extends AppCompatActivity
                 datosPedidoFragment.setArguments(args);
                 getSupportFragmentManager().beginTransaction().replace(R.id.EntregasRelativeLayout, datosPedidoFragment).addToBackStack(null).commit();
 
-                GuardarButton_E.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -85,7 +83,6 @@ public class EntregasActivity extends AppCompatActivity
     private void inicializacion()
     {
         EntregasListView = (ListView)findViewById(R.id.EntregasListView);
-        GuardarButton_E = (Button)findViewById(R.id.GuardarButton_E);
     }
 
     @Override
@@ -98,7 +95,6 @@ public class EntregasActivity extends AppCompatActivity
             getSupportFragmentManager().popBackStack();
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            GuardarButton_E.setVisibility(View.VISIBLE);
         }
         else
             finish();
