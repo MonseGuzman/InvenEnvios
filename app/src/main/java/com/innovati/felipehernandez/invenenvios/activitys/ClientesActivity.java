@@ -30,8 +30,15 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
+import com.innovati.felipehernandez.invenenvios.database.VwClientes_I;
 import com.innovati.felipehernandez.invenenvios.database.VwClientes_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwUsuarios_I;
+import com.innovati.felipehernandez.invenenvios.database.VwUsuarios_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.ClienteFragment;
+
+import org.greenrobot.greendao.query.QueryBuilder;
+
+import java.util.List;
 
 public class ClientesActivity extends AppCompatActivity
 {
@@ -43,9 +50,10 @@ public class ClientesActivity extends AppCompatActivity
     private ClientesAdaptador adaptador;
     VwClientes result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
-    String fragment ="";
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int posicion;
+    private DaoSession daoSession;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +63,7 @@ public class ClientesActivity extends AppCompatActivity
 
         this.setTitle(R.string.tituloClientes);
         buscarEditText.setHint(R.string.seleccionarCliente);
+        daoSession = ((MyApp) getApplication()).getDaoSession();
 
         datitosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,8 +71,6 @@ public class ClientesActivity extends AppCompatActivity
             {
                 ClienteFragment clienteFragment = new ClienteFragment();
                 args = new Bundle();
-
-                fragment = "Agregar";
 
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
@@ -163,7 +170,6 @@ public class ClientesActivity extends AppCompatActivity
             getSupportFragmentManager().popBackStack();
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            fragment = "";
         }
         else
             finish();
@@ -191,10 +197,10 @@ public class ClientesActivity extends AppCompatActivity
     public void filtar(View v)
     {
         String nombre = buscarEditText.getText().toString();
-        if(TextUtils.isEmpty(nombre))
+        if(metodosInternos.conexionRed())
         {
             //sin filtro = todos
-            if(metodosInternos.conexionRed())
+            if(TextUtils.isEmpty(nombre))
             {
                 try
                 {
@@ -208,15 +214,6 @@ public class ClientesActivity extends AppCompatActivity
                 }
             }
             else
-            {
-                //bd interna
-                metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
-            }
-        }
-        else
-        {
-            //todos los que se parecen con el where
-            if(metodosInternos.conexionRed())
             {
                 try
                 {
@@ -231,24 +228,61 @@ public class ClientesActivity extends AppCompatActivity
                     Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
                 }
             }
-            else
-            {
-                //bd interna
-                metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
-            }
         }
+        else
+            try
+            {
+                internaBD();
+            } catch (Exception e)
+            {
+                metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
+                e.printStackTrace();
+            }
     }
 
-    /*private void internaBD()
+    private void internaBD()
     {
-        //solo hice la lista da flojera hacer el for
-        List<com.innovati.felipehernandez.invenenvios.database.VwClientes> vwClientesList = cliente.queryBuilder()
-                .where(com.innovati.felipehernandez.invenenvios.database.VwClientesDao.Properties.Nombre.eq(buscarEditText.getText().toString()))
-                .list();
+        String nombre = buscarEditText.getText().toString();
+        VwClientes_IDao vwClientes_iDao = daoSession.getVwClientes_IDao();
+        List<VwClientes_I> clientes;
 
-        adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
-        datitosListView.setAdapter(adaptador);
-    }*/
+        //si esta vacio
+        if(TextUtils.isEmpty(nombre))
+        {
+            QueryBuilder<VwClientes_I> qb = vwClientes_iDao.queryBuilder();
+            clientes = qb.list();
+            result = new VwClientes[clientes.size()];
+        }
+        else
+        {
+            nombre = "%" + nombre;
+            nombre += "%";
+
+            QueryBuilder<VwClientes_I> qb = vwClientes_iDao.queryBuilder();
+            qb.where(VwClientes_IDao.Properties.Nombre.like(nombre));
+
+            clientes = qb.list();
+            result = new VwClientes[clientes.size()];
+        }
+
+        for(int x=0; x<clientes.size(); x++)
+        {
+            VwClientes objetoCliente = new VwClientes();
+
+            objetoCliente.setClave(clientes.get(x).getClave());
+            objetoCliente.setNombre(clientes.get(x).getNombre());
+            objetoCliente.setRfc(clientes.get(x).getRfc());
+            objetoCliente.setCalle(clientes.get(x).getCalle());
+            objetoCliente.setNumeroExterior(clientes.get(x).getNumeroExterior());
+            objetoCliente.setNumeroInterior(clientes.get(x).getNumeroInterior());
+            objetoCliente.setColonia(clientes.get(x).getColonia());
+            objetoCliente.setTelefono(clientes.get(x).getTelefono());
+
+            result[x] = objetoCliente;
+        }
+
+        cargarDatos(result);
+    }
 
     private void cargarDatos(VwClientes[] result)
     {
