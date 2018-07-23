@@ -200,7 +200,7 @@ public class ArticuloActivity extends AppCompatActivity
             objetoArticulos.setClave(articulos.get(x).getClave());
             objetoArticulos.setNombre(articulos.get(x).getNombre());
             //RESOLVER ESTO EL LUNES (¿SERÁ ESTATUS O ACTIVO?) 🤔
-            objetoArticulos.setStatus(articulos.get(x).getStatus());
+            objetoArticulos.setStatus(articulos.get(x).getActivo());
             objetoArticulos.setTiempoSurtido(Float.parseFloat(articulos.get(x).getTiempoSurtido()));
             objetoArticulos.setExistenciaTotal(articulos.get(x).getExistenciaTotal());
             objetoArticulos.setPrecio1(articulos.get(x).getPrecio1());

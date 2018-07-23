@@ -27,7 +27,7 @@ public class VwArticulos_IDao extends AbstractDao<VwArticulos_I, Long> {
         public final static Property Nombre = new Property(2, String.class, "nombre", false, "NOMBRE");
         public final static Property UnidadPrimaria = new Property(3, String.class, "unidadPrimaria", false, "UNIDAD_PRIMARIA");
         public final static Property Precio1 = new Property(4, float.class, "precio1", false, "PRECIO1");
-        public final static Property Status = new Property(5, String.class, "status", false, "STATUS");
+        public final static Property Activo = new Property(5, String.class, "activo", false, "ACTIVO");
         public final static Property TiempoSurtido = new Property(6, String.class, "tiempoSurtido", false, "TIEMPO_SURTIDO");
         public final static Property ExistenciaTotal = new Property(7, float.class, "existenciaTotal", false, "EXISTENCIA_TOTAL");
         public final static Property Cubicaje = new Property(8, String.class, "cubicaje", false, "CUBICAJE");
@@ -51,7 +51,7 @@ public class VwArticulos_IDao extends AbstractDao<VwArticulos_I, Long> {
                 "\"NOMBRE\" TEXT," + // 2: nombre
                 "\"UNIDAD_PRIMARIA\" TEXT," + // 3: unidadPrimaria
                 "\"PRECIO1\" REAL NOT NULL ," + // 4: precio1
-                "\"STATUS\" TEXT," + // 5: status
+                "\"ACTIVO\" TEXT," + // 5: activo
                 "\"TIEMPO_SURTIDO\" TEXT," + // 6: tiempoSurtido
                 "\"EXISTENCIA_TOTAL\" REAL NOT NULL ," + // 7: existenciaTotal
                 "\"CUBICAJE\" TEXT);"); // 8: cubicaje
@@ -88,9 +88,9 @@ public class VwArticulos_IDao extends AbstractDao<VwArticulos_I, Long> {
         }
         stmt.bindDouble(5, entity.getPrecio1());
  
-        String status = entity.getStatus();
-        if (status != null) {
-            stmt.bindString(6, status);
+        String activo = entity.getActivo();
+        if (activo != null) {
+            stmt.bindString(6, activo);
         }
  
         String tiempoSurtido = entity.getTiempoSurtido();
@@ -130,9 +130,9 @@ public class VwArticulos_IDao extends AbstractDao<VwArticulos_I, Long> {
         }
         stmt.bindDouble(5, entity.getPrecio1());
  
-        String status = entity.getStatus();
-        if (status != null) {
-            stmt.bindString(6, status);
+        String activo = entity.getActivo();
+        if (activo != null) {
+            stmt.bindString(6, activo);
         }
  
         String tiempoSurtido = entity.getTiempoSurtido();
@@ -160,7 +160,7 @@ public class VwArticulos_IDao extends AbstractDao<VwArticulos_I, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // nombre
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // unidadPrimaria
             cursor.getFloat(offset + 4), // precio1
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // status
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // activo
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // tiempoSurtido
             cursor.getFloat(offset + 7), // existenciaTotal
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // cubicaje
@@ -175,7 +175,7 @@ public class VwArticulos_IDao extends AbstractDao<VwArticulos_I, Long> {
         entity.setNombre(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setUnidadPrimaria(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setPrecio1(cursor.getFloat(offset + 4));
-        entity.setStatus(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setActivo(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setTiempoSurtido(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setExistenciaTotal(cursor.getFloat(offset + 7));
         entity.setCubicaje(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));

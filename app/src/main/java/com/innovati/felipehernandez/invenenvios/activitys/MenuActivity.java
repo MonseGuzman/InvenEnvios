@@ -259,7 +259,7 @@ public class MenuActivity extends AppCompatActivity
                     articulo_i.setClave(articulo.getClave());
                     articulo_i.setNombre(articulo.getNombre());
                     articulo_i.setPrecio1((float) articulo.getPrecio1());
-                    articulo_i.setStatus(articulo.getStatus());
+                    articulo_i.setActivo(articulo.getStatus());
                     articulo_i.setTiempoSurtido(String.valueOf(articulo.getTiempoSurtido()));
                     articulo_i.setExistenciaTotal((float) articulo.getExistenciaTotal());
                     articulo_i.setCubicaje(String.valueOf(articulo.getCubicaje()));

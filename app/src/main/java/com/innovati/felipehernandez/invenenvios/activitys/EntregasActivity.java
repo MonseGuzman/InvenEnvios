@@ -26,7 +26,6 @@ import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
 public class EntregasActivity extends AppCompatActivity
 {
     private ListView EntregasListView;
-    private Button GuardarButton_E;
 
     private PedidosAdapter adaptador;
     private Pedidos result[];
@@ -54,7 +53,6 @@ public class EntregasActivity extends AppCompatActivity
                 datosPedidoFragment.setArguments(args);
                 getSupportFragmentManager().beginTransaction().replace(R.id.EntregasRelativeLayout, datosPedidoFragment).addToBackStack(null).commit();
 
-                GuardarButton_E.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -69,6 +67,8 @@ public class EntregasActivity extends AppCompatActivity
                     public void onClick(View v)
                     {
                         result[position].setEstatus((short) 2); //no sé que se manda aquí
+                        ActualizarPedido a = new ActualizarPedido();
+                        a.execute(result);
 
                     }
                 }).show();
@@ -83,7 +83,6 @@ public class EntregasActivity extends AppCompatActivity
     private void inicializacion()
     {
         EntregasListView = (ListView)findViewById(R.id.EntregasListView);
-        GuardarButton_E = (Button)findViewById(R.id.GuardarButton_E);
     }
 
     @Override
@@ -96,7 +95,6 @@ public class EntregasActivity extends AppCompatActivity
             getSupportFragmentManager().popBackStack();
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            GuardarButton_E.setVisibility(View.VISIBLE);
         }
         else
             finish();
@@ -179,7 +177,8 @@ public class EntregasActivity extends AppCompatActivity
             PedidosDao _dao = getPedidosDao();
             try
             {
-                _dao.update(pedidos[0], "IdPedido = ?", new String[]{pedidos[0].getIdPedido()});
+                String parametros[] = new String[]{pedidos[0].getIdPedido()};
+                _dao.update(pedidos[0], "IdPedido = ?", parametros);
             }
             catch (Exception e)
             {

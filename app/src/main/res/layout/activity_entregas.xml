@@ -13,7 +13,7 @@
         android:layout_height="550dp">
     </ListView>
 
-    <Button
+    <!--<Button
         android:id="@+id/GuardarButton_E"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,6 +22,6 @@
         android:textColor="@color/primaryTextColor"
         android:background="@color/colorPrimaryDark"
         android:layout_below="@+id/EntregasListView"
-        android:visibility="visible"/>
+        android:visibility="visible"/>-->
 
 </RelativeLayout>
