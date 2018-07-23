@@ -69,6 +69,8 @@ public class EntregasActivity extends AppCompatActivity
                     public void onClick(View v)
                     {
                         result[position].setEstatus((short) 2); //no sé que se manda aquí
+                        ActualizarPedido a = new ActualizarPedido();
+                        a.execute(result);
 
                     }
                 }).show();
@@ -179,7 +181,8 @@ public class EntregasActivity extends AppCompatActivity
             PedidosDao _dao = getPedidosDao();
             try
             {
-                _dao.update(pedidos[0], "IdPedido = ?", new String[]{pedidos[0].getIdPedido()});
+                String parametros[] = new String[]{pedidos[0].getIdPedido()};
+                _dao.update(pedidos[0], "IdPedido = ?", parametros);
             }
             catch (Exception e)
             {

@@ -197,7 +197,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		// declare variables
 		final boolean isConnSupplied = (userConn != null);
 		Connection conn = null;
-		CallableStatement stmt = null;
+		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		final String SQL = SQL_UPDATE + " WHERE " + sql;
 
@@ -205,7 +205,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 			// get the user-specified connection or get a connection from the ResourceManager
 			conn = isConnSupplied ? userConn : ResourceManager.getConnection();
 
-			stmt = conn.prepareCall( SQL  );
+			stmt = conn.prepareStatement( SQL  );
 			stmt.setString( COLUMN_ID_PEDIDO, dto.getIdPedido() );
 			stmt.setString( COLUMN_ID_USUARIO, dto.getIdUsuario() );
 			if (dto.isFolioNull()) {
@@ -245,8 +245,8 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 			stmt.setString( COLUMN_ULTIMO_USUARIO_ACTUALIZACION, dto.getUltimoUsuarioActualizacion() );
 
 			System.out.println( "Executing " + SQL_UPDATE + " with DTO: " + dto );
-			for (int i=12; sqlParams!=null && i<sqlParams.length +12; i++ ) {
-				stmt.setObject( i+1, sqlParams[i] );
+			for (int i=0; sqlParams!=null && i<sqlParams.length ; i++ ) {
+				stmt.setObject( i+13, sqlParams[i] );
 			}
 			stmt.execute();
 			int rows = stmt.getUpdateCount();
