@@ -29,8 +29,6 @@ public class ResourceManager
         {
             try
             {
-				StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-				StrictMode.setThreadPolicy(policy);
                 Class jdbcDriverClass = Class.forName( JDBC_DRIVER );
                 driver = (Driver) jdbcDriverClass.newInstance();
                 DriverManager.registerDriver( driver );

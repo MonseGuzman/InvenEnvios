@@ -538,7 +538,7 @@ public class DetallesPedidos implements Serializable
 	public String toString()
 	{
 		StringBuffer ret = new StringBuffer();
-		ret.append( "com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos_I: " );
+		ret.append( "com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos: " );
 		ret.append( "idDetallePedido=" + idDetallePedido );
 		ret.append( ", idPedido=" + idPedido );
 		ret.append( ", claveArticulo=" + claveArticulo );
