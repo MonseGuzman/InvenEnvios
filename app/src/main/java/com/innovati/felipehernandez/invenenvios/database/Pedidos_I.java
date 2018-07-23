@@ -13,7 +13,7 @@ public class Pedidos_I
     private Long Id;
     private String idPedido;
     private String idUsuario;
-    private String folio;
+    private int folio;
     private String claveCliente;
     private Date fecha;
     private short estatus;
@@ -23,8 +23,8 @@ public class Pedidos_I
     private String observaciones;
     private Date ultimaFechaActualizacion;
     private String ultimoUsuarioActualizacion;
-    @Generated(hash = 545283679)
-    public Pedidos_I(Long Id, String idPedido, String idUsuario, String folio,
+    @Generated(hash = 1719534996)
+    public Pedidos_I(Long Id, String idPedido, String idUsuario, int folio,
             String claveCliente, Date fecha, short estatus, float subtotal,
             float iva, float total, String observaciones,
             Date ultimaFechaActualizacion, String ultimoUsuarioActualizacion) {
@@ -63,10 +63,10 @@ public class Pedidos_I
     public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
     }
-    public String getFolio() {
+    public int getFolio() {
         return this.folio;
     }
-    public void setFolio(String folio) {
+    public void setFolio(int folio) {
         this.folio = folio;
     }
     public String getClaveCliente() {

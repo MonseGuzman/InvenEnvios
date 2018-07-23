@@ -104,7 +104,6 @@ public class MenuActivity extends AppCompatActivity
     {
         Pedidos_IDao daoPedidos = daoSession.getPedidos_IDao();
         List<Pedidos_I> pedidos = daoPedidos.loadAll();
-
     }
 
     public void actualizarDBServidor(View v)
@@ -207,7 +206,7 @@ public class MenuActivity extends AppCompatActivity
                     Pedidos_I pedidos_i = new Pedidos_I();
                     pedidos_i.setIdPedido(pedido.getIdPedido());
                     pedidos_i.setIdUsuario(pedido.getIdUsuario());
-                    pedidos_i.setFolio(String.valueOf(pedido.getFolio()));
+                    pedidos_i.setFolio(pedido.getFolio());
                     pedidos_i.setClaveCliente(pedido.getClaveCliente());
                     pedidos_i.setFecha(pedido.getFecha());
                     pedidos_i.setEstatus(pedido.getEstatus());
@@ -218,7 +217,7 @@ public class MenuActivity extends AppCompatActivity
                     pedidos_i.setUltimaFechaActualizacion(pedido.getUltimaFechaActualizacion());
                     pedidos_i.setUltimoUsuarioActualizacion(pedido.getUltimoUsuarioActualizacion());
 
-                    Pedidos_IDao metodo = daoSession.getPedidos_IDao();
+                   Pedidos_IDao metodo = daoSession.getPedidos_IDao();
                     metodo.insertOrReplace(pedidos_i);
                 }
 

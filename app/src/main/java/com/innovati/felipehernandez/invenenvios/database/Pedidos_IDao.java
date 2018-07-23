@@ -25,7 +25,7 @@ public class Pedidos_IDao extends AbstractDao<Pedidos_I, Long> {
         public final static Property Id = new Property(0, Long.class, "Id", true, "_id");
         public final static Property IdPedido = new Property(1, String.class, "idPedido", false, "ID_PEDIDO");
         public final static Property IdUsuario = new Property(2, String.class, "idUsuario", false, "ID_USUARIO");
-        public final static Property Folio = new Property(3, String.class, "folio", false, "FOLIO");
+        public final static Property Folio = new Property(3, int.class, "folio", false, "FOLIO");
         public final static Property ClaveCliente = new Property(4, String.class, "claveCliente", false, "CLAVE_CLIENTE");
         public final static Property Fecha = new Property(5, java.util.Date.class, "fecha", false, "FECHA");
         public final static Property Estatus = new Property(6, short.class, "estatus", false, "ESTATUS");
@@ -53,7 +53,7 @@ public class Pedidos_IDao extends AbstractDao<Pedidos_I, Long> {
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: Id
                 "\"ID_PEDIDO\" TEXT," + // 1: idPedido
                 "\"ID_USUARIO\" TEXT," + // 2: idUsuario
-                "\"FOLIO\" TEXT," + // 3: folio
+                "\"FOLIO\" INTEGER NOT NULL ," + // 3: folio
                 "\"CLAVE_CLIENTE\" TEXT," + // 4: claveCliente
                 "\"FECHA\" INTEGER," + // 5: fecha
                 "\"ESTATUS\" INTEGER NOT NULL ," + // 6: estatus
@@ -89,11 +89,7 @@ public class Pedidos_IDao extends AbstractDao<Pedidos_I, Long> {
         if (idUsuario != null) {
             stmt.bindString(3, idUsuario);
         }
- 
-        String folio = entity.getFolio();
-        if (folio != null) {
-            stmt.bindString(4, folio);
-        }
+        stmt.bindLong(4, entity.getFolio());
  
         String claveCliente = entity.getClaveCliente();
         if (claveCliente != null) {
@@ -143,11 +139,7 @@ public class Pedidos_IDao extends AbstractDao<Pedidos_I, Long> {
         if (idUsuario != null) {
             stmt.bindString(3, idUsuario);
         }
- 
-        String folio = entity.getFolio();
-        if (folio != null) {
-            stmt.bindString(4, folio);
-        }
+        stmt.bindLong(4, entity.getFolio());
  
         String claveCliente = entity.getClaveCliente();
         if (claveCliente != null) {
@@ -190,7 +182,7 @@ public class Pedidos_IDao extends AbstractDao<Pedidos_I, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // Id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // idPedido
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // idUsuario
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // folio
+            cursor.getInt(offset + 3), // folio
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // claveCliente
             cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)), // fecha
             cursor.getShort(offset + 6), // estatus
@@ -209,7 +201,7 @@ public class Pedidos_IDao extends AbstractDao<Pedidos_I, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setIdPedido(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setIdUsuario(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setFolio(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setFolio(cursor.getInt(offset + 3));
         entity.setClaveCliente(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setFecha(cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)));
         entity.setEstatus(cursor.getShort(offset + 6));

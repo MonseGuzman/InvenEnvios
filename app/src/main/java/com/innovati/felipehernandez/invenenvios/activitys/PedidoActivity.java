@@ -81,7 +81,6 @@ public class PedidoActivity extends AppCompatActivity
             public void onTabSelected(TabLayout.Tab tab)
             {
                 //cuando se selecciona un tab
-
                 int posicion = tab.getPosition();
                 if(siPasa()){
                     viewPager.setCurrentItem(posicion);
@@ -314,7 +313,12 @@ public class PedidoActivity extends AppCompatActivity
         protected void onPostExecute(Pedidos[] pedidos)
         {
             super.onPostExecute(pedidos);
-            int folioAux = pedidos.length+1;
+            int folioAux;
+            if(pedidos != null)
+                 folioAux = pedidos.length+1;
+            else
+                folioAux = 1;
+
             tvFolio.setText(String.valueOf(folioAux));
         }
     }
