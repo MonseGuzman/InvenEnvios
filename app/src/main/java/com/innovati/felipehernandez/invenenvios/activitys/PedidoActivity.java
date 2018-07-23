@@ -347,7 +347,7 @@ public class PedidoActivity extends AppCompatActivity
             DetallesPedidosDao _dao = getDetallesPedidosDao();
             try
             {
-
+                _dao.insert(detallesPedidos[0]);
             }
             catch (Exception e)
             {
@@ -356,6 +356,7 @@ public class PedidoActivity extends AppCompatActivity
             return null;
         }
     }
+
     private boolean siPasa(){
         return ((nombreC == "No elegido")? false: true);
     }

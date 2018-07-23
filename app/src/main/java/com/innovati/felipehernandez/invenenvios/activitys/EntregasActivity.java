@@ -68,9 +68,8 @@ public class EntregasActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
-                        Pedidos pedidos = new Pedidos();
-                        pedidos.setEstatus((short) 2); //no sé que se manda aquí
-                        //método update
+                        result[position].setEstatus((short) 2); //no sé que se manda aquí
+
                     }
                 }).show();
 
@@ -168,6 +167,25 @@ public class EntregasActivity extends AppCompatActivity
 
             adaptador = new PedidosAdapter(EntregasActivity.this,  R.layout.listview_pedidos, result, 2);
             EntregasListView.setAdapter(adaptador);
+        }
+    }
+
+    private static class ActualizarPedido extends AsyncTask<Pedidos, Void, Void>
+    {
+
+        @Override
+        protected Void doInBackground(Pedidos... pedidos)
+        {
+            PedidosDao _dao = getPedidosDao();
+            try
+            {
+                _dao.update(pedidos[0], "IdPedido = ?", new String[]{pedidos[0].getIdPedido()});
+            }
+            catch (Exception e)
+            {
+
+            }
+            return null;
         }
     }
 }

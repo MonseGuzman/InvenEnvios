@@ -207,7 +207,7 @@ public class MenuActivity extends AppCompatActivity
                     Pedidos_I pedidos_i = new Pedidos_I();
                     pedidos_i.setIdPedido(pedido.getIdPedido());
                     pedidos_i.setIdUsuario(pedido.getIdUsuario());
-                    pedidos_i.setFolio(pedido.getFolio());
+                    pedidos_i.setFolio(String.valueOf(pedido.getFolio()));
                     pedidos_i.setClaveCliente(pedido.getClaveCliente());
                     pedidos_i.setFecha(pedido.getFecha());
                     pedidos_i.setEstatus(pedido.getEstatus());
