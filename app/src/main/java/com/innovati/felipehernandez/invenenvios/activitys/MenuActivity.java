@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
@@ -49,6 +50,7 @@ public class MenuActivity extends AppCompatActivity
 {
     private SharedPreferences preferences;
     DaoSession daoSession;
+    private MetodosInternos metodosInternos = new MetodosInternos(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -276,6 +278,12 @@ public class MenuActivity extends AppCompatActivity
 
 
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            metodosInternos.Alerta(R.string.tituloBDI, R.string.mensajeBDI);
         }
     }
 

@@ -136,9 +136,9 @@ public class EntregasActivity extends AppCompatActivity
             ConsultaPedidos conP = new ConsultaPedidos();
             conP.execute(_dao);
         }
-        else
-        {
-            //código para buscar en la bd interna
+        else //código para buscar en la bd interna
+            try {
+            }catch (Exception e){
             metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
         }
     }

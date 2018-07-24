@@ -29,6 +29,8 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwAbastecimientoD
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_I;
+import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
 
 import org.greenrobot.greendao.query.QueryBuilder;
@@ -113,10 +115,9 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
         {
             case 1:
                 Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
-                List<Pedidos_I> pedidos;
-
                 QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
-                pedidos = qb.list();
+
+                List<Pedidos_I> pedidos = qb.list();
                 result = new Pedidos[pedidos.size()];
 
                 for(int x=0; x<pedidos.size(); x++)
@@ -144,27 +145,21 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 
                 break;
             case 2:
-                VwArticulos_IDao pedidos = daoSession.getVwArticulos_IDao();
-                List<VwAbastecimiento> abastecimientos;
+                VwAbastecimientos_IDao vwAbastecimientosIDao = daoSession.getVwAbastecimientos_IDao();
+                QueryBuilder<VwAbastecimientos_I> qb2 = vwAbastecimientosIDao.queryBuilder();
 
-                QueryBuilder<VwArticulos_I> qb = pedidos.queryBuilder();
-                abastecimientos = qb.list();
-                lista = new VwArticulos[abastecimientos.size()];
+                List<VwAbastecimientos_I> abastecimientos = qb2.list();
+                lista = new VwAbastecimiento[abastecimientos.size()];
 
                 for(int x=0; x<abastecimientos.size(); x++)
                 {
-                    VwArticulos objetoPedidos = new VwArticulos();
+                    VwAbastecimiento objetoAbastecimiento = new VwAbastecimiento();
 
-                    objetoPedidos.setClave(abastecimientos.get(x).getClave());
-                    objetoPedidos.setNombre(abastecimientos.get(x).getNombre());
-                    //RESOLVER ESTO EL LUNES (¿SERÁ ESTATUS O ACTIVO?) 🤔
-                    objetoPedidos.setStatus(abastecimientos.get(x).getStatus());
-                    objetoPedidos.setTiempoSurtido(Float.parseFloat(articulos.get(x).getTiempoSurtido()));
-                    objetoPedidos.setExistenciaTotal(abastecimientos.get(x).getExistenciaTotal());
-                    objetoPedidos.setPrecio1(abastecimientos.get(x).getPrecio1());
-                    objetoPedidos.setUnidadPrimaria(abastecimientos.get(x).getUnidadPrimaria());
+                    objetoAbastecimiento.setNombre(abastecimientos.get(x).getNombre());
+                    objetoAbastecimiento.setTotal(abastecimientos.get(x).getCantidad());
+                    objetoAbastecimiento.setUnidadPrimaria(abastecimientos.get(x).getUnidadPrimaria());
 
-                    lista[x] = objetoPedidos;
+                    lista[x] = objetoAbastecimiento;
                 }
 
                 listaArticulosAdapter = new ListaArticulosAdapter(AbastecimientosActivity.this, animationUp, animationDown, lista);
