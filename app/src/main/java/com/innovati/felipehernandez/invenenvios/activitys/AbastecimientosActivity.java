@@ -12,22 +12,30 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ListaArticulosAdapter;
 import com.innovati.felipehernandez.invenenvios.adapters.PedidosAdapter;
+import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwAbastecimientoDao;
-import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwAbastecimiento;
 import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwAbastecimientoDaoFactory;
+import com.innovati.felipehernandez.invenenvios.database.DaoSession;
+import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
+import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_I;
+import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
+
+import org.greenrobot.greendao.query.QueryBuilder;
+
+import java.util.List;
 
 public class AbastecimientosActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
@@ -38,6 +46,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
     private ListaArticulosAdapter listaArticulosAdapter;
     private VwAbastecimiento lista[];
     private MetodosInternos metodosInternos = new MetodosInternos(this);
+    private DaoSession daoSession;
 
     private PedidosAdapter adaptador;
     Pedidos result[];
@@ -52,6 +61,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 
         tipo = getIntent().getExtras().getInt("Tipo", 0);
         this.setTitle(R.string.tituloAbastecimiento);
+        daoSession = ((MyApp) getApplication()).getDaoSession();
 
         AbastecimientoListView.setOnItemClickListener(this);
 
@@ -89,10 +99,73 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                     break;
             }
         }
-        else
+        else //bd interna
+            try
+            {
+                internaBD(item);
+            }catch (Exception e) {
+                metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
+            }
+    }
+
+    private void internaBD(int item)
+    {
+        //elige el adaptador
+        switch (item)
         {
-            //bd interna
-            metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
+            case 1:
+                Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
+                QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
+
+                List<Pedidos_I> pedidos = qb.list();
+                result = new Pedidos[pedidos.size()];
+
+                for(int x=0; x<pedidos.size(); x++)
+                {
+                    Pedidos objetoPedidos = new Pedidos();
+
+                    objetoPedidos.setIdPedido(pedidos.get(x).getIdPedido());
+                    objetoPedidos.setIdUsuario(pedidos.get(x).getIdUsuario());
+                    objetoPedidos.setFolio(pedidos.get(x).getFolio());
+                    objetoPedidos.setClaveCliente(pedidos.get(x).getClaveCliente());
+                    objetoPedidos.setFecha(pedidos.get(x).getFecha());
+                    objetoPedidos.setEstatus(pedidos.get(x).getEstatus());
+                    objetoPedidos.setSubtotal(pedidos.get(x).getSubtotal());
+                    objetoPedidos.setTotal(pedidos.get(x).getTotal());
+                    objetoPedidos.setIva(pedidos.get(x).getIva());
+                    objetoPedidos.setObservaciones(pedidos.get(x).getObservaciones());
+                    objetoPedidos.setUltimaFechaActualizacion(pedidos.get(x).getUltimaFechaActualizacion());
+                    objetoPedidos.setUltimoUsuarioActualizacion(pedidos.get(x).getUltimoUsuarioActualizacion());
+
+                    result[x] = objetoPedidos;
+                }
+
+                adaptador = new PedidosAdapter(AbastecimientosActivity.this,  R.layout.listview_pedidos, result, 1);
+                AbastecimientoListView.setAdapter(adaptador);
+
+                break;
+            case 2:
+                VwAbastecimientos_IDao vwAbastecimientosIDao = daoSession.getVwAbastecimientos_IDao();
+                QueryBuilder<VwAbastecimientos_I> qb2 = vwAbastecimientosIDao.queryBuilder();
+
+                List<VwAbastecimientos_I> abastecimientos = qb2.list();
+                lista = new VwAbastecimiento[abastecimientos.size()];
+
+                for(int x=0; x<abastecimientos.size(); x++)
+                {
+                    VwAbastecimiento objetoAbastecimiento = new VwAbastecimiento();
+
+                    objetoAbastecimiento.setNombre(abastecimientos.get(x).getNombre());
+                    objetoAbastecimiento.setTotal(abastecimientos.get(x).getCantidad());
+                    objetoAbastecimiento.setUnidadPrimaria(abastecimientos.get(x).getUnidadPrimaria());
+
+                    lista[x] = objetoAbastecimiento;
+                }
+
+                listaArticulosAdapter = new ListaArticulosAdapter(AbastecimientosActivity.this, animationUp, animationDown, lista);
+                AbastecimientoRecycleView.setAdapter(listaArticulosAdapter);
+
+                break;
         }
     }
 
@@ -226,8 +299,6 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
             AbastecimientoRecycleView.setAdapter(listaArticulosAdapter);
         }
     }
-
-
 
     public static DetallesPedidosDao getDetallesPedidosDao()
     {
