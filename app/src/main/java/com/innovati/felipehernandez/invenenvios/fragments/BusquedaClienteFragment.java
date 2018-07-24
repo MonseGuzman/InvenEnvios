@@ -22,9 +22,17 @@ import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.activitys.PedidoActivity;
 import com.innovati.felipehernandez.invenenvios.adapters.EntregasRecycleViewAdaptador;
+import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
+import com.innovati.felipehernandez.invenenvios.database.DaoSession;
+import com.innovati.felipehernandez.invenenvios.database.VwClientes_I;
+import com.innovati.felipehernandez.invenenvios.database.VwClientes_IDao;
+
+import org.greenrobot.greendao.query.QueryBuilder;
+
+import java.util.List;
 
 public class BusquedaClienteFragment extends Fragment
 {
@@ -46,6 +54,7 @@ public class BusquedaClienteFragment extends Fragment
 
     MetodosInternos metodosInternos;
     VwClientes result[];
+    private DaoSession daoSession;
 
 
     public BusquedaClienteFragment() {
@@ -60,6 +69,7 @@ public class BusquedaClienteFragment extends Fragment
         View v = inflater.inflate(R.layout.fragment_busqueda_cliente, container, false);
 
         inicializacion(v);
+        daoSession = ((MyApp) getActivity().getApplication()).getDaoSession();
 
         mLayour = new GridLayoutManager(getContext(), 2);
         mLayour = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -81,23 +91,24 @@ public class BusquedaClienteFragment extends Fragment
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recycleView);
         fragment_Datos = (ConstraintLayout)view.findViewById(R.id.fragment_Datos);
 
-        nombreClienteEditText_C = view.findViewById(R.id.NombreClienteEditText_C);
-        rfcEditText_C = view.findViewById(R.id.RFCEditText_C);
-        calleEditText_C = view.findViewById(R.id.CalleEditText_C);
-        numeroExteriorEditText_C = view.findViewById(R.id.NumeroExteriorEditText_C);
-        numeroInteriorEditText_C = view.findViewById(R.id.NumeroInteriorEditText_C);
-        coloniaEditText_C = view.findViewById(R.id.ColoniaEditText_C);
-        telefonoEditText_C = view.findViewById(R.id.TelefonoEditText_C);
+        nombreClienteEditText_C = (EditText)view.findViewById(R.id.NombreClienteEditText_C);
+        rfcEditText_C = (EditText)view.findViewById(R.id.RFCEditText_C);
+        calleEditText_C = (EditText)view.findViewById(R.id.CalleEditText_C);
+        numeroExteriorEditText_C = (EditText)view.findViewById(R.id.NumeroExteriorEditText_C);
+        numeroInteriorEditText_C = (EditText)view.findViewById(R.id.NumeroInteriorEditText_C);
+        coloniaEditText_C = (EditText)view.findViewById(R.id.ColoniaEditText_C);
+        telefonoEditText_C = (EditText)view.findViewById(R.id.TelefonoEditText_C);
     }
 
     public void filtar()
     {
         String nombre = buscarEditText.getText().toString();
         metodosInternos = new MetodosInternos(getActivity());
-        if(TextUtils.isEmpty(nombre))
+
+        if(metodosInternos.conexionRed())
         {
             //sin filtro = todos
-            if(metodosInternos.conexionRed())
+            if(TextUtils.isEmpty(nombre))
             {
                 try
                 {
@@ -129,14 +140,6 @@ public class BusquedaClienteFragment extends Fragment
             }
             else
             {
-                //bd interna
-            }
-        }
-        else
-        {
-            //todos los que se parecen con el where
-            if(metodosInternos.conexionRed())
-            {
                 try
                 {
                     nombre = "%" + nombre;
@@ -152,9 +155,15 @@ public class BusquedaClienteFragment extends Fragment
                     Toast.makeText(getContext(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
                 }
             }
-            else
+        }
+        else //bd interna
+        {
+            try {
+                internaBD();
+
+            }catch (Exception e)
             {
-                //bd interna
+                metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
             }
         }
     }
@@ -197,6 +206,49 @@ public class BusquedaClienteFragment extends Fragment
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    private void internaBD()
+    {
+        String nombre = buscarEditText.getText().toString();
+        VwClientes_IDao vwClientes_iDao = daoSession.getVwClientes_IDao();
+        List<VwClientes_I> clientes;
+
+        //si esta vacio
+        if(TextUtils.isEmpty(nombre))
+        {
+            QueryBuilder<VwClientes_I> qb = vwClientes_iDao.queryBuilder();
+            clientes = qb.list();
+            result = new VwClientes[clientes.size()];
+        }
+        else
+        {
+            nombre = "%" + nombre;
+            nombre += "%";
+
+            QueryBuilder<VwClientes_I> qb = vwClientes_iDao.queryBuilder();
+            qb.where(VwClientes_IDao.Properties.Nombre.like(nombre));
+
+            clientes = qb.list();
+            result = new VwClientes[clientes.size()];
+        }
+
+        for(int x=0; x<clientes.size(); x++)
+        {
+            VwClientes objetoCliente = new VwClientes();
+
+            objetoCliente.setClave(clientes.get(x).getClave());
+            objetoCliente.setNombre(clientes.get(x).getNombre());
+            objetoCliente.setRfc(clientes.get(x).getRfc());
+            objetoCliente.setCalle(clientes.get(x).getCalle());
+            objetoCliente.setNumeroExterior(clientes.get(x).getNumeroExterior());
+            objetoCliente.setNumeroInterior(clientes.get(x).getNumeroInterior());
+            objetoCliente.setColonia(clientes.get(x).getColonia());
+            objetoCliente.setTelefono(clientes.get(x).getTelefono());
+
+            result[x] = objetoCliente;
+        }
+
+        cargarDatos();
+    }
 
     public static VwClientesDao getVwClientesDao()
     {

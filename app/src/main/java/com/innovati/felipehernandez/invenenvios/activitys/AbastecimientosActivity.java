@@ -31,6 +31,8 @@ import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_I;
 import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_I;
+import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
 
 import org.greenrobot.greendao.query.QueryBuilder;
@@ -87,15 +89,15 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
             switch (item)
             {
                 case 1:
-                        PedidosDao _daoP = getPedidosDao();
-                        ConsultaPedidos conP = new ConsultaPedidos();
-                        conP.execute(_daoP);
+                    PedidosDao _daoP = getPedidosDao();
+                    ConsultaPedidos conP = new ConsultaPedidos();
+                    conP.execute(_daoP);
 
                     break;
                 case 2:
-                        VwAbastecimientoDao _daoA = getVwAbastecimientoDao();
-                        ConsultaAbastecimientos conA = new ConsultaAbastecimientos();
-                        conA.execute(_daoA);
+                    VwAbastecimientoDao _daoA = getVwAbastecimientoDao();
+                    ConsultaAbastecimientos conA = new ConsultaAbastecimientos();
+                    conA.execute(_daoA);
                     break;
             }
         }
@@ -110,7 +112,6 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 
     private void internaBD(int item)
     {
-        //elige el adaptador
         switch (item)
         {
             case 1:
@@ -237,16 +238,17 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        DetallePedidoFragment datosPedidoFragment = new DetallePedidoFragment();
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    {
+        DetallePedidoFragment detallePedidoFragment = new DetallePedidoFragment();
         Bundle args;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
         args = new Bundle();
         args.putString("pedido", result[position].getIdPedido());
         args.putBoolean("bandera",true);
-        datosPedidoFragment.setArguments(args);
-        getSupportFragmentManager().beginTransaction().replace(R.id.abastecimientoConsulta, datosPedidoFragment).addToBackStack(null).commit();
+        detallePedidoFragment.setArguments(args);
+        getSupportFragmentManager().beginTransaction().replace(R.id.abastecimientoConsulta, detallePedidoFragment).addToBackStack(null).commit();
     }
 
     private class ConsultaPedidos extends AsyncTask<PedidosDao,Void, Pedidos[]>

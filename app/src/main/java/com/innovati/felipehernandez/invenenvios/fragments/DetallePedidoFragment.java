@@ -1,26 +1,22 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
-import com.innovati.felipehernandez.invenenvios.activitys.PedidoActivity;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticulosPedidosAdapter;
 import com.innovati.felipehernandez.invenenvios.adapters.RecycleViewOnItemClickListener;
+import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
@@ -30,28 +26,36 @@ import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDaoFactory;
+import com.innovati.felipehernandez.invenenvios.database.DaoSession;
+import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_I;
+import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_IDao;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
+
+import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.UUID;
 
 public class DetallePedidoFragment extends Fragment implements View.OnClickListener
 {
+    private RecyclerView recyclerArticulos;
+    private Button btnMas, btnMeno, btnAceptar, btnCancelar;
+    private EditText editCantida;
+    private ConstraintLayout datosEditArticle;
+
     private List<ArticulosPedido> articulosPedidos = new ArrayList<ArticulosPedido>();
     VwDetallePedido result[];
     String clavePedido = "";
-    private  RecyclerView recyclerArticulos;
-    private Button btnMas, btnMeno, btnAceptar, btnCancelar;
-    private  EditText editCantida;
-    private  ConstraintLayout datosEditArticle;
     private static float exitArticul = 0, cantidaNum;
     private static int positionList;
     private boolean bandera = true;
     private List<String> listDet = new ArrayList<>();
     static List<ArticulosPedido> articuloEdit = new ArrayList<ArticulosPedido>();
     String idUsuario = "";
+    private MetodosInternos metodosInternos;
+    private DaoSession daoSession;
+
     public DetallePedidoFragment() {
         // Required empty public constructor
     }
@@ -63,15 +67,18 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         View v = inflater.inflate(R.layout.fragment_detalle_pedido, container, false);
 
         inicializar(v);
+        daoSession = ((MyApp) getActivity().getApplication()).getDaoSession();
+
         btnMas.setOnClickListener(this);
         btnMeno.setOnClickListener(this);
         btnAceptar.setOnClickListener(this);
         btnCancelar.setOnClickListener(this);
         editCantida.setOnClickListener(this);
+
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         recyclerArticulos.setLayoutManager(manager);
         recyclerArticulos.setHasFixedSize(true);
-        //btnReg.setVisibility(View.INVISIBLE);  ARREGLAR DESPUÉS
+
         Bundle args = getArguments();
         clavePedido = args.getString("pedido", "");
         bandera = args.getBoolean("bandera",true);
@@ -93,11 +100,47 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
     public void loadData()
     {
+        metodosInternos = new MetodosInternos(getActivity());
+
+        if(metodosInternos.conexionRed())
+        {
             VwDetallePedidoDao detallesPedidos = getVwDetallePedidoDao();
             Consulta c = new Consulta();
             c.execute(detallesPedidos);
-
+        }
+        else {
+            internaBD();
+            updateAdapter();
+        }
     }
+
+    private void internaBD() //PREGUNTARLE A DEINI MAÑANA
+    {
+        VwDetallePedido_IDao detallePedidoIDao = daoSession.getVwDetallePedido_IDao();
+        QueryBuilder<VwDetallePedido_I> qb = detallePedidoIDao.queryBuilder();
+
+        List<VwDetallePedido_I> detallePedido = qb.list();
+        result = new VwDetallePedido[detallePedido.size()];
+
+        for(int x=0; x<detallePedido.size(); x++)
+        {
+            VwDetallePedido objetoDetalle = new VwDetallePedido();
+
+            objetoDetalle.setIdPedido(detallePedido.get(x).getIdPedido());
+            objetoDetalle.setIdDetallePedido(detallePedido.get(x).getIdDetallePedido());
+            objetoDetalle.setClaveArticulo(detallePedido.get(x).getClaveArticulo());
+            objetoDetalle.setCantidad(detallePedido.get(x).getCantidad());
+            objetoDetalle.setPrecio(detallePedido.get(x).getPrecio());
+            objetoDetalle.setSubtotal(detallePedido.get(x).getSubtotal());
+            objetoDetalle.setTotal(detallePedido.get(x).getTotal());
+            objetoDetalle.setIva(detallePedido.get(x).getIva());
+            objetoDetalle.setUltimoUsuarioActualizacion(detallePedido.get(x).getUsuarioActualizacion());
+            objetoDetalle.setUltimaFechaActualizacion(detallePedido.get(x).getFechaActualizacion());
+
+            result[x] = objetoDetalle;
+        }
+    }
+
     public static VwDetallePedidoDao getVwDetallePedidoDao()
     {
         return VwDetallePedidoDaoFactory.create();
@@ -119,6 +162,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             }
         }));
     }
+
     public  void updateAr(int x){
         try{
             updateArticle(x);
@@ -138,6 +182,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         editCantida.setText(String.valueOf(articulosPedidos.get(position).getCantidad()));
         datosEditArticle.setVisibility(View.VISIBLE);
     }
+
     public  void updateAdapterArt(List<ArticulosPedido> articuloEdit){
         recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(articuloEdit, new RecycleViewOnItemClickListener() {
             @Override
@@ -180,44 +225,40 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         @Override
         protected VwDetallePedido doInBackground(VwDetallePedidoDao... vwDetallePedidoDaos)
         {
-          try
-          {
-              result = vwDetallePedidoDaos[0].findWhereIdPedidoEquals(clavePedido);
-              articulosPedidos.clear();
+            try
+            {
+                result = vwDetallePedidoDaos[0].findWhereIdPedidoEquals(clavePedido);
+                articulosPedidos.clear();
 
-              for(VwDetallePedido pedidos: result)
-              {
-                  ArticulosPedido articulo = new ArticulosPedido();
-                  articulo.setNombre(pedidos.getNombre());
-                  articulo.setIdArticulo(pedidos.getClaveArticulo());
-                  articulo.setPresentacion(pedidos.getUnidadPrimaria());
-                  articulo.setCantidad((float) pedidos.getCantidad());
-                  articulo.setIva(pedidos.getIva());
-                  articulo.setPrecio(pedidos.getPrecio());
-                  articulo.setTotal(pedidos.getTotal());
-                  articulo.setSubTotal(pedidos.getSubtotal());
-                  articulo.setStatus(true);
-                  articulosPedidos.add(articulo);
-                  listDet.add(pedidos.getIdDetallePedido());
-                  idUsuario = pedidos.getIdDetallePedido();
-              }
+                for(VwDetallePedido pedidos: result)
+                {
+                    ArticulosPedido articulo = new ArticulosPedido();
+                    articulo.setNombre(pedidos.getNombre());
+                    articulo.setIdArticulo(pedidos.getClaveArticulo());
+                    articulo.setPresentacion(pedidos.getUnidadPrimaria());
+                    articulo.setCantidad((float) pedidos.getCantidad());
+                    articulo.setIva(pedidos.getIva());
+                    articulo.setPrecio(pedidos.getPrecio());
+                    articulo.setTotal(pedidos.getTotal());
+                    articulo.setSubTotal(pedidos.getSubtotal());
+                    articulo.setStatus(true);
+                    articulosPedidos.add(articulo);
+                    listDet.add(pedidos.getIdDetallePedido());
+                    idUsuario = pedidos.getIdDetallePedido();
+                }
 
-              VwArticulos vwArticulos[];
-              int x = 0;
-              for(ArticulosPedido articulosPedido: articulosPedidos)
-              {
-                  vwArticulos = getVwArticulosDao().findWhereClaveEquals(articulosPedido.getIdArticulo());
-                  Double tem = vwArticulos[0].getExistenciaTotal();
-                  articulosPedido.setExits(Float.valueOf(tem.toString()));
-                  articulosPedidos.set(x,articulosPedido);
-                  x++;
-              }
-
-          }
-          catch (Exception e)
-          {
-
-          }
+                VwArticulos vwArticulos[];
+                int x = 0;
+                for(ArticulosPedido articulosPedido: articulosPedidos)
+                {
+                    vwArticulos = getVwArticulosDao().findWhereClaveEquals(articulosPedido.getIdArticulo());
+                    Double tem = vwArticulos[0].getExistenciaTotal();
+                    articulosPedido.setExits(Float.valueOf(tem.toString()));
+                    articulosPedidos.set(x,articulosPedido);
+                    x++;
+                }
+            }
+            catch (Exception e) { }
             return null;
         }
 
@@ -226,11 +267,11 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         {
             super.onPostExecute(vwDetallePedido);
 
-
             updateAdapter();
 
         }
     }
+
     public void updateArticleList(boolean ban){
         if (ban){
             float precioAux = Float.valueOf(articulosPedidos.get(positionList).getPrecio());
@@ -252,6 +293,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         datosEditArticle.setVisibility(View.INVISIBLE);
         updateAdapter();
     }
+
     public void addArticulo(ArticulosPedido a){
         boolean ban = false;
         int position = -1;
@@ -269,7 +311,8 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         }else
         updateAdapter();
     }
-     public float calTotal(){
+
+    public float calTotal(){
         float total = 0;
         if (articulosPedidos != null){
             for(ArticulosPedido ar: articulosPedidos){
@@ -281,6 +324,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         }
         return total;
     }
+
     public void uptadeExits(){
         int x = 0;
         for (ArticulosPedido ar: articulosPedidos){
@@ -288,6 +332,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             x++;
         }
     }
+
     public void uptadeExits(String idDet, String idPedido, String clave ,float cantidad, float precio, float subTotal, float iva, float total, String idUsuario)
     {
         DetallesPedidos detalle = new DetallesPedidos();
@@ -324,6 +369,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             return null;
         }
     }
+
     public static DetallesPedidosDao getDetallesPedidosDao()
     {
         return DetallesPedidosDaoFactory.create();

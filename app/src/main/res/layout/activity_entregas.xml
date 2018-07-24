@@ -10,18 +10,7 @@
     <ListView
         android:id="@+id/EntregasListView"
         android:layout_width="match_parent"
-        android:layout_height="550dp">
+        android:layout_height="match_parent">
     </ListView>
-
-    <!--<Button
-        android:id="@+id/GuardarButton_E"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/guardar"
-        android:layout_alignParentEnd="true"
-        android:textColor="@color/primaryTextColor"
-        android:background="@color/colorPrimaryDark"
-        android:layout_below="@+id/EntregasListView"
-        android:visibility="visible"/>-->
 
 </RelativeLayout>

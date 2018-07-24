@@ -366,5 +366,3 @@ public class PedidoActivity extends AppCompatActivity
     }
 
 }
-//consulta del pedidio junto con sus detalles
-//este pedidio es para las entregas jajaja
