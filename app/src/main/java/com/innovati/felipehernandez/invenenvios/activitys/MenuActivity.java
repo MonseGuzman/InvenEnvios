@@ -120,8 +120,17 @@ public class MenuActivity extends AppCompatActivity
         dialog.setMessage("Cargando...");
         dialog.setCancelable(false);
         dialog.show();
-        InsertarAInterna insertar = new InsertarAInterna();
-        insertar.execute();
+
+        if(metodosInternos.conexionRed())
+        {
+            InsertarAInterna insertar = new InsertarAInterna();
+            insertar.execute();
+        }
+        else
+        {
+            dialog.hide();
+            metodosInternos.Alerta(R.string.error, R.string.conectarse);
+        }
     }
 
     private class insertarAServidor extends AsyncTask<List<Object>,Void, Void>

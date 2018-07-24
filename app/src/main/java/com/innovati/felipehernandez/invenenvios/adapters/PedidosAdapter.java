@@ -82,10 +82,10 @@ public class PedidosAdapter extends BaseAdapter
         {
             vh.EstatusCheckbox_P.setVisibility(View.VISIBLE);
 
-            if (pedidos.getEstatus() == 1)
-                vh.EstatusCheckbox_P.setSelected(true);
+            if (pedidos.getEstatus() == 2)
+                vh.EstatusCheckbox_P.setChecked(true);
             else
-                vh.EstatusCheckbox_P.setSelected(false);
+                vh.EstatusCheckbox_P.setChecked(false);
         }
         else
             vh.EstatusCheckbox_P.setVisibility(View.INVISIBLE);
