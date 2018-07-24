@@ -12,18 +12,21 @@ import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwAbastecimientoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwAgenteDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwAbastecimiento;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwAgente;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwUsuarios;
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwAbastecimientoDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwAgenteDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
@@ -33,6 +36,8 @@ import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.database.DetallesPedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_I;
+import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwAgente_I;
 import com.innovati.felipehernandez.invenenvios.database.VwAgente_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwArticulos_I;
@@ -144,6 +149,7 @@ public class MenuActivity extends AppCompatActivity
         private VwAgenteDao _daoAgente;
         private VwArticulosDao _daoVwArticulos;
         private VwClientesDao _daoVwClientes;
+        private VwAbastecimientoDao _daoVwAbastecimiento;
 
         @Override
         protected Void doInBackground(Void... voids)
@@ -154,6 +160,7 @@ public class MenuActivity extends AppCompatActivity
             _daoVwClientes = getVwClientesDao();
             _daoVwArticulos = getVwArticulosDao();
             _daoVwUsuarios = getVwUsuariosDao();
+            _daoVwAbastecimiento = getVwAbastecimientoDao();
             try
             {
 
@@ -163,6 +170,7 @@ public class MenuActivity extends AppCompatActivity
                 VwClientes[] clientes = _daoVwClientes.findAll();
                 VwArticulos[] articulos = _daoVwArticulos.findAll();
                 VwUsuarios[] usuarios = _daoVwUsuarios.findAll();
+                VwAbastecimiento[] abastecimientos = _daoVwAbastecimiento.findAll();
 
                for(VwAgente agente: agentes)
                 {
@@ -270,6 +278,17 @@ public class MenuActivity extends AppCompatActivity
                     metodo.insertOrReplace(articulo_i);
                 }
 
+                for(VwAbastecimiento abastecimiento : abastecimientos)
+                {
+                    VwAbastecimientos_I abastecimientos_i = new VwAbastecimientos_I();
+                    abastecimientos_i.setNombre(abastecimiento.getNombre());
+                    abastecimientos_i.setCantidad((float)abastecimiento.getTotal());
+                    abastecimientos_i.setUnidadPrimaria(abastecimiento.getUnidadPrimaria());
+
+                    VwAbastecimientos_IDao metodo = daoSession.getVwAbastecimientos_IDao();
+                    metodo.insertOrReplace(abastecimientos_i);
+                }
+
             }
             catch (Exception e)
             {
@@ -304,5 +323,6 @@ public class MenuActivity extends AppCompatActivity
     public static VwUsuariosDao getVwUsuariosDao() {
         return VwUsuariosDaoFactory.create();
     }
+    public static VwAbastecimientoDao getVwAbastecimientoDao(){ return VwAbastecimientoDaoFactory.create();}
 
 }
