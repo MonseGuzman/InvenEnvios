@@ -28,7 +28,7 @@ public class MetodosInternos
 
         if(tipoRed != null)
         {
-            if (tipoRed.getType() == ConnectivityManager.TYPE_MOBILE || tipoRed.getType() == ConnectivityManager.TYPE_WIFI)
+            if (/*tipoRed.getType() == ConnectivityManager.TYPE_MOBILE ||*/ tipoRed.getType() == ConnectivityManager.TYPE_WIFI)
                 return true;
         }
         return false;
