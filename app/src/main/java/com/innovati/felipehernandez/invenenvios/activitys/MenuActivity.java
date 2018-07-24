@@ -1,5 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -56,7 +57,7 @@ public class MenuActivity extends AppCompatActivity
     private SharedPreferences preferences;
     DaoSession daoSession;
     private MetodosInternos metodosInternos = new MetodosInternos(this);
-
+    ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,6 +116,10 @@ public class MenuActivity extends AppCompatActivity
 
     public void actualizarDBServidor(View v)
     {
+        dialog=new ProgressDialog(this);
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
+        dialog.show();
         InsertarAInterna insertar = new InsertarAInterna();
         insertar.execute();
     }
@@ -154,6 +159,7 @@ public class MenuActivity extends AppCompatActivity
         @Override
         protected Void doInBackground(Void... voids)
         {
+
             _daoAgente = getVwAgenteDao();
             _daoPedidos = getPedidosDao();
             _daoDetallesPedidos = getDetallesPedidosDao();
@@ -302,6 +308,7 @@ public class MenuActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            dialog.hide();
             metodosInternos.Alerta(R.string.tituloBDI, R.string.mensajeBDI);
         }
     }
