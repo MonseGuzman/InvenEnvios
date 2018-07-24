@@ -13,6 +13,7 @@ public class VwDetallePedido_I
     private String idDetallePedido;
     private String idPedido;
     private String claveArticulo;
+    private String nombre;
     private float cantidad;
     private float precio;
     private float subtotal;
@@ -20,15 +21,16 @@ public class VwDetallePedido_I
     private float total;
     private Date fechaActualizacion;
     private String usuarioActualizacion;
-    @Generated(hash = 157371043)
+    @Generated(hash = 1959607518)
     public VwDetallePedido_I(Long Id, String idDetallePedido, String idPedido,
-            String claveArticulo, float cantidad, float precio, float subtotal,
-            float iva, float total, Date fechaActualizacion,
+            String claveArticulo, String nombre, float cantidad, float precio,
+            float subtotal, float iva, float total, Date fechaActualizacion,
             String usuarioActualizacion) {
         this.Id = Id;
         this.idDetallePedido = idDetallePedido;
         this.idPedido = idPedido;
         this.claveArticulo = claveArticulo;
+        this.nombre = nombre;
         this.cantidad = cantidad;
         this.precio = precio;
         this.subtotal = subtotal;
@@ -63,6 +65,12 @@ public class VwDetallePedido_I
     }
     public void setClaveArticulo(String claveArticulo) {
         this.claveArticulo = claveArticulo;
+    }
+    public String getNombre() {
+        return this.nombre;
+    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
     public float getCantidad() {
         return this.cantidad;
@@ -106,5 +114,4 @@ public class VwDetallePedido_I
     public void setUsuarioActualizacion(String usuarioActualizacion) {
         this.usuarioActualizacion = usuarioActualizacion;
     }
-
 }

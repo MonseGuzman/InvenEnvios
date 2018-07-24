@@ -6,13 +6,16 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class VwAbastecimientos_I
 {
+    @org.greenrobot.greendao.annotation.Id(autoincrement = true)
+    private Long id;
     private String nombre;
     private float cantidad;
     private String unidadPrimaria;
     private short estatus;
-    @Generated(hash = 88919372)
-    public VwAbastecimientos_I(String nombre, float cantidad, String unidadPrimaria,
-            short estatus) {
+    @Generated(hash = 2112491576)
+    public VwAbastecimientos_I(Long id, String nombre, float cantidad,
+            String unidadPrimaria, short estatus) {
+        this.id = id;
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.unidadPrimaria = unidadPrimaria;
@@ -20,6 +23,12 @@ public class VwAbastecimientos_I
     }
     @Generated(hash = 681867513)
     public VwAbastecimientos_I() {
+    }
+    public Long getId() {
+        return this.id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
     public String getNombre() {
         return this.nombre;

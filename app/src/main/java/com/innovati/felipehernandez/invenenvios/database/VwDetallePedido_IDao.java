@@ -26,13 +26,14 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
         public final static Property IdDetallePedido = new Property(1, String.class, "idDetallePedido", false, "ID_DETALLE_PEDIDO");
         public final static Property IdPedido = new Property(2, String.class, "idPedido", false, "ID_PEDIDO");
         public final static Property ClaveArticulo = new Property(3, String.class, "claveArticulo", false, "CLAVE_ARTICULO");
-        public final static Property Cantidad = new Property(4, float.class, "cantidad", false, "CANTIDAD");
-        public final static Property Precio = new Property(5, float.class, "precio", false, "PRECIO");
-        public final static Property Subtotal = new Property(6, float.class, "subtotal", false, "SUBTOTAL");
-        public final static Property Iva = new Property(7, float.class, "iva", false, "IVA");
-        public final static Property Total = new Property(8, float.class, "total", false, "TOTAL");
-        public final static Property FechaActualizacion = new Property(9, java.util.Date.class, "fechaActualizacion", false, "FECHA_ACTUALIZACION");
-        public final static Property UsuarioActualizacion = new Property(10, String.class, "usuarioActualizacion", false, "USUARIO_ACTUALIZACION");
+        public final static Property Nombre = new Property(4, String.class, "nombre", false, "NOMBRE");
+        public final static Property Cantidad = new Property(5, float.class, "cantidad", false, "CANTIDAD");
+        public final static Property Precio = new Property(6, float.class, "precio", false, "PRECIO");
+        public final static Property Subtotal = new Property(7, float.class, "subtotal", false, "SUBTOTAL");
+        public final static Property Iva = new Property(8, float.class, "iva", false, "IVA");
+        public final static Property Total = new Property(9, float.class, "total", false, "TOTAL");
+        public final static Property FechaActualizacion = new Property(10, java.util.Date.class, "fechaActualizacion", false, "FECHA_ACTUALIZACION");
+        public final static Property UsuarioActualizacion = new Property(11, String.class, "usuarioActualizacion", false, "USUARIO_ACTUALIZACION");
     }
 
 
@@ -52,13 +53,14 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
                 "\"ID_DETALLE_PEDIDO\" TEXT," + // 1: idDetallePedido
                 "\"ID_PEDIDO\" TEXT," + // 2: idPedido
                 "\"CLAVE_ARTICULO\" TEXT," + // 3: claveArticulo
-                "\"CANTIDAD\" REAL NOT NULL ," + // 4: cantidad
-                "\"PRECIO\" REAL NOT NULL ," + // 5: precio
-                "\"SUBTOTAL\" REAL NOT NULL ," + // 6: subtotal
-                "\"IVA\" REAL NOT NULL ," + // 7: iva
-                "\"TOTAL\" REAL NOT NULL ," + // 8: total
-                "\"FECHA_ACTUALIZACION\" INTEGER," + // 9: fechaActualizacion
-                "\"USUARIO_ACTUALIZACION\" TEXT);"); // 10: usuarioActualizacion
+                "\"NOMBRE\" TEXT," + // 4: nombre
+                "\"CANTIDAD\" REAL NOT NULL ," + // 5: cantidad
+                "\"PRECIO\" REAL NOT NULL ," + // 6: precio
+                "\"SUBTOTAL\" REAL NOT NULL ," + // 7: subtotal
+                "\"IVA\" REAL NOT NULL ," + // 8: iva
+                "\"TOTAL\" REAL NOT NULL ," + // 9: total
+                "\"FECHA_ACTUALIZACION\" INTEGER," + // 10: fechaActualizacion
+                "\"USUARIO_ACTUALIZACION\" TEXT);"); // 11: usuarioActualizacion
     }
 
     /** Drops the underlying database table. */
@@ -90,20 +92,25 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
         if (claveArticulo != null) {
             stmt.bindString(4, claveArticulo);
         }
-        stmt.bindDouble(5, entity.getCantidad());
-        stmt.bindDouble(6, entity.getPrecio());
-        stmt.bindDouble(7, entity.getSubtotal());
-        stmt.bindDouble(8, entity.getIva());
-        stmt.bindDouble(9, entity.getTotal());
+ 
+        String nombre = entity.getNombre();
+        if (nombre != null) {
+            stmt.bindString(5, nombre);
+        }
+        stmt.bindDouble(6, entity.getCantidad());
+        stmt.bindDouble(7, entity.getPrecio());
+        stmt.bindDouble(8, entity.getSubtotal());
+        stmt.bindDouble(9, entity.getIva());
+        stmt.bindDouble(10, entity.getTotal());
  
         java.util.Date fechaActualizacion = entity.getFechaActualizacion();
         if (fechaActualizacion != null) {
-            stmt.bindLong(10, fechaActualizacion.getTime());
+            stmt.bindLong(11, fechaActualizacion.getTime());
         }
  
         String usuarioActualizacion = entity.getUsuarioActualizacion();
         if (usuarioActualizacion != null) {
-            stmt.bindString(11, usuarioActualizacion);
+            stmt.bindString(12, usuarioActualizacion);
         }
     }
 
@@ -130,20 +137,25 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
         if (claveArticulo != null) {
             stmt.bindString(4, claveArticulo);
         }
-        stmt.bindDouble(5, entity.getCantidad());
-        stmt.bindDouble(6, entity.getPrecio());
-        stmt.bindDouble(7, entity.getSubtotal());
-        stmt.bindDouble(8, entity.getIva());
-        stmt.bindDouble(9, entity.getTotal());
+ 
+        String nombre = entity.getNombre();
+        if (nombre != null) {
+            stmt.bindString(5, nombre);
+        }
+        stmt.bindDouble(6, entity.getCantidad());
+        stmt.bindDouble(7, entity.getPrecio());
+        stmt.bindDouble(8, entity.getSubtotal());
+        stmt.bindDouble(9, entity.getIva());
+        stmt.bindDouble(10, entity.getTotal());
  
         java.util.Date fechaActualizacion = entity.getFechaActualizacion();
         if (fechaActualizacion != null) {
-            stmt.bindLong(10, fechaActualizacion.getTime());
+            stmt.bindLong(11, fechaActualizacion.getTime());
         }
  
         String usuarioActualizacion = entity.getUsuarioActualizacion();
         if (usuarioActualizacion != null) {
-            stmt.bindString(11, usuarioActualizacion);
+            stmt.bindString(12, usuarioActualizacion);
         }
     }
 
@@ -159,13 +171,14 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // idDetallePedido
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // idPedido
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // claveArticulo
-            cursor.getFloat(offset + 4), // cantidad
-            cursor.getFloat(offset + 5), // precio
-            cursor.getFloat(offset + 6), // subtotal
-            cursor.getFloat(offset + 7), // iva
-            cursor.getFloat(offset + 8), // total
-            cursor.isNull(offset + 9) ? null : new java.util.Date(cursor.getLong(offset + 9)), // fechaActualizacion
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10) // usuarioActualizacion
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // nombre
+            cursor.getFloat(offset + 5), // cantidad
+            cursor.getFloat(offset + 6), // precio
+            cursor.getFloat(offset + 7), // subtotal
+            cursor.getFloat(offset + 8), // iva
+            cursor.getFloat(offset + 9), // total
+            cursor.isNull(offset + 10) ? null : new java.util.Date(cursor.getLong(offset + 10)), // fechaActualizacion
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11) // usuarioActualizacion
         );
         return entity;
     }
@@ -176,13 +189,14 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
         entity.setIdDetallePedido(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setIdPedido(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setClaveArticulo(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setCantidad(cursor.getFloat(offset + 4));
-        entity.setPrecio(cursor.getFloat(offset + 5));
-        entity.setSubtotal(cursor.getFloat(offset + 6));
-        entity.setIva(cursor.getFloat(offset + 7));
-        entity.setTotal(cursor.getFloat(offset + 8));
-        entity.setFechaActualizacion(cursor.isNull(offset + 9) ? null : new java.util.Date(cursor.getLong(offset + 9)));
-        entity.setUsuarioActualizacion(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setNombre(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setCantidad(cursor.getFloat(offset + 5));
+        entity.setPrecio(cursor.getFloat(offset + 6));
+        entity.setSubtotal(cursor.getFloat(offset + 7));
+        entity.setIva(cursor.getFloat(offset + 8));
+        entity.setTotal(cursor.getFloat(offset + 9));
+        entity.setFechaActualizacion(cursor.isNull(offset + 10) ? null : new java.util.Date(cursor.getLong(offset + 10)));
+        entity.setUsuarioActualizacion(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
      }
     
     @Override

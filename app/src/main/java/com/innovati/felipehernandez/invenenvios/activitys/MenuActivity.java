@@ -164,6 +164,7 @@ public class MenuActivity extends AppCompatActivity
         private VwArticulosDao _daoVwArticulos;
         private VwClientesDao _daoVwClientes;
         private VwAbastecimientoDao _daoVwAbastecimiento;
+        private long cont=1;
 
         @Override
         protected Void doInBackground(Void... voids)
@@ -176,6 +177,7 @@ public class MenuActivity extends AppCompatActivity
             _daoVwArticulos = getVwArticulosDao();
             _daoVwUsuarios = getVwUsuariosDao();
             _daoVwAbastecimiento = getVwAbastecimientoDao();
+
             try
             {
 
@@ -189,7 +191,9 @@ public class MenuActivity extends AppCompatActivity
 
                for(VwAgente agente: agentes)
                 {
+
                     VwAgente_I agente_i = new VwAgente_I();
+                    agente_i.setId(cont);
                     if(agente.getClave() != null)
                         agente_i.setClave(agente.getClave());
                     if(agente.getNombre() != null)
@@ -207,11 +211,14 @@ public class MenuActivity extends AppCompatActivity
                     VwAgente_IDao metodo = daoSession.getVwAgente_IDao();
 
                     metodo.insertOrReplace(agente_i);
+                    cont++;
                 }
+                cont = 1;
 
                 for(VwUsuarios usuario: usuarios)
                 {
                     VwUsuarios_I vwUsuarios_i = new VwUsuarios_I();
+                    vwUsuarios_i.setId(cont);
                     if(usuario.getIdUsuario() != null)
                         vwUsuarios_i.setIdUsuario(usuario.getIdUsuario());
                     vwUsuarios_i.setClave(usuario.getClave());
@@ -224,7 +231,9 @@ public class MenuActivity extends AppCompatActivity
 
                     VwUsuarios_IDao metodo = daoSession.getVwUsuarios_IDao();
                     metodo.insertOrReplace(vwUsuarios_i);
+                    cont++;
                 }
+                cont=1;
 
                 for(Pedidos pedido: pedidos)
                 {
@@ -244,8 +253,10 @@ public class MenuActivity extends AppCompatActivity
 
                    Pedidos_IDao metodo = daoSession.getPedidos_IDao();
                     metodo.insertOrReplace(pedidos_i);
+                    cont++;
                 }
 
+                cont=1;
                 for(VwDetallePedido detallePedido: detallesPedidos)
                 {
                     VwDetallePedido_I detallePedido_i = new VwDetallePedido_I();
@@ -258,14 +269,16 @@ public class MenuActivity extends AppCompatActivity
                     detallePedido_i.setTotal(detallePedido.getTotal());
                     detallePedido_i.setFechaActualizacion(detallePedido.getUltimaFechaActualizacion());
                     detallePedido_i.setUsuarioActualizacion(detallePedido.getUltimoUsuarioActualizacion());
-
                     VwDetallePedido_IDao metodo = daoSession.getVwDetallePedido_IDao();
                     metodo.insertOrReplace(detallePedido_i);
+                    cont++;
                 }
 
+                cont=1;
                 for(VwClientes cliente: clientes)
                 {
                     VwClientes_I cliente_i = new VwClientes_I();
+                    cliente_i.setId(cont);
                     cliente_i.setClave(cliente.getClave());
                     cliente_i.setNombre(cliente.getNombre());
                     cliente_i.setRfc(cliente.getRfc());
@@ -276,11 +289,14 @@ public class MenuActivity extends AppCompatActivity
 
                     VwClientes_IDao metodo = daoSession.getVwClientes_IDao();
                     metodo.insertOrReplace(cliente_i);
+                    cont++;
                 }
 
+                cont=1;
                 for(VwArticulos articulo : articulos)
                 {
                     VwArticulos_I articulo_i = new VwArticulos_I();
+                    articulo_i.setId(cont);
                     articulo_i.setClave(articulo.getClave());
                     articulo_i.setNombre(articulo.getNombre());
                     articulo_i.setPrecio1((float) articulo.getPrecio1());
@@ -291,17 +307,21 @@ public class MenuActivity extends AppCompatActivity
 
                     VwArticulos_IDao metodo = daoSession.getVwArticulos_IDao();
                     metodo.insertOrReplace(articulo_i);
+                    cont++;
                 }
 
+                cont=1;
                 for(VwAbastecimiento abastecimiento : abastecimientos)
                 {
                     VwAbastecimientos_I abastecimientos_i = new VwAbastecimientos_I();
+                    abastecimientos_i.setId(cont);
                     abastecimientos_i.setNombre(abastecimiento.getNombre());
                     abastecimientos_i.setCantidad((float)abastecimiento.getTotal());
                     abastecimientos_i.setUnidadPrimaria(abastecimiento.getUnidadPrimaria());
 
                     VwAbastecimientos_IDao metodo = daoSession.getVwAbastecimientos_IDao();
                     metodo.insertOrReplace(abastecimientos_i);
+                    cont++;
                 }
 
             }

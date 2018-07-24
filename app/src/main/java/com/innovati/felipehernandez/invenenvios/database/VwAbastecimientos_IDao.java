@@ -13,7 +13,7 @@ import org.greenrobot.greendao.database.DatabaseStatement;
 /** 
  * DAO for table "VW_ABASTECIMIENTOS__I".
 */
-public class VwAbastecimientos_IDao extends AbstractDao<VwAbastecimientos_I, Void> {
+public class VwAbastecimientos_IDao extends AbstractDao<VwAbastecimientos_I, Long> {
 
     public static final String TABLENAME = "VW_ABASTECIMIENTOS__I";
 
@@ -22,10 +22,11 @@ public class VwAbastecimientos_IDao extends AbstractDao<VwAbastecimientos_I, Voi
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Nombre = new Property(0, String.class, "nombre", false, "NOMBRE");
-        public final static Property Cantidad = new Property(1, float.class, "cantidad", false, "CANTIDAD");
-        public final static Property UnidadPrimaria = new Property(2, String.class, "unidadPrimaria", false, "UNIDAD_PRIMARIA");
-        public final static Property Estatus = new Property(3, short.class, "estatus", false, "ESTATUS");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property Nombre = new Property(1, String.class, "nombre", false, "NOMBRE");
+        public final static Property Cantidad = new Property(2, float.class, "cantidad", false, "CANTIDAD");
+        public final static Property UnidadPrimaria = new Property(3, String.class, "unidadPrimaria", false, "UNIDAD_PRIMARIA");
+        public final static Property Estatus = new Property(4, short.class, "estatus", false, "ESTATUS");
     }
 
 
@@ -41,10 +42,11 @@ public class VwAbastecimientos_IDao extends AbstractDao<VwAbastecimientos_I, Voi
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"VW_ABASTECIMIENTOS__I\" (" + //
-                "\"NOMBRE\" TEXT," + // 0: nombre
-                "\"CANTIDAD\" REAL NOT NULL ," + // 1: cantidad
-                "\"UNIDAD_PRIMARIA\" TEXT," + // 2: unidadPrimaria
-                "\"ESTATUS\" INTEGER NOT NULL );"); // 3: estatus
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
+                "\"NOMBRE\" TEXT," + // 1: nombre
+                "\"CANTIDAD\" REAL NOT NULL ," + // 2: cantidad
+                "\"UNIDAD_PRIMARIA\" TEXT," + // 3: unidadPrimaria
+                "\"ESTATUS\" INTEGER NOT NULL );"); // 4: estatus
     }
 
     /** Drops the underlying database table. */
@@ -57,75 +59,90 @@ public class VwAbastecimientos_IDao extends AbstractDao<VwAbastecimientos_I, Voi
     protected final void bindValues(DatabaseStatement stmt, VwAbastecimientos_I entity) {
         stmt.clearBindings();
  
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
         String nombre = entity.getNombre();
         if (nombre != null) {
-            stmt.bindString(1, nombre);
+            stmt.bindString(2, nombre);
         }
-        stmt.bindDouble(2, entity.getCantidad());
+        stmt.bindDouble(3, entity.getCantidad());
  
         String unidadPrimaria = entity.getUnidadPrimaria();
         if (unidadPrimaria != null) {
-            stmt.bindString(3, unidadPrimaria);
+            stmt.bindString(4, unidadPrimaria);
         }
-        stmt.bindLong(4, entity.getEstatus());
+        stmt.bindLong(5, entity.getEstatus());
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, VwAbastecimientos_I entity) {
         stmt.clearBindings();
  
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
         String nombre = entity.getNombre();
         if (nombre != null) {
-            stmt.bindString(1, nombre);
+            stmt.bindString(2, nombre);
         }
-        stmt.bindDouble(2, entity.getCantidad());
+        stmt.bindDouble(3, entity.getCantidad());
  
         String unidadPrimaria = entity.getUnidadPrimaria();
         if (unidadPrimaria != null) {
-            stmt.bindString(3, unidadPrimaria);
+            stmt.bindString(4, unidadPrimaria);
         }
-        stmt.bindLong(4, entity.getEstatus());
+        stmt.bindLong(5, entity.getEstatus());
     }
 
     @Override
-    public Void readKey(Cursor cursor, int offset) {
-        return null;
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public VwAbastecimientos_I readEntity(Cursor cursor, int offset) {
         VwAbastecimientos_I entity = new VwAbastecimientos_I( //
-            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // nombre
-            cursor.getFloat(offset + 1), // cantidad
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // unidadPrimaria
-            cursor.getShort(offset + 3) // estatus
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // nombre
+            cursor.getFloat(offset + 2), // cantidad
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // unidadPrimaria
+            cursor.getShort(offset + 4) // estatus
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, VwAbastecimientos_I entity, int offset) {
-        entity.setNombre(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
-        entity.setCantidad(cursor.getFloat(offset + 1));
-        entity.setUnidadPrimaria(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setEstatus(cursor.getShort(offset + 3));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setNombre(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setCantidad(cursor.getFloat(offset + 2));
+        entity.setUnidadPrimaria(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setEstatus(cursor.getShort(offset + 4));
      }
     
     @Override
-    protected final Void updateKeyAfterInsert(VwAbastecimientos_I entity, long rowId) {
-        // Unsupported or missing PK type
-        return null;
+    protected final Long updateKeyAfterInsert(VwAbastecimientos_I entity, long rowId) {
+        entity.setId(rowId);
+        return rowId;
     }
     
     @Override
-    public Void getKey(VwAbastecimientos_I entity) {
-        return null;
+    public Long getKey(VwAbastecimientos_I entity) {
+        if(entity != null) {
+            return entity.getId();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public boolean hasKey(VwAbastecimientos_I entity) {
-        // TODO
-        return false;
+        return entity.getId() != null;
     }
 
     @Override
