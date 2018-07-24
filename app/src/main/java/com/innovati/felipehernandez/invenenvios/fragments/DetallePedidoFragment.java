@@ -314,7 +314,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             DetallesPedidosDao _dao = getDetallesPedidosDao();
             try
             {
-                Object[] objs = new  Object[]{detallesPedidos[0].getIdDetallePedido(), detallesPedidos[0].getClaveArticulo()};
+                Object[] objs = new  Object[]{detallesPedidos[0].getIdDetallePedido()};
                 _dao.update(detallesPedidos[0],"IdDetallePedido = ? AND ClaveArticulo = ?" , objs);
             }
             catch (Exception e)
