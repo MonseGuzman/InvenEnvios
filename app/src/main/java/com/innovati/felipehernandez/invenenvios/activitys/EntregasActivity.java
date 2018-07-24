@@ -1,27 +1,30 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.PedidosAdapter;
+import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.database.DaoSession;
+import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
+import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
+
+import org.greenrobot.greendao.query.QueryBuilder;
+
+import java.util.List;
 
 public class EntregasActivity extends AppCompatActivity
 {
@@ -30,6 +33,7 @@ public class EntregasActivity extends AppCompatActivity
     private PedidosAdapter adaptador;
     private Pedidos result[];
     private MetodosInternos metodosInternos = new MetodosInternos(this);
+    private DaoSession daoSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,8 @@ public class EntregasActivity extends AppCompatActivity
 
         this.setTitle(R.string.tituloEntregas);
         inicializacion();
+
+        daoSession = ((MyApp) getApplication()).getDaoSession();
 
         EntregasListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -137,17 +143,51 @@ public class EntregasActivity extends AppCompatActivity
             conP.execute(_dao);
         }
         else //código para buscar en la bd interna
-            try {
+            try
+            {
+                internaBD();
             }catch (Exception e){
             metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
         }
     }
 
+    private void internaBD()
+    {
+        Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
+        QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
+
+        List<Pedidos_I> pedidos = qb.list();
+        result = new Pedidos[pedidos.size()];
+
+        for(int x=0; x<pedidos.size(); x++)
+        {
+            Pedidos objetoPedidos = new Pedidos();
+
+            objetoPedidos.setIdPedido(pedidos.get(x).getIdPedido());
+            objetoPedidos.setIdUsuario(pedidos.get(x).getIdUsuario());
+            objetoPedidos.setFolio(pedidos.get(x).getFolio());
+            objetoPedidos.setClaveCliente(pedidos.get(x).getClaveCliente());
+            objetoPedidos.setFecha(pedidos.get(x).getFecha());
+            objetoPedidos.setEstatus(pedidos.get(x).getEstatus());
+            objetoPedidos.setSubtotal(pedidos.get(x).getSubtotal());
+            objetoPedidos.setTotal(pedidos.get(x).getTotal());
+            objetoPedidos.setIva(pedidos.get(x).getIva());
+            objetoPedidos.setObservaciones(pedidos.get(x).getObservaciones());
+            objetoPedidos.setUltimaFechaActualizacion(pedidos.get(x).getUltimaFechaActualizacion());
+            objetoPedidos.setUltimoUsuarioActualizacion(pedidos.get(x).getUltimoUsuarioActualizacion());
+
+            result[x] = objetoPedidos;
+        }
+
+        adaptador = new PedidosAdapter(EntregasActivity.this,  R.layout.listview_pedidos, result, 2);
+        EntregasListView.setAdapter(adaptador);
+    }
+
     private class ConsultaPedidos extends AsyncTask<PedidosDao,Void, Pedidos[]>
     {
-
         @Override
-        protected Pedidos[] doInBackground(PedidosDao... pedidosDaos) {
+        protected Pedidos[] doInBackground(PedidosDao... pedidosDaos)
+        {
             try
             {
                 result = pedidosDaos[0].findAll();
@@ -170,7 +210,6 @@ public class EntregasActivity extends AppCompatActivity
 
     private static class ActualizarPedido extends AsyncTask<Pedidos, Void, Void>
     {
-
         @Override
         protected Void doInBackground(Pedidos... pedidos)
         {
