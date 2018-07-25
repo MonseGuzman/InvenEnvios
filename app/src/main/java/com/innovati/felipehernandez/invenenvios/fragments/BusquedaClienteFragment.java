@@ -71,6 +71,7 @@ public class BusquedaClienteFragment extends Fragment
         inicializacion(v);
         daoSession = ((MyApp) getActivity().getApplication()).getDaoSession();
 
+
         mLayour = new GridLayoutManager(getContext(), 2);
         mLayour = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
