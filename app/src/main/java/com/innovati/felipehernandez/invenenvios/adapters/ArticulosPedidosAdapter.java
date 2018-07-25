@@ -17,16 +17,11 @@ import java.util.List;
 public class ArticulosPedidosAdapter extends RecyclerView.Adapter<ArticulosPedidosAdapter.ViewHolder>{
     private RecycleViewOnItemClickListener recyclerViewOnItemClickListener;
     public static List<ArticulosPedido> articulosPedidos;
-    public Context context;
 
     public ArticulosPedidosAdapter( List<ArticulosPedido> articulosPedidos,@NonNull RecycleViewOnItemClickListener recyclerViewOnItemClickListener)
     {
         this.recyclerViewOnItemClickListener = recyclerViewOnItemClickListener;
         this.articulosPedidos = articulosPedidos;
-    }
-    public ArticulosPedidosAdapter(List<ArticulosPedido> articulosPedidos,Context context){
-        this.articulosPedidos = articulosPedidos;
-        this.context = context;
     }
     @NonNull
     @Override
