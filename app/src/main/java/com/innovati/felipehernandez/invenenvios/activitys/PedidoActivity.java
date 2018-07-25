@@ -14,8 +14,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.TabsAdapter;
+import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
@@ -25,6 +27,11 @@ import com.innovati.felipehernandez.invenenvios.clases.dto.VwUsuarios;
 import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.database.DaoSession;
+import com.innovati.felipehernandez.invenenvios.database.DetallesPedidos_I;
+import com.innovati.felipehernandez.invenenvios.database.DetallesPedidos_IDao;
+import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
+import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.DatosPedidoFragment;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
@@ -49,14 +56,17 @@ public class PedidoActivity extends AppCompatActivity
     public static String nombreC = "No elegido";
     public static String agente;
     private static String idUsuario;
+    private static MetodosInternos metodosInternos;
+    private static DaoSession daoSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedido);
-
+        metodosInternos = new MetodosInternos(this);
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         inicializacion();
+        daoSession = ((MyApp) this.getApplication()).getDaoSession();
         geneFolio();
         //fecha
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
@@ -197,10 +207,19 @@ public class PedidoActivity extends AppCompatActivity
         Date date = new Date();
         int auxFolio = Integer.valueOf(tvFolio.getText().toString());
 
-        insertar(idPedido,idUsuario,clave,date,Short.valueOf("1"),getSub(),getIva(),getTotal(),"No Hay", auxFolio);
-        for (ArticulosPedido ar:articulosPedidoList){
-            if (ar.isStatus()){
-                detPedido(idUsuario,idPedido,ar);
+        if(metodosInternos.conexionRed()){
+            insertarInterna(idPedido,idUsuario,clave,date,Short.valueOf("1"),getSub(),getIva(),getTotal(),"No Hay", auxFolio);
+            for (ArticulosPedido ar:articulosPedidoList){
+                if (ar.isStatus()){
+                    detPedidoInterna(idUsuario,idPedido,ar);
+                }
+            }
+        }else{
+            insertar(idPedido,idUsuario,clave,date,Short.valueOf("1"),getSub(),getIva(),getTotal(),"No Hay", auxFolio);
+            for (ArticulosPedido ar:articulosPedidoList){
+                if (ar.isStatus()){
+                    detPedido(idUsuario,idPedido,ar);
+                }
             }
         }
         articulosPedidoList = null;
@@ -229,6 +248,8 @@ public class PedidoActivity extends AppCompatActivity
 
     }
     public static void detPedido(String idUsuario,String idPedido,ArticulosPedido a){
+
+
         DetallesPedidos detalle = new DetallesPedidos();
         String idDetallePedido = UUID.randomUUID().toString();
         detalle.setIdDetallePedido(idDetallePedido);
@@ -244,6 +265,44 @@ public class PedidoActivity extends AppCompatActivity
         InsertarDetalle detalleInsertar = new InsertarDetalle();
         detalleInsertar.execute(detalle);
 
+    }
+    public static void insertarInterna(String idPedido,String idUsuario, String claveCliente, Date fecha, short estatus, float subtotal, float iva, float total, String observaciones, int folio)
+    {
+        Pedidos_I pedidos = new Pedidos_I();
+        pedidos.setIdPedido(idPedido);
+        pedidos.setIdUsuario(idUsuario);
+        pedidos.setClaveCliente(claveCliente);
+        pedidos.setFecha(fecha);
+        pedidos.setEstatus(estatus);
+        pedidos.setSubtotal(subtotal);
+        pedidos.setIva(iva);
+        pedidos.setTotal(total);
+        pedidos.setFolio((folio));
+        pedidos.setObservaciones(observaciones);
+        pedidos.setUltimoUsuarioActualizacion(idUsuario);
+        pedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
+        Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
+        pedidos_iDao.insert(pedidos);
+
+
+    }
+    public static void detPedidoInterna(String idUsuario,String idPedido,ArticulosPedido a){
+
+
+        DetallesPedidos_I detalle = new DetallesPedidos_I();
+        String idDetallePedido = UUID.randomUUID().toString();
+        detalle.setIdDetallePedido(idDetallePedido);
+        detalle.setIdPedido(idPedido);
+        detalle.setClaveArticulo(a.getIdArticulo());
+        detalle.setCantidad(a.getCantidad());
+        detalle.setPrecio(a.getPrecio());
+        detalle.setSubtotal(a.getSubTotal());
+        detalle.setIva(a.getIva());
+        detalle.setTotal(a.getTotal());
+        detalle.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
+        detalle.setUltimoUsuarioActualizacion(idUsuario);
+        DetallesPedidos_IDao detallesPedidos_iDao = daoSession.getDetallesPedidos_IDao();
+        detallesPedidos_iDao.insert(detalle);
     }
     public static float getTotal(){
         float total = 0;
