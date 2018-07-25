@@ -132,7 +132,9 @@
         app:layout_constraintHorizontal_bias="0.972"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="1.0"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        fab:fab_labelsPosition="left">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/SincronizarfloatingActionButton"
@@ -140,7 +142,9 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:onClick="actualizarDBInterna"
-            app:backgroundTint="@color/secondaryColor"
+            app:fab_title="Bajar Datos"
+            app:fab_colorNormal="@color/secondaryLightColor"
+            app:fab_colorPressed="@color/secondaryColor"
             app:fab_icon="@drawable/ic_file_download"
             app:fab_size="mini" />
 
@@ -148,9 +152,11 @@
             android:id="@+id/SubirDatosfloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/secondaryLightColor"
+            app:fab_colorPressed="@color/secondaryColor"
             android:clickable="true"
             android:onClick="actualizarDBServidor"
-            app:backgroundTint="@color/secondaryColor"
+            app:fab_title="Subir Datos"
             app:fab_icon="@drawable/ic_file_upload"
             app:fab_size="mini" />
 

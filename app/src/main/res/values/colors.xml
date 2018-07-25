@@ -18,4 +18,6 @@
     <color name="primaryTextColor">#ffffff</color>
     <color name="bg_row_background">#fa315b</color>
 
+    <color name="black_semi_transparent">#B2000000</color>
+
 </resources>
