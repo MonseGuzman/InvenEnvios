@@ -1,5 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,7 +39,7 @@ public class LoginActivity extends AppCompatActivity
     private EncryptionAndDecryption EaD= new EncryptionAndDecryption();
     private MetodosInternos conectado = new MetodosInternos(this);
     private DaoSession daoSession;
-
+    private ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -65,6 +66,10 @@ public class LoginActivity extends AppCompatActivity
 
     public void login(View v)
     {
+        dialog=new ProgressDialog(this);
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
+        dialog.show();
         //si la conexion wifi/datos es conectada
 
         String usuario, password;
@@ -102,12 +107,13 @@ public class LoginActivity extends AppCompatActivity
             {
                 Intent i = new Intent(LoginActivity.this, MenuActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(i);
                 guardarPreferencias(usuario, password, usuarios.get(1).getIdUsuario());
+                startActivity(i);
             }
             else
                 conectado.Alerta(R.string.error,R.string.sinDatos);
         }
+
     }
 
     private void verificaCredenciales()
@@ -138,6 +144,7 @@ public class LoginActivity extends AppCompatActivity
         editor.putString("agente", email);
         editor.commit(); // empieza a guardar los put*
         editor.apply(); //guarda todos los cambios aunque no se guarden todos
+        dialog.hide();
     }
 
     public class dbManager extends AsyncTask<VwUsuariosDao, Void, VwUsuarios[]>

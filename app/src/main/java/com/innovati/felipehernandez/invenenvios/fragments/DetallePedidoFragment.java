@@ -110,7 +110,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         }
         else {
             internaBD();
-            updateAdapter();
         }
     }
 
@@ -139,6 +138,22 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
             result[x] = objetoDetalle;
         }
+        for (VwDetallePedido pedidos: result){
+            ArticulosPedido articulo = new ArticulosPedido();
+            articulo.setNombre(pedidos.getNombre());
+            articulo.setIdArticulo(pedidos.getClaveArticulo());
+            articulo.setPresentacion(pedidos.getUnidadPrimaria());
+            articulo.setCantidad((float) pedidos.getCantidad());
+            articulo.setIva(pedidos.getIva());
+            articulo.setPrecio(pedidos.getPrecio());
+            articulo.setTotal(pedidos.getTotal());
+            articulo.setSubTotal(pedidos.getSubtotal());
+            articulo.setStatus(true);
+            articulosPedidos.add(articulo);
+            listDet.add(pedidos.getIdDetallePedido());
+            idUsuario = pedidos.getIdDetallePedido();
+        }
+        updateAdapter();
     }
 
     public static VwDetallePedidoDao getVwDetallePedidoDao()
@@ -312,18 +327,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         updateAdapter();
     }
 
-    public float calTotal(){
-        float total = 0;
-        if (articulosPedidos != null){
-            for(ArticulosPedido ar: articulosPedidos){
-                if (ar.isStatus()){
-                    total += ar.getTotal();
-
-                }
-            }
-        }
-        return total;
-    }
 
     public void uptadeExits(){
         int x = 0;
@@ -375,4 +378,9 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         return DetallesPedidosDaoFactory.create();
     }
 
+    @Override
+    public void onDestroyView() {
+        uptadeExits();
+        super.onDestroyView();
+    }
 }
