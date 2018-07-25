@@ -139,7 +139,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:onClick="actualizarDBServidor"
+            android:onClick="actualizarDBInterna"
             app:backgroundTint="@color/secondaryColor"
             app:fab_icon="@drawable/ic_file_download"
             app:fab_size="mini" />
@@ -149,6 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
+            android:onClick="actualizarDBServidor"
             app:backgroundTint="@color/secondaryColor"
             app:fab_icon="@drawable/ic_file_upload"
             app:fab_size="mini" />
