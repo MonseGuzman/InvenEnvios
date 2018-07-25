@@ -12,6 +12,7 @@ import android.view.View;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.app.MyApp;
+import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwAbastecimientoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwAgenteDao;
@@ -19,6 +20,7 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
+import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwAbastecimiento;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwAgente;
@@ -26,6 +28,7 @@ import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwUsuarios;
+import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwAbastecimientoDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwAgenteDaoFactory;
@@ -35,6 +38,7 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDa
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.database.DetallesPedidos_I;
+import com.innovati.felipehernandez.invenenvios.database.DetallesPedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_I;
@@ -108,13 +112,21 @@ public class MenuActivity extends AppCompatActivity
         startActivity(i);
     }
 
-    public void actualizarDBInterna()
+    public void actualizarDBServidor(View v)
     {
+
+        VwDetallePedido_IDao daoDetallesPedidos = daoSession.getVwDetallePedido_IDao();
+        List<VwDetallePedido_I> detallesPedidos = daoDetallesPedidos.loadAll();
+
         Pedidos_IDao daoPedidos = daoSession.getPedidos_IDao();
         List<Pedidos_I> pedidos = daoPedidos.loadAll();
+
+
+        InsertarAServidor i = new InsertarAServidor();
+        i.execute((List) pedidos,(List) detallesPedidos);
     }
 
-    public void actualizarDBServidor(View v)
+    public void actualizarDBInterna(View v)
     {
         dialog=new ProgressDialog(this);
         dialog.setMessage("Cargando...");
@@ -133,25 +145,67 @@ public class MenuActivity extends AppCompatActivity
         }
     }
 
-    private class insertarAServidor extends AsyncTask<List<Object>,Void, Void>
+    private class InsertarAServidor extends AsyncTask<List<Object>,Void, Void>
     {
         @Override
         protected Void doInBackground(List<Object>... lists)
         {
             for(int x=0; x<lists.length; x++)
-            {
                 for(Object object: lists[x])
-                {
                     if(Pedidos_I.class == object.getClass())
                     {
+                        Pedidos_I pedido = (Pedidos_I)object;
+                        Pedidos p = new Pedidos();
+                        p.setIdPedido(pedido.getIdPedido());
+                        p.setIdUsuario(pedido.getIdUsuario());
+                        p.setFolio(pedido.getFolio());
+                        p.setClaveCliente(pedido.getClaveCliente());
+                        p.setFecha(pedido.getFecha());
+                        p.setEstatus(pedido.getEstatus());
+                        p.setSubtotal(p.getSubtotal());
+                        p.setIva(p.getIva());
+                        p.setTotal(pedido.getTotal());
+                        p.setObservaciones(pedido.getObservaciones());
+                        p.setUltimoUsuarioActualizacion(pedido.getUltimoUsuarioActualizacion());
+                        p.setUltimaFechaActualizacion(pedido.getUltimaFechaActualizacion());
 
+                        PedidosDao _dao = getPedidosDao();
+                        try
+                        {
+                            _dao.insert(p);
+
+                        }
+                        catch(Exception e)
+                        {
+
+                        }
                     }
                     else if(DetallesPedidos_I.class == object.getClass())
                     {
+                        DetallesPedidos_I detalle = (DetallesPedidos_I)object;
+                        DetallesPedidos detallesPedidos = new DetallesPedidos();
+                        detallesPedidos.setIdDetallePedido(detalle.getIdDetallePedido());
+                        detallesPedidos.setIdPedido(detalle.getIdPedido());
+                        detallesPedidos.setClaveArticulo(detalle.getClaveArticulo());
 
+                        detallesPedidos.setCantidad(detalle.getCantidad());
+                        detallesPedidos.setPrecio(detalle.getPrecio());
+                        detallesPedidos.setSubtotal(detalle.getSubtotal());
+                        detallesPedidos.setIva(detalle.getIva());
+                        detallesPedidos.setTotal(detalle.getTotal());
+                        detallesPedidos.setUltimaFechaActualizacion(detalle.getUltimaFechaActualizacion());
+                        detallesPedidos.setUltimoUsuarioActualizacion(detalle.getUltimoUsuarioActualizacion());
+
+                        DetallesPedidosDao _dao = getDetallesPedidosDao();
+                        try
+                        {
+                            _dao.insert(detallesPedidos);
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
                     }
-                }
-            }
             return null;
         }
     }
@@ -172,7 +226,7 @@ public class MenuActivity extends AppCompatActivity
 
             _daoAgente = getVwAgenteDao();
             _daoPedidos = getPedidosDao();
-            _daoDetallesPedidos = getDetallesPedidosDao();
+            _daoDetallesPedidos = getVwDetallesPedidosDao();
             _daoVwClientes = getVwClientesDao();
             _daoVwArticulos = getVwArticulosDao();
             _daoVwUsuarios = getVwUsuariosDao();
@@ -238,6 +292,7 @@ public class MenuActivity extends AppCompatActivity
                 for(Pedidos pedido: pedidos)
                 {
                     Pedidos_I pedidos_i = new Pedidos_I();
+                    pedidos_i.setId(cont);
                     pedidos_i.setIdPedido(pedido.getIdPedido());
                     pedidos_i.setIdUsuario(pedido.getIdUsuario());
                     pedidos_i.setFolio(pedido.getFolio());
@@ -260,8 +315,11 @@ public class MenuActivity extends AppCompatActivity
                 for(VwDetallePedido detallePedido: detallesPedidos)
                 {
                     VwDetallePedido_I detallePedido_i = new VwDetallePedido_I();
+                    detallePedido_i.setId(cont);
                     detallePedido_i.setIdDetallePedido(detallePedido.getIdDetallePedido());
                     detallePedido_i.setIdPedido(detallePedido.getIdPedido());
+                    detallePedido_i.setClaveArticulo(detallePedido.getClaveArticulo());
+                    detallePedido_i.setNombre(detallePedido.getNombre());
                     detallePedido_i.setCantidad((float)detallePedido.getCantidad());
                     detallePedido_i.setPrecio(detallePedido.getPrecio());
                     detallePedido_i.setSubtotal(detallePedido.getSubtotal());
@@ -269,8 +327,12 @@ public class MenuActivity extends AppCompatActivity
                     detallePedido_i.setTotal(detallePedido.getTotal());
                     detallePedido_i.setFechaActualizacion(detallePedido.getUltimaFechaActualizacion());
                     detallePedido_i.setUsuarioActualizacion(detallePedido.getUltimoUsuarioActualizacion());
+
                     VwDetallePedido_IDao metodo = daoSession.getVwDetallePedido_IDao();
-                    metodo.insertOrReplace(detallePedido_i);
+                    if(metodo.insertOrReplace(detallePedido_i) == cont)
+                    {
+                        System.out.println("Si se pudo");
+                    }
                     cont++;
                 }
 
@@ -323,6 +385,7 @@ public class MenuActivity extends AppCompatActivity
                     metodo.insertOrReplace(abastecimientos_i);
                     cont++;
                 }
+                cont=1;
 
             }
             catch (Exception e)
@@ -347,7 +410,9 @@ public class MenuActivity extends AppCompatActivity
         return VwArticulosDaoFactory.create();
     }
     public static VwClientesDao getVwClientesDao() { return VwClientesDaoFactory.create(); }
-    public static VwDetallePedidoDao getDetallesPedidosDao() { return VwDetallePedidoDaoFactory.create(); }
+    public static VwDetallePedidoDao getVwDetallesPedidosDao() { return VwDetallePedidoDaoFactory.create(); }
+    public static DetallesPedidosDao getDetallesPedidosDao() { return DetallesPedidosDaoFactory.create(); }
+
     public static VwAgenteDao getVwAgenteDao()
     {
         return VwAgenteDaoFactory.create();
