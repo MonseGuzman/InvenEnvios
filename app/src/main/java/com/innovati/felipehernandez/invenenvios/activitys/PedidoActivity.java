@@ -45,7 +45,7 @@ import java.util.UUID;
 
 public class PedidoActivity extends AppCompatActivity
 {
-    public static List<ArticulosPedido> articulosPedidoList = new ArrayList<ArticulosPedido>();
+    public static List<ArticulosPedido> articulosPedidoList;
     private SharedPreferences preferences;
 
     private TabLayout tabLayout;
@@ -63,6 +63,7 @@ public class PedidoActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedido);
+        articulosPedidoList = new ArrayList<ArticulosPedido>();
         metodosInternos = new MetodosInternos(this);
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         inicializacion();
@@ -207,7 +208,7 @@ public class PedidoActivity extends AppCompatActivity
         Date date = new Date();
         int auxFolio = Integer.valueOf(tvFolio.getText().toString());
 
-        if(metodosInternos.conexionRed()){
+        if(!metodosInternos.conexionRed()){
             insertarInterna(idPedido,idUsuario,clave,date,Short.valueOf("1"),getSub(),getIva(),getTotal(),"No Hay", auxFolio);
             for (ArticulosPedido ar:articulosPedidoList){
                 if (ar.isStatus()){
