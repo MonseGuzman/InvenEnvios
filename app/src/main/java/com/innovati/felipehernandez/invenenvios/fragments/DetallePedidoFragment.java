@@ -50,8 +50,8 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     private static float exitArticul = 0, cantidaNum;
     private static int positionList;
     private boolean bandera = true;
-    private List<String> listDet = new ArrayList<>();
-    static List<ArticulosPedido> articuloEdit = new ArrayList<ArticulosPedido>();
+    private List<String> listDet;
+    static List<ArticulosPedido> articuloEdit;
     String idUsuario = "";
     private MetodosInternos metodosInternos;
     private DaoSession daoSession;
@@ -96,6 +96,8 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         btnCancelar = v.findViewById(R.id.editArticuloListAceptar);
         editCantida = v.findViewById(R.id.cantidadEditText_AEdit);
         datosEditArticle.setVisibility(View.INVISIBLE);
+        listDet = new ArrayList<String>();
+        articuloEdit = new ArrayList<ArticulosPedido>();
     }
 
     public void loadData()
@@ -363,7 +365,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             try
             {
                 Object[] objs = new  Object[]{detallesPedidos[0].getIdDetallePedido()};
-                _dao.update(detallesPedidos[0],"IdDetallePedido = ? AND ClaveArticulo = ?" , objs);
+                _dao.update(detallesPedidos[0],"IdDetallePedido = ?" , objs);
             }
             catch (Exception e)
             {
@@ -380,7 +382,9 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onDestroyView() {
-        uptadeExits();
         super.onDestroyView();
+        uptadeExits();
     }
+
+
 }
