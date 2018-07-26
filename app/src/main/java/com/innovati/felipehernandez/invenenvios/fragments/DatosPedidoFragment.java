@@ -103,11 +103,12 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v)
     {
+        validacionCatidad();
         if(v.getId() == R.id.btnRegistrarPedido)
         {
             if(!PedidoActivity.articulosPedidoList.isEmpty()){
                 PedidoActivity.addPedidoDb();
-
+                datosEditArticle.setVisibility(View.INVISIBLE);
                 Snackbar.make(v, R.string.guardado, Snackbar.LENGTH_INDEFINITE).setAction("Ok", new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
@@ -120,7 +121,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
             }
             //this.getActivity().finish();
         }else{
-            cantidaNum = Float.valueOf(editCantida.getText().toString());
+
             switch (v.getId())
             {
                 case R.id.MasButton_AEdit:
@@ -215,5 +216,21 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         PedidoActivity.calTotal();
     }
 
+    private void validacionCatidad(){
+        try{
+            if(editCantida.getText() != null){
+                cantidaNum = Float.valueOf(editCantida.getText().toString());
+            }else{
+                cantidaNum = 0;
+            }
+        }catch (Exception e){
+            cantidaNum = 0;
+        }
+        if (cantidaNum > exitArticul){
+            cantidaNum = exitArticul;
+        }
+        editCantida.setText(String.valueOf(cantidaNum));
+
+    }
 
 }

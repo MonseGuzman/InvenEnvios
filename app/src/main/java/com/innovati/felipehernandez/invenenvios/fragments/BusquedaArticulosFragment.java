@@ -4,6 +4,7 @@ package com.innovati.felipehernandez.invenenvios.fragments;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
@@ -70,8 +71,9 @@ public class BusquedaArticulosFragment extends Fragment
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                ArticuloFragment fragment = new ArticuloFragment();
-                ArticuloBlock.setVisibility(View.INVISIBLE);
+                if(result[position].getExistenciaTotal() > 0){
+                    ArticuloFragment fragment = new ArticuloFragment();
+                    ArticuloBlock.setVisibility(View.INVISIBLE);
                     //AGREGAR ARTICULOS A PERDIDO
                     args = new Bundle();
                     args.putString("clave", result[position].getClave());
@@ -83,7 +85,9 @@ public class BusquedaArticulosFragment extends Fragment
                     args.putString("unidad", result[position].getUnidadPrimaria());
                     fragment.setArguments(args);
                     getFragmentManager().beginTransaction().replace(R.id.ArticuloFrameLayout, fragment).addToBackStack(null).commit();
-
+                }else{
+                    Snackbar.make(getView(), "No Existe Existencias", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
 

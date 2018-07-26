@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity
             List<VwUsuarios_I> usuarios = qb.list();
             if(!usuarios.isEmpty())
             {
-                progress(usuario,usuarios.get(1).getIdUsuario());
+                progress(usuario,usuarios.get(0).getIdUsuario());
                 Intent i = new Intent(LoginActivity.this, MenuActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 guardarPreferencias(usuario, password);
@@ -209,11 +209,14 @@ public class LoginActivity extends AppCompatActivity
         }
     }
     private void progress(String user, String id){
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("agente", user);
-        editor.putString("idUsuario", id);
-        editor.commit(); // empieza a guardar los put*
-        editor.apply(); //guarda todos los cambios aunque no se guarden todos
+        try{
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("agente", user);
+            editor.putString("idUsuario", id);
+            editor.commit(); // empieza a guardar los put*
+            editor.apply(); //guarda todos los cambios aunque no se guarden todos
+        }catch (Exception e){}
+
         dialog.hide();
     }
 
