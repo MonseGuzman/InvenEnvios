@@ -114,16 +114,28 @@ public class MenuActivity extends AppCompatActivity
 
     public void actualizarDBServidor(View v)
     {
+        dialog=new ProgressDialog(this);
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
+        dialog.show();
 
-        VwDetallePedido_IDao daoDetallesPedidos = daoSession.getVwDetallePedido_IDao();
-        List<VwDetallePedido_I> detallesPedidos = daoDetallesPedidos.loadAll();
+        if(metodosInternos.conexionRed())
+        {
+            VwDetallePedido_IDao daoDetallesPedidos = daoSession.getVwDetallePedido_IDao();
+            List<VwDetallePedido_I> detallesPedidos = daoDetallesPedidos.loadAll();
 
-        Pedidos_IDao daoPedidos = daoSession.getPedidos_IDao();
-        List<Pedidos_I> pedidos = daoPedidos.loadAll();
+            Pedidos_IDao daoPedidos = daoSession.getPedidos_IDao();
+            List<Pedidos_I> pedidos = daoPedidos.loadAll();
 
 
-        InsertarAServidor i = new InsertarAServidor();
-        i.execute((List) pedidos,(List) detallesPedidos);
+            InsertarAServidor i = new InsertarAServidor();
+            i.execute((List) pedidos,(List) detallesPedidos);
+        }
+        else
+        {
+            dialog.hide();
+            metodosInternos.Alerta(R.string.error, R.string.conectarse);
+        }
     }
 
     public void actualizarDBInterna(View v)
