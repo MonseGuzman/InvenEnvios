@@ -105,9 +105,10 @@ public class LoginActivity extends AppCompatActivity
             List<VwUsuarios_I> usuarios = qb.list();
             if(!usuarios.isEmpty())
             {
+                progress(usuario,usuarios.get(1).getIdUsuario());
                 Intent i = new Intent(LoginActivity.this, MenuActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                guardarPreferencias(usuario, password, usuarios.get(1).getIdUsuario());
+                guardarPreferencias(usuario, password);
                 startActivity(i);
             }
             else
@@ -128,7 +129,7 @@ public class LoginActivity extends AppCompatActivity
         }
     }
 
-    private void guardarPreferencias(String email, String contra, String IdUsuario)
+    private void guardarPreferencias(String email, String contra)
     {
         //cuando abre la actividad
         if (chRecordarme.isChecked())
@@ -136,15 +137,10 @@ public class LoginActivity extends AppCompatActivity
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("usuario", email);
             editor.putString("contraseña", contra);
-            editor.putString("idUsuario", IdUsuario);
+
             editor.commit(); // empieza a guardar los put*
             editor.apply(); //guarda todos los cambios aunque no se guarden todos
         }
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("agente", email);
-        editor.commit(); // empieza a guardar los put*
-        editor.apply(); //guarda todos los cambios aunque no se guarden todos
-        dialog.hide();
     }
 
     public class dbManager extends AsyncTask<VwUsuariosDao, Void, VwUsuarios[]>
@@ -184,10 +180,11 @@ public class LoginActivity extends AppCompatActivity
             {
                 if(vwUsuarios.length > 0)
                 {
+                    progress(usuario,vwUsuarios[0].getIdUsuario());
                     Intent i = new Intent(LoginActivity.this, MenuActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
-                    guardarPreferencias(usuario, password, vwUsuarios[0].getIdUsuario());
+                    guardarPreferencias(usuario, password);
                 }
                 else
                     conectado.Alerta(R.string.error,R.string.sinDatos);
@@ -210,6 +207,14 @@ public class LoginActivity extends AppCompatActivity
             Intent intent = new Intent(this, SettingActivity.class);
             startActivity(intent);
         }
+    }
+    private void progress(String user, String id){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("agente", user);
+        editor.putString("idUsuario", id);
+        editor.commit(); // empieza a guardar los put*
+        editor.apply(); //guarda todos los cambios aunque no se guarden todos
+        dialog.hide();
     }
 
 }

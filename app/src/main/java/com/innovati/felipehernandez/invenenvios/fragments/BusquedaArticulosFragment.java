@@ -130,7 +130,6 @@ public class BusquedaArticulosFragment extends Fragment
             {
                 //código para buscar en la bd interna
                 internaBD();
-                Toast.makeText(getActivity(), "gog", Toast.LENGTH_LONG).show();
             }
         }
         else
@@ -153,7 +152,6 @@ public class BusquedaArticulosFragment extends Fragment
             }
             else
             {
-                Toast.makeText(getActivity(), "gggog", Toast.LENGTH_LONG).show();
                 //código para buscar en la bd interna
                 internaBD();
             }
