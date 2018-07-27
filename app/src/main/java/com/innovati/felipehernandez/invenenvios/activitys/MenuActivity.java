@@ -182,8 +182,10 @@ public class MenuActivity extends AppCompatActivity
                         PedidosDao _dao = getPedidosDao();
                         try
                         {
-                            _dao.insert(p);
-
+                            if(pedido.getServidor())
+                                _dao.update(p, "IdPedido = ?", new String[]{pedido.getIdPedido()});
+                            else
+                                _dao.insert(p);
                         }
                         catch(Exception e)
                         {
@@ -209,7 +211,10 @@ public class MenuActivity extends AppCompatActivity
                         DetallesPedidosDao _dao = getDetallesPedidosDao();
                         try
                         {
-                            _dao.insert(detallesPedidos);
+                            if(detalle.getServidor())
+                                _dao.update(detallesPedidos, "IdDetallePedido = ?", new String[]{detallesPedidos.getIdDetallePedido()});
+                            else
+                                _dao.insert(detallesPedidos);
                         }
                         catch (Exception e)
                         {
@@ -313,10 +318,11 @@ public class MenuActivity extends AppCompatActivity
                     pedidos_i.setIva(pedido.getIva());
                     pedidos_i.setTotal(pedido.getTotal());
                     pedidos_i.setObservaciones(pedido.getObservaciones());
+                    pedidos_i.setServidor(true);
                     pedidos_i.setUltimaFechaActualizacion(pedido.getUltimaFechaActualizacion());
                     pedidos_i.setUltimoUsuarioActualizacion(pedido.getUltimoUsuarioActualizacion());
 
-                   Pedidos_IDao metodo = daoSession.getPedidos_IDao();
+                    Pedidos_IDao metodo = daoSession.getPedidos_IDao();
                     metodo.insertOrReplace(pedidos_i);
                     cont++;
                 }
@@ -335,6 +341,7 @@ public class MenuActivity extends AppCompatActivity
                     detallePedido_i.setSubtotal(detallePedido.getSubtotal());
                     detallePedido_i.setIva(detallePedido.getIva());
                     detallePedido_i.setTotal(detallePedido.getTotal());
+                    detallePedido_i.setServidor(true);
                     detallePedido_i.setFechaActualizacion(detallePedido.getUltimaFechaActualizacion());
                     detallePedido_i.setUsuarioActualizacion(detallePedido.getUltimoUsuarioActualizacion());
 

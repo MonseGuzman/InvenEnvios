@@ -21,12 +21,13 @@ public class Pedidos_I
     private float iva;
     private float total;
     private String observaciones;
+    private boolean servidor;
     private Date ultimaFechaActualizacion;
     private String ultimoUsuarioActualizacion;
-    @Generated(hash = 1719534996)
+    @Generated(hash = 2020281021)
     public Pedidos_I(Long Id, String idPedido, String idUsuario, int folio,
             String claveCliente, Date fecha, short estatus, float subtotal,
-            float iva, float total, String observaciones,
+            float iva, float total, String observaciones, boolean servidor,
             Date ultimaFechaActualizacion, String ultimoUsuarioActualizacion) {
         this.Id = Id;
         this.idPedido = idPedido;
@@ -39,6 +40,7 @@ public class Pedidos_I
         this.iva = iva;
         this.total = total;
         this.observaciones = observaciones;
+        this.servidor = servidor;
         this.ultimaFechaActualizacion = ultimaFechaActualizacion;
         this.ultimoUsuarioActualizacion = ultimoUsuarioActualizacion;
     }
@@ -111,6 +113,12 @@ public class Pedidos_I
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
+    public boolean getServidor() {
+        return this.servidor;
+    }
+    public void setServidor(boolean servidor) {
+        this.servidor = servidor;
+    }
     public Date getUltimaFechaActualizacion() {
         return this.ultimaFechaActualizacion;
     }
@@ -123,5 +131,4 @@ public class Pedidos_I
     public void setUltimoUsuarioActualizacion(String ultimoUsuarioActualizacion) {
         this.ultimoUsuarioActualizacion = ultimoUsuarioActualizacion;
     }
-
 }

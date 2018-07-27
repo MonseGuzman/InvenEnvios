@@ -33,8 +33,9 @@ public class Pedidos_IDao extends AbstractDao<Pedidos_I, Long> {
         public final static Property Iva = new Property(8, float.class, "iva", false, "IVA");
         public final static Property Total = new Property(9, float.class, "total", false, "TOTAL");
         public final static Property Observaciones = new Property(10, String.class, "observaciones", false, "OBSERVACIONES");
-        public final static Property UltimaFechaActualizacion = new Property(11, java.util.Date.class, "ultimaFechaActualizacion", false, "ULTIMA_FECHA_ACTUALIZACION");
-        public final static Property UltimoUsuarioActualizacion = new Property(12, String.class, "ultimoUsuarioActualizacion", false, "ULTIMO_USUARIO_ACTUALIZACION");
+        public final static Property Servidor = new Property(11, boolean.class, "servidor", false, "SERVIDOR");
+        public final static Property UltimaFechaActualizacion = new Property(12, java.util.Date.class, "ultimaFechaActualizacion", false, "ULTIMA_FECHA_ACTUALIZACION");
+        public final static Property UltimoUsuarioActualizacion = new Property(13, String.class, "ultimoUsuarioActualizacion", false, "ULTIMO_USUARIO_ACTUALIZACION");
     }
 
 
@@ -61,8 +62,9 @@ public class Pedidos_IDao extends AbstractDao<Pedidos_I, Long> {
                 "\"IVA\" REAL NOT NULL ," + // 8: iva
                 "\"TOTAL\" REAL NOT NULL ," + // 9: total
                 "\"OBSERVACIONES\" TEXT," + // 10: observaciones
-                "\"ULTIMA_FECHA_ACTUALIZACION\" INTEGER," + // 11: ultimaFechaActualizacion
-                "\"ULTIMO_USUARIO_ACTUALIZACION\" TEXT);"); // 12: ultimoUsuarioActualizacion
+                "\"SERVIDOR\" INTEGER NOT NULL ," + // 11: servidor
+                "\"ULTIMA_FECHA_ACTUALIZACION\" INTEGER," + // 12: ultimaFechaActualizacion
+                "\"ULTIMO_USUARIO_ACTUALIZACION\" TEXT);"); // 13: ultimoUsuarioActualizacion
     }
 
     /** Drops the underlying database table. */
@@ -109,15 +111,16 @@ public class Pedidos_IDao extends AbstractDao<Pedidos_I, Long> {
         if (observaciones != null) {
             stmt.bindString(11, observaciones);
         }
+        stmt.bindLong(12, entity.getServidor() ? 1L: 0L);
  
         java.util.Date ultimaFechaActualizacion = entity.getUltimaFechaActualizacion();
         if (ultimaFechaActualizacion != null) {
-            stmt.bindLong(12, ultimaFechaActualizacion.getTime());
+            stmt.bindLong(13, ultimaFechaActualizacion.getTime());
         }
  
         String ultimoUsuarioActualizacion = entity.getUltimoUsuarioActualizacion();
         if (ultimoUsuarioActualizacion != null) {
-            stmt.bindString(13, ultimoUsuarioActualizacion);
+            stmt.bindString(14, ultimoUsuarioActualizacion);
         }
     }
 
@@ -159,15 +162,16 @@ public class Pedidos_IDao extends AbstractDao<Pedidos_I, Long> {
         if (observaciones != null) {
             stmt.bindString(11, observaciones);
         }
+        stmt.bindLong(12, entity.getServidor() ? 1L: 0L);
  
         java.util.Date ultimaFechaActualizacion = entity.getUltimaFechaActualizacion();
         if (ultimaFechaActualizacion != null) {
-            stmt.bindLong(12, ultimaFechaActualizacion.getTime());
+            stmt.bindLong(13, ultimaFechaActualizacion.getTime());
         }
  
         String ultimoUsuarioActualizacion = entity.getUltimoUsuarioActualizacion();
         if (ultimoUsuarioActualizacion != null) {
-            stmt.bindString(13, ultimoUsuarioActualizacion);
+            stmt.bindString(14, ultimoUsuarioActualizacion);
         }
     }
 
@@ -190,8 +194,9 @@ public class Pedidos_IDao extends AbstractDao<Pedidos_I, Long> {
             cursor.getFloat(offset + 8), // iva
             cursor.getFloat(offset + 9), // total
             cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // observaciones
-            cursor.isNull(offset + 11) ? null : new java.util.Date(cursor.getLong(offset + 11)), // ultimaFechaActualizacion
-            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // ultimoUsuarioActualizacion
+            cursor.getShort(offset + 11) != 0, // servidor
+            cursor.isNull(offset + 12) ? null : new java.util.Date(cursor.getLong(offset + 12)), // ultimaFechaActualizacion
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13) // ultimoUsuarioActualizacion
         );
         return entity;
     }
@@ -209,8 +214,9 @@ public class Pedidos_IDao extends AbstractDao<Pedidos_I, Long> {
         entity.setIva(cursor.getFloat(offset + 8));
         entity.setTotal(cursor.getFloat(offset + 9));
         entity.setObservaciones(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setUltimaFechaActualizacion(cursor.isNull(offset + 11) ? null : new java.util.Date(cursor.getLong(offset + 11)));
-        entity.setUltimoUsuarioActualizacion(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setServidor(cursor.getShort(offset + 11) != 0);
+        entity.setUltimaFechaActualizacion(cursor.isNull(offset + 12) ? null : new java.util.Date(cursor.getLong(offset + 12)));
+        entity.setUltimoUsuarioActualizacion(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
      }
     
     @Override

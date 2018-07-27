@@ -284,6 +284,7 @@ public class PedidoActivity extends AppCompatActivity
         pedidos.setTotal(total);
         pedidos.setFolio((folio));
         pedidos.setObservaciones(observaciones);
+        pedidos.setServidor(false);
         pedidos.setUltimoUsuarioActualizacion(idUsuario);
         pedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
         Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
@@ -304,6 +305,7 @@ public class PedidoActivity extends AppCompatActivity
         detalle.setSubtotal(a.getSubTotal());
         detalle.setIva(a.getIva());
         detalle.setTotal(a.getTotal());
+        detalle.setServidor(false);
         detalle.setFechaActualizacion(Calendar.getInstance().getTime());
         detalle.setUsuarioActualizacion(idUsuario);
         VwDetallePedido_IDao detallesPedidos_iDao = daoSession.getVwDetallePedido_IDao();
