@@ -119,6 +119,10 @@ public class LoginActivity extends AppCompatActivity
 
     private void verificaCredenciales()
     {
+        dialog=new ProgressDialog(this);
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
+        dialog.show();
         String email = preferences.getString("usuario", "");
         String pass = preferences.getString("contraseña", "");
 

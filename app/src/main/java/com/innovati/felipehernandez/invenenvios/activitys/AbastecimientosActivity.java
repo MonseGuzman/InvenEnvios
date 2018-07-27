@@ -1,5 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -49,7 +50,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
     private VwAbastecimiento lista[];
     private MetodosInternos metodosInternos = new MetodosInternos(this);
     private DaoSession daoSession;
-
+    private ProgressDialog dialog;
     private PedidosAdapter adaptador;
     Pedidos result[];
     int tipo;
@@ -80,10 +81,14 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
     {
         AbastecimientoListView = (ListView)findViewById(R.id.AbastecimientoListView);
         AbastecimientoRecycleView = (RecyclerView) findViewById(R.id.AbastecimientoRecycleView);
+        dialog=new ProgressDialog(this);
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
     }
 
     private void cargarDatos(int item)
     {
+        dialog.show();
         if(metodosInternos.conexionRed())
         {
             switch (item)
@@ -108,6 +113,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
             }catch (Exception e) {
                 metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
             }
+            dialog.hide();
     }
 
     private void internaBD(int item)

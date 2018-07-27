@@ -1,6 +1,7 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -53,6 +54,7 @@ public class ClientesActivity extends AppCompatActivity
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int posicion;
     private DaoSession daoSession;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class ClientesActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
+                dialog.show();
                 ClienteFragment clienteFragment = new ClienteFragment();
                 args = new Bundle();
 
@@ -83,6 +86,7 @@ public class ClientesActivity extends AppCompatActivity
                 args.putString("colonia", result[position].getColonia());
                 args.putString("telefono", result[position].getTelefono());
                 clienteFragment.setArguments(args);
+                dialog.hide();
                 getSupportFragmentManager().beginTransaction().replace(R.id.ClienteConstraintLayout, clienteFragment).addToBackStack(null).commit();
             }
         });
@@ -103,6 +107,9 @@ public class ClientesActivity extends AppCompatActivity
         datitosListView = (ListView)findViewById(R.id.datitosListView);
         buscarEditText = (EditText)findViewById(R.id.buscarEditText);
         BuscarImageButton = (ImageButton)findViewById(R.id.BuscarImageButton);
+        dialog=new ProgressDialog(this);
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
     }
 
     //menú de contexto
@@ -196,6 +203,7 @@ public class ClientesActivity extends AppCompatActivity
 
     public void filtar(View v)
     {
+        dialog.show();
         String nombre = buscarEditText.getText().toString();
         if(metodosInternos.conexionRed())
         {
@@ -238,6 +246,7 @@ public class ClientesActivity extends AppCompatActivity
                 metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
                 e.printStackTrace();
             }
+            dialog.hide();
     }
 
     private void internaBD()

@@ -1,5 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaRecorder;
@@ -58,6 +59,7 @@ public class PedidoActivity extends AppCompatActivity
     private static String idUsuario;
     private static MetodosInternos metodosInternos;
     private static DaoSession daoSession;
+    private static ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +126,9 @@ public class PedidoActivity extends AppCompatActivity
         ClienteEntTextView = (TextView)findViewById(R.id.ClienteEntTextView);
         tvAgente = (TextView)findViewById(R.id.tvAgente);
         tvFolio = (TextView)findViewById(R.id.tvFolioEnt);
+        dialog=new ProgressDialog(this);
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
     }
 
     @Override
@@ -203,6 +208,7 @@ public class PedidoActivity extends AppCompatActivity
     }
 
     public static void addPedidoDb(){
+        dialog.show();
         //"%05d%n", 5
         String idPedido = UUID.randomUUID().toString();
         Date date = new Date();
@@ -227,6 +233,7 @@ public class PedidoActivity extends AppCompatActivity
         calTotal();
         DatosPedidoFragment.updateAdapter();
         nombreC = "No elegido";
+        dialog.hide();
     }
 
     public static void insertar(String idPedido,String idUsuario, String claveCliente, Date fecha, short estatus, float subtotal, float iva, float total, String observaciones, int folio)

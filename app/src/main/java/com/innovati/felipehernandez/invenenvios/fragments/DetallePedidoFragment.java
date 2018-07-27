@@ -213,7 +213,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        cantidaNum = Float.valueOf(editCantida.getText().toString());
+        validacionCatidad();
         switch (view.getId())
         {
             case R.id.MasButton_AEdit:
@@ -387,6 +387,21 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         super.onDestroyView();
         uptadeExits();
     }
+    private void validacionCatidad(){
+        try{
+            if(editCantida.getText() != null){
+                cantidaNum = Float.valueOf(editCantida.getText().toString());
+            }else{
+                cantidaNum = 0;
+            }
+        }catch (Exception e){
+            cantidaNum = 0;
+        }
+        if (cantidaNum > exitArticul){
+            cantidaNum = exitArticul;
+        }
+        editCantida.setText(String.valueOf(cantidaNum));
 
+    }
 
 }

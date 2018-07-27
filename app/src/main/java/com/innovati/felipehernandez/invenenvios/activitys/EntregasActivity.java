@@ -1,5 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -34,7 +35,7 @@ public class EntregasActivity extends AppCompatActivity
     private Pedidos result[];
     private MetodosInternos metodosInternos = new MetodosInternos(this);
     private DaoSession daoSession;
-
+    private ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +90,9 @@ public class EntregasActivity extends AppCompatActivity
     private void inicializacion()
     {
         EntregasListView = (ListView)findViewById(R.id.EntregasListView);
+        dialog=new ProgressDialog(this);
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
     }
 
     @Override
@@ -136,6 +140,7 @@ public class EntregasActivity extends AppCompatActivity
 
     public void cargarDatos()
     {
+        dialog.show();
         if(metodosInternos.conexionRed())
         {
             PedidosDao _dao = getPedidosDao();
@@ -149,6 +154,7 @@ public class EntregasActivity extends AppCompatActivity
             }catch (Exception e){
             metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
         }
+        dialog.hide();
     }
 
     private void internaBD()
