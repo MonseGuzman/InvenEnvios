@@ -79,6 +79,10 @@ public class MenuActivity extends AppCompatActivity
     //              |  2 | VISTA CON DETALLES
     public void botones(View v)
     {
+        dialog=new ProgressDialog(this);
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
+        dialog.show();
         Intent i = new Intent();
 
         switch (v.getId())
@@ -101,15 +105,21 @@ public class MenuActivity extends AppCompatActivity
                 break;
         }
         startActivity(i);
+        dialog.hide();
     }
 
     public void salir(View v)
     {
+        dialog=new ProgressDialog(this);
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
+        dialog.show();
         preferences.edit().clear().apply();
 
         Intent i = new Intent(this, LoginActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //cierra esta actividad
         startActivity(i);
+        dialog.hide();
     }
 
     public void actualizarDBServidor(View v)

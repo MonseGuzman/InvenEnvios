@@ -85,7 +85,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerArticulos);
-
+        editCantida.getOnFocusChangeListener();
         return v;
     }
     private void inicialize(View v){
