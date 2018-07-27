@@ -1,5 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,7 +21,7 @@ public class ClienteFragment extends Fragment
     private EditText numeroInteriorEditText_C;
     private EditText coloniaEditText_C;
     private EditText telefonoEditText_C;
-
+    ProgressDialog dialog;
 
     private String nombre, rfc, calle, numeroExterior, numeroInterior, colonia, telefono;
 
@@ -37,7 +38,7 @@ public class ClienteFragment extends Fragment
         View v = inflater.inflate(R.layout.fragment_cliente, container, false);
 
         inicializar(v);
-
+        dialog.show();
         Bundle args = getArguments();
         nombre = args.getString("nombre", "");
         rfc = args.getString("rfc", "");
@@ -54,7 +55,7 @@ public class ClienteFragment extends Fragment
         numeroInteriorEditText_C.setText(numeroInterior);
         coloniaEditText_C.setText(colonia);
         telefonoEditText_C.setText(telefono);
-
+        dialog.hide();
         return v;
     }
 
@@ -68,6 +69,9 @@ public class ClienteFragment extends Fragment
         numeroInteriorEditText_C = v.findViewById(R.id.NumeroInteriorEditText_C);
         coloniaEditText_C = v.findViewById(R.id.ColoniaEditText_C);
         telefonoEditText_C = v.findViewById(R.id.TelefonoEditText_C);
+        dialog=new ProgressDialog(getContext());
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
     }
 
     @Override

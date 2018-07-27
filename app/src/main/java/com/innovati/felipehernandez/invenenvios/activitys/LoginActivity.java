@@ -46,7 +46,9 @@ public class LoginActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        dialog=new ProgressDialog(this);
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.logo_carmenta);
 
@@ -55,6 +57,7 @@ public class LoginActivity extends AppCompatActivity
         verificaCredenciales();
         touch = 0;
         daoSession = ((MyApp) getApplication()).getDaoSession();
+
     }
 
     private void inicializacion()
@@ -66,9 +69,6 @@ public class LoginActivity extends AppCompatActivity
 
     public void login(View v)
     {
-        dialog=new ProgressDialog(this);
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
         dialog.show();
         //si la conexion wifi/datos es conectada
 
@@ -114,14 +114,11 @@ public class LoginActivity extends AppCompatActivity
             else
                 conectado.Alerta(R.string.error,R.string.sinDatos);
         }
-
+        dialog.hide();
     }
 
     private void verificaCredenciales()
     {
-        dialog=new ProgressDialog(this);
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
         dialog.show();
         String email = preferences.getString("usuario", "");
         String pass = preferences.getString("contraseña", "");
@@ -131,6 +128,7 @@ public class LoginActivity extends AppCompatActivity
             etUsuario.setText(email);
             etPassword.setText(pass);
         }
+        dialog.hide();
     }
 
     private void guardarPreferencias(String email, String contra)

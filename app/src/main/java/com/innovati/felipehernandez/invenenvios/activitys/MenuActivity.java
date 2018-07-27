@@ -64,7 +64,9 @@ public class MenuActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
+        dialog=new ProgressDialog(this);
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
         this.setTitle("Menú");
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         daoSession = ((MyApp) getApplication()).getDaoSession();
@@ -77,9 +79,6 @@ public class MenuActivity extends AppCompatActivity
     //              |  2 | VISTA CON DETALLES
     public void botones(View v)
     {
-        dialog=new ProgressDialog(this);
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
         dialog.show();
         Intent i = new Intent();
 
@@ -108,9 +107,6 @@ public class MenuActivity extends AppCompatActivity
 
     public void salir(View v)
     {
-        dialog=new ProgressDialog(this);
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
         dialog.show();
         preferences.edit().clear().apply();
 
@@ -122,10 +118,7 @@ public class MenuActivity extends AppCompatActivity
 
     public void actualizarDBServidor(View v)
     {
-        dialog=new ProgressDialog(this);
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
-        dialog.show();
+
 
         if(metodosInternos.conexionRed())
         {
@@ -141,16 +134,13 @@ public class MenuActivity extends AppCompatActivity
         }
         else
         {
-            dialog.hide();
             metodosInternos.Alerta(R.string.error, R.string.conectarse);
         }
+        dialog.hide();
     }
 
     public void actualizarDBInterna(View v)
     {
-        dialog=new ProgressDialog(this);
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
         dialog.show();
 
         if(metodosInternos.conexionRed())
@@ -160,9 +150,9 @@ public class MenuActivity extends AppCompatActivity
         }
         else
         {
-            dialog.hide();
             metodosInternos.Alerta(R.string.error, R.string.conectarse);
         }
+        dialog.hide();
     }
 
     private class InsertarAServidor extends AsyncTask<List<Object>,Void, Void>
