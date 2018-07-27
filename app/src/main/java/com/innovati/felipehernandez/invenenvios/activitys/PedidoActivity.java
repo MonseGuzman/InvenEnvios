@@ -3,7 +3,6 @@ package com.innovati.felipehernandez.invenenvios.activitys;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
@@ -24,15 +22,14 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
-import com.innovati.felipehernandez.invenenvios.clases.dto.VwUsuarios;
 import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
-import com.innovati.felipehernandez.invenenvios.database.DetallesPedidos_I;
-import com.innovati.felipehernandez.invenenvios.database.DetallesPedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_I;
+import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.DatosPedidoFragment;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
@@ -297,7 +294,7 @@ public class PedidoActivity extends AppCompatActivity
     public static void detPedidoInterna(String idUsuario,String idPedido,ArticulosPedido a){
 
 
-        DetallesPedidos_I detalle = new DetallesPedidos_I();
+        VwDetallePedido_I detalle = new VwDetallePedido_I();
         String idDetallePedido = UUID.randomUUID().toString();
         detalle.setIdDetallePedido(idDetallePedido);
         detalle.setIdPedido(idPedido);
@@ -307,9 +304,9 @@ public class PedidoActivity extends AppCompatActivity
         detalle.setSubtotal(a.getSubTotal());
         detalle.setIva(a.getIva());
         detalle.setTotal(a.getTotal());
-        detalle.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
-        detalle.setUltimoUsuarioActualizacion(idUsuario);
-        DetallesPedidos_IDao detallesPedidos_iDao = daoSession.getDetallesPedidos_IDao();
+        detalle.setFechaActualizacion(Calendar.getInstance().getTime());
+        detalle.setUsuarioActualizacion(idUsuario);
+        VwDetallePedido_IDao detallesPedidos_iDao = daoSession.getVwDetallePedido_IDao();
         detallesPedidos_iDao.insert(detalle);
     }
     public static float getTotal(){

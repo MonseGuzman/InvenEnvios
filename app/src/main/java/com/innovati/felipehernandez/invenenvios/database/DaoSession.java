@@ -8,7 +8,6 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
-import com.innovati.felipehernandez.invenenvios.database.DetallesPedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Usuarios_I;
 import com.innovati.felipehernandez.invenenvios.database.VwAgente_I;
@@ -18,7 +17,6 @@ import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_I;
 import com.innovati.felipehernandez.invenenvios.database.VwUsuarios_I;
 import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_I;
 
-import com.innovati.felipehernandez.invenenvios.database.DetallesPedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.Usuarios_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwAgente_IDao;
@@ -37,7 +35,6 @@ import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_IDao;
  */
 public class DaoSession extends AbstractDaoSession {
 
-    private final DaoConfig detallesPedidos_IDaoConfig;
     private final DaoConfig pedidos_IDaoConfig;
     private final DaoConfig usuarios_IDaoConfig;
     private final DaoConfig vwAgente_IDaoConfig;
@@ -47,7 +44,6 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig vwUsuarios_IDaoConfig;
     private final DaoConfig vwAbastecimientos_IDaoConfig;
 
-    private final DetallesPedidos_IDao detallesPedidos_IDao;
     private final Pedidos_IDao pedidos_IDao;
     private final Usuarios_IDao usuarios_IDao;
     private final VwAgente_IDao vwAgente_IDao;
@@ -60,9 +56,6 @@ public class DaoSession extends AbstractDaoSession {
     public DaoSession(Database db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
         super(db);
-
-        detallesPedidos_IDaoConfig = daoConfigMap.get(DetallesPedidos_IDao.class).clone();
-        detallesPedidos_IDaoConfig.initIdentityScope(type);
 
         pedidos_IDaoConfig = daoConfigMap.get(Pedidos_IDao.class).clone();
         pedidos_IDaoConfig.initIdentityScope(type);
@@ -88,7 +81,6 @@ public class DaoSession extends AbstractDaoSession {
         vwAbastecimientos_IDaoConfig = daoConfigMap.get(VwAbastecimientos_IDao.class).clone();
         vwAbastecimientos_IDaoConfig.initIdentityScope(type);
 
-        detallesPedidos_IDao = new DetallesPedidos_IDao(detallesPedidos_IDaoConfig, this);
         pedidos_IDao = new Pedidos_IDao(pedidos_IDaoConfig, this);
         usuarios_IDao = new Usuarios_IDao(usuarios_IDaoConfig, this);
         vwAgente_IDao = new VwAgente_IDao(vwAgente_IDaoConfig, this);
@@ -98,7 +90,6 @@ public class DaoSession extends AbstractDaoSession {
         vwUsuarios_IDao = new VwUsuarios_IDao(vwUsuarios_IDaoConfig, this);
         vwAbastecimientos_IDao = new VwAbastecimientos_IDao(vwAbastecimientos_IDaoConfig, this);
 
-        registerDao(DetallesPedidos_I.class, detallesPedidos_IDao);
         registerDao(Pedidos_I.class, pedidos_IDao);
         registerDao(Usuarios_I.class, usuarios_IDao);
         registerDao(VwAgente_I.class, vwAgente_IDao);
@@ -110,7 +101,6 @@ public class DaoSession extends AbstractDaoSession {
     }
     
     public void clear() {
-        detallesPedidos_IDaoConfig.clearIdentityScope();
         pedidos_IDaoConfig.clearIdentityScope();
         usuarios_IDaoConfig.clearIdentityScope();
         vwAgente_IDaoConfig.clearIdentityScope();
@@ -119,10 +109,6 @@ public class DaoSession extends AbstractDaoSession {
         vwDetallePedido_IDaoConfig.clearIdentityScope();
         vwUsuarios_IDaoConfig.clearIdentityScope();
         vwAbastecimientos_IDaoConfig.clearIdentityScope();
-    }
-
-    public DetallesPedidos_IDao getDetallesPedidos_IDao() {
-        return detallesPedidos_IDao;
     }
 
     public Pedidos_IDao getPedidos_IDao() {

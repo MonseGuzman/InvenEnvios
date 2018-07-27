@@ -32,8 +32,6 @@ import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_I;
 import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_IDao;
-import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_I;
-import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
 
 import org.greenrobot.greendao.query.QueryBuilder;

@@ -37,8 +37,6 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFact
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
-import com.innovati.felipehernandez.invenenvios.database.DetallesPedidos_I;
-import com.innovati.felipehernandez.invenenvios.database.DetallesPedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_I;
@@ -202,9 +200,9 @@ public class MenuActivity extends AppCompatActivity
 
                         }
                     }
-                    else if(DetallesPedidos_I.class == object.getClass())
+                    else if(VwDetallePedido_I.class == object.getClass())
                     {
-                        DetallesPedidos_I detalle = (DetallesPedidos_I)object;
+                        VwDetallePedido_I detalle = (VwDetallePedido_I) object;
                         DetallesPedidos detallesPedidos = new DetallesPedidos();
                         detallesPedidos.setIdDetallePedido(detalle.getIdDetallePedido());
                         detallesPedidos.setIdPedido(detalle.getIdPedido());
@@ -215,8 +213,8 @@ public class MenuActivity extends AppCompatActivity
                         detallesPedidos.setSubtotal(detalle.getSubtotal());
                         detallesPedidos.setIva(detalle.getIva());
                         detallesPedidos.setTotal(detalle.getTotal());
-                        detallesPedidos.setUltimaFechaActualizacion(detalle.getUltimaFechaActualizacion());
-                        detallesPedidos.setUltimoUsuarioActualizacion(detalle.getUltimoUsuarioActualizacion());
+                        detallesPedidos.setUltimaFechaActualizacion(detalle.getFechaActualizacion());
+                        detallesPedidos.setUltimoUsuarioActualizacion(detalle.getUsuarioActualizacion());
 
                         DetallesPedidosDao _dao = getDetallesPedidosDao();
                         try

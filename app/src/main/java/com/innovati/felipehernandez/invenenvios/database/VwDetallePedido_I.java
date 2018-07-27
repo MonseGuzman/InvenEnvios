@@ -19,13 +19,14 @@ public class VwDetallePedido_I
     private float subtotal;
     private float iva;
     private float total;
+    private boolean servidor;
     private Date fechaActualizacion;
     private String usuarioActualizacion;
-    @Generated(hash = 1959607518)
+    @Generated(hash = 634717236)
     public VwDetallePedido_I(Long Id, String idDetallePedido, String idPedido,
             String claveArticulo, String nombre, float cantidad, float precio,
-            float subtotal, float iva, float total, Date fechaActualizacion,
-            String usuarioActualizacion) {
+            float subtotal, float iva, float total, boolean servidor,
+            Date fechaActualizacion, String usuarioActualizacion) {
         this.Id = Id;
         this.idDetallePedido = idDetallePedido;
         this.idPedido = idPedido;
@@ -36,6 +37,7 @@ public class VwDetallePedido_I
         this.subtotal = subtotal;
         this.iva = iva;
         this.total = total;
+        this.servidor = servidor;
         this.fechaActualizacion = fechaActualizacion;
         this.usuarioActualizacion = usuarioActualizacion;
     }
@@ -101,6 +103,12 @@ public class VwDetallePedido_I
     }
     public void setTotal(float total) {
         this.total = total;
+    }
+    public boolean getServidor() {
+        return this.servidor;
+    }
+    public void setServidor(boolean servidor) {
+        this.servidor = servidor;
     }
     public Date getFechaActualizacion() {
         return this.fechaActualizacion;
