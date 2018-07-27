@@ -120,6 +120,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         VwDetallePedido_IDao detallePedidoIDao = daoSession.getVwDetallePedido_IDao();
         QueryBuilder<VwDetallePedido_I> qb = detallePedidoIDao.queryBuilder();
 
+        qb.where(VwDetallePedido_IDao.Properties.IdPedido.eq(clavePedido));
         List<VwDetallePedido_I> detallePedido = qb.list();
         result = new VwDetallePedido[detallePedido.size()];
 
@@ -130,6 +131,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             objetoDetalle.setIdPedido(detallePedido.get(x).getIdPedido());
             objetoDetalle.setIdDetallePedido(detallePedido.get(x).getIdDetallePedido());
             objetoDetalle.setClaveArticulo(detallePedido.get(x).getClaveArticulo());
+            objetoDetalle.setNombre(detallePedido.get(x).getNombre());
             objetoDetalle.setCantidad(detallePedido.get(x).getCantidad());
             objetoDetalle.setPrecio(detallePedido.get(x).getPrecio());
             objetoDetalle.setSubtotal(detallePedido.get(x).getSubtotal());
