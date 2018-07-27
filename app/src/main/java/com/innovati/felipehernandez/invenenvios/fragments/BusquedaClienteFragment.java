@@ -1,5 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -52,6 +53,7 @@ public class BusquedaClienteFragment extends Fragment
     private EditText coloniaEditText_C;
     private EditText telefonoEditText_C;
 
+    private ProgressDialog dialog;
     MetodosInternos metodosInternos;
     VwClientes result[];
     private DaoSession daoSession;
@@ -99,10 +101,14 @@ public class BusquedaClienteFragment extends Fragment
         numeroInteriorEditText_C = (EditText)view.findViewById(R.id.NumeroInteriorEditText_C);
         coloniaEditText_C = (EditText)view.findViewById(R.id.ColoniaEditText_C);
         telefonoEditText_C = (EditText)view.findViewById(R.id.TelefonoEditText_C);
+        dialog=new ProgressDialog(getContext());
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
     }
 
     public void filtar()
     {
+        dialog.show();
         String nombre = buscarEditText.getText().toString();
         metodosInternos = new MetodosInternos(getActivity());
 
@@ -132,10 +138,12 @@ public class BusquedaClienteFragment extends Fragment
                     mRecyclerView.setLayoutManager(mLayour);
                     mRecyclerView.setAdapter(mAdapter);
                     cargarDatos();
+                    dialog.hide();
 
                 }
                 catch(Exception e)
                 {
+                    dialog.hide();
                     Toast.makeText(getActivity(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
                 }
             }
@@ -153,6 +161,7 @@ public class BusquedaClienteFragment extends Fragment
                 }
                 catch(Exception e)
                 {
+                    dialog.hide();
                     Toast.makeText(getContext(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
                 }
             }
@@ -161,12 +170,14 @@ public class BusquedaClienteFragment extends Fragment
         {
             try {
                 internaBD();
-
+                dialog.hide();
             }catch (Exception e)
             {
+                dialog.hide();
                 metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
             }
         }
+        dialog.hide();
     }
 
     private void cargarDatos()

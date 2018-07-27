@@ -1,6 +1,7 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -46,7 +47,7 @@ public class BusquedaArticulosFragment extends Fragment
     private static EditText buscarEditText;
     private static ImageButton BuscarImageButton;
     private FloatingActionButton AgregarFAB_A;
-
+    private ProgressDialog dialog;
     VwArticulos result[];
     MetodosInternos metodosInternos;
     Bundle args;
@@ -72,6 +73,7 @@ public class BusquedaArticulosFragment extends Fragment
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 if(result[position].getExistenciaTotal() > 0){
+                    dialog.show();
                     ArticuloFragment fragment = new ArticuloFragment();
                     ArticuloBlock.setVisibility(View.INVISIBLE);
                     //AGREGAR ARTICULOS A PERDIDO
@@ -84,6 +86,7 @@ public class BusquedaArticulosFragment extends Fragment
                     args.putDouble("precio", result[position].getPrecio1());
                     args.putString("unidad", result[position].getUnidadPrimaria());
                     fragment.setArguments(args);
+                    dialog.hide();
                     getFragmentManager().beginTransaction().replace(R.id.ArticuloFrameLayout, fragment).addToBackStack(null).commit();
                 }else{
                     Snackbar.make(getView(), "No Existe Existencias", Snackbar.LENGTH_SHORT).show();
@@ -108,6 +111,9 @@ public class BusquedaArticulosFragment extends Fragment
         BuscarImageButton = (ImageButton) view.findViewById(R.id.BuscarImageButton);
         AgregarFAB_A = (FloatingActionButton) view.findViewById(R.id.AgregarFAB_A);
         ArticuloBlock = (RelativeLayout)view.findViewById(R.id.ArticuloBlock);
+        dialog=new ProgressDialog(getContext());
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
     }
 
 
@@ -118,6 +124,7 @@ public class BusquedaArticulosFragment extends Fragment
 
     public void filtar(View v)
     {
+        dialog.show();
         metodosInternos = new MetodosInternos(getActivity());
         String nombre = buscarEditText.getText().toString();
         if(TextUtils.isEmpty(nombre))
@@ -160,6 +167,7 @@ public class BusquedaArticulosFragment extends Fragment
                 internaBD();
             }
         }
+        dialog.hide();
     }
 
 

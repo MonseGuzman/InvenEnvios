@@ -1,5 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -55,7 +56,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     String idUsuario = "";
     private MetodosInternos metodosInternos;
     private DaoSession daoSession;
-
+    private ProgressDialog dialog;
     public DetallePedidoFragment() {
         // Required empty public constructor
     }
@@ -98,10 +99,14 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         datosEditArticle.setVisibility(View.INVISIBLE);
         listDet = new ArrayList<String>();
         articuloEdit = new ArrayList<ArticulosPedido>();
+        dialog=new ProgressDialog(getContext());
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
     }
 
     public void loadData()
     {
+        dialog.show();
         metodosInternos = new MetodosInternos(getActivity());
 
         if(metodosInternos.conexionRed())
@@ -113,6 +118,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         else {
             internaBD();
         }
+        dialog.hide();
     }
 
     private void internaBD() //PREGUNTARLE A DEINI MAÑANA

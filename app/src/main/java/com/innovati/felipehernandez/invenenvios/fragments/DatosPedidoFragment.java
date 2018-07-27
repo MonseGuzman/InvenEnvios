@@ -1,5 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
     private static float exitArticul = 0, cantidaNum;
     private static int positionList;
     static List<ArticulosPedido> articuloEdit = new ArrayList<ArticulosPedido>();
+    private ProgressDialog dialog;
 
     public DatosPedidoFragment() {
         // Required empty public constructor
@@ -98,11 +100,16 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         btnCancelar = v.findViewById(R.id.editArticuloListAceptar);
         editCantida = v.findViewById(R.id.cantidadEditText_AEdit);
         datosEditArticle.setVisibility(View.INVISIBLE);
+        dialog=new ProgressDialog(getContext());
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
     }
 
     @Override
     public void onClick(View v)
     {
+        dialog.show();
+
         validacionCatidad();
         if(v.getId() == R.id.btnRegistrarPedido)
         {
@@ -146,6 +153,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
             editCantida.setText(String.valueOf(cantidaNum));
         }
         PedidoActivity.calTotal();
+        dialog.hide();
     }
 
     public static void updateAdapter(){
