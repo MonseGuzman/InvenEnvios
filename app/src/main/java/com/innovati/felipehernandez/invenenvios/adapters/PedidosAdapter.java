@@ -78,8 +78,9 @@ public class PedidosAdapter extends BaseAdapter
         vh.FechaTextView_P.setText(dateFormat.format(pedidos.getFecha()));
         vh.TotalTextView_P.setText("Total: $" + String.valueOf(pedidos.getTotal()));
 
+        VwClientesDao _dao = getVwClientesDao();
         Consulta c = new Consulta(pedidos.getClaveCliente());
-        c.execute();
+        c.execute(_dao);
 
         vh.ClienteTextView_P.setText(nombre);
 
