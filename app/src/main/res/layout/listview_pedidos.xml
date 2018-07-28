@@ -56,24 +56,41 @@
         </TableRow>
 
         <TableRow>
-            <TextView
-                android:id="@+id/TotalTextView_P"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Total: $"
-                android:textSize="17dp"
-                android:textColor="#F74B4B"
-                android:textStyle="bold"/>
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="horizontal">
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Cantidad: 10"
+                   android:textSize="17dp"
+                   android:textColor="@color/secondaryColor"
+                   android:gravity="left"
+                   android:textStyle="bold"/>
+
+               <TextView
+                   android:id="@+id/TotalTextView_P"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:text="Total: $"
+                   android:textColor="#F74B4B"
+                   android:textSize="17dp"
+                   android:gravity="right"
+                   android:textStyle="bold" />
+           </LinearLayout>
+
         </TableRow>
 
         <TableRow>
             <TextView
                 android:id="@+id/ClienteTextView_P"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:text="Nombre del Cliente: Andrea Monserrat Guzmán López"
                 android:textSize="15dp"
+                android:visibility="visible"
                 android:textColor="@color/secondaryColor"/>
         </TableRow>
 

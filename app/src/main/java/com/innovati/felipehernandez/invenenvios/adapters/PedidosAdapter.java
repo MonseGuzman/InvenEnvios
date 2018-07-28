@@ -16,7 +16,6 @@ import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 public class PedidosAdapter extends BaseAdapter
@@ -26,7 +25,7 @@ public class PedidosAdapter extends BaseAdapter
     private int layout;
     private int tipo; //CONSULTA - 1 ENTREGA 2
     private String nombre = "";
-    //editar
+
     public PedidosAdapter(Context context, int layout, Pedidos lista[], int tipo)
     {
         this.context = context;
@@ -37,7 +36,9 @@ public class PedidosAdapter extends BaseAdapter
 
     @Override
     public int getCount() {
-        return lista.length;
+        if(lista != null)
+            return lista.length;
+        else return 0;
     }
 
     @Override
@@ -76,6 +77,10 @@ public class PedidosAdapter extends BaseAdapter
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         vh.FechaTextView_P.setText(dateFormat.format(pedidos.getFecha()));
         vh.TotalTextView_P.setText("Total: $" + String.valueOf(pedidos.getTotal()));
+
+        Consulta c = new Consulta(pedidos.getClaveCliente());
+        c.execute();
+
         vh.ClienteTextView_P.setText(nombre);
 
         if(tipo == 2) //si es una entrega
@@ -107,10 +112,12 @@ public class PedidosAdapter extends BaseAdapter
     public class Consulta extends AsyncTask<VwClientesDao, Void, VwClientes>
     {
         String clave;
+
         public Consulta(String clave)
         {
             this.clave = clave;
         }
+
         @Override
         protected VwClientes doInBackground(VwClientesDao... vwClientesDaos)
         {

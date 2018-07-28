@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.TextView;
 
+import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwAbastecimiento;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
@@ -38,7 +39,7 @@ public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAd
     }
 
     @Override
-    public void onBindViewHolder(final ListaArticulosAdapter.ViewHolder holder, int position)
+    public void onBindViewHolder(ViewHolder holder, int position)
     {
         holder.bind(lista[position]);
     }
@@ -65,8 +66,19 @@ public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAd
         public void bind(final VwAbastecimiento datos)
         {
             String descripcion = String.valueOf(datos.getTotal()) + " " + datos.getUnidadPrimaria();
+            /*String nombre = datos.getNombre() + " (" +descripcion+ ")";
+            String datosDeDescripcion = "";*/
 
             NombreArticuloTextView.setText(datos.getNombre());
+
+            /*for(int x=0; x<lista.length-1; x++)
+            {
+                if(nombre.equals(lista[x].getNombre()))
+                {
+                    datosDeDescripcion = datos.getCantidad() + "\n " ;
+                }+
+            }*/
+
             DescripcionTextView.setText(descripcion);
 
             NombreArticuloTextView.setOnClickListener(new View.OnClickListener()
