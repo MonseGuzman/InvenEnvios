@@ -3,6 +3,7 @@ package com.innovati.felipehernandez.invenenvios.fragments;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,19 +20,25 @@ import com.innovati.felipehernandez.invenenvios.adapters.ArticulosPedidosAdapter
 import com.innovati.felipehernandez.invenenvios.adapters.RecycleViewOnItemClickListener;
 import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
+import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDaoFactory;
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
+import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
+import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_I;
 import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_IDao;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
+import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.ArrayList;
@@ -122,7 +129,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     }
 
     private void internaBD() //PREGUNTARLE A DEINI MAÑANA
-    {
+    {//Borrar el comentario anterio de monse
         VwDetallePedido_IDao detallePedidoIDao = daoSession.getVwDetallePedido_IDao();
         QueryBuilder<VwDetallePedido_I> qb = detallePedidoIDao.queryBuilder();
 
@@ -339,6 +346,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
 
     public void uptadeExits(){
+        uptadePeido();
         int x = 0;
         for (ArticulosPedido ar: articulosPedidos){
             uptadeExits(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario);
@@ -391,7 +399,23 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        uptadeExits();
+        dialog.show();
+        if(bandera){
+            metodosInternos = new MetodosInternos(getActivity());
+            if(metodosInternos.conexionRed())
+            {
+                uptadeExits();
+            }
+            else {
+                uptadeExitsBDI();
+            }
+        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.hide();
+            }
+        },100);
     }
     private void validacionCatidad(){
         try{
@@ -410,4 +434,114 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
     }
 
+    private void uptadeExitsBDI(){
+        pedidoExitsDBI();
+        int x = 0;
+        for (ArticulosPedido ar: articulosPedidos){
+            uptadeExitsDBI(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario);
+            x++;
+        }
+    }
+
+    public void uptadeExitsDBI(String idDet, String idPedido, String clave ,float cantidad, float precio, float subTotal, float iva, float total, String idUsuario)
+    {
+        VwDetallePedido_IDao detallePedidoIDao = daoSession.getVwDetallePedido_IDao();
+        VwDetallePedido_I detalle = new VwDetallePedido_I();
+        detalle.setIdDetallePedido(idDet);
+        detalle.setIdPedido(idPedido);
+        detalle.setClaveArticulo(clave);
+        detalle.setCantidad(cantidad);
+        detalle.setPrecio(precio);
+        detalle.setSubtotal(subTotal);
+        detalle.setIva(iva);
+        detalle.setTotal(total);
+        detalle.setUsuarioActualizacion(idPedido);
+        detalle.setFechaActualizacion(Calendar.getInstance().getTime());
+        detallePedidoIDao.update(detalle);
+
+    }
+    public void pedidoExitsDBI(){
+        Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
+        QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
+        qb.where(Pedidos_IDao.Properties.IdPedido.eq(clavePedido));
+        List<Pedidos_I> pedidos = qb.list();
+            int x= 0;
+            Pedidos_I objetoPedidos = new Pedidos_I();
+            objetoPedidos.setIdPedido(pedidos.get(x).getIdPedido());
+            objetoPedidos.setIdUsuario(pedidos.get(x).getIdUsuario());
+            objetoPedidos.setFolio(pedidos.get(x).getFolio());
+            objetoPedidos.setClaveCliente(pedidos.get(x).getClaveCliente());
+            objetoPedidos.setFecha(pedidos.get(x).getFecha());
+            objetoPedidos.setEstatus(pedidos.get(x).getEstatus());
+            objetoPedidos.setSubtotal(getSub());
+            objetoPedidos.setTotal(getTotal());
+            objetoPedidos.setIva(getIva());
+            objetoPedidos.setObservaciones(pedidos.get(x).getObservaciones());
+            objetoPedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
+            objetoPedidos.setUltimoUsuarioActualizacion(idUsuario);
+        pedidos_iDao.update(objetoPedidos);
+    }
+
+    public float getTotal(){
+        float total = 0;
+        if (articulosPedidos != null){
+            for(ArticulosPedido ar: articulosPedidos){
+                if (ar.isStatus()){
+                    total += ar.getTotal();
+                }
+            }
+        }
+        return total;
+    }
+
+    public  float getSub(){
+        float sub = 0;
+        if (articulosPedidos != null){
+            for(ArticulosPedido ar: articulosPedidos){
+                if (ar.isStatus()){
+                    sub += ar.getSubTotal();
+                }
+            }
+        }
+        return sub;
+    }
+    public  float getIva(){
+        float iva = 0;
+        if (articulosPedidos != null){
+            for(ArticulosPedido ar: articulosPedidos){
+                if (ar.isStatus()){
+                    iva += ar.getIva();
+                }
+            }
+        }
+        return iva;
+    }
+
+    public void uptadePeido()
+    {
+        /*Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
+        QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
+        qb.where(Pedidos_IDao.Properties.IdPedido.eq(clavePedido));
+        List<Pedidos_I> pedidos = qb.list();
+        int x= 0;
+        Pedidos objetoPedidos = new Pedidos();
+        objetoPedidos.setIdPedido(pedidos.get(x).getIdPedido());
+        objetoPedidos.setIdUsuario(pedidos.get(x).getIdUsuario());
+        objetoPedidos.setFolio(pedidos.get(x).getFolio());
+        objetoPedidos.setClaveCliente(pedidos.get(x).getClaveCliente());
+        objetoPedidos.setFecha(pedidos.get(x).getFecha());
+        objetoPedidos.setEstatus(pedidos.get(x).getEstatus());
+        objetoPedidos.setSubtotal(getSub());
+        objetoPedidos.setTotal(getTotal());
+        objetoPedidos.setIva(getIva());
+        objetoPedidos.setObservaciones(pedidos.get(x).getObservaciones());
+        objetoPedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
+        objetoPedidos.setUltimoUsuarioActualizacion(idUsuario);*/
+
+    }
+
+    public static PedidosDao getPedidosDao()
+    {
+        return PedidosDaoFactory.create();
+    }
 }
