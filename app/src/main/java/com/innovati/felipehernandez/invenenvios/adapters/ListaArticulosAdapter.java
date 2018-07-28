@@ -86,7 +86,7 @@ public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAd
                 @Override
                 public void onClick(View v)
                 {
-                    if(DescripcionTextView.isShown())
+                    if(DescripcionTextView.getVisibility() == View.VISIBLE) //isShown()
                     {
                         DescripcionTextView.startAnimation(animationUp);
 
