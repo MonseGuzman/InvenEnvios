@@ -11,11 +11,18 @@ public class ArticulosPedido {
     float total;
     float exits;
     boolean status;
+    int estado;
+    /*
+    * 1 = Activo
+    * 2 = surtido
+    * 3 = Cancelado
+    * 4 = Devulto
+    * */
 
     public ArticulosPedido() {
     }
 
-    public ArticulosPedido(String idArticulo, String nombre, String presentacion, float cantidad, float precio, float subTotal, float iva, float total, float exits, boolean status) {
+    public ArticulosPedido(String idArticulo, String nombre, String presentacion, float cantidad, float precio, float subTotal, float iva, float total, float exits, boolean status, int estado) {
         this.idArticulo = idArticulo;
         this.nombre = nombre;
         this.presentacion = presentacion;
@@ -26,6 +33,7 @@ public class ArticulosPedido {
         this.total = total;
         this.exits = exits;
         this.status = status;
+        this.estado = estado;
     }
 
     public String getIdArticulo() {
@@ -106,5 +114,13 @@ public class ArticulosPedido {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
     }
 }
