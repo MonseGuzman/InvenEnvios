@@ -18,24 +18,24 @@ import java.util.Date;
 public class DetallesPedidos implements Serializable
 {
 	/** 
-	 * This attribute maps to the column IdDetallePedido in the DetallesPedidos_I table.
+	 * This attribute maps to the column IdDetallePedido in the DetallesPedidos table.
 	 */
 	protected String idDetallePedido;
 
 	/** 
-	 * This attribute maps to the column IdPedido in the DetallesPedidos_I table.
+	 * This attribute maps to the column IdPedido in the DetallesPedidos table.
 	 */
 	protected String idPedido;
 
 	/** 
-	 * This attribute maps to the column ClaveArticulo in the DetallesPedidos_I table.
+	 * This attribute maps to the column ClaveArticulo in the DetallesPedidos table.
 	 */
 	protected String claveArticulo;
 
 	/** 
-	 * This attribute maps to the column Cantidad in the DetallesPedidos_I table.
+	 * This attribute maps to the column Cantidad in the DetallesPedidos table.
 	 */
-	protected float cantidad;
+	protected double cantidad;
 
 	/** 
 	 * This attribute represents whether the primitive attribute cantidad is null.
@@ -43,7 +43,7 @@ public class DetallesPedidos implements Serializable
 	protected boolean cantidadNull = true;
 
 	/** 
-	 * This attribute maps to the column Precio in the DetallesPedidos_I table.
+	 * This attribute maps to the column Precio in the DetallesPedidos table.
 	 */
 	protected float precio;
 
@@ -53,7 +53,7 @@ public class DetallesPedidos implements Serializable
 	protected boolean precioNull = true;
 
 	/** 
-	 * This attribute maps to the column Subtotal in the DetallesPedidos_I table.
+	 * This attribute maps to the column Subtotal in the DetallesPedidos table.
 	 */
 	protected float subtotal;
 
@@ -63,7 +63,7 @@ public class DetallesPedidos implements Serializable
 	protected boolean subtotalNull = true;
 
 	/** 
-	 * This attribute maps to the column IVA in the DetallesPedidos_I table.
+	 * This attribute maps to the column IVA in the DetallesPedidos table.
 	 */
 	protected float iva;
 
@@ -73,7 +73,7 @@ public class DetallesPedidos implements Serializable
 	protected boolean ivaNull = true;
 
 	/** 
-	 * This attribute maps to the column Total in the DetallesPedidos_I table.
+	 * This attribute maps to the column Total in the DetallesPedidos table.
 	 */
 	protected float total;
 
@@ -83,17 +83,27 @@ public class DetallesPedidos implements Serializable
 	protected boolean totalNull = true;
 
 	/** 
-	 * This attribute maps to the column UltimaFechaActualizacion in the DetallesPedidos_I table.
+	 * This attribute maps to the column Surtido in the DetallesPedidos table.
+	 */
+	protected short surtido;
+
+	/** 
+	 * This attribute represents whether the primitive attribute surtido is null.
+	 */
+	protected boolean surtidoNull = true;
+
+	/** 
+	 * This attribute maps to the column UltimaFechaActualizacion in the DetallesPedidos table.
 	 */
 	protected Date ultimaFechaActualizacion;
 
 	/** 
-	 * This attribute maps to the column UltimoUsuarioActualizacion in the DetallesPedidos_I table.
+	 * This attribute maps to the column UltimoUsuarioActualizacion in the DetallesPedidos table.
 	 */
 	protected String ultimoUsuarioActualizacion;
 
 	/**
-	 * Method 'DetallesPedidos_I'
+	 * Method 'DetallesPedidos'
 	 * 
 	 */
 	public DetallesPedidos()
@@ -163,9 +173,9 @@ public class DetallesPedidos implements Serializable
 	/**
 	 * Method 'getCantidad'
 	 * 
-	 * @return float
+	 * @return double
 	 */
-	public float getCantidad()
+	public double getCantidad()
 	{
 		return cantidad;
 	}
@@ -175,7 +185,7 @@ public class DetallesPedidos implements Serializable
 	 * 
 	 * @param cantidad
 	 */
-	public void setCantidad(float cantidad)
+	public void setCantidad(double cantidad)
 	{
 		this.cantidad = cantidad;
 		this.cantidadNull = false;
@@ -366,6 +376,47 @@ public class DetallesPedidos implements Serializable
 	}
 
 	/**
+	 * Method 'getSurtido'
+	 * 
+	 * @return short
+	 */
+	public short getSurtido()
+	{
+		return surtido;
+	}
+
+	/**
+	 * Method 'setSurtido'
+	 * 
+	 * @param surtido
+	 */
+	public void setSurtido(short surtido)
+	{
+		this.surtido = surtido;
+		this.surtidoNull = false;
+	}
+
+	/**
+	 * Method 'setSurtidoNull'
+	 * 
+	 * @param value
+	 */
+	public void setSurtidoNull(boolean value)
+	{
+		this.surtidoNull = value;
+	}
+
+	/**
+	 * Method 'isSurtidoNull'
+	 * 
+	 * @return boolean
+	 */
+	public boolean isSurtidoNull()
+	{
+		return surtidoNull;
+	}
+
+	/**
 	 * Method 'getUltimaFechaActualizacion'
 	 * 
 	 * @return Date
@@ -478,6 +529,14 @@ public class DetallesPedidos implements Serializable
 			return false;
 		}
 		
+		if (surtido != _cast.surtido) {
+			return false;
+		}
+		
+		if (surtidoNull != _cast.surtidoNull) {
+			return false;
+		}
+		
 		if (ultimaFechaActualizacion == null ? _cast.ultimaFechaActualizacion != ultimaFechaActualizacion : !ultimaFechaActualizacion.equals( _cast.ultimaFechaActualizacion )) {
 			return false;
 		}
@@ -509,7 +568,8 @@ public class DetallesPedidos implements Serializable
 			_hashCode = 29 * _hashCode + claveArticulo.hashCode();
 		}
 		
-		_hashCode = 29 * _hashCode + Float.floatToIntBits(cantidad);
+		long temp_cantidad = Double.doubleToLongBits(cantidad);
+		_hashCode = 29 * _hashCode + (int) (temp_cantidad ^ (temp_cantidad >>> 32));
 		_hashCode = 29 * _hashCode + (cantidadNull ? 1 : 0);
 		_hashCode = 29 * _hashCode + Float.floatToIntBits(precio);
 		_hashCode = 29 * _hashCode + (precioNull ? 1 : 0);
@@ -519,6 +579,8 @@ public class DetallesPedidos implements Serializable
 		_hashCode = 29 * _hashCode + (ivaNull ? 1 : 0);
 		_hashCode = 29 * _hashCode + Float.floatToIntBits(total);
 		_hashCode = 29 * _hashCode + (totalNull ? 1 : 0);
+		_hashCode = 29 * _hashCode + (int) surtido;
+		_hashCode = 29 * _hashCode + (surtidoNull ? 1 : 0);
 		if (ultimaFechaActualizacion != null) {
 			_hashCode = 29 * _hashCode + ultimaFechaActualizacion.hashCode();
 		}
@@ -528,6 +590,16 @@ public class DetallesPedidos implements Serializable
 		}
 		
 		return _hashCode;
+	}
+
+	/**
+	 * Method 'createPk'
+	 * 
+	 * @return DetallesPedidosPk
+	 */
+	public DetallesPedidosPk createPk()
+	{
+		return new DetallesPedidosPk(idDetallePedido);
 	}
 
 	/**
@@ -547,6 +619,7 @@ public class DetallesPedidos implements Serializable
 		ret.append( ", subtotal=" + subtotal );
 		ret.append( ", iva=" + iva );
 		ret.append( ", total=" + total );
+		ret.append( ", surtido=" + surtido );
 		ret.append( ", ultimaFechaActualizacion=" + ultimaFechaActualizacion );
 		ret.append( ", ultimoUsuarioActualizacion=" + ultimoUsuarioActualizacion );
 		return ret.toString();

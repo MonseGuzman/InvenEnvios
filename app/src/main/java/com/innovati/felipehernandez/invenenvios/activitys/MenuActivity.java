@@ -21,6 +21,7 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidosPk;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwAbastecimiento;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwAgente;
@@ -212,7 +213,11 @@ public class MenuActivity extends AppCompatActivity
                         try
                         {
                             if(detalle.getServidor())
-                                _dao.update(detallesPedidos, "IdDetallePedido = ?", new String[]{detallesPedidos.getIdDetallePedido()});
+                            {
+                                DetallesPedidosPk pk = new DetallesPedidosPk(detallesPedidos.getIdDetallePedido());
+                                _dao.update(pk, detallesPedidos);
+                            }
+
                             else
                                 _dao.insert(detallesPedidos);
                         }

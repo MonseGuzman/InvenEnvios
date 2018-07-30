@@ -21,11 +21,6 @@ public interface VwDetallePedidoDao
 	public VwDetallePedido[] findAll() throws VwDetallePedidoDaoException;
 
 	/** 
-	 * Returns all rows from the vwDetallePedido table that match the criteria 'IdPedido = :idPedido'.
-	 */
-	public VwDetallePedido[] findWhereIdPedidoEquals(String idPedido) throws VwDetallePedidoDaoException;
-
-	/** 
 	 * Returns all rows from the vwDetallePedido table that match the criteria 'IdDetallePedido = :idDetallePedido'.
 	 */
 	public VwDetallePedido[] findWhereIdDetallePedidoEquals(String idDetallePedido) throws VwDetallePedidoDaoException;
@@ -79,6 +74,16 @@ public interface VwDetallePedidoDao
 	 * Returns all rows from the vwDetallePedido table that match the criteria 'UltimoUsuarioActualizacion = :ultimoUsuarioActualizacion'.
 	 */
 	public VwDetallePedido[] findWhereUltimoUsuarioActualizacionEquals(String ultimoUsuarioActualizacion) throws VwDetallePedidoDaoException;
+
+	/** 
+	 * Returns all rows from the vwDetallePedido table that match the criteria 'IdPedido = :idPedido'.
+	 */
+	public VwDetallePedido[] findWhereIdPedidoEquals(String idPedido) throws VwDetallePedidoDaoException;
+
+	/** 
+	 * Returns all rows from the vwDetallePedido table that match the criteria 'Surtido = :surtido'.
+	 */
+	public VwDetallePedido[] findWhereSurtidoEquals(short surtido) throws VwDetallePedidoDaoException;
 
 	/** 
 	 * Sets the value of maxRows

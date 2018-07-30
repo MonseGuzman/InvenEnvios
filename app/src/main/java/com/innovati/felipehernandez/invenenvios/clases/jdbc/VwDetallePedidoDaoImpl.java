@@ -38,7 +38,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	/** 
 	 * All finder methods in this class use this SELECT constant to build their queries
 	 */
-	protected final String SQL_SELECT = "SELECT IdPedido, IdDetallePedido, ClaveArticulo, Nombre, UnidadPrimaria, Cantidad, Precio, Subtotal, IVA, Total, UltimaFechaActualizacion, UltimoUsuarioActualizacion FROM " + getTableName() + "";
+	protected final String SQL_SELECT = "SELECT IdDetallePedido, ClaveArticulo, Nombre, UnidadPrimaria, Cantidad, Precio, Subtotal, IVA, Total, UltimaFechaActualizacion, UltimoUsuarioActualizacion, IdPedido, Surtido FROM " + getTableName() + "";
 
 	/** 
 	 * Finder methods will pass this value to the JDBC setMaxRows method
@@ -46,69 +46,74 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	protected int maxRows;
 
 	/** 
-	 * Index of column IdPedido
-	 */
-	protected static final int COLUMN_ID_PEDIDO = 1;
-
-	/** 
 	 * Index of column IdDetallePedido
 	 */
-	protected static final int COLUMN_ID_DETALLE_PEDIDO = 2;
+	protected static final int COLUMN_ID_DETALLE_PEDIDO = 1;
 
 	/** 
 	 * Index of column ClaveArticulo
 	 */
-	protected static final int COLUMN_CLAVE_ARTICULO = 3;
+	protected static final int COLUMN_CLAVE_ARTICULO = 2;
 
 	/** 
 	 * Index of column Nombre
 	 */
-	protected static final int COLUMN_NOMBRE = 4;
+	protected static final int COLUMN_NOMBRE = 3;
 
 	/** 
 	 * Index of column UnidadPrimaria
 	 */
-	protected static final int COLUMN_UNIDAD_PRIMARIA = 5;
+	protected static final int COLUMN_UNIDAD_PRIMARIA = 4;
 
 	/** 
 	 * Index of column Cantidad
 	 */
-	protected static final int COLUMN_CANTIDAD = 6;
+	protected static final int COLUMN_CANTIDAD = 5;
 
 	/** 
 	 * Index of column Precio
 	 */
-	protected static final int COLUMN_PRECIO = 7;
+	protected static final int COLUMN_PRECIO = 6;
 
 	/** 
 	 * Index of column Subtotal
 	 */
-	protected static final int COLUMN_SUBTOTAL = 8;
+	protected static final int COLUMN_SUBTOTAL = 7;
 
 	/** 
 	 * Index of column IVA
 	 */
-	protected static final int COLUMN_IVA = 9;
+	protected static final int COLUMN_IVA = 8;
 
 	/** 
 	 * Index of column Total
 	 */
-	protected static final int COLUMN_TOTAL = 10;
+	protected static final int COLUMN_TOTAL = 9;
 
 	/** 
 	 * Index of column UltimaFechaActualizacion
 	 */
-	protected static final int COLUMN_ULTIMA_FECHA_ACTUALIZACION = 11;
+	protected static final int COLUMN_ULTIMA_FECHA_ACTUALIZACION = 10;
 
 	/** 
 	 * Index of column UltimoUsuarioActualizacion
 	 */
-	protected static final int COLUMN_ULTIMO_USUARIO_ACTUALIZACION = 12;
+	protected static final int COLUMN_ULTIMO_USUARIO_ACTUALIZACION = 11;
+
+	/** 
+	 * Index of column IdPedido
+	 */
+	protected static final int COLUMN_ID_PEDIDO = 12;
+
+	/** 
+	 * Index of column Surtido
+	 */
+	protected static final int COLUMN_SURTIDO = 13;
 
 	/** 
 	 * Number of columns
 	 */
-	protected static final int NUMBER_OF_COLUMNS = 12;
+	protected static final int NUMBER_OF_COLUMNS = 13;
 
 	/** 
 	 * Returns all rows from the vwDetallePedido table that match the criteria ''.
@@ -116,14 +121,6 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	public VwDetallePedido[] findAll() throws VwDetallePedidoDaoException
 	{
 		return findByDynamicSelect( SQL_SELECT, null );
-	}
-
-	/** 
-	 * Returns all rows from the vwDetallePedido table that match the criteria 'IdPedido = :idPedido'.
-	 */
-	public VwDetallePedido[] findWhereIdPedidoEquals(String idPedido) throws VwDetallePedidoDaoException
-	{
-		return findByDynamicSelect( SQL_SELECT + " WHERE IdPedido = ? ORDER BY IdPedido", new Object[] { idPedido } );
 	}
 
 	/** 
@@ -214,6 +211,22 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		return findByDynamicSelect( SQL_SELECT + " WHERE UltimoUsuarioActualizacion = ? ORDER BY UltimoUsuarioActualizacion", new Object[] { ultimoUsuarioActualizacion } );
 	}
 
+	/** 
+	 * Returns all rows from the vwDetallePedido table that match the criteria 'IdPedido = :idPedido'.
+	 */
+	public VwDetallePedido[] findWhereIdPedidoEquals(String idPedido) throws VwDetallePedidoDaoException
+	{
+		return findByDynamicSelect( SQL_SELECT + " WHERE IdPedido = ? ORDER BY IdPedido", new Object[] { idPedido } );
+	}
+
+	/** 
+	 * Returns all rows from the vwDetallePedido table that match the criteria 'Surtido = :surtido'.
+	 */
+	public VwDetallePedido[] findWhereSurtidoEquals(short surtido) throws VwDetallePedidoDaoException
+	{
+		return findByDynamicSelect( SQL_SELECT + " WHERE Surtido = ? ORDER BY Surtido", new Object[] {  new Short(surtido) } );
+	}
+
 	/**
 	 * Method 'VwDetallePedidoDaoImpl'
 	 * 
@@ -295,7 +308,6 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	protected void populateDto(VwDetallePedido dto, ResultSet rs) throws SQLException
 	{
-		dto.setIdPedido( rs.getString( COLUMN_ID_PEDIDO ) );
 		dto.setIdDetallePedido( rs.getString( COLUMN_ID_DETALLE_PEDIDO ) );
 		dto.setClaveArticulo( rs.getString( COLUMN_CLAVE_ARTICULO ) );
 		dto.setNombre( rs.getString( COLUMN_NOMBRE ) );
@@ -327,6 +339,12 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		
 		dto.setUltimaFechaActualizacion( rs.getTimestamp(COLUMN_ULTIMA_FECHA_ACTUALIZACION ) );
 		dto.setUltimoUsuarioActualizacion( rs.getString( COLUMN_ULTIMO_USUARIO_ACTUALIZACION ) );
+		dto.setIdPedido( rs.getString( COLUMN_ID_PEDIDO ) );
+		dto.setSurtido( rs.getShort( COLUMN_SURTIDO ) );
+		if (rs.wasNull()) {
+			dto.setSurtidoNull( true );
+		}
+		
 	}
 
 	/** 

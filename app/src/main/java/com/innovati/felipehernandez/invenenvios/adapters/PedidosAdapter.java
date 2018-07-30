@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
@@ -25,6 +26,7 @@ public class PedidosAdapter extends BaseAdapter
     private int layout;
     private int tipo; //CONSULTA - 1 ENTREGA 2
     private String nombre = "";
+    private MetodosInternos metodosInternos;
 
     public PedidosAdapter(Context context, int layout, Pedidos lista[], int tipo)
     {
@@ -32,6 +34,7 @@ public class PedidosAdapter extends BaseAdapter
         this.layout = layout;
         this.lista = lista;
         this.tipo = tipo;
+        metodosInternos = new MetodosInternos(context);
     }
 
     @Override
@@ -78,9 +81,17 @@ public class PedidosAdapter extends BaseAdapter
         vh.FechaTextView_P.setText(dateFormat.format(pedidos.getFecha()));
         vh.TotalTextView_P.setText("Total: $" + String.valueOf(pedidos.getTotal()));
 
-        VwClientesDao _dao = getVwClientesDao();
-        Consulta c = new Consulta(pedidos.getClaveCliente());
-        c.execute(_dao);
+        if(metodosInternos.conexionRed())
+        {
+            VwClientesDao _dao = getVwClientesDao();
+            Consulta c = new Consulta(pedidos.getClaveCliente());
+            c.execute(_dao);
+
+        }
+        else
+        {
+
+        }
 
         vh.ClienteTextView_P.setText(nombre);
 

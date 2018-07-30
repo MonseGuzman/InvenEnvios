@@ -12,27 +12,27 @@ import java.sql.Connection;
 import com.innovati.felipehernandez.invenenvios.clases.dao.*;
 import com.innovati.felipehernandez.invenenvios.clases.jdbc.*;
 
-public class DetallesPedidosDaoFactory
+public class VwPedidosDaoFactory
 {
 	/**
 	 * Method 'create'
 	 * 
-	 * @return DetallesPedidosDao
+	 * @return VwPedidosDao
 	 */
-	public static DetallesPedidosDao create()
+	public static VwPedidosDao create()
 	{
-		return new DetallesPedidosDaoImpl();
+		return new VwPedidosDaoImpl();
 	}
 
 	/**
 	 * Method 'create'
 	 * 
 	 * @param conn
-	 * @return DetallesPedidosDao
+	 * @return VwPedidosDao
 	 */
-	public static DetallesPedidosDao create(Connection conn)
+	public static VwPedidosDao create(Connection conn)
 	{
-		return new DetallesPedidosDaoImpl( conn );
+		return new VwPedidosDaoImpl( conn );
 	}
 
 }

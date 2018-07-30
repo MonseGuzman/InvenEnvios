@@ -24,6 +24,7 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidosPk;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
@@ -380,8 +381,8 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             DetallesPedidosDao _dao = getDetallesPedidosDao();
             try
             {
-                Object[] objs = new  Object[]{detallesPedidos[0].getIdDetallePedido()};
-                _dao.update(detallesPedidos[0],"IdDetallePedido = ?" , objs);
+                DetallesPedidosPk pk = new DetallesPedidosPk(detallesPedidos[0].getIdDetallePedido());
+                _dao.update(pk, detallesPedidos[0]);
             }
             catch (Exception e)
             {
@@ -519,7 +520,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
     public void uptadePeido()
     {
-        /*Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
+        Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
         QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
         qb.where(Pedidos_IDao.Properties.IdPedido.eq(clavePedido));
         List<Pedidos_I> pedidos = qb.list();
@@ -536,12 +537,33 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         objetoPedidos.setIva(getIva());
         objetoPedidos.setObservaciones(pedidos.get(x).getObservaciones());
         objetoPedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
-        objetoPedidos.setUltimoUsuarioActualizacion(idUsuario);*/
+        objetoPedidos.setUltimoUsuarioActualizacion(idUsuario);
+        ActualizarPedido a = new ActualizarPedido();
+        a.execute(objetoPedidos);
 
     }
 
     public static PedidosDao getPedidosDao()
     {
         return PedidosDaoFactory.create();
+    }
+
+    private static class ActualizarPedido extends AsyncTask<Pedidos, Void, Void>
+    {
+        @Override
+        protected Void doInBackground(Pedidos... pedidos)
+        {
+            PedidosDao _dao = getPedidosDao();
+            try
+            {
+                String parametros[] = new String[]{pedidos[0].getIdPedido()};
+                _dao.update(pedidos[0], "IdPedido = ?", parametros);
+            }
+            catch (Exception e)
+            {
+
+            }
+            return null;
+        }
     }
 }

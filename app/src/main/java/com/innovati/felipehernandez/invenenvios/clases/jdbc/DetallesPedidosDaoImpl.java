@@ -38,7 +38,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	/** 
 	 * All finder methods in this class use this SELECT constant to build their queries
 	 */
-	protected final String SQL_SELECT = "SELECT IdDetallePedido, IdPedido, ClaveArticulo, Cantidad, Precio, Subtotal, IVA, Total, UltimaFechaActualizacion, UltimoUsuarioActualizacion FROM " + getTableName() + "";
+	protected final String SQL_SELECT = "SELECT IdDetallePedido, IdPedido, ClaveArticulo, Cantidad, Precio, Subtotal, IVA, Total, Surtido, UltimaFechaActualizacion, UltimoUsuarioActualizacion FROM " + getTableName() + "";
 
 	/** 
 	 * Finder methods will pass this value to the JDBC setMaxRows method
@@ -48,9 +48,17 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	/** 
 	 * SQL INSERT statement for this table
 	 */
-	protected final String SQL_INSERT = "INSERT INTO " + getTableName() + " ( IdDetallePedido, IdPedido, ClaveArticulo, Cantidad, Precio, Subtotal, IVA, Total, UltimaFechaActualizacion, UltimoUsuarioActualizacion ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+	protected final String SQL_INSERT = "INSERT INTO " + getTableName() + " ( IdDetallePedido, IdPedido, ClaveArticulo, Cantidad, Precio, Subtotal, IVA, Total, Surtido, UltimaFechaActualizacion, UltimoUsuarioActualizacion ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
-	protected final String SQL_UPDATE = "UPDATE " + getTableName() + " SET IdDetallePedido = ?, IdPedido = ?, ClaveArticulo = ?, Cantidad = ?, Precio = ?, Subtotal = ?, IVA = ?, Total = ?, UltimaFechaActualizacion = ?, UltimoUsuarioActualizacion = ?";
+	/** 
+	 * SQL UPDATE statement for this table
+	 */
+	protected final String SQL_UPDATE = "UPDATE " + getTableName() + " SET IdDetallePedido = ?, IdPedido = ?, ClaveArticulo = ?, Cantidad = ?, Precio = ?, Subtotal = ?, IVA = ?, Total = ?, Surtido = ?, UltimaFechaActualizacion = ?, UltimoUsuarioActualizacion = ? WHERE IdDetallePedido = ?";
+
+	/** 
+	 * SQL DELETE statement for this table
+	 */
+	protected final String SQL_DELETE = "DELETE FROM " + getTableName() + " WHERE IdDetallePedido = ?";
 
 	/** 
 	 * Index of column IdDetallePedido
@@ -93,44 +101,54 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	protected static final int COLUMN_TOTAL = 8;
 
 	/** 
+	 * Index of column Surtido
+	 */
+	protected static final int COLUMN_SURTIDO = 9;
+
+	/** 
 	 * Index of column UltimaFechaActualizacion
 	 */
-	protected static final int COLUMN_ULTIMA_FECHA_ACTUALIZACION = 9;
+	protected static final int COLUMN_ULTIMA_FECHA_ACTUALIZACION = 10;
 
 	/** 
 	 * Index of column UltimoUsuarioActualizacion
 	 */
-	protected static final int COLUMN_ULTIMO_USUARIO_ACTUALIZACION = 10;
+	protected static final int COLUMN_ULTIMO_USUARIO_ACTUALIZACION = 11;
 
 	/** 
 	 * Number of columns
 	 */
-	protected static final int NUMBER_OF_COLUMNS = 10;
+	protected static final int NUMBER_OF_COLUMNS = 11;
 
 	/** 
-	 * Inserts a new row in the DetallesPedidos_I table.
+	 * Index of primary-key column IdDetallePedido
 	 */
-	public void insert(DetallesPedidos dto) throws DetallesPedidosDaoException
+	protected static final int PK_COLUMN_ID_DETALLE_PEDIDO = 1;
+
+	/** 
+	 * Inserts a new row in the DetallesPedidos table.
+	 */
+	public DetallesPedidosPk insert(DetallesPedidos dto) throws DetallesPedidosDaoException
 	{
 		long t1 = System.currentTimeMillis();
 		// declare variables
 		final boolean isConnSupplied = (userConn != null);
 		Connection conn = null;
-		PreparedStatement stmt = null;
+		CallableStatement stmt = null;
 		ResultSet rs = null;
 		
 		try {
 			// get the user-specified connection or get a connection from the ResourceManager
 			conn = isConnSupplied ? userConn : ResourceManager.getConnection();
 		
-			stmt = conn.prepareStatement( SQL_INSERT );
+			stmt = conn.prepareCall( SQL_INSERT );
 			stmt.setString( COLUMN_ID_DETALLE_PEDIDO, dto.getIdDetallePedido() );
 			stmt.setString( COLUMN_ID_PEDIDO, dto.getIdPedido() );
 			stmt.setString( COLUMN_CLAVE_ARTICULO, dto.getClaveArticulo() );
 			if (dto.isCantidadNull()) {
-				stmt.setNull( COLUMN_CANTIDAD, java.sql.Types.FLOAT );
+				stmt.setNull( COLUMN_CANTIDAD, java.sql.Types.DOUBLE );
 			} else {
-				stmt.setFloat( COLUMN_CANTIDAD, dto.getCantidad() );
+				stmt.setDouble( COLUMN_CANTIDAD, dto.getCantidad() );
 			}
 		
 			if (dto.isPrecioNull()) {
@@ -155,6 +173,12 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 				stmt.setNull( COLUMN_TOTAL, java.sql.Types.FLOAT );
 			} else {
 				stmt.setFloat( COLUMN_TOTAL, dto.getTotal() );
+			}
+		
+			if (dto.isSurtidoNull()) {
+				stmt.setNull( COLUMN_SURTIDO, java.sql.Types.INTEGER );
+			} else {
+				stmt.setShort( COLUMN_SURTIDO, dto.getSurtido() );
 			}
 		
 			stmt.setTimestamp(COLUMN_ULTIMA_FECHA_ACTUALIZACION, dto.getUltimaFechaActualizacion()==null ? null : new java.sql.Timestamp( dto.getUltimaFechaActualizacion().getTime() ) );
@@ -163,6 +187,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 			stmt.execute();
 			int rows = stmt.getUpdateCount();
 			System.out.println( rows + " rows affected" );
+			return dto.createPk();
 		}
 		catch (Exception _e) {
 			_e.printStackTrace();
@@ -178,64 +203,70 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		
 	}
 
-	public void update(DetallesPedidos dto, String sql, Object[] sqlParams) throws DetallesPedidosDaoException
+	/** 
+	 * Updates a single row in the DetallesPedidos table.
+	 */
+	public void update(DetallesPedidosPk pk, DetallesPedidos dto) throws DetallesPedidosDaoException
 	{
 		long t1 = System.currentTimeMillis();
 		// declare variables
 		final boolean isConnSupplied = (userConn != null);
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		ResultSet rs = null;
-
+		
 		try {
 			// get the user-specified connection or get a connection from the ResourceManager
 			conn = isConnSupplied ? userConn : ResourceManager.getConnection();
-			final String SQL = SQL_UPDATE + " WHERE " + sql;
-			stmt = conn.prepareStatement( SQL );
-			stmt.setString( COLUMN_ID_DETALLE_PEDIDO, dto.getIdDetallePedido() );
-			stmt.setString( COLUMN_ID_PEDIDO, dto.getIdPedido() );
-			stmt.setString( COLUMN_CLAVE_ARTICULO, dto.getClaveArticulo() );
+		
+			System.out.println( "Executing " + SQL_UPDATE + " with DTO: " + dto );
+			stmt = conn.prepareStatement( SQL_UPDATE );
+			int index=1;
+			stmt.setString( index++, dto.getIdDetallePedido() );
+			stmt.setString( index++, dto.getIdPedido() );
+			stmt.setString( index++, dto.getClaveArticulo() );
 			if (dto.isCantidadNull()) {
-				stmt.setNull( COLUMN_CANTIDAD, java.sql.Types.FLOAT );
+				stmt.setNull( index++, java.sql.Types.DOUBLE );
 			} else {
-				stmt.setFloat( COLUMN_CANTIDAD, dto.getCantidad() );
+				stmt.setDouble( index++, dto.getCantidad() );
 			}
-
+		
 			if (dto.isPrecioNull()) {
-				stmt.setNull( COLUMN_PRECIO, java.sql.Types.FLOAT );
+				stmt.setNull( index++, java.sql.Types.FLOAT );
 			} else {
-				stmt.setFloat( COLUMN_PRECIO, dto.getPrecio() );
+				stmt.setFloat( index++, dto.getPrecio() );
 			}
-
+		
 			if (dto.isSubtotalNull()) {
-				stmt.setNull( COLUMN_SUBTOTAL, java.sql.Types.FLOAT );
+				stmt.setNull( index++, java.sql.Types.FLOAT );
 			} else {
-				stmt.setFloat( COLUMN_SUBTOTAL, dto.getSubtotal() );
+				stmt.setFloat( index++, dto.getSubtotal() );
 			}
-
+		
 			if (dto.isIvaNull()) {
-				stmt.setNull( COLUMN_IVA, java.sql.Types.FLOAT );
+				stmt.setNull( index++, java.sql.Types.FLOAT );
 			} else {
-				stmt.setFloat( COLUMN_IVA, dto.getIva() );
+				stmt.setFloat( index++, dto.getIva() );
 			}
-
+		
 			if (dto.isTotalNull()) {
-				stmt.setNull( COLUMN_TOTAL, java.sql.Types.FLOAT );
+				stmt.setNull( index++, java.sql.Types.FLOAT );
 			} else {
-				stmt.setFloat( COLUMN_TOTAL, dto.getTotal() );
+				stmt.setFloat( index++, dto.getTotal() );
 			}
-
-			stmt.setTimestamp(COLUMN_ULTIMA_FECHA_ACTUALIZACION, dto.getUltimaFechaActualizacion()==null ? null : new java.sql.Timestamp( dto.getUltimaFechaActualizacion().getTime() ) );
-			stmt.setString( COLUMN_ULTIMO_USUARIO_ACTUALIZACION, dto.getUltimoUsuarioActualizacion() );
-
-			for (int i=0; sqlParams!=null && i<sqlParams.length; i++ ) {
-				stmt.setObject( i+11, sqlParams[i] );
+		
+			if (dto.isSurtidoNull()) {
+				stmt.setNull( index++, java.sql.Types.INTEGER );
+			} else {
+				stmt.setShort( index++, dto.getSurtido() );
 			}
-
-			System.out.println( "Executing " + SQL);
-			stmt.execute();
-			int rows = stmt.getUpdateCount();
-			System.out.println( rows + " rows affected" );
+		
+			stmt.setTimestamp(index++, dto.getUltimaFechaActualizacion()==null ? null : new java.sql.Timestamp( dto.getUltimaFechaActualizacion().getTime() ) );
+			stmt.setString( index++, dto.getUltimoUsuarioActualizacion() );
+			stmt.setString( 12, pk.getIdDetallePedido() );
+			int rows = stmt.executeUpdate();
+			reset(dto);
+			long t2 = System.currentTimeMillis();
+			System.out.println( rows + " rows affected (" + (t2-t1) + " ms)" );
 		}
 		catch (Exception _e) {
 			_e.printStackTrace();
@@ -246,21 +277,74 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 			if (!isConnSupplied) {
 				ResourceManager.close(conn);
 			}
-
+		
 		}
-
+		
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos_I table that match the criteria ''.
+	 * Deletes a single row in the DetallesPedidos table.
+	 */
+	public void delete(DetallesPedidosPk pk) throws DetallesPedidosDaoException
+	{
+		long t1 = System.currentTimeMillis();
+		// declare variables
+		final boolean isConnSupplied = (userConn != null);
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			// get the user-specified connection or get a connection from the ResourceManager
+			conn = isConnSupplied ? userConn : ResourceManager.getConnection();
+		
+			System.out.println( "Executing " + SQL_DELETE + " with PK: " + pk );
+			stmt = conn.prepareStatement( SQL_DELETE );
+			stmt.setString( 1, pk.getIdDetallePedido() );
+			int rows = stmt.executeUpdate();
+			long t2 = System.currentTimeMillis();
+			System.out.println( rows + " rows affected (" + (t2-t1) + " ms)" );
+		}
+		catch (Exception _e) {
+			_e.printStackTrace();
+			throw new DetallesPedidosDaoException( "Exception: " + _e.getMessage(), _e );
+		}
+		finally {
+			ResourceManager.close(stmt);
+			if (!isConnSupplied) {
+				ResourceManager.close(conn);
+			}
+		
+		}
+		
+	}
+
+	/** 
+	 * Returns the rows from the DetallesPedidos table that matches the specified primary-key value.
+	 */
+	public DetallesPedidos findByPrimaryKey(DetallesPedidosPk pk) throws DetallesPedidosDaoException
+	{
+		return findByPrimaryKey( pk.getIdDetallePedido() );
+	}
+
+	/** 
+	 * Returns all rows from the DetallesPedidos table that match the criteria 'IdDetallePedido = :idDetallePedido'.
+	 */
+	public DetallesPedidos findByPrimaryKey(String idDetallePedido) throws DetallesPedidosDaoException
+	{
+		DetallesPedidos ret[] = findByDynamicSelect( SQL_SELECT + " WHERE IdDetallePedido = ?", new Object[] { idDetallePedido } );
+		return ret.length==0 ? null : ret[0];
+	}
+
+	/** 
+	 * Returns all rows from the DetallesPedidos table that match the criteria ''.
 	 */
 	public DetallesPedidos[] findAll() throws DetallesPedidosDaoException
 	{
-		return findByDynamicSelect( SQL_SELECT, null );
+		return findByDynamicSelect( SQL_SELECT + " ORDER BY IdDetallePedido", null );
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'IdDetallePedido = :idDetallePedido'.
+	 * Returns all rows from the DetallesPedidos table that match the criteria 'IdDetallePedido = :idDetallePedido'.
 	 */
 	public DetallesPedidos[] findWhereIdDetallePedidoEquals(String idDetallePedido) throws DetallesPedidosDaoException
 	{
@@ -268,7 +352,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'IdPedido = :idPedido'.
+	 * Returns all rows from the DetallesPedidos table that match the criteria 'IdPedido = :idPedido'.
 	 */
 	public DetallesPedidos[] findWhereIdPedidoEquals(String idPedido) throws DetallesPedidosDaoException
 	{
@@ -276,7 +360,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'ClaveArticulo = :claveArticulo'.
+	 * Returns all rows from the DetallesPedidos table that match the criteria 'ClaveArticulo = :claveArticulo'.
 	 */
 	public DetallesPedidos[] findWhereClaveArticuloEquals(String claveArticulo) throws DetallesPedidosDaoException
 	{
@@ -284,7 +368,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'Cantidad = :cantidad'.
+	 * Returns all rows from the DetallesPedidos table that match the criteria 'Cantidad = :cantidad'.
 	 */
 	public DetallesPedidos[] findWhereCantidadEquals(double cantidad) throws DetallesPedidosDaoException
 	{
@@ -292,7 +376,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'Precio = :precio'.
+	 * Returns all rows from the DetallesPedidos table that match the criteria 'Precio = :precio'.
 	 */
 	public DetallesPedidos[] findWherePrecioEquals(float precio) throws DetallesPedidosDaoException
 	{
@@ -300,7 +384,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'Subtotal = :subtotal'.
+	 * Returns all rows from the DetallesPedidos table that match the criteria 'Subtotal = :subtotal'.
 	 */
 	public DetallesPedidos[] findWhereSubtotalEquals(float subtotal) throws DetallesPedidosDaoException
 	{
@@ -308,7 +392,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'IVA = :iva'.
+	 * Returns all rows from the DetallesPedidos table that match the criteria 'IVA = :iva'.
 	 */
 	public DetallesPedidos[] findWhereIvaEquals(float iva) throws DetallesPedidosDaoException
 	{
@@ -316,7 +400,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'Total = :total'.
+	 * Returns all rows from the DetallesPedidos table that match the criteria 'Total = :total'.
 	 */
 	public DetallesPedidos[] findWhereTotalEquals(float total) throws DetallesPedidosDaoException
 	{
@@ -324,7 +408,15 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'UltimaFechaActualizacion = :ultimaFechaActualizacion'.
+	 * Returns all rows from the DetallesPedidos table that match the criteria 'Surtido = :surtido'.
+	 */
+	public DetallesPedidos[] findWhereSurtidoEquals(short surtido) throws DetallesPedidosDaoException
+	{
+		return findByDynamicSelect( SQL_SELECT + " WHERE Surtido = ? ORDER BY Surtido", new Object[] {  new Short(surtido) } );
+	}
+
+	/** 
+	 * Returns all rows from the DetallesPedidos table that match the criteria 'UltimaFechaActualizacion = :ultimaFechaActualizacion'.
 	 */
 	public DetallesPedidos[] findWhereUltimaFechaActualizacionEquals(Date ultimaFechaActualizacion) throws DetallesPedidosDaoException
 	{
@@ -332,7 +424,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos_I table that match the criteria 'UltimoUsuarioActualizacion = :ultimoUsuarioActualizacion'.
+	 * Returns all rows from the DetallesPedidos table that match the criteria 'UltimoUsuarioActualizacion = :ultimoUsuarioActualizacion'.
 	 */
 	public DetallesPedidos[] findWhereUltimoUsuarioActualizacionEquals(String ultimoUsuarioActualizacion) throws DetallesPedidosDaoException
 	{
@@ -423,7 +515,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		dto.setIdDetallePedido( rs.getString( COLUMN_ID_DETALLE_PEDIDO ) );
 		dto.setIdPedido( rs.getString( COLUMN_ID_PEDIDO ) );
 		dto.setClaveArticulo( rs.getString( COLUMN_CLAVE_ARTICULO ) );
-		dto.setCantidad( rs.getFloat( COLUMN_CANTIDAD ) );
+		dto.setCantidad( rs.getDouble( COLUMN_CANTIDAD ) );
 		if (rs.wasNull()) {
 			dto.setCantidadNull( true );
 		}
@@ -448,6 +540,11 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 			dto.setTotalNull( true );
 		}
 		
+		dto.setSurtido( rs.getShort( COLUMN_SURTIDO ) );
+		if (rs.wasNull()) {
+			dto.setSurtidoNull( true );
+		}
+		
 		dto.setUltimaFechaActualizacion( rs.getTimestamp(COLUMN_ULTIMA_FECHA_ACTUALIZACION ) );
 		dto.setUltimoUsuarioActualizacion( rs.getString( COLUMN_ULTIMO_USUARIO_ACTUALIZACION ) );
 	}
@@ -460,7 +557,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos_I table that match the specified arbitrary SQL statement
+	 * Returns all rows from the DetallesPedidos table that match the specified arbitrary SQL statement
 	 */
 	public DetallesPedidos[] findByDynamicSelect(String sql, Object[] sqlParams) throws DetallesPedidosDaoException
 	{
@@ -510,7 +607,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
-	 * Returns all rows from the DetallesPedidos_I table that match the specified arbitrary SQL statement
+	 * Returns all rows from the DetallesPedidos table that match the specified arbitrary SQL statement
 	 */
 	public DetallesPedidos[] findByDynamicWhere(String sql, Object[] sqlParams) throws DetallesPedidosDaoException
 	{

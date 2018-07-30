@@ -18,11 +18,6 @@ import java.util.Date;
 public class VwDetallePedido implements Serializable
 {
 	/** 
-	 * This attribute maps to the column IdPedido in the vwDetallePedido table.
-	 */
-	protected String idPedido;
-
-	/** 
 	 * This attribute maps to the column IdDetallePedido in the vwDetallePedido table.
 	 */
 	protected String idDetallePedido;
@@ -102,32 +97,27 @@ public class VwDetallePedido implements Serializable
 	 */
 	protected String ultimoUsuarioActualizacion;
 
+	/** 
+	 * This attribute maps to the column IdPedido in the vwDetallePedido table.
+	 */
+	protected String idPedido;
+
+	/** 
+	 * This attribute maps to the column Surtido in the vwDetallePedido table.
+	 */
+	protected short surtido;
+
+	/** 
+	 * This attribute represents whether the primitive attribute surtido is null.
+	 */
+	protected boolean surtidoNull = true;
+
 	/**
-	 * Method 'VwDetallePedido_I'
+	 * Method 'VwDetallePedido'
 	 * 
 	 */
 	public VwDetallePedido()
 	{
-	}
-
-	/**
-	 * Method 'getIdPedido'
-	 * 
-	 * @return String
-	 */
-	public String getIdPedido()
-	{
-		return idPedido;
-	}
-
-	/**
-	 * Method 'setIdPedido'
-	 * 
-	 * @param idPedido
-	 */
-	public void setIdPedido(String idPedido)
-	{
-		this.idPedido = idPedido;
 	}
 
 	/**
@@ -456,6 +446,67 @@ public class VwDetallePedido implements Serializable
 	}
 
 	/**
+	 * Method 'getIdPedido'
+	 * 
+	 * @return String
+	 */
+	public String getIdPedido()
+	{
+		return idPedido;
+	}
+
+	/**
+	 * Method 'setIdPedido'
+	 * 
+	 * @param idPedido
+	 */
+	public void setIdPedido(String idPedido)
+	{
+		this.idPedido = idPedido;
+	}
+
+	/**
+	 * Method 'getSurtido'
+	 * 
+	 * @return short
+	 */
+	public short getSurtido()
+	{
+		return surtido;
+	}
+
+	/**
+	 * Method 'setSurtido'
+	 * 
+	 * @param surtido
+	 */
+	public void setSurtido(short surtido)
+	{
+		this.surtido = surtido;
+		this.surtidoNull = false;
+	}
+
+	/**
+	 * Method 'setSurtidoNull'
+	 * 
+	 * @param value
+	 */
+	public void setSurtidoNull(boolean value)
+	{
+		this.surtidoNull = value;
+	}
+
+	/**
+	 * Method 'isSurtidoNull'
+	 * 
+	 * @return boolean
+	 */
+	public boolean isSurtidoNull()
+	{
+		return surtidoNull;
+	}
+
+	/**
 	 * Method 'equals'
 	 * 
 	 * @param _other
@@ -476,10 +527,6 @@ public class VwDetallePedido implements Serializable
 		}
 		
 		final VwDetallePedido _cast = (VwDetallePedido) _other;
-		if (idPedido == null ? _cast.idPedido != idPedido : !idPedido.equals( _cast.idPedido )) {
-			return false;
-		}
-		
 		if (idDetallePedido == null ? _cast.idDetallePedido != idDetallePedido : !idDetallePedido.equals( _cast.idDetallePedido )) {
 			return false;
 		}
@@ -544,6 +591,18 @@ public class VwDetallePedido implements Serializable
 			return false;
 		}
 		
+		if (idPedido == null ? _cast.idPedido != idPedido : !idPedido.equals( _cast.idPedido )) {
+			return false;
+		}
+		
+		if (surtido != _cast.surtido) {
+			return false;
+		}
+		
+		if (surtidoNull != _cast.surtidoNull) {
+			return false;
+		}
+		
 		return true;
 	}
 
@@ -555,10 +614,6 @@ public class VwDetallePedido implements Serializable
 	public int hashCode()
 	{
 		int _hashCode = 0;
-		if (idPedido != null) {
-			_hashCode = 29 * _hashCode + idPedido.hashCode();
-		}
-		
 		if (idDetallePedido != null) {
 			_hashCode = 29 * _hashCode + idDetallePedido.hashCode();
 		}
@@ -594,6 +649,12 @@ public class VwDetallePedido implements Serializable
 			_hashCode = 29 * _hashCode + ultimoUsuarioActualizacion.hashCode();
 		}
 		
+		if (idPedido != null) {
+			_hashCode = 29 * _hashCode + idPedido.hashCode();
+		}
+		
+		_hashCode = 29 * _hashCode + (int) surtido;
+		_hashCode = 29 * _hashCode + (surtidoNull ? 1 : 0);
 		return _hashCode;
 	}
 
@@ -605,9 +666,8 @@ public class VwDetallePedido implements Serializable
 	public String toString()
 	{
 		StringBuffer ret = new StringBuffer();
-		ret.append( "com.innovati.felipehernandez.clases.dto.VwDetallePedido_I: " );
-		ret.append( "idPedido=" + idPedido );
-		ret.append( ", idDetallePedido=" + idDetallePedido );
+		ret.append( "com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido: " );
+		ret.append( "idDetallePedido=" + idDetallePedido );
 		ret.append( ", claveArticulo=" + claveArticulo );
 		ret.append( ", nombre=" + nombre );
 		ret.append( ", unidadPrimaria=" + unidadPrimaria );
@@ -618,6 +678,8 @@ public class VwDetallePedido implements Serializable
 		ret.append( ", total=" + total );
 		ret.append( ", ultimaFechaActualizacion=" + ultimaFechaActualizacion );
 		ret.append( ", ultimoUsuarioActualizacion=" + ultimoUsuarioActualizacion );
+		ret.append( ", idPedido=" + idPedido );
+		ret.append( ", surtido=" + surtido );
 		return ret.toString();
 	}
 
