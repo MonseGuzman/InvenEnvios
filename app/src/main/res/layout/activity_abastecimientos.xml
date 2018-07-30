@@ -7,6 +7,13 @@
     tools:context=".activitys.AbastecimientosActivity"
     android:id="@+id/abastecimientoConsulta">
 
+    <ExpandableListView
+        android:id="@+id/AbastecimientoExpandableListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ExpandableListView>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/AbastecimientoRecycleView"
         android:layout_width="match_parent"
@@ -16,7 +23,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:scrollbars="vertical"
-        android:visibility="visible"/>
+        android:visibility="invisible"/>
 
     <ListView
         android:id="@+id/AbastecimientoListView"
