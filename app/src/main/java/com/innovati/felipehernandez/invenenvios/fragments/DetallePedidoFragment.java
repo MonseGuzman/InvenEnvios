@@ -8,6 +8,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,6 +93,34 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         clavePedido = args.getString("pedido", "");
         bandera = args.getBoolean("bandera",true);
         loadData();
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int  position = viewHolder.getAdapterPosition();
+                ArticulosPedidosAdapter adapter = (ArticulosPedidosAdapter) recyclerArticulos.getAdapter();
+                ArticulosPedido articulosPedido = new ArticulosPedido();
+                articulosPedido = adapter.articulosPedidos.get(position);
+                if (direction == ItemTouchHelper.RIGHT){
+                    articulosPedido.setEstado(2);
+                }else if (direction == ItemTouchHelper.LEFT){
+                    articulosPedido.setEstado(2);
+                    articulosPedido.setCantidad(0);
+                    articulosPedido.setIva(0);
+                    articulosPedido.setSubTotal(0);
+                    articulosPedido.setTotal(0);
+                }
+                adapter.articulosPedidos.set(position,articulosPedido);
+                updateAdapter();
+            }
+
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerArticulos);
         return v;
     }
 
