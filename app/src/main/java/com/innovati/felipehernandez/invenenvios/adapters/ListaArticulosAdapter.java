@@ -59,25 +59,25 @@ public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAd
         {
             super(itemView);
 
-            DescripcionTextView = (TextView) itemView.findViewById(R.id.DescripcionTextView);
-            NombreArticuloTextView = (TextView) itemView.findViewById(R.id.NombreArticuloTextView);
+            /*DescripcionTextView = (TextView) itemView.findViewById(R.id.DescripcionTextView);
+            NombreArticuloTextView = (TextView) itemView.findViewById(R.id.NombreArticuloTextView);*/
         }
 
         public void bind(final VwAbastecimiento datos)
         {
-            String descripcion = String.valueOf(datos.getTotal()) + " " + datos.getUnidadPrimaria();
-            /*String nombre = datos.getNombre() + " (" +descripcion+ ")";
-            String datosDeDescripcion = "";*/
+            /*String descripcion = String.valueOf(datos.getTotal()) + " " + datos.getUnidadPrimaria();
+            *//*String nombre = datos.getNombre() + " (" +descripcion+ ")";
+            String datosDeDescripcion = "";*//*
 
             NombreArticuloTextView.setText(datos.getNombre());
 
-            /*for(int x=0; x<lista.length-1; x++)
+            *//*for(int x=0; x<lista.length-1; x++)
             {
                 if(nombre.equals(lista[x].getNombre()))
                 {
                     datosDeDescripcion = datos.getCantidad() + "\n " ;
                 }+
-            }*/
+            }*//*
 
             DescripcionTextView.setText(descripcion);
 
@@ -111,7 +111,7 @@ public class ListaArticulosAdapter extends RecyclerView.Adapter<ListaArticulosAd
                         NombreArticuloTextView.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.ic_keyboard_arrow_up, 0);
                     }
                 }
-            });
+            });*/
         }
     }
 }

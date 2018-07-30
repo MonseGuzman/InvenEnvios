@@ -12,8 +12,12 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.innovati.felipehernandez.invenenvios.adapters.ListaAbastecimientoAdapter;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ListaArticulosAdapter;
@@ -33,9 +37,12 @@ import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_I;
 import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
+import com.innovati.felipehernandez.invenenvios.prueba2;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class AbastecimientosActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
@@ -52,6 +59,12 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
     private PedidosAdapter adaptador;
     Pedidos result[];
     int tipo;
+
+    //borrar
+    ExpandableListView expandableListView;
+    ExpandableListAdapter expandableListAdapter;
+    List<String> expandableListTitle;
+    HashMap<String, List<String>> expandableListDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +86,56 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
         animationDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
 
         cargarDatos(tipo);
+
+        //borrar
+        expandableListDetail = prueba.getData();
+        expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+        expandableListAdapter = new ListaAbastecimientoAdapter(this, lista, expandableListDetail);
+        expandableListView.setAdapter(expandableListAdapter);
+        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                Toast.makeText(getApplicationContext(),
+                        expandableListTitle.get(groupPosition) + " List Expanded.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+                Toast.makeText(getApplicationContext(),
+                        expandableListTitle.get(groupPosition) + " List Collapsed.",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+                Toast.makeText(
+                        getApplicationContext(),
+                        expandableListTitle.get(groupPosition)
+                                + " -> "
+                                + expandableListDetail.get(
+                                expandableListTitle.get(groupPosition)).get(
+                                childPosition), Toast.LENGTH_SHORT
+                ).show();
+                return false;
+            }
+        });
     }
 
     private void inicializar()
     {
         AbastecimientoListView = (ListView)findViewById(R.id.AbastecimientoListView);
         AbastecimientoRecycleView = (RecyclerView) findViewById(R.id.AbastecimientoRecycleView);
+        expandableListView = (ExpandableListView) findViewById(R.id.AbastecimientoExpandableListView);
+
         dialog=new ProgressDialog(this);
         dialog.setMessage("Cargando...");
         dialog.setCancelable(false);
