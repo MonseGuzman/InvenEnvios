@@ -1,6 +1,8 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -28,6 +30,7 @@ import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.util.Date;
 import java.util.List;
 
 public class EntregasActivity extends AppCompatActivity
@@ -75,9 +78,24 @@ public class EntregasActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
-                        result[position].setEstatus((short) 4); //no sé que se manda aquí
+                        result[position].setEstatus((short) 4);
+                        SharedPreferences preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+
+                        Pedidos pedidos = new Pedidos();
+                        pedidos.setIdPedido(result[position].getIdPedido());
+                        pedidos.setIdUsuario(result[position].getIdUsuario());
+                        pedidos.setFolio(result[position].getFolio());
+                        pedidos.setClaveCliente(result[position].getClaveCliente());
+                        pedidos.setFecha(result[position].getFecha());
+                        pedidos.setEstatus(result[position].getEstatus());
+                        pedidos.setSubtotal(result[position].getSubtotal());
+                        pedidos.setIva(result[position].getIva());
+                        pedidos.setTotal(result[position].getTotal());
+
+                        pedidos.setUltimaFechaActualizacion( new Date());
+                        pedidos.setUltimoUsuarioActualizacion(preferences.getString("idUsuario", ""));
                         ActualizarPedido a = new ActualizarPedido();
-                        a.execute(result);
+                        a.execute(pedidos);
 
                     }
                 }).show();
@@ -150,7 +168,7 @@ public class EntregasActivity extends AppCompatActivity
         dialog.show();
         if(metodosInternos.conexionRed())
         {
-            VwPedidosDao _dao = getPedidosDao();
+            VwPedidosDao _dao = getVwPedidosDao();
             ConsultaPedidos conP = new ConsultaPedidos();
             conP.execute(_dao);
         }
