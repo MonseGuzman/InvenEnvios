@@ -4,51 +4,41 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.innovati.felipehernandez.invenenvios.adapters.ListaAbastecimientoAdapter;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ListaArticulosAdapter;
 import com.innovati.felipehernandez.invenenvios.adapters.PedidosAdapter;
 import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
-import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwAbastecimientoDao;
-import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwAbastecimiento;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
-import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwAbastecimientoDaoFactory;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
-import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_I;
-import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
-import com.innovati.felipehernandez.invenenvios.prueba2;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class AbastecimientosActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     private ListView AbastecimientoListView;
-    private RecyclerView AbastecimientoRecycleView;
     private ExpandableListView AbastecimientoExpandableListView;
 
     private ListaArticulosAdapter listaArticulosAdapter;
@@ -57,7 +47,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
     private DaoSession daoSession;
     private ProgressDialog dialog;
     private PedidosAdapter adaptador;
-    Pedidos result[];
+    VwPedidos result[];
     int tipo;
 
     //borrar
@@ -92,7 +82,6 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
     private void inicializar()
     {
         AbastecimientoListView = (ListView)findViewById(R.id.AbastecimientoListView);
-        AbastecimientoRecycleView = (RecyclerView) findViewById(R.id.AbastecimientoRecycleView);
         AbastecimientoExpandableListView = (ExpandableListView) findViewById(R.id.AbastecimientoExpandableListView);
 
         dialog=new ProgressDialog(this);
@@ -108,12 +97,13 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
             switch (item)
             {
                 case 1:
-                    PedidosDao _daoP = getPedidosDao();
+                    VwPedidosDao _daoP = getPedidosDao();
                     ConsultaPedidos conP = new ConsultaPedidos();
                     conP.execute(_daoP);
 
                     break;
                 case 2:
+                    Toast.makeText(this, "En reparación", Toast.LENGTH_LONG).show();
                     /*VwAbastecimientoDao _daoA = getVwAbastecimientoDao();
                     ConsultaAbastecimientos conA = new ConsultaAbastecimientos();
                     conA.execute(_daoA);*/
@@ -139,13 +129,14 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                 QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
 
                 List<Pedidos_I> pedidos = qb.list();
-                result = new Pedidos[pedidos.size()];
+                result = new VwPedidos[pedidos.size()];
 
                 for(int x=0; x<pedidos.size(); x++)
                 {
-                    Pedidos objetoPedidos = new Pedidos();
+                    VwPedidos objetoPedidos = new VwPedidos();
 
                     objetoPedidos.setIdPedido(pedidos.get(x).getIdPedido());
+                    //objetoPedidos.setNombre(pedidos.get(x).getNombre());
                     objetoPedidos.setIdUsuario(pedidos.get(x).getIdUsuario());
                     objetoPedidos.setFolio(pedidos.get(x).getFolio());
                     objetoPedidos.setClaveCliente(pedidos.get(x).getClaveCliente());
@@ -154,9 +145,6 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                     objetoPedidos.setSubtotal(pedidos.get(x).getSubtotal());
                     objetoPedidos.setTotal(pedidos.get(x).getTotal());
                     objetoPedidos.setIva(pedidos.get(x).getIva());
-                    objetoPedidos.setObservaciones(pedidos.get(x).getObservaciones());
-                    objetoPedidos.setUltimaFechaActualizacion(pedidos.get(x).getUltimaFechaActualizacion());
-                    objetoPedidos.setUltimoUsuarioActualizacion(pedidos.get(x).getUltimoUsuarioActualizacion());
 
                     result[x] = objetoPedidos;
                 }
@@ -251,9 +239,9 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
         return VwAbastecimientoDaoFactory.create();
     }
 
-    public static PedidosDao getPedidosDao()
+    public static VwPedidosDao getPedidosDao()
     {
-        return PedidosDaoFactory.create();
+        return VwPedidosDaoFactory.create();
     }
 
     @Override
@@ -270,11 +258,11 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
         getSupportFragmentManager().beginTransaction().replace(R.id.abastecimientoConsulta, detallePedidoFragment).addToBackStack(null).commit();
     }
 
-    private class ConsultaPedidos extends AsyncTask<PedidosDao,Void, Pedidos[]>
+    private class ConsultaPedidos extends AsyncTask<VwPedidosDao,Void, VwPedidos[]>
     {
 
         @Override
-        protected Pedidos[] doInBackground(PedidosDao... pedidosDaos) {
+        protected VwPedidos[] doInBackground(VwPedidosDao... pedidosDaos) {
             try
             {
                 result = pedidosDaos[0].findAll();
@@ -287,7 +275,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
         }
 
         @Override
-        protected void onPostExecute(Pedidos[] pedidos) {
+        protected void onPostExecute(VwPedidos[] pedidos) {
             super.onPostExecute(pedidos);
 
             adaptador = new PedidosAdapter(AbastecimientosActivity.this,  R.layout.listview_pedidos, result, 1);
