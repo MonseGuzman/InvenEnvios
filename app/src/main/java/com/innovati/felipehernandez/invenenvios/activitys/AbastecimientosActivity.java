@@ -49,7 +49,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 
     private ListView AbastecimientoListView;
     private RecyclerView AbastecimientoRecycleView;
-    private Animation animationUp, animationDown;
+    private ExpandableListView AbastecimientoExpandableListView;
 
     private ListaArticulosAdapter listaArticulosAdapter;
     private VwAbastecimiento lista[];
@@ -61,7 +61,6 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
     int tipo;
 
     //borrar
-    ExpandableListView expandableListView;
     ExpandableListAdapter expandableListAdapter;
     List<String> expandableListTitle;
     HashMap<String, List<String>> expandableListDetail;
@@ -79,62 +78,22 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 
         AbastecimientoListView.setOnItemClickListener(this);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        AbastecimientoRecycleView.setLayoutManager(linearLayoutManager);
-
-        animationUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
-        animationDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
-
-        cargarDatos(tipo);
-
-        //borrar
-        expandableListDetail = prueba.getData();
+        /*expandableListDetail = prueba.getData();
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
         expandableListAdapter = new ListaAbastecimientoAdapter(this, lista, expandableListDetail);
-        expandableListView.setAdapter(expandableListAdapter);
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+        AbastecimientoExpandableListView.setAdapter(expandableListAdapter);*/
 
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        expandableListTitle.get(groupPosition) + " List Expanded.",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        expandableListTitle.get(groupPosition) + " List Collapsed.",
-                        Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        expandableListTitle.get(groupPosition)
-                                + " -> "
-                                + expandableListDetail.get(
-                                expandableListTitle.get(groupPosition)).get(
-                                childPosition), Toast.LENGTH_SHORT
-                ).show();
-                return false;
-            }
-        });
+        //AbastecimientoExpandableListView.setOnGroupExpandListener -- este sirve para cuando expanda la lista
+        //AbastecimientoExpandableListView.setOnGroupCollapseListener -- este sirve para cuando se collapsa la lista
+        //AbastecimientoExpandableListView.setOnChildClickListener --este sirve para el clic de los items
+        cargarDatos(tipo);
     }
 
     private void inicializar()
     {
         AbastecimientoListView = (ListView)findViewById(R.id.AbastecimientoListView);
         AbastecimientoRecycleView = (RecyclerView) findViewById(R.id.AbastecimientoRecycleView);
-        expandableListView = (ExpandableListView) findViewById(R.id.AbastecimientoExpandableListView);
+        AbastecimientoExpandableListView = (ExpandableListView) findViewById(R.id.AbastecimientoExpandableListView);
 
         dialog=new ProgressDialog(this);
         dialog.setMessage("Cargando...");
@@ -155,9 +114,9 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 
                     break;
                 case 2:
-                    VwAbastecimientoDao _daoA = getVwAbastecimientoDao();
+                    /*VwAbastecimientoDao _daoA = getVwAbastecimientoDao();
                     ConsultaAbastecimientos conA = new ConsultaAbastecimientos();
-                    conA.execute(_daoA);
+                    conA.execute(_daoA);*/
                     break;
             }
         }
@@ -207,7 +166,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 
                 break;
             case 2:
-                VwAbastecimientos_IDao vwAbastecimientosIDao = daoSession.getVwAbastecimientos_IDao();
+                /*VwAbastecimientos_IDao vwAbastecimientosIDao = daoSession.getVwAbastecimientos_IDao();
                 QueryBuilder<VwAbastecimientos_I> qb2 = vwAbastecimientosIDao.queryBuilder();
 
                 List<VwAbastecimientos_I> abastecimientos = qb2.list();
@@ -225,7 +184,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                 }
 
                 listaArticulosAdapter = new ListaArticulosAdapter(AbastecimientosActivity.this, animationUp, animationDown, lista);
-                AbastecimientoRecycleView.setAdapter(listaArticulosAdapter);
+                AbastecimientoRecycleView.setAdapter(listaArticulosAdapter);*/
 
                 break;
         }
@@ -251,21 +210,20 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                 onBackPressed();
                 return true;
             case R.id.menu_cambia:
-                int menu = 0;
-                if(AbastecimientoRecycleView.getVisibility() == View.VISIBLE)
+                if(AbastecimientoExpandableListView.getVisibility() == View.VISIBLE)
                 {
-                    AbastecimientoRecycleView.setVisibility(View.INVISIBLE);
+                    AbastecimientoExpandableListView.setVisibility(View.INVISIBLE);
                     AbastecimientoListView.setVisibility(View.VISIBLE);
-                    menu = 1;
+                    tipo = 1;
                 }
                 else
                 {
-                    AbastecimientoRecycleView.setVisibility(View.VISIBLE);
+                    AbastecimientoExpandableListView.setVisibility(View.VISIBLE);
                     AbastecimientoListView.setVisibility(View.INVISIBLE);
-                    menu = 2;
+                    tipo = 2;
                 }
 
-                cargarDatos(menu);
+                cargarDatos(tipo);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -345,7 +303,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
         {
             try
             {
-                lista = vwAbastecimientoDaos[0].findAll();
+                //lista = vwAbastecimientoDaos[0].findAll();
             }
             catch (Exception e){
 
@@ -358,8 +316,8 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
         protected void onPostExecute(VwAbastecimiento[] vwAbastecimientos)
         {
             super.onPostExecute(vwAbastecimientos);
-            listaArticulosAdapter = new ListaArticulosAdapter(AbastecimientosActivity.this, animationUp, animationDown, lista);
-            AbastecimientoRecycleView.setAdapter(listaArticulosAdapter);
+            /*listaArticulosAdapter = new ListaArticulosAdapter(AbastecimientosActivity.this, animationUp, animationDown, lista);
+            AbastecimientoRecycleView.setAdapter(listaArticulosAdapter);*/
         }
     }
 
