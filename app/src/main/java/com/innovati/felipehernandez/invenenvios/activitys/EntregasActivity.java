@@ -16,8 +16,11 @@ import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.PedidosAdapter;
 import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
@@ -32,7 +35,7 @@ public class EntregasActivity extends AppCompatActivity
     private ListView EntregasListView;
 
     private PedidosAdapter adaptador;
-    private Pedidos result[];
+    private VwPedidos result[];
     private MetodosInternos metodosInternos = new MetodosInternos(this);
     private DaoSession daoSession;
     private ProgressDialog dialog;
@@ -132,17 +135,22 @@ public class EntregasActivity extends AppCompatActivity
         }
     }
 
+    public static VwPedidosDao getVwPedidosDao()
+    {
+        return VwPedidosDaoFactory.create();
+    }
+
+
     public static PedidosDao getPedidosDao()
     {
         return PedidosDaoFactory.create();
     }
-
     public void cargarDatos()
     {
         dialog.show();
         if(metodosInternos.conexionRed())
         {
-            PedidosDao _dao = getPedidosDao();
+            VwPedidosDao _dao = getPedidosDao();
             ConsultaPedidos conP = new ConsultaPedidos();
             conP.execute(_dao);
         }
@@ -162,14 +170,15 @@ public class EntregasActivity extends AppCompatActivity
         QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
 
         List<Pedidos_I> pedidos = qb.list();
-        result = new Pedidos[pedidos.size()];
+        result = new VwPedidos[pedidos.size()];
 
         for(int x=0; x<pedidos.size(); x++)
         {
-            Pedidos objetoPedidos = new Pedidos();
+            VwPedidos objetoPedidos = new VwPedidos();
 
             objetoPedidos.setIdPedido(pedidos.get(x).getIdPedido());
             objetoPedidos.setIdUsuario(pedidos.get(x).getIdUsuario());
+            //objetoPedidos.setNombre(pedidos.get(x).getNombre());
             objetoPedidos.setFolio(pedidos.get(x).getFolio());
             objetoPedidos.setClaveCliente(pedidos.get(x).getClaveCliente());
             objetoPedidos.setFecha(pedidos.get(x).getFecha());
@@ -177,10 +186,6 @@ public class EntregasActivity extends AppCompatActivity
             objetoPedidos.setSubtotal(pedidos.get(x).getSubtotal());
             objetoPedidos.setTotal(pedidos.get(x).getTotal());
             objetoPedidos.setIva(pedidos.get(x).getIva());
-            objetoPedidos.setObservaciones(pedidos.get(x).getObservaciones());
-            objetoPedidos.setUltimaFechaActualizacion(pedidos.get(x).getUltimaFechaActualizacion());
-            objetoPedidos.setUltimoUsuarioActualizacion(pedidos.get(x).getUltimoUsuarioActualizacion());
-
             result[x] = objetoPedidos;
         }
 
@@ -188,10 +193,10 @@ public class EntregasActivity extends AppCompatActivity
         EntregasListView.setAdapter(adaptador);
     }
 
-    private class ConsultaPedidos extends AsyncTask<PedidosDao,Void, Pedidos[]>
+    private class ConsultaPedidos extends AsyncTask<VwPedidosDao,Void, VwPedidos[]>
     {
         @Override
-        protected Pedidos[] doInBackground(PedidosDao... pedidosDaos)
+        protected VwPedidos[] doInBackground(VwPedidosDao... pedidosDaos)
         {
             try
             {
@@ -205,7 +210,7 @@ public class EntregasActivity extends AppCompatActivity
         }
 
         @Override
-        protected void onPostExecute(Pedidos[] pedidos) {
+        protected void onPostExecute(VwPedidos[] pedidos) {
             super.onPostExecute(pedidos);
 
             adaptador = new PedidosAdapter(EntregasActivity.this,  R.layout.listview_pedidos, result, 2);

@@ -1,7 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.adapters;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
-import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
-import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
-import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
-import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwPedidos;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -22,19 +17,16 @@ import java.util.Locale;
 public class PedidosAdapter extends BaseAdapter
 {
     private Context context;
-    private Pedidos lista[];
+    private VwPedidos lista[];
     private int layout;
     private int tipo; //CONSULTA - 1 ENTREGA 2
-    private String nombre = "";
-    private MetodosInternos metodosInternos;
 
-    public PedidosAdapter(Context context, int layout, Pedidos lista[], int tipo)
+    public PedidosAdapter(Context context, int layout, VwPedidos lista[], int tipo)
     {
         this.context = context;
         this.layout = layout;
         this.lista = lista;
         this.tipo = tipo;
-        metodosInternos = new MetodosInternos(context);
     }
 
     @Override
@@ -73,27 +65,14 @@ public class PedidosAdapter extends BaseAdapter
         else
             vh = (PedidosAdapter.ViewHolder) convertView.getTag();
 
-        Pedidos pedidos = lista[position];
+        VwPedidos pedidos = lista[position];
 
         vh.FolioTextView_P.setText(String.valueOf(pedidos.getFolio()));
         //fecha
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         vh.FechaTextView_P.setText(dateFormat.format(pedidos.getFecha()));
         vh.TotalTextView_P.setText("Total: $" + String.valueOf(pedidos.getTotal()));
-
-        if(metodosInternos.conexionRed())
-        {
-            VwClientesDao _dao = getVwClientesDao();
-            Consulta c = new Consulta(pedidos.getClaveCliente());
-            c.execute(_dao);
-
-        }
-        else
-        {
-
-        }
-
-        vh.ClienteTextView_P.setText(nombre);
+        vh.ClienteTextView_P.setText(pedidos.getNombre());
 
         if(tipo == 2) //si es una entrega
         {
@@ -114,43 +93,5 @@ public class PedidosAdapter extends BaseAdapter
     {
         TextView FolioTextView_P, FechaTextView_P, TotalTextView_P, ClienteTextView_P;
         CheckBox EstatusCheckbox_P;
-    }
-
-    public static VwClientesDao getVwClientesDao()
-    {
-        return VwClientesDaoFactory.create();
-    }
-
-    public class Consulta extends AsyncTask<VwClientesDao, Void, VwClientes>
-    {
-        String clave;
-
-        public Consulta(String clave)
-        {
-            this.clave = clave;
-        }
-
-        @Override
-        protected VwClientes doInBackground(VwClientesDao... vwClientesDaos)
-        {
-            VwClientes cliente = null;
-            try
-            {
-                VwClientes clientes[] = vwClientesDaos[0].findWhereClaveEquals(clave);
-                cliente = clientes[0];
-            }
-            catch(Exception e)
-            {
-
-            }
-            return cliente;
-        }
-
-        @Override
-        protected void onPostExecute(VwClientes vwClientes)
-        {
-            super.onPostExecute(vwClientes);
-            nombre = vwClientes.getNombre();
-        }
     }
 }
