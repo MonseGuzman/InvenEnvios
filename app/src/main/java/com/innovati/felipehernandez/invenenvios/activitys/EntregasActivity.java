@@ -40,14 +40,12 @@ import java.util.List;
 
 public class EntregasActivity extends AppCompatActivity
 {
-    //private ListView EntregasListView;
-
-    private PedidosAdapter adaptador;
     private VwPedidos result[];
     private MetodosInternos metodosInternos = new MetodosInternos(this);
     private DaoSession daoSession;
     private ProgressDialog dialog;
     private RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,57 +56,6 @@ public class EntregasActivity extends AppCompatActivity
 
         daoSession = ((MyApp) getApplication()).getDaoSession();
 
-        /*EntregasListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                DetallePedidoFragment datosPedidoFragment = new DetallePedidoFragment();
-                Bundle args;
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
-                args = new Bundle();
-                args.putString("pedido", result[position].getIdPedido());
-                args.putBoolean("bandera",false);
-                datosPedidoFragment.setArguments(args);
-                getSupportFragmentManager().beginTransaction().replace(R.id.EntregasRelativeLayout, datosPedidoFragment).addToBackStack(null).commit();
-
-            }
-        });*/
-
-        /*EntregasListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id)
-            {
-                Snackbar.make(view, "¿Desea cambiar el estado a 'Entregado' sobre el pedido con folio "+ result[position].getFolio() +"?", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("Si", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        result[position].setEstatus((short) 4);
-                        SharedPreferences preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
-
-                        Pedidos pedidos = new Pedidos();
-                        pedidos.setIdPedido(result[position].getIdPedido());
-                        pedidos.setIdUsuario(result[position].getIdUsuario());
-                        pedidos.setFolio(result[position].getFolio());
-                        pedidos.setClaveCliente(result[position].getClaveCliente());
-                        pedidos.setFecha(result[position].getFecha());
-                        pedidos.setEstatus(result[position].getEstatus());
-                        pedidos.setSubtotal(result[position].getSubtotal());
-                        pedidos.setIva(result[position].getIva());
-                        pedidos.setTotal(result[position].getTotal());
-
-                        pedidos.setUltimaFechaActualizacion( new Date());
-                        pedidos.setUltimoUsuarioActualizacion(preferences.getString("idUsuario", ""));
-                        ActualizarPedido a = new ActualizarPedido();
-                        a.execute(pedidos);
-
-                    }
-                }).show();
-
-                return false;
-            }
-        });*/
         cargarDatos();
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
@@ -167,11 +114,11 @@ public class EntregasActivity extends AppCompatActivity
 
     private void inicializacion()
     {
-        //EntregasListView = (ListView)findViewById(R.id.EntregasListView);
         dialog=new ProgressDialog(this);
         dialog.setMessage("Cargando...");
         dialog.setCancelable(false);
-        recyclerView =(RecyclerView) findViewById(R.id.recycleViewEntrega);LinearLayoutManager manager = new LinearLayoutManager(this);
+        recyclerView = (RecyclerView) findViewById(R.id.recycleViewEntrega);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
 
@@ -287,8 +234,6 @@ public class EntregasActivity extends AppCompatActivity
             result[x] = objetoPedidos;
         }
         updateAdapter();
-        /*adaptador = new PedidosAdapter(EntregasActivity.this,  R.layout.listview_pedidos, result, 2);
-        EntregasListView.setAdapter(adaptador);*/
     }
 
     private class ConsultaPedidos extends AsyncTask<VwPedidosDao,Void, VwPedidos[]>
@@ -311,8 +256,6 @@ public class EntregasActivity extends AppCompatActivity
         protected void onPostExecute(VwPedidos[] pedidos) {
             super.onPostExecute(pedidos);
             updateAdapter();
-            /*adaptador = new PedidosAdapter(EntregasActivity.this,  R.layout.listview_pedidos, result, 2);
-            EntregasListView.setAdapter(adaptador);*/
         }
     }
 

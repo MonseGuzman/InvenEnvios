@@ -41,20 +41,16 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textStyle="bold"/>
 
-                <CheckBox
-                    android:id="@+id/EstatusCheckbox_P"
-                    android:enabled="false"
-                    android:checked="false"
+                <TextView
+                    android:id="@+id/CantidadDetallesTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
-                    android:textSize="15dp"
-                    android:text="Entregado"
-                    android:visibility="visible"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
+                    android:gravity="left"
+                    android:text="Cantidad: 10"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textStyle="bold"/>
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </TableRow>
@@ -64,15 +60,6 @@
                android:layout_width="match_parent"
                android:layout_height="match_parent"
                android:orientation="horizontal">
-
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Cantidad: 10"
-                   android:textSize="17dp"
-                   android:textColor="@color/secondaryColor"
-                   android:gravity="left"
-                   android:textStyle="bold"/>
 
                <TextView
                    android:id="@+id/TotalTextView_P"
