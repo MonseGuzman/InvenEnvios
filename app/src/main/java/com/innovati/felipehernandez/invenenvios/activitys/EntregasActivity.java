@@ -86,7 +86,6 @@ public class EntregasActivity extends AppCompatActivity
                     pedidos.setSubtotal(result[position].getSubtotal());
                     pedidos.setIva(result[position].getIva());
                     pedidos.setTotal(result[position].getTotal());
-
                     pedidos.setUltimaFechaActualizacion( new Date());
                     pedidos.setUltimoUsuarioActualizacion(preferences.getString("idUsuario", ""));
                     ActualizarPedido a = new ActualizarPedido();
@@ -128,7 +127,7 @@ public class EntregasActivity extends AppCompatActivity
         recyclerView.setAdapter(new EntregasRecycleView(this, result , new RecycleViewOnItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                /*DetallePedidoFragment datosPedidoFragment = new DetallePedidoFragment();
+                DetallePedidoFragment datosPedidoFragment = new DetallePedidoFragment();
                 Bundle args;
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
@@ -137,7 +136,7 @@ public class EntregasActivity extends AppCompatActivity
                 args.putBoolean("bandera",false);
                 datosPedidoFragment.setArguments(args);
                 getSupportFragmentManager().beginTransaction().replace(R.id.EntregasRelativeLayout, datosPedidoFragment).addToBackStack(null).commit();
-*/
+
             }
         }));
     }
@@ -276,5 +275,9 @@ public class EntregasActivity extends AppCompatActivity
             }
             return null;
         }
+    }
+
+    public void regEntregas(View view){
+
     }
 }

@@ -11,7 +11,7 @@ public class ArticulosPedido {
     float total;
     float exits;
     boolean status;
-    int estado;
+    short estado;
     /*
     * 1 = Activo
     * 2 = surtido
@@ -22,7 +22,7 @@ public class ArticulosPedido {
     public ArticulosPedido() {
     }
 
-    public ArticulosPedido(String idArticulo, String nombre, String presentacion, float cantidad, float precio, float subTotal, float iva, float total, float exits, boolean status, int estado) {
+    public ArticulosPedido(String idArticulo, String nombre, String presentacion, float cantidad, float precio, float subTotal, float iva, float total, float exits, boolean status, short estado) {
         this.idArticulo = idArticulo;
         this.nombre = nombre;
         this.presentacion = presentacion;
@@ -116,11 +116,11 @@ public class ArticulosPedido {
         this.status = status;
     }
 
-    public int getEstado() {
+    public short getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(short estado) {
         this.estado = estado;
     }
 }

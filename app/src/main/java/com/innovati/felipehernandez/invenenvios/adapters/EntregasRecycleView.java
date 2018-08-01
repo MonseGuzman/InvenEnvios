@@ -45,18 +45,20 @@ public class EntregasRecycleView extends RecyclerView.Adapter<EntregasRecycleVie
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         VwPedidos pedidos = lista[position];
-
-        holder.FolioTextView_P.setText(String.valueOf(pedidos.getFolio()));
-        //fecha
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        holder.FechaTextView_P.setText(dateFormat.format(pedidos.getFecha()));
-        holder.TotalTextView_P.setText("Total: $" + String.valueOf(pedidos.getTotal()));
-        if(pedidos.getEstatus() == 4){
-            holder.EntregasTable.setBackgroundColor(Color.rgb(176,236,222));
-        }else{
-            holder.EntregasTable.setBackgroundColor(Color.WHITE);
+        holder.can.setVisibility(View.INVISIBLE);
+        if(pedidos.getEstatus() != 5){
+            holder.FolioTextView_P.setText(String.valueOf(pedidos.getFolio()));
+            //fecha
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+            holder.FechaTextView_P.setText(dateFormat.format(pedidos.getFecha()));
+            holder.TotalTextView_P.setText("Total: $" + String.valueOf(pedidos.getTotal()));
+            if(pedidos.getEstatus() == 4){
+                holder.EntregasTable.setBackgroundColor(Color.rgb(176,236,222));
+            }else{
+                holder.EntregasTable.setBackgroundColor(Color.WHITE);
+            }
+            holder.ClienteTextView_P.setText(" "+String.valueOf(pedidos.getNombre()));
         }
-        holder.ClienteTextView_P.setText(" "+String.valueOf(pedidos.getNombre()));
     }
 
     @Override
@@ -67,18 +69,17 @@ public class EntregasRecycleView extends RecyclerView.Adapter<EntregasRecycleVie
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView FolioTextView_P, FechaTextView_P, TotalTextView_P, ClienteTextView_P;
-        CheckBox EstatusCheckbox_P;
+        TextView FolioTextView_P, FechaTextView_P, TotalTextView_P, ClienteTextView_P,can;
         TableLayout EntregasTable;
 
         public ViewHolder(View itemView) {
             super(itemView);
             FolioTextView_P = (TextView)itemView.findViewById(R.id.FolioTextView_P);
             FechaTextView_P = (TextView)itemView.findViewById(R.id.FechaTextView_P);
-            EstatusCheckbox_P = (CheckBox) itemView.findViewById(R.id.EstatusCheckbox_P);
             TotalTextView_P = (TextView) itemView.findViewById(R.id.TotalTextView_P);
             ClienteTextView_P = (TextView) itemView.findViewById(R.id.ClienteTextView_P);
             EntregasTable = (TableLayout) itemView.findViewById(R.id.EntregasTable);
+            can = (TextView)itemView.findViewById(R.id.CantidadDetallesTextView);
             itemView.setOnClickListener(this);
         }
 

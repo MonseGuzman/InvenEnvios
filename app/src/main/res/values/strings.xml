@@ -50,4 +50,5 @@
     <!--Abastecimiento-->
     <string name="tituloAbastecimiento">Consulta de abastecimiento</string>
     <string name="guardado">¡Pedido guardado!</string>
+    <string name="btnEntregas">Registrar Entregas</string>
 </resources>

@@ -43,7 +43,6 @@ public class LoginActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         dialog=new ProgressDialog(this);
@@ -57,7 +56,6 @@ public class LoginActivity extends AppCompatActivity
         verificaCredenciales();
         touch = 0;
         daoSession = ((MyApp) getApplication()).getDaoSession();
-
     }
 
     private void inicializacion()

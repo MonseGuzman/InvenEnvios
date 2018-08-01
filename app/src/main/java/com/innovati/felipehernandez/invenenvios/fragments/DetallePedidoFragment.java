@@ -106,9 +106,9 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                 ArticulosPedido articulosPedido = new ArticulosPedido();
                 articulosPedido = adapter.articulosPedidos.get(position);
                 if (direction == ItemTouchHelper.RIGHT){
-                    articulosPedido.setEstado(2);
+                    articulosPedido.setEstado((short)2);
                 }else if (direction == ItemTouchHelper.LEFT){
-                    articulosPedido.setEstado(2);
+                    articulosPedido.setEstado((short)2);
                     articulosPedido.setCantidad(0);
                     articulosPedido.setIva(0);
                     articulosPedido.setSubTotal(0);
@@ -196,6 +196,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             articulo.setTotal(pedidos.getTotal());
             articulo.setSubTotal(pedidos.getSubtotal());
             articulo.setStatus(true);
+
             articulosPedidos.add(articulo);
             listDet.add(pedidos.getIdDetallePedido());
             idUsuario = pedidos.getIdDetallePedido();
@@ -214,7 +215,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     }
 
     public void updateAdapter(){
-        recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(articulosPedidos, new RecycleViewOnItemClickListener() {
+        recyclerArticulos.setAdapter(new ArticulosPedidosAdapter(true,articulosPedidos, new RecycleViewOnItemClickListener() {
             @Override
             public void onClick(View view, int position) {
                 if(bandera){
@@ -304,6 +305,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                     articulo.setTotal(pedidos.getTotal());
                     articulo.setSubTotal(pedidos.getSubtotal());
                     articulo.setStatus(true);
+                    articulo.setEstado(pedidos.getSurtido());
                     articulosPedidos.add(articulo);
                     listDet.add(pedidos.getIdDetallePedido());
                     idUsuario = pedidos.getIdDetallePedido();
@@ -345,6 +347,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             articulosPedido.setSubTotal((float) (precioAux*cantidaNum));
             articulosPedido.setPresentacion(articulosPedidos.get(positionList).getPresentacion());
             articulosPedido.setStatus(true);
+            articulosPedido.setEstado(articulosPedidos.get(positionList).getEstado());
             float ivaAux = (float) (articulosPedido.getTotal()*0.16);
             articulosPedido.setIva(ivaAux);
             ivaAux = articulosPedidos.get(positionList).getExits();
@@ -379,12 +382,12 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         uptadePeido();
         int x = 0;
         for (ArticulosPedido ar: articulosPedidos){
-            uptadeExits(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario);
+            uptadeExits(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
             x++;
         }
     }
 
-    public void uptadeExits(String idDet, String idPedido, String clave ,float cantidad, float precio, float subTotal, float iva, float total, String idUsuario)
+    public void uptadeExits(String idDet, String idPedido, String clave ,float cantidad, float precio, float subTotal, float iva, float total, String idUsuario, short estado)
     {
         DetallesPedidos detalle = new DetallesPedidos();
         detalle.setIdDetallePedido(idDet);
@@ -395,6 +398,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         detalle.setSubtotal(subTotal);
         detalle.setIva(iva);
         detalle.setTotal(total);
+        detalle.setSurtido(estado);
         detalle.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
         detalle.setUltimoUsuarioActualizacion(idPedido);
         ActualizarDetalle detalleInsertar = new ActualizarDetalle();
@@ -468,12 +472,12 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         pedidoExitsDBI();
         int x = 0;
         for (ArticulosPedido ar: articulosPedidos){
-            uptadeExitsDBI(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario);
+            uptadeExitsDBI(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
             x++;
         }
     }
 
-    public void uptadeExitsDBI(String idDet, String idPedido, String clave ,float cantidad, float precio, float subTotal, float iva, float total, String idUsuario)
+    public void uptadeExitsDBI(String idDet, String idPedido, String clave ,float cantidad, float precio, float subTotal, float iva, float total, String idUsuario, short estado)
     {
         VwDetallePedido_IDao detallePedidoIDao = daoSession.getVwDetallePedido_IDao();
         VwDetallePedido_I detalle = new VwDetallePedido_I();
