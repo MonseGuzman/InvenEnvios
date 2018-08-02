@@ -65,10 +65,13 @@ public class MenuActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        dialog=new ProgressDialog(this);
+
+        dialog = new ProgressDialog(this);
         dialog.setMessage("Cargando...");
         dialog.setCancelable(false);
-        this.setTitle("Menú");
+
+        this.setTitle(R.string.tituloMenu);
+
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         daoSession = ((MyApp) getApplication()).getDaoSession();
     }

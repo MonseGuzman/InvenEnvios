@@ -5,13 +5,6 @@ import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
-import android.widget.Toast;
-
-import com.innovati.felipehernandez.invenenvios.adapters.ClientesAdaptador;
-import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
-import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
-import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
 
 public class MetodosInternos
 {
