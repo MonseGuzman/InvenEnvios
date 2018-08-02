@@ -7,6 +7,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +18,9 @@ import android.widget.ListView;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
+import com.innovati.felipehernandez.invenenvios.adapters.EntregasRecycleView;
 import com.innovati.felipehernandez.invenenvios.adapters.PedidosAdapter;
+import com.innovati.felipehernandez.invenenvios.adapters.RecycleViewOnItemClickListener;
 import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwPedidosDao;
@@ -35,13 +40,12 @@ import java.util.List;
 
 public class EntregasActivity extends AppCompatActivity
 {
-    private ListView EntregasListView;
-
-    private PedidosAdapter adaptador;
     private VwPedidos result[];
     private MetodosInternos metodosInternos = new MetodosInternos(this);
     private DaoSession daoSession;
     private ProgressDialog dialog;
+    private RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +56,77 @@ public class EntregasActivity extends AppCompatActivity
 
         daoSession = ((MyApp) getApplication()).getDaoSession();
 
-        EntregasListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        cargarDatos();
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int  position = viewHolder.getAdapterPosition();
+                if (direction == ItemTouchHelper.RIGHT){
+                    SharedPreferences preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+
+                    Pedidos pedidos = new Pedidos();
+
+                    if(result[position].getEstatus() == 3){
+                        result[position].setEstatus((short) 4);
+                    }else{
+                        result[position].setEstatus((short) 3);
+                    }
+                    pedidos.setIdPedido(result[position].getIdPedido());
+                    pedidos.setIdUsuario(result[position].getIdUsuario());
+                    pedidos.setFolio(result[position].getFolio());
+                    pedidos.setClaveCliente(result[position].getClaveCliente());
+                    pedidos.setFecha(result[position].getFecha());
+                    pedidos.setEstatus(result[position].getEstatus());
+                    pedidos.setSubtotal(result[position].getSubtotal());
+                    pedidos.setIva(result[position].getIva());
+                    pedidos.setTotal(result[position].getTotal());
+                    pedidos.setUltimaFechaActualizacion( new Date());
+                    pedidos.setUltimoUsuarioActualizacion(preferences.getString("idUsuario", ""));
+                    ActualizarPedido a = new ActualizarPedido();
+                    a.execute(pedidos);
+
+                }else if (direction == ItemTouchHelper.LEFT){
+                    /*ArticulosPedidosAdapter adapter = (ArticulosPedidosAdapter) recyclerEntregas.getAdapter();
+                    ArticulosPedido articulosPedido = new ArticulosPedido();
+                    articulosPedido = adapter.articulosPedidos.get(position);
+                    if(articulosPedido.isStatus()){
+                        articulosPedido.setStatus(false);
+                    }else{
+                        articulosPedido.setStatus(true);
+                    }
+                    adapter.articulosPedidos.set(position,articulosPedido);*/
+                }
+                updateAdapter();
+            }
+
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+    }
+
+    private void inicializacion()
+    {
+        dialog=new ProgressDialog(this);
+        dialog.setMessage("Cargando...");
+        dialog.setCancelable(false);
+        recyclerView = (RecyclerView) findViewById(R.id.recycleViewEntrega);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setHasFixedSize(true);
+
+    }
+
+    private void updateAdapter(){
+        recyclerView.setAdapter(new EntregasRecycleView(this, result , new RecycleViewOnItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
                 DetallePedidoFragment datosPedidoFragment = new DetallePedidoFragment();
                 Bundle args;
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -67,52 +138,7 @@ public class EntregasActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.EntregasRelativeLayout, datosPedidoFragment).addToBackStack(null).commit();
 
             }
-        });
-
-        EntregasListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id)
-            {
-                Snackbar.make(view, "¿Desea cambiar el estado a 'Entregado' sobre el pedido con folio "+ result[position].getFolio() +"?", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("Si", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        result[position].setEstatus((short) 4);
-                        SharedPreferences preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
-
-                        Pedidos pedidos = new Pedidos();
-                        pedidos.setIdPedido(result[position].getIdPedido());
-                        pedidos.setIdUsuario(result[position].getIdUsuario());
-                        pedidos.setFolio(result[position].getFolio());
-                        pedidos.setClaveCliente(result[position].getClaveCliente());
-                        pedidos.setFecha(result[position].getFecha());
-                        pedidos.setEstatus(result[position].getEstatus());
-                        pedidos.setSubtotal(result[position].getSubtotal());
-                        pedidos.setIva(result[position].getIva());
-                        pedidos.setTotal(result[position].getTotal());
-
-                        pedidos.setUltimaFechaActualizacion( new Date());
-                        pedidos.setUltimoUsuarioActualizacion(preferences.getString("idUsuario", ""));
-                        ActualizarPedido a = new ActualizarPedido();
-                        a.execute(pedidos);
-
-                    }
-                }).show();
-
-                return false;
-            }
-        });
-
-        cargarDatos();
-    }
-
-    private void inicializacion()
-    {
-        EntregasListView = (ListView)findViewById(R.id.EntregasListView);
-        dialog=new ProgressDialog(this);
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
+        }));
     }
 
     @Override
@@ -206,9 +232,7 @@ public class EntregasActivity extends AppCompatActivity
             objetoPedidos.setIva(pedidos.get(x).getIva());
             result[x] = objetoPedidos;
         }
-
-        adaptador = new PedidosAdapter(EntregasActivity.this,  R.layout.listview_pedidos, result, 2);
-        EntregasListView.setAdapter(adaptador);
+        updateAdapter();
     }
 
     private class ConsultaPedidos extends AsyncTask<VwPedidosDao,Void, VwPedidos[]>
@@ -230,9 +254,7 @@ public class EntregasActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(VwPedidos[] pedidos) {
             super.onPostExecute(pedidos);
-
-            adaptador = new PedidosAdapter(EntregasActivity.this,  R.layout.listview_pedidos, result, 2);
-            EntregasListView.setAdapter(adaptador);
+            updateAdapter();
         }
     }
 
@@ -253,5 +275,9 @@ public class EntregasActivity extends AppCompatActivity
             }
             return null;
         }
+    }
+
+    public void regEntregas(View view){
+
     }
 }

@@ -5,6 +5,7 @@
 
     <!--Generales -->
     <string name="bienvenido">¡Bienvenido!</string>
+    <string name="cargando">Cargando...</string>
 
     <!--Mensaje-->
     <string name="sinInternet">Sin acceso a Internet</string>
@@ -16,9 +17,11 @@
     <string name="guardar">Guardar</string>
     <string name="tituloBDI">¡Listo!</string>
     <string name="mensajeBDI">Datos descargados correctamente</string>
+    <string name="noLlamar">No se usar el "teléfono" en esta aplicación hasta que proporcione el permiso</string>
 
     <!--Menú-->
     <string name="menuLlamar">Llamar</string>
+    <string name="tituloMenu">Menú</string>
 
     <!--Login-->
     <string name="contrasena">Contraseña</string>
@@ -44,10 +47,11 @@
     <string name="title_activity_articulos_pedido">ArticulosPedidoActivity</string>
     <string name="fecha">Fecha</string>
 
-    <!--Pedidos_I-->
+    <!--Pedidos-->
     <string name="tituloEntregas">Consulta de entregas</string>
 
     <!--Abastecimiento-->
     <string name="tituloAbastecimiento">Consulta de abastecimiento</string>
     <string name="guardado">¡Pedido guardado!</string>
+    <string name="btnEntregas">Registrar Entregas</string>
 </resources>

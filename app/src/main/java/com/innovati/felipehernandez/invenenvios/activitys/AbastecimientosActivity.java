@@ -150,7 +150,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                     result[x] = objetoPedidos;
                 }
 
-                adaptador = new PedidosAdapter(AbastecimientosActivity.this,  R.layout.listview_pedidos, result, 1);
+                adaptador = new PedidosAdapter(AbastecimientosActivity.this,  R.layout.listview_pedidos, result);
                 AbastecimientoListView.setAdapter(adaptador);
 
                 break;
@@ -279,7 +279,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
         protected void onPostExecute(VwPedidos[] pedidos) {
             super.onPostExecute(pedidos);
 
-            adaptador = new PedidosAdapter(AbastecimientosActivity.this,  R.layout.listview_pedidos, result, 1);
+            adaptador = new PedidosAdapter(AbastecimientosActivity.this,  R.layout.listview_pedidos, result);
             AbastecimientoListView.setAdapter(adaptador);
         }
     }
