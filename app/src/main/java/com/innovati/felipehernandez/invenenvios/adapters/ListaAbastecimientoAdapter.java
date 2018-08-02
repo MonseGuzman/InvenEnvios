@@ -42,7 +42,7 @@ public class ListaAbastecimientoAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int listPosition, final int expandedListPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
-        final String expandedListText = (String) getChild(listPosition, expandedListPosition);
+        final Float expandedListText = (Float) getChild(listPosition, expandedListPosition);
         if (convertView == null)
         {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -50,7 +50,7 @@ public class ListaAbastecimientoAdapter extends BaseExpandableListAdapter {
         }
 
         TextView expandedListTextView = (TextView) convertView.findViewById(R.id.DescripcionTextView);
-        expandedListTextView.setText(expandedListText);
+        expandedListTextView.setText(String.valueOf(expandedListText));
         return convertView;
     }
 
