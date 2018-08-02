@@ -15,24 +15,31 @@ import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
+import com.innovati.felipehernandez.invenenvios.adapters.ListaAbastecimientoAdapter;
 import com.innovati.felipehernandez.invenenvios.adapters.ListaArticulosAdapter;
 import com.innovati.felipehernandez.invenenvios.adapters.PedidosAdapter;
 import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwAbastecimientoDao;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwAbastecimiento;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwAbastecimientoDaoFactory;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
+import com.innovati.felipehernandez.invenenvios.pojos.ExpandableListDataPump;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,7 +60,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
     //borrar
     ExpandableListAdapter expandableListAdapter;
     List<String> expandableListTitle;
-    HashMap<String, List<String>> expandableListDetail;
+    HashMap<String, List<Float>> expandableListDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,14 +75,8 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 
         AbastecimientoListView.setOnItemClickListener(this);
 
-        /*expandableListDetail = prueba.getData();
-        expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-        expandableListAdapter = new ListaAbastecimientoAdapter(this, lista, expandableListDetail);
-        AbastecimientoExpandableListView.setAdapter(expandableListAdapter);*/
 
-        //AbastecimientoExpandableListView.setOnGroupExpandListener -- este sirve para cuando expanda la lista
-        //AbastecimientoExpandableListView.setOnGroupCollapseListener -- este sirve para cuando se collapsa la lista
-        //AbastecimientoExpandableListView.setOnChildClickListener --este sirve para el clic de los items
+
         cargarDatos(tipo);
     }
 
@@ -104,9 +105,9 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                     break;
                 case 2:
                     Toast.makeText(this, "En reparación", Toast.LENGTH_LONG).show();
-                    /*VwAbastecimientoDao _daoA = getVwAbastecimientoDao();
-                    ConsultaAbastecimientos conA = new ConsultaAbastecimientos();
-                    conA.execute(_daoA);*/
+                    VwAbastecimientoDao _dao = getVwAbastecimientoDao();
+                    LlenarAdaptador c = new LlenarAdaptador();
+                    c.execute(_dao);
                     break;
             }
         }
@@ -312,5 +313,64 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
     public static DetallesPedidosDao getDetallesPedidosDao()
     {
         return DetallesPedidosDaoFactory.create();
+    }
+
+    public static VwDetallePedidoDao getVwDetallesPedidosDao()
+    {
+        return VwDetallePedidoDaoFactory.create();
+    }
+
+    private class LlenarAdaptador extends AsyncTask<VwAbastecimientoDao, Void, List<String>>
+    {
+        @Override
+        protected List<String> doInBackground(VwAbastecimientoDao... vwAbastecimientoDaos)
+        {
+            try
+            {
+                VwDetallePedidoDao _daoDetalle = getVwDetallesPedidosDao();
+
+                VwAbastecimiento[] abastecimientos = vwAbastecimientoDaos[0].findAll();
+                List<String> list = new ArrayList<>();
+                List<Object> objectList = new ArrayList<>();
+                for (VwAbastecimiento abastecimiento: abastecimientos)
+                {
+
+                    String nombre = abastecimiento.getNombre() + " " + abastecimiento.getTotal() + abastecimiento.getUnidadPrimaria();
+                    VwDetallePedido[] detalles = _daoDetalle.findByDynamicSelect("NULL, NULL, NULL, NULL, Cantidad, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL FROM VwDetallePedido WHERE Surtido = ? AND Nombre = ?",new Object[]{0,nombre});
+
+                    List<Float> numeros = new ArrayList<>();
+                    for(VwDetallePedido cantidades: detalles)
+                    {
+                        numeros.add((float)cantidades.getCantidad());
+                    }
+                    objectList.add(numeros);
+                    list.add(nombre);
+                }
+                ExpandableListDataPump e = new ExpandableListDataPump(list,objectList);
+                expandableListDetail = e.getData();
+                expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+
+                return list;
+            }
+            catch (Exception e)
+            {
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<String> strings)
+        {
+            super.onPostExecute(strings);
+
+
+            expandableListAdapter = new ListaAbastecimientoAdapter(AbastecimientosActivity.this, strings, expandableListDetail);
+            AbastecimientoExpandableListView.setAdapter(expandableListAdapter);
+            //AbastecimientoExpandableListView.setOnGroupExpandListener -- este sirve para cuando expanda la lista
+            //AbastecimientoExpandableListView.setOnGroupCollapseListener -- este sirve para cuando se collapsa la lista
+            //AbastecimientoExpandableListView.setOnChildClickListener --este sirve para el clic de los items
+
+        }
     }
 }

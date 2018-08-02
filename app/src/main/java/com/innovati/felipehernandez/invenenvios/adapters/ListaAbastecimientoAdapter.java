@@ -16,18 +16,22 @@ import com.innovati.felipehernandez.invenenvios.clases.dto.VwAbastecimiento;
 public class ListaAbastecimientoAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private HashMap<String, List<String>> expandableListDetail;
-    private VwAbastecimiento lista[];
+    private List<String> expandableListTitle;
+    private HashMap<String, List<Float>> expandableListDetail;
 
-    public ListaAbastecimientoAdapter(Context context,VwAbastecimiento[] lista , HashMap<String, List<String>> expandableListDetail ) {
+    public ListaAbastecimientoAdapter(Context context, List<String> expandableListTitle,HashMap<String, List<Float>> expandableListDetail)
+    {
         this.context = context;
+        this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
-        this.lista = lista;
     }
+
+
 
     @Override
     public Object getChild(int listPosition, int expandedListPosition) {
-        return this.expandableListDetail.get(lista[listPosition]).get(expandedListPosition);
+        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
+                .get(expandedListPosition);
     }
 
     @Override
@@ -53,22 +57,19 @@ public class ListaAbastecimientoAdapter extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int listPosition)
     {
-        return this.expandableListDetail.get(lista[listPosition]).size();
+        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
+                .size();
+    }
+    @Override
+    public Object getGroup(int listPosition) {
+        return this.expandableListTitle.get(listPosition);
     }
 
     @Override
-    public Object getGroup(int listPosition)
-    {
-        return lista[listPosition];
+    public int getGroupCount() {
+        return this.expandableListTitle.size();
     }
 
-    @Override
-    public int getGroupCount()
-    {
-        if(lista != null)
-            return lista.length;
-        else return 0;
-    }
 
     @Override
     public long getGroupId(int listPosition) {
