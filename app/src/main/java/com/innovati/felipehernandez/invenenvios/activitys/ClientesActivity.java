@@ -1,7 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -23,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.innovati.felipehernandez.invenenvios.API.DelayedProgressDialog;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ClientesAdaptador;
@@ -33,8 +33,6 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFact
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.database.VwClientes_I;
 import com.innovati.felipehernandez.invenenvios.database.VwClientes_IDao;
-import com.innovati.felipehernandez.invenenvios.database.VwUsuarios_I;
-import com.innovati.felipehernandez.invenenvios.database.VwUsuarios_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.ClienteFragment;
 
 import org.greenrobot.greendao.query.QueryBuilder;
@@ -54,7 +52,7 @@ public class ClientesActivity extends AppCompatActivity
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int posicion;
     private DaoSession daoSession;
-    private ProgressDialog dialog;
+    private DelayedProgressDialog progressDialog = new DelayedProgressDialog();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +69,6 @@ public class ClientesActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                dialog.show();
                 ClienteFragment clienteFragment = new ClienteFragment();
                 args = new Bundle();
 
@@ -86,7 +83,6 @@ public class ClientesActivity extends AppCompatActivity
                 args.putString("colonia", result[position].getColonia());
                 args.putString("telefono", result[position].getTelefono());
                 clienteFragment.setArguments(args);
-                dialog.hide();
                 getSupportFragmentManager().beginTransaction().replace(R.id.ClienteConstraintLayout, clienteFragment).addToBackStack(null).commit();
             }
         });
@@ -101,15 +97,11 @@ public class ClientesActivity extends AppCompatActivity
         registerForContextMenu(datitosListView);
     }
 
-
     private void inicializacion()
     {
         datitosListView = (ListView)findViewById(R.id.datitosListView);
         buscarEditText = (EditText)findViewById(R.id.buscarEditText);
         BuscarImageButton = (ImageButton)findViewById(R.id.BuscarImageButton);
-        dialog=new ProgressDialog(this);
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
     }
 
     //menú de contexto
@@ -203,7 +195,7 @@ public class ClientesActivity extends AppCompatActivity
 
     public void filtar(View v)
     {
-        dialog.show();
+        //dialog.show();
         String nombre = buscarEditText.getText().toString();
         if(metodosInternos.conexionRed())
         {
@@ -246,7 +238,7 @@ public class ClientesActivity extends AppCompatActivity
                 metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
                 e.printStackTrace();
             }
-            dialog.hide();
+            //dialog.hide();
     }
 
     private void internaBD()
@@ -327,6 +319,7 @@ public class ClientesActivity extends AppCompatActivity
                 else
                 {
                     //Aquí lo que se hace si no lo aceptan
+                    metodosInternos.Alerta(R.string.error, R.string.noLlamar);
                 }
                 break;
         }
@@ -339,6 +332,15 @@ public class ClientesActivity extends AppCompatActivity
         public ConsultaClientes(String nombre)
         {
             this.nombre = nombre;
+        }
+
+        //calar mañana
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog.setCancelable(false);
+            progressDialog.show(getSupportFragmentManager(), "tag");
         }
 
         @Override
@@ -363,6 +365,8 @@ public class ClientesActivity extends AppCompatActivity
         {
             super.onPostExecute(vwArticulos);
             cargarDatos(result);
+
+            progressDialog.dismiss(); //o .cancel();
         }
     }
 }
