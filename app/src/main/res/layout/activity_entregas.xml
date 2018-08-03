@@ -24,6 +24,8 @@
         android:layout_alignParentStart="true"
         android:text="@string/btnEntregas"
         android:layout_marginBottom="3dp"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="24dp"
         android:background="@color/colorPrimaryDark"
         android:onClick="regEntregas"/>
 </RelativeLayout>

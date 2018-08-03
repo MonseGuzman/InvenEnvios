@@ -63,7 +63,7 @@ public class PedidosAdapter extends BaseAdapter
 
         VwPedidos pedidos = lista[position];
 
-        vh.FolioTextView_P.setText(String.valueOf(pedidos.getFolio()));
+        vh.FolioTextView_P.setText("Folio: "+String.valueOf(pedidos.getFolio()));
         //fecha
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         vh.FechaTextView_P.setText(dateFormat.format(pedidos.getFecha()));

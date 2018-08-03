@@ -47,7 +47,7 @@ public class EntregasRecycleView extends RecyclerView.Adapter<EntregasRecycleVie
         VwPedidos pedidos = lista[position];
         holder.can.setVisibility(View.INVISIBLE);
         if(pedidos.getEstatus() != 5){
-            holder.FolioTextView_P.setText(String.valueOf(pedidos.getFolio()));
+            holder.FolioTextView_P.setText("Folio: "+String.valueOf(pedidos.getFolio()));
             //fecha
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
             holder.FechaTextView_P.setText(dateFormat.format(pedidos.getFecha()));
