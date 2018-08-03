@@ -1,6 +1,5 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -13,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.innovati.felipehernandez.invenenvios.API.DelayedProgressDialog;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.TabsAdapter;
@@ -43,29 +43,31 @@ import java.util.UUID;
 
 public class PedidoActivity extends AppCompatActivity
 {
-    public static List<ArticulosPedido> articulosPedidoList;
-    private SharedPreferences preferences;
-
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private static TextView fechaTextView, tvTotal;
     public static TextView ClienteEntTextView, tvAgente, tvFolio;
+
+    public static List<ArticulosPedido> articulosPedidoList;
+    private SharedPreferences preferences;
     public static String clave = "";
     public static String nombreC = "No elegido";
     public static String agente;
     private static String idUsuario;
     private static MetodosInternos metodosInternos;
     private static DaoSession daoSession;
-    private static ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedido);
+
         articulosPedidoList = new ArrayList<ArticulosPedido>();
         metodosInternos = new MetodosInternos(this);
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+
         inicializacion();
+
         daoSession = ((MyApp) this.getApplication()).getDaoSession();
         geneFolio();
         //fecha
@@ -123,9 +125,6 @@ public class PedidoActivity extends AppCompatActivity
         ClienteEntTextView = (TextView)findViewById(R.id.ClienteEntTextView);
         tvAgente = (TextView)findViewById(R.id.tvAgente);
         tvFolio = (TextView)findViewById(R.id.tvFolioEnt);
-        dialog=new ProgressDialog(this);
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
     }
 
     @Override
@@ -205,7 +204,6 @@ public class PedidoActivity extends AppCompatActivity
     }
 
     public static void addPedidoDb(){
-        dialog.show();
         //"%05d%n", 5
         String idPedido = UUID.randomUUID().toString();
         Date date = new Date();
@@ -230,7 +228,6 @@ public class PedidoActivity extends AppCompatActivity
         calTotal();
         DatosPedidoFragment.updateAdapter();
         nombreC = "No elegido";
-        dialog.hide();
     }
 
     public static void insertar(String idPedido,String idUsuario, String claveCliente, Date fecha, short estatus, float subtotal, float iva, float total, String observaciones, int folio)
@@ -250,11 +247,10 @@ public class PedidoActivity extends AppCompatActivity
         pedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
         InsertarPedido insertar = new InsertarPedido();
         insertar.execute(pedidos);
-
     }
-    public static void detPedido(String idUsuario,String idPedido,ArticulosPedido a){
 
-
+    public static void detPedido(String idUsuario,String idPedido,ArticulosPedido a)
+    {
         DetallesPedidos detalle = new DetallesPedidos();
         String idDetallePedido = UUID.randomUUID().toString();
         detalle.setIdDetallePedido(idDetallePedido);
@@ -271,6 +267,7 @@ public class PedidoActivity extends AppCompatActivity
         detalleInsertar.execute(detalle);
 
     }
+
     public static void insertarInterna(String idPedido,String idUsuario, String claveCliente, Date fecha, short estatus, float subtotal, float iva, float total, String observaciones, int folio)
     {
         Pedidos_I pedidos = new Pedidos_I();
@@ -292,6 +289,7 @@ public class PedidoActivity extends AppCompatActivity
 
 
     }
+
     public static void detPedidoInterna(String idUsuario,String idPedido,ArticulosPedido a){
 
 
@@ -358,6 +356,16 @@ public class PedidoActivity extends AppCompatActivity
 
     public class Consulta extends AsyncTask<PedidosDao, PedidosDao, Pedidos[]>
     {
+        DelayedProgressDialog progressDialog = new DelayedProgressDialog();
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+
+            progressDialog.setCancelable(false);
+            progressDialog.show(getSupportFragmentManager(), "tag");
+        }
 
         @Override
         protected Pedidos[] doInBackground(PedidosDao... pedidosDaos)
@@ -365,7 +373,6 @@ public class PedidoActivity extends AppCompatActivity
             Pedidos result[] = null;
             try
             {
-                String folioAux;
                 result = pedidosDaos[0].findByDynamicSelect("SELECT NULL, NULL, Folio, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL FROM Pedidos", null);
             }
             catch (Exception e)
@@ -379,6 +386,8 @@ public class PedidoActivity extends AppCompatActivity
         protected void onPostExecute(Pedidos[] pedidos)
         {
             super.onPostExecute(pedidos);
+            progressDialog.cancel();
+
             int folioAux;
             if(pedidos != null)
                  folioAux = pedidos.length+1;
@@ -386,6 +395,13 @@ public class PedidoActivity extends AppCompatActivity
                 folioAux = 1;
 
             tvFolio.setText(String.valueOf(folioAux));
+        }
+
+        @Override
+        protected void onCancelled()
+        {
+            super.onCancelled();
+            progressDialog.cancel();
         }
     }
 

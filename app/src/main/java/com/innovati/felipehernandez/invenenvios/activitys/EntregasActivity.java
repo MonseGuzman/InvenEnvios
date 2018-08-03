@@ -1,11 +1,9 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,13 +11,11 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
+import com.innovati.felipehernandez.invenenvios.API.DelayedProgressDialog;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.EntregasRecycleView;
-import com.innovati.felipehernandez.invenenvios.adapters.PedidosAdapter;
 import com.innovati.felipehernandez.invenenvios.adapters.RecycleViewOnItemClickListener;
 import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
@@ -43,7 +39,7 @@ public class EntregasActivity extends AppCompatActivity
     private VwPedidos result[];
     private MetodosInternos metodosInternos = new MetodosInternos(this);
     private DaoSession daoSession;
-    private ProgressDialog dialog;
+
     private RecyclerView recyclerView;
 
     @Override
@@ -91,16 +87,6 @@ public class EntregasActivity extends AppCompatActivity
                     ActualizarPedido a = new ActualizarPedido();
                     a.execute(pedidos);
 
-                }else if (direction == ItemTouchHelper.LEFT){
-                    /*ArticulosPedidosAdapter adapter = (ArticulosPedidosAdapter) recyclerEntregas.getAdapter();
-                    ArticulosPedido articulosPedido = new ArticulosPedido();
-                    articulosPedido = adapter.articulosPedidos.get(position);
-                    if(articulosPedido.isStatus()){
-                        articulosPedido.setStatus(false);
-                    }else{
-                        articulosPedido.setStatus(true);
-                    }
-                    adapter.articulosPedidos.set(position,articulosPedido);*/
                 }
                 updateAdapter();
             }
@@ -113,14 +99,10 @@ public class EntregasActivity extends AppCompatActivity
 
     private void inicializacion()
     {
-        dialog=new ProgressDialog(this);
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
         recyclerView = (RecyclerView) findViewById(R.id.recycleViewEntrega);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
-
     }
 
     private void updateAdapter(){
@@ -184,14 +166,13 @@ public class EntregasActivity extends AppCompatActivity
         return VwPedidosDaoFactory.create();
     }
 
-
     public static PedidosDao getPedidosDao()
     {
         return PedidosDaoFactory.create();
     }
+
     public void cargarDatos()
     {
-        dialog.show();
         if(metodosInternos.conexionRed())
         {
             VwPedidosDao _dao = getVwPedidosDao();
@@ -205,7 +186,6 @@ public class EntregasActivity extends AppCompatActivity
             }catch (Exception e){
             metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
         }
-        dialog.hide();
     }
 
     private void internaBD()
@@ -237,6 +217,17 @@ public class EntregasActivity extends AppCompatActivity
 
     private class ConsultaPedidos extends AsyncTask<VwPedidosDao,Void, VwPedidos[]>
     {
+        DelayedProgressDialog progressDialog = new DelayedProgressDialog();
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+
+            progressDialog.setCancelable(false);
+            progressDialog.show(getSupportFragmentManager(), "tag");
+        }
+
         @Override
         protected VwPedidos[] doInBackground(VwPedidosDao... pedidosDaos)
         {
@@ -254,7 +245,16 @@ public class EntregasActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(VwPedidos[] pedidos) {
             super.onPostExecute(pedidos);
+
+            progressDialog.cancel();
             updateAdapter();
+        }
+
+        @Override
+        protected void onCancelled()
+        {
+            super.onCancelled();
+            progressDialog.cancel();
         }
     }
 
