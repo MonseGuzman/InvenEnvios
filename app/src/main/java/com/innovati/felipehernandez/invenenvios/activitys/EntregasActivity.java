@@ -191,7 +191,6 @@ public class EntregasActivity extends AppCompatActivity
     }
     public void cargarDatos()
     {
-        dialog.show();
         if(metodosInternos.conexionRed())
         {
             VwPedidosDao _dao = getVwPedidosDao();
