@@ -16,12 +16,6 @@
 
     </android.support.v7.widget.RecyclerView>
 
-    <!--<ListView
-        android:id="@+id/EntregasListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>-->
-
     <Button
         android:id="@+id/btnEntregasReg"
         android:layout_width="match_parent"

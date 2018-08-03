@@ -1,6 +1,5 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.innovati.felipehernandez.invenenvios.API.DelayedProgressDialog;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.SettingActivity;
@@ -32,28 +32,29 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity
 {
-    private SharedPreferences preferences;
     private CheckBox chRecordarme;
     private EditText etUsuario, etPassword;
+
+    private SharedPreferences preferences;
     private int touch= 0;
     private EncryptionAndDecryption EaD= new EncryptionAndDecryption();
     private MetodosInternos conectado = new MetodosInternos(this);
     private DaoSession daoSession;
-    private ProgressDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        dialog=new ProgressDialog(this);
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.logo_carmenta);
 
         inicializacion();
+
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         verificaCredenciales();
+
         touch = 0;
         daoSession = ((MyApp) getApplication()).getDaoSession();
     }
@@ -67,14 +68,10 @@ public class LoginActivity extends AppCompatActivity
 
     public void login(View v)
     {
-        dialog.show();
-        //si la conexion wifi/datos es conectada
+        String usuario = etUsuario.getText().toString();
+        String password = EaD.encry(etPassword.getText().toString());
 
-        String usuario, password;
-
-        usuario = etUsuario.getText().toString();
-        password = EaD.encry(etPassword.getText().toString());
-        if(conectado.conexionRed())
+        if(conectado.conexionRed())//si la conexion wifi/datos es conectada
         {
             if(conectado.validacion(usuario, password))
             {
@@ -112,12 +109,10 @@ public class LoginActivity extends AppCompatActivity
             else
                 conectado.Alerta(R.string.error,R.string.sinDatos);
         }
-        dialog.hide();
     }
 
     private void verificaCredenciales()
     {
-        dialog.show();
         String email = preferences.getString("usuario", "");
         String pass = preferences.getString("contraseña", "");
 
@@ -126,7 +121,6 @@ public class LoginActivity extends AppCompatActivity
             etUsuario.setText(email);
             etPassword.setText(pass);
         }
-        dialog.hide();
     }
 
     private void guardarPreferencias(String email, String contra)
@@ -145,11 +139,20 @@ public class LoginActivity extends AppCompatActivity
 
     public class dbManager extends AsyncTask<VwUsuariosDao, Void, VwUsuarios[]>
     {
+        DelayedProgressDialog progressDialog = new DelayedProgressDialog();
         String[] parametros;
 
         public dbManager(String[] parametros)
         {
             this.parametros = parametros;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog.setCancelable(false);
+            progressDialog.show(getSupportFragmentManager(), "tag");
         }
 
         @Override
@@ -159,7 +162,6 @@ public class LoginActivity extends AppCompatActivity
             try
             {
                 result =  strings[0].findByDynamicWhere("NickName = ? AND Password = ? ", parametros);
-
             }
             catch(Exception e)
             {
@@ -171,11 +173,12 @@ public class LoginActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(VwUsuarios[] vwUsuarios)
         {
-
             super.onPostExecute(vwUsuarios);
-            String usuario, password;
-            usuario = etUsuario.getText().toString();
-            password = EaD.encry(etPassword.getText().toString());
+            progressDialog.cancel();
+
+            String usuario = etUsuario.getText().toString();
+            String password = EaD.encry(etPassword.getText().toString());
+
             if(vwUsuarios != null)
             {
                 if(vwUsuarios.length > 0)
@@ -190,9 +193,13 @@ public class LoginActivity extends AppCompatActivity
                     conectado.Alerta(R.string.error,R.string.sinDatos);
             }
             else
-            {
                 conectado.Alerta(R.string.error,R.string.sinDatos);
-            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            progressDialog.cancel();
         }
     }
 
@@ -208,16 +215,17 @@ public class LoginActivity extends AppCompatActivity
             startActivity(intent);
         }
     }
-    private void progress(String user, String id){
-        try{
+
+    private void progress(String user, String id)
+    {
+        try
+        {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("agente", user);
             editor.putString("idUsuario", id);
             editor.commit(); // empieza a guardar los put*
             editor.apply(); //guarda todos los cambios aunque no se guarden todos
         }catch (Exception e){}
-
-        dialog.hide();
     }
 
 }

@@ -1,6 +1,5 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,22 +10,20 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.Toast;
 
+import com.innovati.felipehernandez.invenenvios.API.DelayedProgressDialog;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ListaAbastecimientoAdapter;
 import com.innovati.felipehernandez.invenenvios.adapters.ListaArticulosAdapter;
 import com.innovati.felipehernandez.invenenvios.adapters.PedidosAdapter;
 import com.innovati.felipehernandez.invenenvios.app.MyApp;
-import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwAbastecimientoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwAbastecimiento;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwPedidos;
-import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwAbastecimientoDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwPedidosDaoFactory;
@@ -38,13 +35,12 @@ import com.innovati.felipehernandez.invenenvios.pojos.ExpandableListDataPump;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AbastecimientosActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
-
+public class AbastecimientosActivity extends AppCompatActivity implements AdapterView.OnItemClickListener
+{
     private ListView AbastecimientoListView;
     private ExpandableListView AbastecimientoExpandableListView;
 
@@ -52,15 +48,13 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
     private VwAbastecimiento lista[];
     private MetodosInternos metodosInternos = new MetodosInternos(this);
     private DaoSession daoSession;
-    private ProgressDialog dialog;
     private PedidosAdapter adaptador;
     VwPedidos result[];
     int tipo;
-
-    //borrar
     ExpandableListAdapter expandableListAdapter;
     List<String> expandableListTitle;
     HashMap<String, List<Float>> expandableListDetail;
+    DelayedProgressDialog progressDialog = new DelayedProgressDialog();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,30 +63,27 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 
         inicializar();
 
+        progressDialog.setCancelable(false);
+        progressDialog.show(getSupportFragmentManager(), "tag");
+
         tipo = getIntent().getExtras().getInt("Tipo", 0);
         this.setTitle(R.string.tituloAbastecimiento);
         daoSession = ((MyApp) getApplication()).getDaoSession();
 
         AbastecimientoListView.setOnItemClickListener(this);
 
-
-
         cargarDatos(tipo);
+        progressDialog.cancel();
     }
 
     private void inicializar()
     {
         AbastecimientoListView = (ListView)findViewById(R.id.AbastecimientoListView);
         AbastecimientoExpandableListView = (ExpandableListView) findViewById(R.id.AbastecimientoExpandableListView);
-
-        dialog=new ProgressDialog(this);
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
     }
 
     private void cargarDatos(int item)
     {
-        dialog.show();
         if(metodosInternos.conexionRed())
         {
             switch (item)
@@ -104,7 +95,6 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 
                     break;
                 case 2:
-                    Toast.makeText(this, "En reparación", Toast.LENGTH_LONG).show();
                     VwAbastecimientoDao _dao = getVwAbastecimientoDao();
                     LlenarAdaptador c = new LlenarAdaptador();
                     c.execute(_dao);
@@ -118,7 +108,6 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
             }catch (Exception e) {
                 metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
             }
-            dialog.hide();
     }
 
     private void internaBD(int item)
@@ -199,6 +188,9 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                 onBackPressed();
                 return true;
             case R.id.menu_cambia:
+                progressDialog.setCancelable(false);
+                progressDialog.show(getSupportFragmentManager(), "tag");
+
                 if(AbastecimientoExpandableListView.getVisibility() == View.VISIBLE)
                 {
                     AbastecimientoExpandableListView.setVisibility(View.INVISIBLE);
@@ -213,6 +205,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                 }
 
                 cargarDatos(tipo);
+                progressDialog.cancel();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -263,6 +256,15 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
     {
 
         @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+
+            progressDialog.setCancelable(false);
+            progressDialog.show(getSupportFragmentManager(), "tag");
+        }
+
+        @Override
         protected VwPedidos[] doInBackground(VwPedidosDao... pedidosDaos) {
             try
             {
@@ -278,41 +280,18 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
         @Override
         protected void onPostExecute(VwPedidos[] pedidos) {
             super.onPostExecute(pedidos);
+            progressDialog.cancel();
 
             adaptador = new PedidosAdapter(AbastecimientosActivity.this,  R.layout.listview_pedidos, result);
             AbastecimientoListView.setAdapter(adaptador);
         }
-    }
-
-    private class ConsultaAbastecimientos extends AsyncTask<VwAbastecimientoDao, Void, VwAbastecimiento[]>
-    {
 
         @Override
-        protected VwAbastecimiento[] doInBackground(VwAbastecimientoDao... vwAbastecimientoDaos)
+        protected void onCancelled()
         {
-            try
-            {
-                //lista = vwAbastecimientoDaos[0].findAll();
-            }
-            catch (Exception e){
-
-            }
-
-            return lista;
+            super.onCancelled();
+            progressDialog.cancel();
         }
-
-        @Override
-        protected void onPostExecute(VwAbastecimiento[] vwAbastecimientos)
-        {
-            super.onPostExecute(vwAbastecimientos);
-            /*listaArticulosAdapter = new ListaArticulosAdapter(AbastecimientosActivity.this, animationUp, animationDown, lista);
-            AbastecimientoRecycleView.setAdapter(listaArticulosAdapter);*/
-        }
-    }
-
-    public static DetallesPedidosDao getDetallesPedidosDao()
-    {
-        return DetallesPedidosDaoFactory.create();
     }
 
     public static VwDetallePedidoDao getVwDetallesPedidosDao()
@@ -322,6 +301,17 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 
     private class LlenarAdaptador extends AsyncTask<VwAbastecimientoDao, Void, List<String>>
     {
+        DelayedProgressDialog progressDialog = new DelayedProgressDialog();
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+
+            progressDialog.setCancelable(false);
+            progressDialog.show(getSupportFragmentManager(), "tag");
+        }
+
         @Override
         protected List<String> doInBackground(VwAbastecimientoDao... vwAbastecimientoDaos)
         {
@@ -363,14 +353,20 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
         protected void onPostExecute(List<String> strings)
         {
             super.onPostExecute(strings);
-
+            progressDialog.cancel();
 
             expandableListAdapter = new ListaAbastecimientoAdapter(AbastecimientosActivity.this, strings, expandableListDetail);
             AbastecimientoExpandableListView.setAdapter(expandableListAdapter);
             //AbastecimientoExpandableListView.setOnGroupExpandListener -- este sirve para cuando expanda la lista
             //AbastecimientoExpandableListView.setOnGroupCollapseListener -- este sirve para cuando se collapsa la lista
             //AbastecimientoExpandableListView.setOnChildClickListener --este sirve para el clic de los items
+        }
 
+        @Override
+        protected void onCancelled()
+        {
+            super.onCancelled();
+            progressDialog.cancel();
         }
     }
 }
