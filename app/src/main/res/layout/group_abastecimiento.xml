@@ -8,8 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
+        android:paddingStart="?android:attr/expandableListPreferredItemPaddingLeft"
+        android:paddingTop="10dp"
+        android:paddingBottom="50dp"
         android:padding="10dp"
         android:textSize="15dp"
-        android:text="texto"
+        android:text="Nombre del artículo"
         android:textColor="@android:color/white" />
 </LinearLayout>

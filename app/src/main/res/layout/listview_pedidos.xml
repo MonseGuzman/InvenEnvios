@@ -8,9 +8,6 @@
 
     <TableLayout
         android:id="@+id/EntregasTable"
-        android:layout_marginBottom="3dp"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -77,8 +74,8 @@
         <TableRow>
             <TextView
                 android:id="@+id/ClienteTextView_P"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Nombre del Cliente: Andrea Monserrat Guzmán López"
                 android:textSize="15dp"
                 android:visibility="visible"
