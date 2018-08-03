@@ -1,14 +1,14 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.innovati.felipehernandez.invenenvios.API.DelayedProgressDialog;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.app.MyApp;
@@ -60,15 +60,12 @@ public class MenuActivity extends AppCompatActivity
     private SharedPreferences preferences;
     DaoSession daoSession;
     private MetodosInternos metodosInternos = new MetodosInternos(this);
-    ProgressDialog dialog;
+    private DelayedProgressDialog progressDialog = new DelayedProgressDialog();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
 
         this.setTitle(R.string.tituloMenu);
 
@@ -83,7 +80,9 @@ public class MenuActivity extends AppCompatActivity
     //              |  2 | VISTA CON DETALLES
     public void botones(View v)
     {
-        dialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.show(getSupportFragmentManager(), "tag");
+
         Intent i = new Intent();
 
         switch (v.getId())
@@ -106,18 +105,21 @@ public class MenuActivity extends AppCompatActivity
                 break;
         }
         startActivity(i);
-        dialog.hide();
+        progressDialog.cancel();
     }
 
     public void salir(View v)
     {
-        dialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.show(getSupportFragmentManager(), "tag");
+
         preferences.edit().clear().apply();
 
         Intent i = new Intent(this, LoginActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //cierra esta actividad
         startActivity(i);
-        dialog.hide();
+
+        progressDialog.cancel();
     }
 
     public void actualizarDBServidor(View v)
@@ -137,15 +139,15 @@ public class MenuActivity extends AppCompatActivity
             i.execute((List) pedidos,(List) detallesPedidos);
         }
         else
-        {
             metodosInternos.Alerta(R.string.error, R.string.conectarse);
-        }
-        dialog.hide();
+
+        progressDialog.cancel();
     }
 
     public void actualizarDBInterna(View v)
     {
-        dialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.show(getSupportFragmentManager(), "tag");
 
         if(metodosInternos.conexionRed())
         {
@@ -156,11 +158,20 @@ public class MenuActivity extends AppCompatActivity
         {
             metodosInternos.Alerta(R.string.error, R.string.conectarse);
         }
-        dialog.hide();
+        progressDialog.cancel();
     }
 
     private class InsertarAServidor extends AsyncTask<List<Object>,Void, Void>
     {
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+
+            progressDialog.setCancelable(false);
+            progressDialog.show(getSupportFragmentManager(), "tag");
+        }
+
         @Override
         protected Void doInBackground(List<Object>... lists)
         {
@@ -231,6 +242,19 @@ public class MenuActivity extends AppCompatActivity
                     }
             return null;
         }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progressDialog.cancel();
+        }
+
+        @Override
+        protected void onCancelled()
+        {
+            super.onCancelled();
+            progressDialog.cancel();
+        }
     }
     private class InsertarAInterna extends AsyncTask<Void, Void, Void>
     {
@@ -242,6 +266,15 @@ public class MenuActivity extends AppCompatActivity
         private VwClientesDao _daoVwClientes;
         private VwAbastecimientoDao _daoVwAbastecimiento;
         private long cont=1;
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+
+            progressDialog.setCancelable(false);
+            progressDialog.show(getSupportFragmentManager(), "tag");
+        }
 
         @Override
         protected Void doInBackground(Void... voids)
@@ -423,9 +456,16 @@ public class MenuActivity extends AppCompatActivity
         }
 
         @Override
+        protected void onCancelled()
+        {
+            super.onCancelled();
+            progressDialog.cancel();
+        }
+
+        @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            dialog.hide();
+            progressDialog.cancel();
             metodosInternos.Alerta(R.string.tituloBDI, R.string.mensajeBDI);
         }
     }

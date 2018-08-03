@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.innovati.felipehernandez.invenenvios.API.DelayedProgressDialog;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticuloAdapter;
@@ -44,7 +45,6 @@ public class ArticuloActivity extends AppCompatActivity
     Bundle args;
     static String fragmento = "";
     private DaoSession daoSession;
-    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -62,7 +62,6 @@ public class ArticuloActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                dialog.show();
                 ArticuloFragment fragment = new ArticuloFragment();
                 datitosListView.setVisibility(View.INVISIBLE);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -79,7 +78,6 @@ public class ArticuloActivity extends AppCompatActivity
                 args.putDouble("precio", result[position].getPrecio1());
                 args.putString("unidad", result[position].getUnidadPrimaria());
                 fragment.setArguments(args);
-                dialog.hide();
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.ArticuloConstraintLayout, fragment).addToBackStack(null).commit();
             }
@@ -91,7 +89,6 @@ public class ArticuloActivity extends AppCompatActivity
                 filtar(v);
             }
         });
-
     }
 
     private void inicializacion()
@@ -100,9 +97,6 @@ public class ArticuloActivity extends AppCompatActivity
         buscarEditText = (EditText) findViewById(R.id.buscarEditText);
         BuscarImageButton = (ImageButton) findViewById(R.id.BuscarImageButton);
         AgregarFAB_A = (FloatingActionButton) findViewById(R.id.AgregarFAB_A);
-        dialog=new ProgressDialog(this);
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
     }
 
     @Override
@@ -129,7 +123,6 @@ public class ArticuloActivity extends AppCompatActivity
 
     public void filtar(View v)
     {
-        dialog.show();
         String nombre = buscarEditText.getText().toString();
         if(metodosInternos.conexionRed())
         {
@@ -173,7 +166,6 @@ public class ArticuloActivity extends AppCompatActivity
                 metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
                 e.printStackTrace();
             }
-            dialog.hide();
     }
 
     private void internaBD()
@@ -256,11 +248,20 @@ public class ArticuloActivity extends AppCompatActivity
 
      public class ConsultaArticulos extends AsyncTask<VwArticulosDao, VwArticulos, VwArticulos[]>
      {
+         private DelayedProgressDialog progressDialog = new DelayedProgressDialog();
          String nombre;
 
          public ConsultaArticulos(String nombre)
          {
              this.nombre = nombre;
+         }
+
+         @Override
+         protected void onPreExecute() {
+             super.onPreExecute();
+
+             progressDialog.setCancelable(false);
+             progressDialog.show(getSupportFragmentManager(), "tag");
          }
 
          @Override
@@ -284,6 +285,14 @@ public class ArticuloActivity extends AppCompatActivity
          {
              super.onPostExecute(vwArticulos);
              cargarDatos(result);
+
+             progressDialog.cancel();
+         }
+
+         @Override
+         protected void onCancelled() {
+             super.onCancelled();
+             progressDialog.cancel();
          }
      }
 

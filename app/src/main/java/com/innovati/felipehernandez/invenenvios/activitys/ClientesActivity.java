@@ -44,15 +44,14 @@ public class ClientesActivity extends AppCompatActivity
     private static ListView datitosListView;
     private EditText buscarEditText;
     private ImageButton BuscarImageButton;
-    private Bundle args;
 
+    private Bundle args;
     private ClientesAdaptador adaptador;
     VwClientes result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int posicion;
     private DaoSession daoSession;
-    private DelayedProgressDialog progressDialog = new DelayedProgressDialog();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -328,15 +327,16 @@ public class ClientesActivity extends AppCompatActivity
     public class ConsultaClientes extends AsyncTask<VwClientesDao, VwClientes[], VwClientes[]>
     {
         String nombre;
+        DelayedProgressDialog progressDialog = new DelayedProgressDialog();
 
         public ConsultaClientes(String nombre)
         {
             this.nombre = nombre;
         }
 
-        //calar mañana
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
 
             progressDialog.setCancelable(false);
@@ -366,7 +366,14 @@ public class ClientesActivity extends AppCompatActivity
             super.onPostExecute(vwArticulos);
             cargarDatos(result);
 
-            progressDialog.dismiss(); //o .cancel();
+            progressDialog.cancel(); //o .cancel();
+        }
+
+        @Override
+        protected void onCancelled()
+        {
+            super.onCancelled();
+            progressDialog.cancel();
         }
     }
 }
