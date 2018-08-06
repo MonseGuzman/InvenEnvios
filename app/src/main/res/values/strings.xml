@@ -18,6 +18,8 @@
     <string name="tituloBDI">¡Listo!</string>
     <string name="mensajeBDI">Datos descargados correctamente</string>
     <string name="noLlamar">No se usar el "teléfono" en esta aplicación hasta que proporcione el permiso</string>
+    <string name="vacioDescripcion">Sin datos que consultar</string>
+    <string name="vacioTitulo">Carga terminada</string>
 
     <!--Menú-->
     <string name="menuLlamar">Llamar</string>
