@@ -1,12 +1,5 @@
 package com.innovati.felipehernandez.invenenvios.pojos;
 
-import android.os.AsyncTask;
-
-import com.innovati.felipehernandez.invenenvios.clases.dao.VwAbastecimientoDao;
-import com.innovati.felipehernandez.invenenvios.clases.dto.VwAbastecimiento;
-import com.innovati.felipehernandez.invenenvios.clases.factory.VwAbastecimientoDaoFactory;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 

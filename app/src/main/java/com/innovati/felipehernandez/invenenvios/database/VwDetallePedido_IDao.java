@@ -33,8 +33,9 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
         public final static Property Iva = new Property(8, float.class, "iva", false, "IVA");
         public final static Property Total = new Property(9, float.class, "total", false, "TOTAL");
         public final static Property Servidor = new Property(10, boolean.class, "servidor", false, "SERVIDOR");
-        public final static Property FechaActualizacion = new Property(11, java.util.Date.class, "fechaActualizacion", false, "FECHA_ACTUALIZACION");
-        public final static Property UsuarioActualizacion = new Property(12, String.class, "usuarioActualizacion", false, "USUARIO_ACTUALIZACION");
+        public final static Property Surtido = new Property(11, short.class, "surtido", false, "SURTIDO");
+        public final static Property FechaActualizacion = new Property(12, java.util.Date.class, "fechaActualizacion", false, "FECHA_ACTUALIZACION");
+        public final static Property UsuarioActualizacion = new Property(13, String.class, "usuarioActualizacion", false, "USUARIO_ACTUALIZACION");
     }
 
 
@@ -61,8 +62,9 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
                 "\"IVA\" REAL NOT NULL ," + // 8: iva
                 "\"TOTAL\" REAL NOT NULL ," + // 9: total
                 "\"SERVIDOR\" INTEGER NOT NULL ," + // 10: servidor
-                "\"FECHA_ACTUALIZACION\" INTEGER," + // 11: fechaActualizacion
-                "\"USUARIO_ACTUALIZACION\" TEXT);"); // 12: usuarioActualizacion
+                "\"SURTIDO\" INTEGER NOT NULL ," + // 11: surtido
+                "\"FECHA_ACTUALIZACION\" INTEGER," + // 12: fechaActualizacion
+                "\"USUARIO_ACTUALIZACION\" TEXT);"); // 13: usuarioActualizacion
     }
 
     /** Drops the underlying database table. */
@@ -105,15 +107,16 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
         stmt.bindDouble(9, entity.getIva());
         stmt.bindDouble(10, entity.getTotal());
         stmt.bindLong(11, entity.getServidor() ? 1L: 0L);
+        stmt.bindLong(12, entity.getSurtido());
  
         java.util.Date fechaActualizacion = entity.getFechaActualizacion();
         if (fechaActualizacion != null) {
-            stmt.bindLong(12, fechaActualizacion.getTime());
+            stmt.bindLong(13, fechaActualizacion.getTime());
         }
  
         String usuarioActualizacion = entity.getUsuarioActualizacion();
         if (usuarioActualizacion != null) {
-            stmt.bindString(13, usuarioActualizacion);
+            stmt.bindString(14, usuarioActualizacion);
         }
     }
 
@@ -151,15 +154,16 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
         stmt.bindDouble(9, entity.getIva());
         stmt.bindDouble(10, entity.getTotal());
         stmt.bindLong(11, entity.getServidor() ? 1L: 0L);
+        stmt.bindLong(12, entity.getSurtido());
  
         java.util.Date fechaActualizacion = entity.getFechaActualizacion();
         if (fechaActualizacion != null) {
-            stmt.bindLong(12, fechaActualizacion.getTime());
+            stmt.bindLong(13, fechaActualizacion.getTime());
         }
  
         String usuarioActualizacion = entity.getUsuarioActualizacion();
         if (usuarioActualizacion != null) {
-            stmt.bindString(13, usuarioActualizacion);
+            stmt.bindString(14, usuarioActualizacion);
         }
     }
 
@@ -182,8 +186,9 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
             cursor.getFloat(offset + 8), // iva
             cursor.getFloat(offset + 9), // total
             cursor.getShort(offset + 10) != 0, // servidor
-            cursor.isNull(offset + 11) ? null : new java.util.Date(cursor.getLong(offset + 11)), // fechaActualizacion
-            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // usuarioActualizacion
+            cursor.getShort(offset + 11), // surtido
+            cursor.isNull(offset + 12) ? null : new java.util.Date(cursor.getLong(offset + 12)), // fechaActualizacion
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13) // usuarioActualizacion
         );
         return entity;
     }
@@ -201,8 +206,9 @@ public class VwDetallePedido_IDao extends AbstractDao<VwDetallePedido_I, Long> {
         entity.setIva(cursor.getFloat(offset + 8));
         entity.setTotal(cursor.getFloat(offset + 9));
         entity.setServidor(cursor.getShort(offset + 10) != 0);
-        entity.setFechaActualizacion(cursor.isNull(offset + 11) ? null : new java.util.Date(cursor.getLong(offset + 11)));
-        entity.setUsuarioActualizacion(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setSurtido(cursor.getShort(offset + 11));
+        entity.setFechaActualizacion(cursor.isNull(offset + 12) ? null : new java.util.Date(cursor.getLong(offset + 12)));
+        entity.setUsuarioActualizacion(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
      }
     
     @Override
