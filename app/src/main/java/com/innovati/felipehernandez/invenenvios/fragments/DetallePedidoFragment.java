@@ -40,7 +40,6 @@ import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_I;
 import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_IDao;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
-import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.ArrayList;

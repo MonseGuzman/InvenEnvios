@@ -28,8 +28,12 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwAbastecimientoD
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
-import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
-import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_I;
+import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_I;
+import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwPedidos_I;
+import com.innovati.felipehernandez.invenenvios.database.VwPedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
 import com.innovati.felipehernandez.invenenvios.pojos.ExpandableListDataPump;
 
@@ -101,7 +105,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                     break;
             }
         }
-        else //bd interna
+        else
             try
             {
                 internaBD(item);
@@ -115,10 +119,8 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
         switch (item)
         {
             case 1:
-                Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
-                QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
-
-                List<Pedidos_I> pedidos = qb.list();
+                VwPedidos_IDao pedidos_iDao = daoSession.getVwPedidos_IDao();
+                List<VwPedidos_I> pedidos = pedidos_iDao.loadAll();
                 result = new VwPedidos[pedidos.size()];
 
                 for(int x=0; x<pedidos.size(); x++)
@@ -126,7 +128,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                     VwPedidos objetoPedidos = new VwPedidos();
 
                     objetoPedidos.setIdPedido(pedidos.get(x).getIdPedido());
-                    //objetoPedidos.setNombre(pedidos.get(x).getNombre());
+                    objetoPedidos.setNombre(pedidos.get(x).getNombre());
                     objetoPedidos.setIdUsuario(pedidos.get(x).getIdUsuario());
                     objetoPedidos.setFolio(pedidos.get(x).getFolio());
                     objetoPedidos.setClaveCliente(pedidos.get(x).getClaveCliente());
@@ -144,26 +146,34 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 
                 break;
             case 2:
-                /*VwAbastecimientos_IDao vwAbastecimientosIDao = daoSession.getVwAbastecimientos_IDao();
-                QueryBuilder<VwAbastecimientos_I> qb2 = vwAbastecimientosIDao.queryBuilder();
+                VwAbastecimientos_IDao vwAbastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
+                VwDetallePedido_IDao vwDetallePedido_iDao = daoSession.getVwDetallePedido_IDao();
+                List<VwAbastecimientos_I> abastecimientos_is = vwAbastecimientos_iDao.loadAll();
 
-                List<VwAbastecimientos_I> abastecimientos = qb2.list();
-                lista = new VwAbastecimiento[abastecimientos.size()];
-
-                for(int x=0; x<abastecimientos.size(); x++)
+                List<String> list = new ArrayList<>();
+                List<Object> objectList = new ArrayList<>();
+                for(VwAbastecimientos_I abastecimiento: abastecimientos_is)
                 {
-                    VwAbastecimiento objetoAbastecimiento = new VwAbastecimiento();
+                    String nombre = abastecimiento.getNombre() + " " + abastecimiento.getCantidad() + abastecimiento.getUnidadPrimaria();
+                    QueryBuilder<VwDetallePedido_I> qb = vwDetallePedido_iDao.queryBuilder();
 
-                    objetoAbastecimiento.setNombre(abastecimientos.get(x).getNombre());
-                    objetoAbastecimiento.setTotal(abastecimientos.get(x).getCantidad());
-                    objetoAbastecimiento.setUnidadPrimaria(abastecimientos.get(x).getUnidadPrimaria());
+                    qb.where(VwDetallePedido_IDao.Properties.Nombre.eq(abastecimiento.getNombre()), VwDetallePedido_IDao.Properties.Surtido.eq(0));
 
-                    lista[x] = objetoAbastecimiento;
+                    List<VwDetallePedido_I> detalles = qb.list();
+
+                    List<Float> numeros = new ArrayList<>();
+                    for(VwDetallePedido_I cantidades: detalles)
+                    {
+                        numeros.add((float)cantidades.getCantidad());
+                    }
+                    objectList.add(numeros);
+                    list.add(nombre);
                 }
-
-                listaArticulosAdapter = new ListaArticulosAdapter(AbastecimientosActivity.this, animationUp, animationDown, lista);
-                AbastecimientoRecycleView.setAdapter(listaArticulosAdapter);*/
-
+                ExpandableListDataPump e = new ExpandableListDataPump(list,objectList);
+                expandableListDetail = e.getData();
+                expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+                expandableListAdapter = new ListaAbastecimientoAdapter(AbastecimientosActivity.this, list, expandableListDetail);
+                AbastecimientoExpandableListView.setAdapter(expandableListAdapter);
                 break;
         }
     }
