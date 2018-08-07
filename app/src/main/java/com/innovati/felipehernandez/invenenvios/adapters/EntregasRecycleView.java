@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
@@ -47,7 +48,7 @@ public class EntregasRecycleView extends RecyclerView.Adapter<EntregasRecycleVie
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         VwPedidos pedidos = lista[position];
         holder.can.setVisibility(View.INVISIBLE);
-        if(pedidos.getEstatus() != 5){
+        if(pedidos.getEstatus() != 4){
             holder.FolioTextView_P.setText("Folio: "+String.valueOf(pedidos.getFolio()));
             //fecha
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
@@ -60,6 +61,8 @@ public class EntregasRecycleView extends RecyclerView.Adapter<EntregasRecycleVie
             }
             holder.ClienteTextView_P.setText(" "+String.valueOf(pedidos.getNombre()));
         }
+        else
+            Toast.makeText(context, "hola", Toast.LENGTH_SHORT).show();
     }
 
     @Override
