@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -233,7 +234,10 @@ public class EntregasActivity extends AppCompatActivity
         {
             try
             {
-                result = pedidosDaos[0].findAll();
+                //result = pedidosDaos[0].findAll();
+                result = pedidosDaos[0].findWhereEstatusEquals((short)3);
+                if(result == null)
+                    metodosInternos.Alerta(R.string.vacioTitulo, R.string.vacioDescripcion);
             }
             catch (Exception e){
 

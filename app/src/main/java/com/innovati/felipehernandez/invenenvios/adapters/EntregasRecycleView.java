@@ -4,6 +4,7 @@ package com.innovati.felipehernandez.invenenvios.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,7 @@ public class EntregasRecycleView extends RecyclerView.Adapter<EntregasRecycleVie
         VwPedidos pedidos = lista[position];
         holder.can.setVisibility(View.INVISIBLE);
         if(pedidos.getEstatus() != 5){
-            holder.FolioTextView_P.setText(String.valueOf(pedidos.getFolio()));
+            holder.FolioTextView_P.setText("Folio: "+String.valueOf(pedidos.getFolio()));
             //fecha
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
             holder.FechaTextView_P.setText(dateFormat.format(pedidos.getFecha()));
@@ -70,7 +71,7 @@ public class EntregasRecycleView extends RecyclerView.Adapter<EntregasRecycleVie
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView FolioTextView_P, FechaTextView_P, TotalTextView_P, ClienteTextView_P,can;
-        TableLayout EntregasTable;
+        ConstraintLayout EntregasTable;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -78,7 +79,7 @@ public class EntregasRecycleView extends RecyclerView.Adapter<EntregasRecycleVie
             FechaTextView_P = (TextView)itemView.findViewById(R.id.FechaTextView_P);
             TotalTextView_P = (TextView) itemView.findViewById(R.id.TotalTextView_P);
             ClienteTextView_P = (TextView) itemView.findViewById(R.id.ClienteTextView_P);
-            EntregasTable = (TableLayout) itemView.findViewById(R.id.EntregasTable);
+            EntregasTable = (ConstraintLayout) itemView.findViewById(R.id.EntregasTable);
             can = (TextView)itemView.findViewById(R.id.CantidadDetallesTextView);
             itemView.setOnClickListener(this);
         }

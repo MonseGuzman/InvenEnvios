@@ -194,8 +194,8 @@ public class ClientesActivity extends AppCompatActivity
 
     public void filtar(View v)
     {
-        //dialog.show();
         String nombre = buscarEditText.getText().toString();
+
         if(metodosInternos.conexionRed())
         {
             //sin filtro = todos
@@ -237,7 +237,6 @@ public class ClientesActivity extends AppCompatActivity
                 metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
                 e.printStackTrace();
             }
-            //dialog.hide();
     }
 
     private void internaBD()
