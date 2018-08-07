@@ -234,7 +234,8 @@ public class EntregasActivity extends AppCompatActivity
         {
             try
             {
-                result = pedidosDaos[0].findAll();
+                //result = pedidosDaos[0].findAll();
+                result = pedidosDaos[0].findWhereEstatusEquals((short)3);
                 if(result == null)
                     metodosInternos.Alerta(R.string.vacioTitulo, R.string.vacioDescripcion);
             }
