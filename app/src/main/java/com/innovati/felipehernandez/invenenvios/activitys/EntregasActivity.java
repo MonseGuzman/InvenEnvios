@@ -43,7 +43,6 @@ public class EntregasActivity extends AppCompatActivity
     private VwPedidos result[];
     private MetodosInternos metodosInternos = new MetodosInternos(this);
     private DaoSession daoSession;
-    private Button btnEntregasReg;
 
     private RecyclerView recyclerView;
 
@@ -105,7 +104,6 @@ public class EntregasActivity extends AppCompatActivity
     private void inicializacion()
     {
         recyclerView = (RecyclerView) findViewById(R.id.recycleViewEntrega);
-        btnEntregasReg = (Button) findViewById(R.id.btnEntregasReg);
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
@@ -130,12 +128,7 @@ public class EntregasActivity extends AppCompatActivity
         }));
 
         if(result.length == 0)
-        {
             metodosInternos.Alerta(R.string.vacioTitulo, R.string.vacioDescripcion);
-            btnEntregasReg.setVisibility(View.INVISIBLE);
-        }
-        else
-            btnEntregasReg.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -290,9 +283,5 @@ public class EntregasActivity extends AppCompatActivity
             }
             return null;
         }
-    }
-
-    public void regEntregas(View view){
-
     }
 }
