@@ -1,9 +1,7 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -64,7 +62,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     String idUsuario = "";
     private MetodosInternos metodosInternos;
     private DaoSession daoSession;
-    private ProgressDialog dialog;
+
     public DetallePedidoFragment() {
         // Required empty public constructor
     }
@@ -133,16 +131,13 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         btnCancelar = v.findViewById(R.id.editArticuloListAceptar);
         editCantida = v.findViewById(R.id.cantidadEditText_AEdit);
         datosEditArticle.setVisibility(View.INVISIBLE);
+
         listDet = new ArrayList<String>();
         articuloEdit = new ArrayList<ArticulosPedido>();
-        dialog=new ProgressDialog(getContext());
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
     }
 
     public void loadData()
     {
-        dialog.show();
         metodosInternos = new MetodosInternos(getActivity());
 
         if(metodosInternos.conexionRed())
@@ -154,7 +149,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         else {
             internaBD();
         }
-        dialog.hide();
     }
 
     private void internaBD() //PREGUNTARLE A DEINI MAÑANA
@@ -432,7 +426,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        dialog.show();
+
         if(bandera){
             metodosInternos = new MetodosInternos(getActivity());
             if(metodosInternos.conexionRed())
@@ -443,12 +437,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                 uptadeExitsBDI();
             }
         }
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.hide();
-            }
-        },100);
     }
     private void validacionCatidad(){
         try{

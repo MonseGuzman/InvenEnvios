@@ -1,8 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,8 +40,8 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
     Double precio;
     String unidad;
     float cantidadPedido = 0;
-    private ProgressDialog dialog;
-    FloatingActionButton AgregarFAB_A;
+
+    //FloatingActionButton AgregarFAB_A;
 
     public ArticuloFragment() {
         // Required empty public constructor
@@ -114,9 +112,6 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
         MasButton_A = (Button) v.findViewById(R.id.MasButton_A);
         cantidadEditText_A = (EditText) v.findViewById(R.id.cantidadEditText_A);
         addArticuloList = v.findViewById(R.id.addArticuloList);
-        dialog=new ProgressDialog(getContext());
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
     }
 
     private void limpiar()
@@ -145,7 +140,6 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        dialog.show();
         try{
             BusquedaArticulosFragment.blockeo();
         }catch (Exception e){
@@ -156,7 +150,6 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
         }catch (Exception e){
 
         }
-        dialog.hide();
     }
 
     @Override
@@ -211,7 +204,6 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
     }
 
     public void addArticuloList(){
-        dialog.show();
         float precioAux = Float.valueOf(precio.toString());
         ArticulosPedido articulosPedido = new ArticulosPedido();
         articulosPedido.setIdArticulo(clave);
@@ -227,7 +219,6 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
         articulosPedido.setExits(ivaAux);
         articulosPedido.setTotal(articulosPedido.getSubTotal()+articulosPedido.getIva());
         PedidoActivity.addArticulo(articulosPedido);
-        dialog.hide();
         getActivity().onBackPressed();
     }
 }
