@@ -48,8 +48,6 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
     private ListView AbastecimientoListView;
     private ExpandableListView AbastecimientoExpandableListView;
 
-    private ListaArticulosAdapter listaArticulosAdapter;
-    private VwAbastecimiento lista[];
     private MetodosInternos metodosInternos = new MetodosInternos(this);
     private DaoSession daoSession;
     private PedidosAdapter adaptador;

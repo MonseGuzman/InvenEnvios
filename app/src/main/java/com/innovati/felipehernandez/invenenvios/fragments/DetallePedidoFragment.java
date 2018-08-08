@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.innovati.felipehernandez.invenenvios.API.DelayedProgressDialog;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticulosPedidosAdapter;
@@ -277,6 +278,16 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
     private class Consulta extends AsyncTask<VwDetallePedidoDao, Void, VwDetallePedido>
     {
+        DelayedProgressDialog progressDialog = new DelayedProgressDialog();
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+
+            progressDialog.setCancelable(false);
+            progressDialog.show(getFragmentManager(), "tag");
+        }
 
         @Override
         protected VwDetallePedido doInBackground(VwDetallePedidoDao... vwDetallePedidoDaos)
@@ -324,8 +335,15 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         {
             super.onPostExecute(vwDetallePedido);
 
+            progressDialog.cancel();
             updateAdapter();
+        }
 
+        @Override
+        protected void onCancelled()
+        {
+            super.onCancelled();
+            progressDialog.cancel();
         }
     }
 
@@ -369,7 +387,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         }else
         updateAdapter();
     }
-
 
     public void uptadeExits(){
         uptadePeido();
@@ -540,7 +557,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
     public void uptadePeido()
     {
-        Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
+        /*Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
         QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
         qb.where(Pedidos_IDao.Properties.IdPedido.eq(clavePedido));
         List<Pedidos_I> pedidos = qb.list();
@@ -559,7 +576,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         objetoPedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
         objetoPedidos.setUltimoUsuarioActualizacion(idUsuario);
         ActualizarPedido a = new ActualizarPedido();
-        a.execute(objetoPedidos);
+        a.execute(objetoPedidos);*/
 
     }
 
