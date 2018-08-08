@@ -55,6 +55,7 @@ public class PedidosAdapter extends BaseAdapter
             vh.FechaTextView_P = (TextView)convertView.findViewById(R.id.FechaTextView_P);
             vh.TotalTextView_P = (TextView) convertView.findViewById(R.id.TotalTextView_P);
             vh.ClienteTextView_P = (TextView) convertView.findViewById(R.id.ClienteTextView_P);
+            vh.CantidadDetallesTextView = (TextView) convertView.findViewById(R.id.CantidadDetallesTextView);
 
             convertView.setTag(vh);
         }
@@ -62,6 +63,7 @@ public class PedidosAdapter extends BaseAdapter
             vh = (PedidosAdapter.ViewHolder) convertView.getTag();
 
         VwPedidos pedidos = lista[position];
+        String estado;
 
         vh.FolioTextView_P.setText("Folio: "+String.valueOf(pedidos.getFolio()));
         //fecha
@@ -70,11 +72,34 @@ public class PedidosAdapter extends BaseAdapter
         vh.TotalTextView_P.setText("Total: $" + String.valueOf(pedidos.getTotal()));
         vh.ClienteTextView_P.setText(pedidos.getNombre());
 
+        switch (pedidos.getEstatus())
+        {
+            case 0:
+                estado = "Estatus: Ninguno";
+                break;
+            case 1:
+                estado = "Estatus: Proceso";
+                break;
+            case 2:
+                estado = "Estatus: Cancelado";
+                break;
+            case 3:
+                estado = "Estatus: Surtido";
+                break;
+            case 4:
+                estado = "Estatus: Entregado";
+                break;
+                default:
+                    estado = "Error";
+            //0: Ninguno, 1:Proceso, 2:Cancelado, 3: Surtido, 4:Entregado (Devuelto?)
+        }
+        vh.CantidadDetallesTextView.setText(estado);
+
         return convertView;
     }
 
     public class ViewHolder
     {
-        TextView FolioTextView_P, FechaTextView_P, TotalTextView_P, ClienteTextView_P;
+        TextView FolioTextView_P, FechaTextView_P, TotalTextView_P, ClienteTextView_P, CantidadDetallesTextView;
     }
 }
