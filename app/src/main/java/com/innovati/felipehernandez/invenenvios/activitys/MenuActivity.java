@@ -19,6 +19,7 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.VwAgenteDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
+import com.innovati.felipehernandez.invenenvios.clases.dao.VwPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidosPk;
@@ -28,6 +29,7 @@ import com.innovati.felipehernandez.invenenvios.clases.dto.VwAgente;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwUsuarios;
 import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
@@ -36,6 +38,7 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwAgenteDaoFactor
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDaoFactory;
+import com.innovati.felipehernandez.invenenvios.clases.factory.VwPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
@@ -50,6 +53,8 @@ import com.innovati.felipehernandez.invenenvios.database.VwClientes_I;
 import com.innovati.felipehernandez.invenenvios.database.VwClientes_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_I;
 import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwPedidos_I;
+import com.innovati.felipehernandez.invenenvios.database.VwPedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwUsuarios_I;
 import com.innovati.felipehernandez.invenenvios.database.VwUsuarios_IDao;
 
@@ -265,6 +270,7 @@ public class MenuActivity extends AppCompatActivity
         private VwArticulosDao _daoVwArticulos;
         private VwClientesDao _daoVwClientes;
         private VwAbastecimientoDao _daoVwAbastecimiento;
+        private VwPedidosDao _daoVwPedidos;
         private long cont=1;
 
         @Override
@@ -287,6 +293,7 @@ public class MenuActivity extends AppCompatActivity
             _daoVwArticulos = getVwArticulosDao();
             _daoVwUsuarios = getVwUsuariosDao();
             _daoVwAbastecimiento = getVwAbastecimientoDao();
+            _daoVwPedidos = getVwPedidosDao();
 
             try
             {
@@ -298,6 +305,7 @@ public class MenuActivity extends AppCompatActivity
                 VwArticulos[] articulos = _daoVwArticulos.findAll();
                 VwUsuarios[] usuarios = _daoVwUsuarios.findAll();
                 VwAbastecimiento[] abastecimientos = _daoVwAbastecimiento.findAll();
+                VwPedidos[] pedidos1 = _daoVwPedidos.findAll();
 
                for(VwAgente agente: agentes)
                 {
@@ -364,6 +372,27 @@ public class MenuActivity extends AppCompatActivity
                     pedidos_i.setUltimoUsuarioActualizacion(pedido.getUltimoUsuarioActualizacion());
 
                     Pedidos_IDao metodo = daoSession.getPedidos_IDao();
+                    metodo.insertOrReplace(pedidos_i);
+                    cont++;
+                }
+
+                for(VwPedidos pedido: pedidos1)
+                {
+                    VwPedidos_I pedidos_i = new VwPedidos_I();
+                    pedidos_i.setId(cont);
+                    pedidos_i.setIdPedido(pedido.getIdPedido());
+                    pedidos_i.setIdUsuario(pedido.getIdUsuario());
+                    pedidos_i.setFolio(pedido.getFolio());
+                    pedidos_i.setClaveCliente(pedido.getClaveCliente());
+                    pedidos_i.setFecha(pedido.getFecha());
+                    pedidos_i.setEstatus(pedido.getEstatus());
+                    pedidos_i.setSubtotal(pedido.getSubtotal());
+                    pedidos_i.setIva(pedido.getIva());
+                    pedidos_i.setTotal(pedido.getTotal());
+                    pedidos_i.setNombre(pedido.getNombre());
+                    pedidos_i.setServidor(true);
+
+                    VwPedidos_IDao metodo = daoSession.getVwPedidos_IDao();
                     metodo.insertOrReplace(pedidos_i);
                     cont++;
                 }
@@ -485,6 +514,11 @@ public class MenuActivity extends AppCompatActivity
     public static PedidosDao getPedidosDao()
     {
         return PedidosDaoFactory.create();
+    }
+
+    public static VwPedidosDao getVwPedidosDao()
+    {
+        return VwPedidosDaoFactory.create();
     }
     public static VwUsuariosDao getVwUsuariosDao() {
         return VwUsuariosDaoFactory.create();
