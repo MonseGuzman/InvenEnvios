@@ -1,13 +1,11 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,11 +16,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
-import com.innovati.felipehernandez.invenenvios.activitys.ArticuloActivity;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticuloAdapter;
 import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwArticulosDao;
@@ -31,8 +27,6 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwArticulosDaoFac
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.database.VwArticulos_I;
 import com.innovati.felipehernandez.invenenvios.database.VwArticulos_IDao;
-import com.innovati.felipehernandez.invenenvios.database.VwClientes_I;
-import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -47,7 +41,7 @@ public class BusquedaArticulosFragment extends Fragment
     private static EditText buscarEditText;
     private static ImageButton BuscarImageButton;
     private FloatingActionButton AgregarFAB_A;
-    private ProgressDialog dialog;
+
     VwArticulos result[];
     MetodosInternos metodosInternos;
     Bundle args;
@@ -72,8 +66,8 @@ public class BusquedaArticulosFragment extends Fragment
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                if(result[position].getExistenciaTotal() > 0){
-                    dialog.show();
+                if(result[position].getExistenciaTotal() > 0)
+                {
                     ArticuloFragment fragment = new ArticuloFragment();
                     ArticuloBlock.setVisibility(View.INVISIBLE);
                     //AGREGAR ARTICULOS A PERDIDO
@@ -86,7 +80,6 @@ public class BusquedaArticulosFragment extends Fragment
                     args.putDouble("precio", result[position].getPrecio1());
                     args.putString("unidad", result[position].getUnidadPrimaria());
                     fragment.setArguments(args);
-                    dialog.hide();
                     getFragmentManager().beginTransaction().replace(R.id.ArticuloFrameLayout, fragment).addToBackStack(null).commit();
                 }else{
                     Snackbar.make(getView(), "No Existe Existencias", Snackbar.LENGTH_SHORT).show();
@@ -111,11 +104,7 @@ public class BusquedaArticulosFragment extends Fragment
         BuscarImageButton = (ImageButton) view.findViewById(R.id.BuscarImageButton);
         AgregarFAB_A = (FloatingActionButton) view.findViewById(R.id.AgregarFAB_A);
         ArticuloBlock = (RelativeLayout)view.findViewById(R.id.ArticuloBlock);
-        dialog=new ProgressDialog(getContext());
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
     }
-
 
     public static VwArticulosDao getVwArticulosDao()
     {
@@ -124,7 +113,6 @@ public class BusquedaArticulosFragment extends Fragment
 
     public void filtar(View v)
     {
-        dialog.show();
         metodosInternos = new MetodosInternos(getActivity());
         String nombre = buscarEditText.getText().toString();
         if(TextUtils.isEmpty(nombre))
@@ -137,11 +125,8 @@ public class BusquedaArticulosFragment extends Fragment
                 c.execute(_dao);
 
             }
-            else
-            {
-                //código para buscar en la bd interna
+            else//código para buscar en la bd interna
                 internaBD();
-            }
         }
         else
         {
@@ -161,16 +146,10 @@ public class BusquedaArticulosFragment extends Fragment
                     //Toast.makeText(getActivity(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
                 }
             }
-            else
-            {
-                //código para buscar en la bd interna
+            else//código para buscar en la bd interna
                 internaBD();
-            }
         }
-        dialog.hide();
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -193,8 +172,6 @@ public class BusquedaArticulosFragment extends Fragment
         {
             this.nombre = nombre;
         }
-
-
 
         @Override
         protected VwArticulos[] doInBackground(VwArticulosDao... vwArticulosDaos)
@@ -223,48 +200,48 @@ public class BusquedaArticulosFragment extends Fragment
     public static void blockeo(){
         ArticuloBlock.setVisibility(View.VISIBLE);
     }
+
     private void internaBD()
-{
-    String nombre = buscarEditText.getText().toString();
-    VwArticulos_IDao vwArticulos_iDao = daoSession.getVwArticulos_IDao();
-    List<VwArticulos_I> articulos;
-
-    //si esta vacio
-    if(TextUtils.isEmpty(nombre))
     {
-        QueryBuilder<VwArticulos_I> qb = vwArticulos_iDao.queryBuilder();
-        articulos = qb.list();
-        result = new VwArticulos[articulos.size()];
+        String nombre = buscarEditText.getText().toString();
+        VwArticulos_IDao vwArticulos_iDao = daoSession.getVwArticulos_IDao();
+        List<VwArticulos_I> articulos;
+
+        //si esta vacio
+        if(TextUtils.isEmpty(nombre))
+        {
+            QueryBuilder<VwArticulos_I> qb = vwArticulos_iDao.queryBuilder();
+            articulos = qb.list();
+            result = new VwArticulos[articulos.size()];
+        }
+        else
+        {
+            nombre = "%" + nombre;
+            nombre += "%";
+
+            QueryBuilder<VwArticulos_I> qb = vwArticulos_iDao.queryBuilder();
+            qb.where(VwArticulos_IDao.Properties.Nombre.like(nombre));
+
+            articulos = qb.list();
+            result = new VwArticulos[articulos.size()];
+        }
+
+        for(int x=0; x<articulos.size(); x++)
+        {
+            VwArticulos vwArticulos = new VwArticulos();
+
+            vwArticulos.setClave(articulos.get(x).getClave());
+            vwArticulos.setNombre(articulos.get(x).getNombre());
+            vwArticulos.setActivo(articulos.get(x).getActivo());
+            vwArticulos.setTiempoSurtido(Double.valueOf(articulos.get(x).getTiempoSurtido().toString()));
+            vwArticulos.setExistenciaTotal(articulos.get(x).getExistenciaTotal());
+            vwArticulos.setPrecio1(articulos.get(x).getPrecio1());
+            vwArticulos.setUnidadPrimaria(articulos.get(x).getUnidadPrimaria());
+
+            result[x] = vwArticulos;
+        }
+        adaptador = new ArticuloAdapter(getActivity(),  R.layout.listview_articulos, result);
+        datitosListView.setAdapter(adaptador);
     }
-    else
-    {
-        nombre = "%" + nombre;
-        nombre += "%";
-
-        QueryBuilder<VwArticulos_I> qb = vwArticulos_iDao.queryBuilder();
-        qb.where(VwArticulos_IDao.Properties.Nombre.like(nombre));
-
-        articulos = qb.list();
-        result = new VwArticulos[articulos.size()];
-    }
-
-    for(int x=0; x<articulos.size(); x++)
-    {
-        VwArticulos vwArticulos = new VwArticulos();
-
-        vwArticulos.setClave(articulos.get(x).getClave());
-        vwArticulos.setNombre(articulos.get(x).getNombre());
-        vwArticulos.setActivo(articulos.get(x).getActivo());
-        vwArticulos.setTiempoSurtido(Double.valueOf(articulos.get(x).getTiempoSurtido().toString()));
-        vwArticulos.setExistenciaTotal(articulos.get(x).getExistenciaTotal());
-        vwArticulos.setPrecio1(articulos.get(x).getPrecio1());
-        vwArticulos.setUnidadPrimaria(articulos.get(x).getUnidadPrimaria());
-
-        result[x] = vwArticulos;
-    }
-    adaptador = new ArticuloAdapter(getActivity(),  R.layout.listview_articulos, result);
-    datitosListView.setAdapter(adaptador);
-}
-
 
 }

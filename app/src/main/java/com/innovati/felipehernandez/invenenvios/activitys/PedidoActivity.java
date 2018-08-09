@@ -21,6 +21,7 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.DetallesPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidosPk;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
@@ -433,7 +434,7 @@ public class PedidoActivity extends AppCompatActivity
             DetallesPedidosDao _dao = getDetallesPedidosDao();
             try
             {
-                _dao.insert(detallesPedidos[0]);
+                DetallesPedidosPk pk = _dao.insert(detallesPedidos[0]);
             }
             catch (Exception e)
             {

@@ -9,9 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.API.DelayedProgressDialog;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
@@ -101,6 +104,7 @@ public class EntregasActivity extends AppCompatActivity
     private void inicializacion()
     {
         recyclerView = (RecyclerView) findViewById(R.id.recycleViewEntrega);
+
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
@@ -122,6 +126,9 @@ public class EntregasActivity extends AppCompatActivity
 
             }
         }));
+
+        if(result.length == 0)
+            metodosInternos.Alerta(R.string.vacioTitulo, R.string.vacioDescripcion);
     }
 
     @Override
@@ -234,10 +241,7 @@ public class EntregasActivity extends AppCompatActivity
         {
             try
             {
-                //result = pedidosDaos[0].findAll();
                 result = pedidosDaos[0].findWhereEstatusEquals((short)3);
-                if(result == null)
-                    metodosInternos.Alerta(R.string.vacioTitulo, R.string.vacioDescripcion);
             }
             catch (Exception e){
 
@@ -279,9 +283,5 @@ public class EntregasActivity extends AppCompatActivity
             }
             return null;
         }
-    }
-
-    public void regEntregas(View view){
-
     }
 }

@@ -1,9 +1,7 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.innovati.felipehernandez.invenenvios.API.DelayedProgressDialog;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ArticulosPedidosAdapter;
@@ -64,7 +63,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     String idUsuario = "";
     private MetodosInternos metodosInternos;
     private DaoSession daoSession;
-    private ProgressDialog dialog;
+
     public DetallePedidoFragment() {
         // Required empty public constructor
     }
@@ -133,16 +132,13 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         btnCancelar = v.findViewById(R.id.editArticuloListAceptar);
         editCantida = v.findViewById(R.id.cantidadEditText_AEdit);
         datosEditArticle.setVisibility(View.INVISIBLE);
+
         listDet = new ArrayList<String>();
         articuloEdit = new ArrayList<ArticulosPedido>();
-        dialog=new ProgressDialog(getContext());
-        dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
     }
 
     public void loadData()
     {
-        dialog.show();
         metodosInternos = new MetodosInternos(getActivity());
 
         if(metodosInternos.conexionRed())
@@ -154,7 +150,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         else {
             internaBD();
         }
-        dialog.hide();
     }
 
     private void internaBD() //PREGUNTARLE A DEINI MAÑANA
@@ -283,6 +278,16 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
     private class Consulta extends AsyncTask<VwDetallePedidoDao, Void, VwDetallePedido>
     {
+        DelayedProgressDialog progressDialog = new DelayedProgressDialog();
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+
+            progressDialog.setCancelable(false);
+            progressDialog.show(getFragmentManager(), "tag");
+        }
 
         @Override
         protected VwDetallePedido doInBackground(VwDetallePedidoDao... vwDetallePedidoDaos)
@@ -330,8 +335,15 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         {
             super.onPostExecute(vwDetallePedido);
 
+            progressDialog.cancel();
             updateAdapter();
+        }
 
+        @Override
+        protected void onCancelled()
+        {
+            super.onCancelled();
+            progressDialog.cancel();
         }
     }
 
@@ -375,7 +387,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         }else
         updateAdapter();
     }
-
 
     public void uptadeExits(){
         uptadePeido();
@@ -432,7 +443,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        dialog.show();
+
         if(bandera){
             metodosInternos = new MetodosInternos(getActivity());
             if(metodosInternos.conexionRed())
@@ -443,12 +454,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                 uptadeExitsBDI();
             }
         }
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.hide();
-            }
-        },100);
     }
     private void validacionCatidad(){
         try{
@@ -552,7 +557,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
     public void uptadePeido()
     {
-        Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
+        /*Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
         QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
         qb.where(Pedidos_IDao.Properties.IdPedido.eq(clavePedido));
         List<Pedidos_I> pedidos = qb.list();
@@ -571,7 +576,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         objetoPedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
         objetoPedidos.setUltimoUsuarioActualizacion(idUsuario);
         ActualizarPedido a = new ActualizarPedido();
-        a.execute(objetoPedidos);
+        a.execute(objetoPedidos);*/
 
     }
 

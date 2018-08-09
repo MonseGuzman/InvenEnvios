@@ -11,21 +11,8 @@
         android:id="@+id/recycleViewEntrega"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignEnd="@id/btnEntregasReg"
         android:layout_marginBottom="40dp">
 
     </android.support.v7.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/btnEntregasReg"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:text="@string/btnEntregas"
-        android:layout_marginBottom="3dp"
-        android:textColor="@color/primaryTextColor"
-        android:textSize="24dp"
-        android:background="@color/colorPrimaryDark"
-        android:onClick="regEntregas"/>
 </RelativeLayout>
