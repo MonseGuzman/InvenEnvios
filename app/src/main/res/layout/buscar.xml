@@ -26,12 +26,13 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"/>
 
-        <ImageButton
-            android:id="@+id/BuscarImageButton"
+        <Button
+            android:id="@+id/BuscarButton"
             android:layout_width="43dp"
             android:layout_height="match_parent"
-            android:background="@color/secondaryColor"
-            android:src="@drawable/ic_busqueda" />
+            android:drawableTop="@drawable/ic_busqueda"
+            android:paddingTop="10dp"
+            android:background="@color/secondaryColor" />
     </LinearLayout>
 
     <ListView

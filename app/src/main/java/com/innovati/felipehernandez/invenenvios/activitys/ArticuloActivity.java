@@ -1,6 +1,5 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,8 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -37,7 +36,7 @@ public class ArticuloActivity extends AppCompatActivity
     private ArticuloAdapter adaptador;
     private static ListView datitosListView;
     private static EditText buscarEditText;
-    private static ImageButton BuscarImageButton;
+    private static Button BuscarButton;
     private FloatingActionButton AgregarFAB_A;
 
     VwArticulos result[];
@@ -83,7 +82,7 @@ public class ArticuloActivity extends AppCompatActivity
             }
         });
 
-        BuscarImageButton.setOnClickListener(new View.OnClickListener() {
+        BuscarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 filtar(v);
@@ -95,7 +94,7 @@ public class ArticuloActivity extends AppCompatActivity
     {
         datitosListView = (ListView)findViewById(R.id.datitosListView);
         buscarEditText = (EditText) findViewById(R.id.buscarEditText);
-        BuscarImageButton = (ImageButton) findViewById(R.id.BuscarImageButton);
+        BuscarButton = (Button) findViewById(R.id.BuscarButton);
         AgregarFAB_A = (FloatingActionButton) findViewById(R.id.AgregarFAB_A);
     }
 

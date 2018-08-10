@@ -31,6 +31,8 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwPedidosDaoFacto
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwPedidos_I;
+import com.innovati.felipehernandez.invenenvios.database.VwPedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
 
 import org.greenrobot.greendao.query.QueryBuilder;
@@ -198,10 +200,10 @@ public class EntregasActivity extends AppCompatActivity
 
     private void internaBD()
     {
-        Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
-        QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
+        VwPedidos_IDao pedidos_iDao = daoSession.getVwPedidos_IDao();
+        QueryBuilder<VwPedidos_I> qb = pedidos_iDao.queryBuilder();
 
-        List<Pedidos_I> pedidos = qb.list();
+        List<VwPedidos_I> pedidos = qb.list();
         result = new VwPedidos[pedidos.size()];
 
         for(int x=0; x<pedidos.size(); x++)
@@ -210,7 +212,7 @@ public class EntregasActivity extends AppCompatActivity
 
             objetoPedidos.setIdPedido(pedidos.get(x).getIdPedido());
             objetoPedidos.setIdUsuario(pedidos.get(x).getIdUsuario());
-            //objetoPedidos.setNombre(pedidos.get(x).getNombre());
+            objetoPedidos.setNombre(pedidos.get(x).getNombre());
             objetoPedidos.setFolio(pedidos.get(x).getFolio());
             objetoPedidos.setClaveCliente(pedidos.get(x).getClaveCliente());
             objetoPedidos.setFecha(pedidos.get(x).getFecha());

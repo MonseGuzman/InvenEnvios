@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -39,7 +40,7 @@ public class BusquedaArticulosFragment extends Fragment
     private ArticuloAdapter adaptador;
     private static ListView datitosListView;
     private static EditText buscarEditText;
-    private static ImageButton BuscarImageButton;
+    private static Button BuscarButton;
     private FloatingActionButton AgregarFAB_A;
 
     VwArticulos result[];
@@ -87,7 +88,7 @@ public class BusquedaArticulosFragment extends Fragment
             }
         });
 
-        BuscarImageButton.setOnClickListener(new View.OnClickListener() {
+        BuscarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 filtar(v);
@@ -101,7 +102,7 @@ public class BusquedaArticulosFragment extends Fragment
     {
         datitosListView = (ListView)view.findViewById(R.id.datitosListView);
         buscarEditText = (EditText) view.findViewById(R.id.buscarEditText);
-        BuscarImageButton = (ImageButton) view.findViewById(R.id.BuscarImageButton);
+        BuscarButton = (Button) view.findViewById(R.id.BuscarButton);
         AgregarFAB_A = (FloatingActionButton) view.findViewById(R.id.AgregarFAB_A);
         ArticuloBlock = (RelativeLayout)view.findViewById(R.id.ArticuloBlock);
     }

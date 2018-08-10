@@ -17,8 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -43,7 +43,7 @@ public class ClientesActivity extends AppCompatActivity
 {
     private static ListView datitosListView;
     private EditText buscarEditText;
-    private ImageButton BuscarImageButton;
+    private Button BuscarButton;
 
     private Bundle args;
     private ClientesAdaptador adaptador;
@@ -86,7 +86,7 @@ public class ClientesActivity extends AppCompatActivity
             }
         });
 
-        BuscarImageButton.setOnClickListener(new View.OnClickListener() {
+        BuscarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 filtar(v);
@@ -100,7 +100,7 @@ public class ClientesActivity extends AppCompatActivity
     {
         datitosListView = (ListView)findViewById(R.id.datitosListView);
         buscarEditText = (EditText)findViewById(R.id.buscarEditText);
-        BuscarImageButton = (ImageButton)findViewById(R.id.BuscarImageButton);
+        BuscarButton = (Button)findViewById(R.id.BuscarButton);
     }
 
     //menú de contexto
