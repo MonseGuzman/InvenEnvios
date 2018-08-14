@@ -376,6 +376,7 @@ public class MenuActivity extends AppCompatActivity
                     cont++;
                 }
 
+                cont=1;
                 for(VwPedidos pedido: pedidos1)
                 {
                     VwPedidos_I pedidos_i = new VwPedidos_I();
@@ -416,10 +417,6 @@ public class MenuActivity extends AppCompatActivity
                     detallePedido_i.setUsuarioActualizacion(detallePedido.getUltimoUsuarioActualizacion());
 
                     VwDetallePedido_IDao metodo = daoSession.getVwDetallePedido_IDao();
-                    if(metodo.insertOrReplace(detallePedido_i) == cont)
-                    {
-                        System.out.println("Si se pudo");
-                    }
                     cont++;
                 }
 
