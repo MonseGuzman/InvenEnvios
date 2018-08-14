@@ -1,6 +1,5 @@
 package com.innovati.felipehernandez.invenenvios.adapters;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -51,6 +50,9 @@ public class ArticulosPedidosAdapter extends RecyclerView.Adapter<ArticulosPedid
                 holder.view_foreground.setBackgroundColor(Color.WHITE);
             }else{
                 holder.view_foreground.setBackgroundColor(Color.rgb(176,236,222));
+            }
+            if (articulosPedidos.get(position).getCantidad() == 0){
+                holder.view_foreground.setBackgroundColor(Color.WHITE);
             }
         }else{
             if (articulosPedidos.get(position).isStatus()){
