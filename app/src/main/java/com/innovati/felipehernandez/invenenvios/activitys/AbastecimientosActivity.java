@@ -65,9 +65,6 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 
         inicializar();
 
-        progressDialog.setCancelable(false);
-        progressDialog.show(getSupportFragmentManager(), "tag");
-
         tipo = getIntent().getExtras().getInt("Tipo", 0);
         this.setTitle(R.string.tituloAbastecimiento);
         daoSession = ((MyApp) getApplication()).getDaoSession();
@@ -75,7 +72,6 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
         AbastecimientoListView.setOnItemClickListener(this);
 
         cargarDatos(tipo);
-        progressDialog.cancel();
     }
 
     private void inicializar()
@@ -311,8 +307,6 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 
     private class LlenarAdaptador extends AsyncTask<VwAbastecimientoDao, Void, List<String>>
     {
-        DelayedProgressDialog progressDialog = new DelayedProgressDialog();
-
         @Override
         protected void onPreExecute()
         {
