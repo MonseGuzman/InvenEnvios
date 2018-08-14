@@ -389,7 +389,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     }
 
     public void uptadeExits(){
-        uptadePeido();
+        updatePedido();
         int x = 0;
         for (ArticulosPedido ar: articulosPedidos){
             uptadeExits(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
@@ -505,6 +505,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         List<Pedidos_I> pedidos = qb.list();
             int x= 0;
             Pedidos_I objetoPedidos = new Pedidos_I();
+            objetoPedidos.setId(pedidos.get(x).getId());
             objetoPedidos.setIdPedido(pedidos.get(x).getIdPedido());
             objetoPedidos.setIdUsuario(pedidos.get(x).getIdUsuario());
             objetoPedidos.setFolio(pedidos.get(x).getFolio());
@@ -555,7 +556,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         return iva;
     }
 
-    public void uptadePeido()
+    public void updatePedido()
     {
         /*Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
         QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
