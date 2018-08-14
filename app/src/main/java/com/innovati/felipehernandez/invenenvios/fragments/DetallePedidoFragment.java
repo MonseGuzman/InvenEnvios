@@ -558,27 +558,9 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
     public void updatePedido()
     {
-        /*Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
-        QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
-        qb.where(Pedidos_IDao.Properties.IdPedido.eq(clavePedido));
-        List<Pedidos_I> pedidos = qb.list();
-        int x= 0;
-        Pedidos objetoPedidos = new Pedidos();
-        objetoPedidos.setIdPedido(pedidos.get(x).getIdPedido());
-        objetoPedidos.setIdUsuario(pedidos.get(x).getIdUsuario());
-        objetoPedidos.setFolio(pedidos.get(x).getFolio());
-        objetoPedidos.setClaveCliente(pedidos.get(x).getClaveCliente());
-        objetoPedidos.setFecha(pedidos.get(x).getFecha());
-        objetoPedidos.setEstatus(pedidos.get(x).getEstatus());
-        objetoPedidos.setSubtotal(getSub());
-        objetoPedidos.setTotal(getTotal());
-        objetoPedidos.setIva(getIva());
-        objetoPedidos.setObservaciones(pedidos.get(x).getObservaciones());
-        objetoPedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
-        objetoPedidos.setUltimoUsuarioActualizacion(idUsuario);
-        ActualizarPedido a = new ActualizarPedido();
-        a.execute(objetoPedidos);*/
-
+        ConsultaPedido consultaPedido = new ConsultaPedido();
+        PedidosDao pedidosDao = getPedidosDao();
+        consultaPedido.execute(pedidosDao);
     }
 
     public static PedidosDao getPedidosDao()
@@ -601,6 +583,47 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             {
 
             }
+            return null;
+        }
+    }
+
+    private class ConsultaPedido extends AsyncTask<PedidosDao, Void, Pedidos>
+    {
+        DelayedProgressDialog progressDialog = new DelayedProgressDialog();
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Pedidos doInBackground(PedidosDao... pedidosDaos)
+        {
+            try
+            {
+                 Pedidos[] pedidos = pedidosDaos[0].findWhereIdPedidoEquals(clavePedido);
+                 for(Pedidos pedido: pedidos)
+                 {
+                     Pedidos objetoPedidos = new Pedidos();
+                     objetoPedidos.setIdPedido(pedido.getIdPedido());
+                     objetoPedidos.setIdUsuario(pedido.getIdUsuario());
+                     objetoPedidos.setFolio(pedido.getFolio());
+                     objetoPedidos.setClaveCliente(pedido.getClaveCliente());
+                     objetoPedidos.setFecha(pedido.getFecha());
+                     objetoPedidos.setEstatus((short)3);
+                     objetoPedidos.setSubtotal(getSub());
+                     objetoPedidos.setTotal(getTotal());
+                     objetoPedidos.setIva(getIva());
+                     objetoPedidos.setObservaciones(pedido.getObservaciones());
+                     objetoPedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
+                     objetoPedidos.setUltimoUsuarioActualizacion(idUsuario);
+                     ActualizarPedido a = new ActualizarPedido();
+                     a.execute(objetoPedidos);
+                 }
+
+            }
+            catch (Exception e) { }
             return null;
         }
     }
