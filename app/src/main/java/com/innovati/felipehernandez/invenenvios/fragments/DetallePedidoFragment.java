@@ -446,7 +446,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
         if(bandera){
             metodosInternos = new MetodosInternos(getActivity());
-            if(metodosInternos.conexionRed())
+            if(metodosInternos.conexionRed() && valideStatus())
             {
                 uptadeExits();
             }
@@ -626,5 +626,17 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             catch (Exception e) { }
             return null;
         }
+    }
+    private boolean valideStatus(){
+        //articulosPedido.setEstado
+        Boolean ban = false;
+        for(ArticulosPedido a:articulosPedidos ){
+            if (a.getEstado() == 2){
+                ban = true;
+            }else{
+                ban = false;
+            }
+        }
+        return ban;
     }
 }
