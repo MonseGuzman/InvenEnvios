@@ -274,7 +274,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
         protected VwPedidos[] doInBackground(VwPedidosDao... pedidosDaos) {
             try
             {
-                result = pedidosDaos[0].findAll();
+                result = pedidosDaos[0].findWhereEstatusEquals((short) 1);
             }
             catch (Exception e){
 
