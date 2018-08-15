@@ -262,6 +262,7 @@ public class PedidoActivity extends AppCompatActivity
         detalle.setSubtotal(a.getSubTotal());
         detalle.setIva(a.getIva());
         detalle.setTotal(a.getTotal());
+        detalle.setSurtido((short)0);
         detalle.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
         detalle.setUltimoUsuarioActualizacion(idUsuario);
         InsertarDetalle detalleInsertar = new InsertarDetalle();

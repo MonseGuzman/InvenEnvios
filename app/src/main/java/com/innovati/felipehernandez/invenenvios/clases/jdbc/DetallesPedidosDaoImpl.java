@@ -142,8 +142,8 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 			conn = isConnSupplied ? userConn : ResourceManager.getConnection();
 		
 			stmt = conn.prepareStatement( SQL_INSERT );
-			stmt.setString( COLUMN_ID_DETALLE_PEDIDO, dto.getIdDetallePedido() );
-			stmt.setString( COLUMN_ID_PEDIDO, dto.getIdPedido() );
+			stmt.setObject( COLUMN_ID_DETALLE_PEDIDO, dto.getIdDetallePedido() );
+			stmt.setObject( COLUMN_ID_PEDIDO, dto.getIdPedido() );
 			stmt.setString( COLUMN_CLAVE_ARTICULO, dto.getClaveArticulo() );
 			if (dto.isCantidadNull()) {
 				stmt.setNull( COLUMN_CANTIDAD, java.sql.Types.DOUBLE );
@@ -182,7 +182,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 			}
 		
 			stmt.setTimestamp(COLUMN_ULTIMA_FECHA_ACTUALIZACION, dto.getUltimaFechaActualizacion()==null ? null : new java.sql.Timestamp( dto.getUltimaFechaActualizacion().getTime() ) );
-			stmt.setString( COLUMN_ULTIMO_USUARIO_ACTUALIZACION, dto.getUltimoUsuarioActualizacion() );
+			stmt.setObject( COLUMN_ULTIMO_USUARIO_ACTUALIZACION, dto.getUltimoUsuarioActualizacion() );
 			System.out.println( "Executing " + SQL_INSERT + " with DTO: " + dto );
 			stmt.execute();
 			int rows = stmt.getUpdateCount();
