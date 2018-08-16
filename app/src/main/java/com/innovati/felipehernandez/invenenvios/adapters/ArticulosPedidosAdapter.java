@@ -48,12 +48,12 @@ public class ArticulosPedidosAdapter extends RecyclerView.Adapter<ArticulosPedid
         if(ban){
             if (articulosPedidos.get(position).getEstado() == 1){
                 holder.view_foreground.setBackgroundColor(Color.WHITE);
-            }else{
+            }else if (articulosPedidos.get(position).getEstado() == 3){
+                holder.view_foreground.setBackgroundColor(Color.RED);
+            }else if(articulosPedidos.get(position).getEstado() == 2){
                 holder.view_foreground.setBackgroundColor(Color.rgb(176,236,222));
             }
-            if (articulosPedidos.get(position).getCantidad() == 0){
-                holder.view_foreground.setBackgroundColor(Color.WHITE);
-            }
+
         }else{
             if (articulosPedidos.get(position).isStatus()){
                 holder.view_foreground.setBackgroundColor(Color.WHITE);

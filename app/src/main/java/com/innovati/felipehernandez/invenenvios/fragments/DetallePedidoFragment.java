@@ -101,12 +101,12 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int  position = viewHolder.getAdapterPosition();
                 ArticulosPedidosAdapter adapter = (ArticulosPedidosAdapter) recyclerArticulos.getAdapter();
-                ArticulosPedido articulosPedido = new ArticulosPedido();
+                ArticulosPedido articulosPedido;
                 articulosPedido = adapter.articulosPedidos.get(position);
                 if (direction == ItemTouchHelper.RIGHT){
                     articulosPedido.setEstado((short)2);
                 }else if (direction == ItemTouchHelper.LEFT){
-                    articulosPedido.setEstado((short)2);
+                    articulosPedido.setEstado((short)3);
                     articulosPedido.setCantidad(0);
                     articulosPedido.setIva(0);
                     articulosPedido.setSubTotal(0);
@@ -444,9 +444,9 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     public void onDestroyView() {
         super.onDestroyView();
 
-        if(bandera){
+        if(bandera && valideStatus()){
             metodosInternos = new MetodosInternos(getActivity());
-            if(metodosInternos.conexionRed() && valideStatus())
+            if(metodosInternos.conexionRed() )
             {
                 uptadeExits();
             }
@@ -515,6 +515,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             objetoPedidos.setSubtotal(getSub());
             objetoPedidos.setTotal(getTotal());
             objetoPedidos.setIva(getIva());
+            objetoPedidos.setEstatus((short)3);
             objetoPedidos.setObservaciones(pedidos.get(x).getObservaciones());
             objetoPedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
             objetoPedidos.setUltimoUsuarioActualizacion(idUsuario);
@@ -628,14 +629,15 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         }
     }
     private boolean valideStatus(){
-        //articulosPedido.setEstado
         Boolean ban = false;
+        int x = 0;
         for(ArticulosPedido a:articulosPedidos ){
-            if (a.getEstado() == 2){
-                ban = true;
-            }else{
-                ban = false;
+            if (a.getEstado() > 1){
+                x++;
             }
+        }
+        if(x == articulosPedidos.size()){
+            ban = true;
         }
         return ban;
     }
