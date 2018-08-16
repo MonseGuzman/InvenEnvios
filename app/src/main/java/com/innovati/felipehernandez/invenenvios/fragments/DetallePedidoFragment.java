@@ -388,14 +388,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         updateAdapter();
     }
 
-    public void uptadeExits(){
-        updatePedido();
-        int x = 0;
-        for (ArticulosPedido ar: articulosPedidos){
-            uptadeExits(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
-            x++;
-        }
-    }
 
     public void uptadeExits(String idDet, String idPedido, String clave ,float cantidad, float precio, float subTotal, float iva, float total, String idUsuario, short estado)
     {
@@ -448,10 +440,10 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             metodosInternos = new MetodosInternos(getActivity());
             if(metodosInternos.conexionRed() )
             {
-                uptadeExits();
+                updatePedido();
             }
             else {
-                uptadeExitsBDI();
+                pedidoExitsDBI();
             }
         }
         if(bandera){
@@ -490,14 +482,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
     }
 
-    private void uptadeExitsBDI(){
-        pedidoExitsDBI();
-        int x = 0;
-        for (ArticulosPedido ar: articulosPedidos){
-            uptadeExitsDBI(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
-            x++;
-        }
-    }
 
     public void uptadeExitsDBI(String idDet, String idPedido, String clave ,float cantidad, float precio, float subTotal, float iva, float total, String idUsuario, short estado)
     {
