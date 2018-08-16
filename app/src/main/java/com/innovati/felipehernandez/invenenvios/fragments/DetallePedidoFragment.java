@@ -454,6 +454,24 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                 uptadeExitsBDI();
             }
         }
+        if(bandera){
+            metodosInternos = new MetodosInternos(getActivity());
+            if(metodosInternos.conexionRed() )
+            {
+                int x = 0;
+                for (ArticulosPedido ar: articulosPedidos){
+                    uptadeExits(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
+                    x++;
+                }
+            }
+            else {
+                int x = 0;
+                for (ArticulosPedido ar: articulosPedidos){
+                    uptadeExitsDBI(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
+                    x++;
+                }
+            }
+        }
     }
     private void validacionCatidad(){
         try{
