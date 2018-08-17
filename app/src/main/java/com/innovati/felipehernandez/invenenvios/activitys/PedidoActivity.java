@@ -34,6 +34,8 @@ import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.DatosPedidoFragment;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
+import org.greenrobot.greendao.query.QueryBuilder;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -350,10 +352,20 @@ public class PedidoActivity extends AppCompatActivity
 
     public void geneFolio()
     {
-        Pedidos pedidosResult[] = null;
-        PedidosDao daoPedidos = getPedidosDao();
-        Consulta c = new Consulta();
-        c.execute(daoPedidos, daoPedidos);
+        if(metodosInternos.conexionRed())
+        {
+            Pedidos pedidosResult[] = null;
+            PedidosDao daoPedidos = getPedidosDao();
+            Consulta c = new Consulta();
+            c.execute(daoPedidos, daoPedidos);
+        }
+        else
+        {
+            Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
+            QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
+            long folio = qb.count();
+            tvFolio.setText(String.valueOf(folio));
+        }
     }
 
     public class Consulta extends AsyncTask<PedidosDao, PedidosDao, Pedidos[]>
