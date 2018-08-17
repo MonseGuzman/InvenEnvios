@@ -1,6 +1,8 @@
 package com.innovati.felipehernandez.invenenvios.app;
 
 import android.app.Application;
+import android.os.SystemClock;
+
 import org.greenrobot.greendao.database.Database;
 
 import com.innovati.felipehernandez.invenenvios.database.DaoMaster;
@@ -16,6 +18,8 @@ public class MyApp extends Application
     public void onCreate()
     {
         super.onCreate();
+
+        SystemClock.sleep(3000);
 
         DevOpenHelper helper = new DevOpenHelper(this, ENCRYPTED ? "inven_e_encrypted" : "inven_e");
         Database db = ENCRYPTED ? helper.getEncryptedWritableDb("super-secret") : helper.getWritableDb();
