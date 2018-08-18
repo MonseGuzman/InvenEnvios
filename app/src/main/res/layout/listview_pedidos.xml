@@ -76,7 +76,7 @@
         android:layout_marginTop="8dp"
         android:layout_span="1"
         android:text="Nombre del Cliente: Andrea Monserrat Guzmán López"
-        android:textColor="@color/secondaryColor"
+        android:textColor="@color/secondaryDarkColor"
         android:textSize="15dp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
