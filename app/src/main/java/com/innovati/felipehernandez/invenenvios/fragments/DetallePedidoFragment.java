@@ -63,7 +63,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     String idUsuario = "";
     private MetodosInternos metodosInternos;
     private DaoSession daoSession;
-    private List<Long> ids;
+    private List<Long> ids = new ArrayList<>();
 
     public DetallePedidoFragment() {
         // Required empty public constructor
