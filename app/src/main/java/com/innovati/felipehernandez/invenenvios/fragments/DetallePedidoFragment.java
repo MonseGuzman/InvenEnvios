@@ -63,6 +63,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     String idUsuario = "";
     private MetodosInternos metodosInternos;
     private DaoSession daoSession;
+    private List<Long> ids;
 
     public DetallePedidoFragment() {
         // Required empty public constructor
@@ -165,6 +166,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         {
             VwDetallePedido objetoDetalle = new VwDetallePedido();
 
+            ids.add(detallePedido.get(x).getId());
             objetoDetalle.setIdPedido(detallePedido.get(x).getIdPedido());
             objetoDetalle.setIdDetallePedido(detallePedido.get(x).getIdDetallePedido());
             objetoDetalle.setClaveArticulo(detallePedido.get(x).getClaveArticulo());
@@ -459,7 +461,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             else {
                 int x = 0;
                 for (ArticulosPedido ar: articulosPedidos){
-                    uptadeExitsDBI(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
+                    uptadeExitsDBI(ids.get(x), listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
                     x++;
                 }
             }
@@ -483,10 +485,11 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     }
 
 
-    public void uptadeExitsDBI(String idDet, String idPedido, String clave ,float cantidad, float precio, float subTotal, float iva, float total, String idUsuario, short estado)
+    public void uptadeExitsDBI(long id, String idDet, String idPedido, String clave ,float cantidad, float precio, float subTotal, float iva, float total, String idUsuario, short estado)
     {
         VwDetallePedido_IDao detallePedidoIDao = daoSession.getVwDetallePedido_IDao();
         VwDetallePedido_I detalle = new VwDetallePedido_I();
+        detalle.setId(id);
         detalle.setIdDetallePedido(idDet);
         detalle.setIdPedido(idPedido);
         detalle.setClaveArticulo(clave);
