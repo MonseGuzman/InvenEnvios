@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.innovati.felipehernandez.invenenvios.API.DelayedProgressDialog;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
-import com.innovati.felipehernandez.invenenvios.SettingActivity;
 import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwUsuarios;
@@ -207,14 +206,6 @@ public class LoginActivity extends AppCompatActivity
         return VwUsuariosDaoFactory.create();
     }
 
-    public void runSeting(View view){
-        touch ++;
-        if(touch == 10){
-            touch = 0;
-            Intent intent = new Intent(this, SettingActivity.class);
-            startActivity(intent);
-        }
-    }
 
     private void progress(String user, String id)
     {
