@@ -31,6 +31,8 @@ import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_I;
 import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwPedidos_I;
+import com.innovati.felipehernandez.invenenvios.database.VwPedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.DatosPedidoFragment;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
@@ -274,7 +276,7 @@ public class PedidoActivity extends AppCompatActivity
 
     public static void insertarInterna(String idPedido,String idUsuario, String claveCliente, Date fecha, short estatus, float subtotal, float iva, float total, String observaciones, int folio)
     {
-        Pedidos_I pedidos = new Pedidos_I();
+        VwPedidos_I pedidos = new VwPedidos_I();
         pedidos.setIdPedido(idPedido);
         pedidos.setIdUsuario(idUsuario);
         pedidos.setClaveCliente(claveCliente);
@@ -288,10 +290,8 @@ public class PedidoActivity extends AppCompatActivity
         pedidos.setServidor(false);
         pedidos.setUltimoUsuarioActualizacion(idUsuario);
         pedidos.setUltimaFechaActualizacion(Calendar.getInstance().getTime());
-        Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
+        VwPedidos_IDao pedidos_iDao = daoSession.getVwPedidos_IDao();
         pedidos_iDao.insert(pedidos);
-
-
     }
 
     public static void detPedidoInterna(String idUsuario,String idPedido,ArticulosPedido a){

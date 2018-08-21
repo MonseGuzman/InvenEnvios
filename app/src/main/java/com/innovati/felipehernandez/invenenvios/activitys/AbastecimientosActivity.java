@@ -115,8 +115,8 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
             case 1:
                 VwPedidos_IDao pedidos_iDao = daoSession.getVwPedidos_IDao();
                 QueryBuilder<VwPedidos_I> qbPedido = pedidos_iDao.queryBuilder();
-
-                List<VwPedidos_I> pedidos = qbPedido.list();
+                qbPedido.where(VwPedidos_IDao.Properties.Estatus.eq(1));
+                List<VwPedidos_I> pedidos = qbPedido.orderAsc(VwPedidos_IDao.Properties.Folio).list();
                 result = new VwPedidos[pedidos.size()];
 
                 for(int x=0; x<pedidos.size(); x++)

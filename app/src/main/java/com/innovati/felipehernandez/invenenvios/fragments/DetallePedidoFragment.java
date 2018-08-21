@@ -37,6 +37,8 @@ import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_I;
 import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwPedidos_I;
+import com.innovati.felipehernandez.invenenvios.database.VwPedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 import org.greenrobot.greendao.query.QueryBuilder;
@@ -504,12 +506,12 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
 
     }
     public void pedidoExitsDBI(){
-        Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
-        QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
+        VwPedidos_IDao pedidos_iDao = daoSession.getVwPedidos_IDao();
+        QueryBuilder<VwPedidos_I> qb = pedidos_iDao.queryBuilder();
         qb.where(Pedidos_IDao.Properties.IdPedido.eq(clavePedido));
-        List<Pedidos_I> pedidos = qb.list();
+        List<VwPedidos_I> pedidos = qb.list();
             int x= 0;
-            Pedidos_I objetoPedidos = new Pedidos_I();
+            VwPedidos_I objetoPedidos = new VwPedidos_I();
             objetoPedidos.setId(pedidos.get(x).getId());
             objetoPedidos.setIdPedido(pedidos.get(x).getIdPedido());
             objetoPedidos.setIdUsuario(pedidos.get(x).getIdUsuario());
