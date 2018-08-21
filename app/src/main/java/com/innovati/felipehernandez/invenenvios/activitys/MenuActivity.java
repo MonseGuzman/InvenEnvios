@@ -412,11 +412,13 @@ public class MenuActivity extends AppCompatActivity
                     detallePedido_i.setSubtotal(detallePedido.getSubtotal());
                     detallePedido_i.setIva(detallePedido.getIva());
                     detallePedido_i.setTotal(detallePedido.getTotal());
+                    detallePedido_i.setSurtido(detallePedido.getSurtido());
                     detallePedido_i.setServidor(true);
                     detallePedido_i.setFechaActualizacion(detallePedido.getUltimaFechaActualizacion());
                     detallePedido_i.setUsuarioActualizacion(detallePedido.getUltimoUsuarioActualizacion());
 
                     VwDetallePedido_IDao metodo = daoSession.getVwDetallePedido_IDao();
+                    metodo.insertOrReplace(detallePedido_i);
                     cont++;
                 }
 

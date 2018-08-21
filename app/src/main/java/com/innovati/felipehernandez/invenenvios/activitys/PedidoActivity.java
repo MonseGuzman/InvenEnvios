@@ -308,6 +308,7 @@ public class PedidoActivity extends AppCompatActivity
         detalle.setIva(a.getIva());
         detalle.setTotal(a.getTotal());
         detalle.setServidor(false);
+        detalle.setSurtido((short)1);
         detalle.setFechaActualizacion(Calendar.getInstance().getTime());
         detalle.setUsuarioActualizacion(idUsuario);
         VwDetallePedido_IDao detallesPedidos_iDao = daoSession.getVwDetallePedido_IDao();
