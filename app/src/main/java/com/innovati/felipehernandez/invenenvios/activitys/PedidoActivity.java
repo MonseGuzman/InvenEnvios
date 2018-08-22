@@ -281,6 +281,7 @@ public class PedidoActivity extends AppCompatActivity
         pedidos.setIdUsuario(idUsuario);
         pedidos.setClaveCliente(claveCliente);
         pedidos.setFecha(fecha);
+        pedidos.setNombre(nombreC);
         pedidos.setEstatus(estatus);
         pedidos.setSubtotal(subtotal);
         pedidos.setIva(iva);
@@ -309,6 +310,7 @@ public class PedidoActivity extends AppCompatActivity
         detalle.setTotal(a.getTotal());
         detalle.setServidor(false);
         detalle.setSurtido((short)1);
+        detalle.setNombre(a.getNombre());
         detalle.setFechaActualizacion(Calendar.getInstance().getTime());
         detalle.setUsuarioActualizacion(idUsuario);
         VwDetallePedido_IDao detallesPedidos_iDao = daoSession.getVwDetallePedido_IDao();
@@ -362,8 +364,8 @@ public class PedidoActivity extends AppCompatActivity
         }
         else
         {
-            Pedidos_IDao pedidos_iDao = daoSession.getPedidos_IDao();
-            QueryBuilder<Pedidos_I> qb = pedidos_iDao.queryBuilder();
+            VwPedidos_IDao pedidos_iDao = daoSession.getVwPedidos_IDao();
+            QueryBuilder<VwPedidos_I> qb = pedidos_iDao.queryBuilder();
             long folio = qb.count();
             tvFolio.setText(String.valueOf(folio));
         }
