@@ -474,6 +474,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                     if(!nombres.contains(ar.getNombre()))
                     {
                         nombres.add(ar.getNombre());
+                        unidades.add(ar.getPresentacion());
                         cantidades.put(ar.getNombre(), ar.getCantidad());
                     }
                     else
@@ -488,20 +489,19 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                 {
                     VwAbastecimientos_IDao vwAbastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
                     QueryBuilder<VwAbastecimientos_I> qb = vwAbastecimientos_iDao.queryBuilder();
-                    qb.where(VwAbastecimientos_IDao.Properties.Estatus.eq(1), VwAbastecimientos_IDao.Properties.Nombre.eq(nombres.get(x)));
+                    qb.where(VwAbastecimientos_IDao.Properties.Estatus.eq(1), VwAbastecimientos_IDao.Properties.Nombre.eq(nombres.get(y)));
                     List<VwAbastecimientos_I> list = qb.list();
 
                     VwAbastecimientos_I abastecimiento = new VwAbastecimientos_I();
                     abastecimiento.setId(list.get(0).getId());
-                    abastecimiento.setNombre(nombres.get(x));
-                    abastecimiento.setUnidadPrimaria(unidades.get(x));
+                    abastecimiento.setNombre(nombres.get(y));
+                    abastecimiento.setUnidadPrimaria(unidades.get(y));
                     abastecimiento.setEstatus((short) 1);
-                    Float n = cantidades.get(nombres.get(x));
+                    Float n = cantidades.get(nombres.get(y));
                     abastecimiento.setCantidad(n);
 
                     VwAbastecimientos_IDao abastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
                     abastecimientos_iDao.update(abastecimiento);
-
                 }
             }
         }
