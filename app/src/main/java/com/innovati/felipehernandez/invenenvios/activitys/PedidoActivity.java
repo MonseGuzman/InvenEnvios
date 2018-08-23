@@ -262,7 +262,7 @@ public class PedidoActivity extends AppCompatActivity
                     detPedido(idUsuario,idPedido,ar);
                 }
             }
-            
+
         }
         articulosPedidoList = null;
         calTotal();

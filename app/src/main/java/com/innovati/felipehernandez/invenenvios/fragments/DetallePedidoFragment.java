@@ -547,7 +547,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     public void pedidoExitsDBI(){
         VwPedidos_IDao pedidos_iDao = daoSession.getVwPedidos_IDao();
         QueryBuilder<VwPedidos_I> qb = pedidos_iDao.queryBuilder();
-        qb.where(Pedidos_IDao.Properties.IdPedido.eq(clavePedido));
+        qb.where(VwPedidos_IDao.Properties.IdPedido.eq(clavePedido));
         List<VwPedidos_I> pedidos = qb.list();
             int x= 0;
             VwPedidos_I objetoPedidos = new VwPedidos_I();
