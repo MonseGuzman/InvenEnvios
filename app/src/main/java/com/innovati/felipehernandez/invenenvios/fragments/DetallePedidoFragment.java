@@ -470,8 +470,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                 List<String> unidades = new ArrayList<>();
                 List<String> nombres = new ArrayList<>();
                 for (ArticulosPedido ar: articulosPedidos){
-<<<<<<< HEAD
-                    uptadeExitsDBI(ids.get(x), listDet.get(x).toString(),clavePedido,ar.getIdArticulo(), ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
+                    uptadeExitsDBI(ids.get(x), listDet.get(x).toString(),ar.getNombre(), clavePedido,ar.getIdArticulo(), ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
                     if(!nombres.contains(ar.getNombre()))
                     {
                         nombres.add(ar.getNombre());
@@ -482,9 +481,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                         Float n =  cantidades.get(ar.getNombre()) + ar.getCantidad();
                         cantidades.put(ar.getNombre(),n);
                     }
-=======
-                    uptadeExitsDBI(ids.get(x), listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getNombre(), ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
->>>>>>> master
                     x++;
                 }
 
@@ -504,7 +500,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                     abastecimiento.setCantidad(n);
 
                     VwAbastecimientos_IDao abastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
-                    vwAbastecimientos_iDao.update(abastecimiento);
+                    abastecimientos_iDao.update(abastecimiento);
 
                 }
             }
