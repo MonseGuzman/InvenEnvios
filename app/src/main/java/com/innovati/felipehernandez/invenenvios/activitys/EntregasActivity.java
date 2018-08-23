@@ -203,7 +203,7 @@ public class EntregasActivity extends AppCompatActivity
         VwPedidos_IDao pedidos_iDao = daoSession.getVwPedidos_IDao();
         QueryBuilder<VwPedidos_I> qb = pedidos_iDao.queryBuilder();
 
-        List<VwPedidos_I> pedidos = qb.list();
+        List<VwPedidos_I> pedidos = qb.orderAsc(VwPedidos_IDao.Properties.Folio).list();
         result = new VwPedidos[pedidos.size()];
 
         for(int x=0; x<pedidos.size(); x++)
