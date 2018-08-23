@@ -63,7 +63,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     String clavePedido = "";
     private static float exitArticul = 0, cantidaNum;
     private static int positionList;
-    private boolean bandera = true;
+    private boolean bandera = true, si = false;
     private List<String> listDet;
     static List<ArticulosPedido> articuloEdit;
     String idUsuario = "";
@@ -98,6 +98,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         clavePedido = args.getString("pedido", "");
         bandera = args.getBoolean("bandera",true);
         loadData();
+        si = false;
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -121,6 +122,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                 }
                 adapter.articulosPedidos.set(position,articulosPedido);
                 updateAdapter();
+                si = true;
             }
 
         };
@@ -444,64 +446,67 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     public void onDestroyView() {
         super.onDestroyView();
 
-        if(bandera && valideStatus()){
-            metodosInternos = new MetodosInternos(getActivity());
-            if(metodosInternos.conexionRed() )
-            {
-                updatePedido();
-            }
-            else {
-                pedidoExitsDBI();
-            }
-        }
-        if(bandera){
-            metodosInternos = new MetodosInternos(getActivity());
-            if(metodosInternos.conexionRed() )
-            {
-                int x = 0;
-                for (ArticulosPedido ar: articulosPedidos){
-                    uptadeExits(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
-                    x++;
-                }
-            }
-            else {
-                int x = 0;
-                HashMap<String, Float> cantidades = new HashMap();
-                List<String> unidades = new ArrayList<>();
-                List<String> nombres = new ArrayList<>();
-                for (ArticulosPedido ar: articulosPedidos){
-                    uptadeExitsDBI(ids.get(x), listDet.get(x).toString(),ar.getNombre(), clavePedido,ar.getIdArticulo(), ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
-                    if(!nombres.contains(ar.getNombre()))
-                    {
-                        nombres.add(ar.getNombre());
-                        unidades.add(ar.getPresentacion());
-                        cantidades.put(ar.getNombre(), ar.getCantidad());
-                    }
-                    else
-                    {
-                        Float n =  cantidades.get(ar.getNombre()) + ar.getCantidad();
-                        cantidades.put(ar.getNombre(),n);
-                    }
-                    x++;
-                }
-
-                for(int y=0; y<nombres.size(); y++)
+        if(si){
+            if(bandera && valideStatus()){
+                metodosInternos = new MetodosInternos(getActivity());
+                if(metodosInternos.conexionRed() )
                 {
-                    VwAbastecimientos_IDao vwAbastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
-                    QueryBuilder<VwAbastecimientos_I> qb = vwAbastecimientos_iDao.queryBuilder();
-                    qb.where(VwAbastecimientos_IDao.Properties.Estatus.eq(1), VwAbastecimientos_IDao.Properties.Nombre.eq(nombres.get(y)));
-                    List<VwAbastecimientos_I> list = qb.list();
+                    updatePedido();
+                }
+                else {
+                    pedidoExitsDBI();
+                }
+            }
+            if(bandera){
+                metodosInternos = new MetodosInternos(getActivity());
+                if(metodosInternos.conexionRed() )
+                {
+                    int x = 0;
+                    for (ArticulosPedido ar: articulosPedidos){
+                        uptadeExits(listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
+                        x++;
+                    }
+                }
+                else {
+                    int x = 0;
+                    HashMap<String, Float> cantidades = new HashMap();
+                    List<String> unidades = new ArrayList<>();
+                    List<String> nombres = new ArrayList<>();
+                    for (ArticulosPedido ar: articulosPedidos){
+                        uptadeExitsDBI(ids.get(x), listDet.get(x).toString(),ar.getNombre(), clavePedido,ar.getIdArticulo(), ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
+                        if(!nombres.contains(ar.getNombre()))
+                        {
+                            nombres.add(ar.getNombre());
+                            unidades.add(ar.getPresentacion());
+                            cantidades.put(ar.getNombre(), ar.getCantidad());
+                        }
+                        else
+                        {
+                            Float n =  cantidades.get(ar.getNombre()) + ar.getCantidad();
+                            cantidades.put(ar.getNombre(),n);
+                        }
+                        x++;
+                    }
 
-                    VwAbastecimientos_I abastecimiento = new VwAbastecimientos_I();
-                    abastecimiento.setId(list.get(0).getId());
-                    abastecimiento.setNombre(nombres.get(y));
-                    abastecimiento.setUnidadPrimaria(unidades.get(y));
-                    abastecimiento.setEstatus((short) 1);
-                    Float n = cantidades.get(nombres.get(y));
-                    abastecimiento.setCantidad(n);
+                    for(int y=0; y<nombres.size(); y++)
+                    {
+                        VwAbastecimientos_IDao vwAbastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
+                        QueryBuilder<VwAbastecimientos_I> qb = vwAbastecimientos_iDao.queryBuilder();
+                        qb.where(VwAbastecimientos_IDao.Properties.Estatus.eq(1), VwAbastecimientos_IDao.Properties.Nombre.eq(nombres.get(y)));
+                        List<VwAbastecimientos_I> list = qb.list();
 
-                    VwAbastecimientos_IDao abastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
-                    abastecimientos_iDao.update(abastecimiento);
+                        VwAbastecimientos_I abastecimiento = new VwAbastecimientos_I();
+                        abastecimiento.setId(list.get(0).getId());
+                        abastecimiento.setNombre(nombres.get(y));
+                        abastecimiento.setUnidadPrimaria(unidades.get(y));
+                        abastecimiento.setEstatus((short) 1);
+                        Float n = cantidades.get(nombres.get(y));
+                        abastecimiento.setCantidad(n);
+
+                        VwAbastecimientos_IDao abastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
+                        abastecimientos_iDao.update(abastecimiento);
+
+                    }
                 }
             }
         }
