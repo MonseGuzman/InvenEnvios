@@ -26,6 +26,7 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidosPk;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwAbastecimiento;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDaoFactory;
@@ -35,6 +36,8 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwDetallePedidoDa
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_I;
+import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_I;
 import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwPedidos_I;
@@ -45,6 +48,7 @@ import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class DetallePedidoFragment extends Fragment implements View.OnClickListener
@@ -462,9 +466,42 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             }
             else {
                 int x = 0;
+                HashMap<String, Float> cantidades = new HashMap();
+                List<String> unidades = new ArrayList<>();
+                List<String> nombres = new ArrayList<>();
                 for (ArticulosPedido ar: articulosPedidos){
-                    uptadeExitsDBI(ids.get(x), listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
+                    uptadeExitsDBI(ids.get(x), listDet.get(x).toString(),clavePedido,ar.getIdArticulo(), ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
+                    if(!nombres.contains(ar.getNombre()))
+                    {
+                        nombres.add(ar.getNombre());
+                        cantidades.put(ar.getNombre(), ar.getCantidad());
+                    }
+                    else
+                    {
+                        Float n =  cantidades.get(ar.getNombre()) + ar.getCantidad();
+                        cantidades.put(ar.getNombre(),n);
+                    }
                     x++;
+                }
+
+                for(int y=0; y<nombres.size(); y++)
+                {
+                    VwAbastecimientos_IDao vwAbastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
+                    QueryBuilder<VwAbastecimientos_I> qb = vwAbastecimientos_iDao.queryBuilder();
+                    qb.where(VwAbastecimientos_IDao.Properties.Estatus.eq(1), VwAbastecimientos_IDao.Properties.Nombre.eq(nombres.get(x)));
+                    List<VwAbastecimientos_I> list = qb.list();
+
+                    VwAbastecimientos_I abastecimiento = new VwAbastecimientos_I();
+                    abastecimiento.setId(list.get(0).getId());
+                    abastecimiento.setNombre(nombres.get(x));
+                    abastecimiento.setUnidadPrimaria(unidades.get(x));
+                    abastecimiento.setEstatus((short) 1);
+                    Float n = cantidades.get(nombres.get(x));
+                    abastecimiento.setCantidad(n);
+
+                    VwAbastecimientos_IDao abastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
+                    vwAbastecimientos_iDao.update(abastecimiento);
+
                 }
             }
         }
@@ -497,6 +534,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         detalle.setClaveArticulo(clave);
         detalle.setCantidad(cantidad);
         detalle.setPrecio(precio);
+
         detalle.setSubtotal(subTotal);
         detalle.setIva(iva);
         detalle.setTotal(total);

@@ -29,6 +29,8 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFact
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_I;
+import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_I;
 import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwPedidos_I;
@@ -42,6 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -216,10 +219,41 @@ public class PedidoActivity extends AppCompatActivity
 
         if(!metodosInternos.conexionRed()){
             insertarInterna(idPedido,idUsuario,clave,date,Short.valueOf("1"),getSub(),getIva(),getTotal(),"No Hay", auxFolio);
-            for (ArticulosPedido ar:articulosPedidoList){
-                if (ar.isStatus()){
+
+            HashMap<String, Float> cantidades = new HashMap();
+            List<String> unidades = new ArrayList<>();
+            List<String> nombres = new ArrayList<>();
+            for (ArticulosPedido ar:articulosPedidoList)
+            {
+                if (ar.isStatus())
+                {
                     detPedidoInterna(idUsuario,idPedido,ar);
+                    if(!nombres.contains(ar.getNombre()))
+                    {
+                        nombres.add(ar.getNombre());
+                        unidades.add(ar.getPresentacion());
+                        cantidades.put(ar.getNombre(), ar.getCantidad());
+                    }
+                    else
+                    {
+                        Float n =  cantidades.get(ar.getNombre()) + ar.getCantidad();
+                        cantidades.put(ar.getNombre(),n);
+                    }
+
                 }
+            }
+            for(int y=0; y<nombres.size(); y++)
+            {
+                VwAbastecimientos_I abastecimiento = new VwAbastecimientos_I();
+
+                abastecimiento.setNombre(nombres.get(y));
+                abastecimiento.setUnidadPrimaria(unidades.get(y));
+                abastecimiento.setEstatus((short) 1);
+                Float n = cantidades.get(nombres.get(y));
+                abastecimiento.setCantidad(n);
+
+                VwAbastecimientos_IDao abastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
+                abastecimientos_iDao.insert(abastecimiento);
             }
         }else{
             insertar(idPedido,idUsuario,clave,date,Short.valueOf("1"),getSub(),getIva(),getTotal(),"No Hay", auxFolio);
