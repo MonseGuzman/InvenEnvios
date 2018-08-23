@@ -470,6 +470,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                 List<String> unidades = new ArrayList<>();
                 List<String> nombres = new ArrayList<>();
                 for (ArticulosPedido ar: articulosPedidos){
+<<<<<<< HEAD
                     uptadeExitsDBI(ids.get(x), listDet.get(x).toString(),clavePedido,ar.getIdArticulo(), ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
                     if(!nombres.contains(ar.getNombre()))
                     {
@@ -481,6 +482,9 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                         Float n =  cantidades.get(ar.getNombre()) + ar.getCantidad();
                         cantidades.put(ar.getNombre(),n);
                     }
+=======
+                    uptadeExitsDBI(ids.get(x), listDet.get(x).toString(),clavePedido,ar.getIdArticulo(),ar.getNombre(), ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
+>>>>>>> master
                     x++;
                 }
 
@@ -524,7 +528,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     }
 
 
-    public void uptadeExitsDBI(long id, String idDet, String idPedido, String clave ,float cantidad, float precio, float subTotal, float iva, float total, String idUsuario, short estado)
+    public void uptadeExitsDBI(long id, String idDet, String idPedido, String clave , String nombre, float cantidad, float precio, float subTotal, float iva, float total, String idUsuario, short estado)
     {
         VwDetallePedido_IDao detallePedidoIDao = daoSession.getVwDetallePedido_IDao();
         VwDetallePedido_I detalle = new VwDetallePedido_I();
@@ -532,6 +536,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         detalle.setIdDetallePedido(idDet);
         detalle.setIdPedido(idPedido);
         detalle.setClaveArticulo(clave);
+        detalle.setNombre(nombre);
         detalle.setCantidad(cantidad);
         detalle.setPrecio(precio);
 

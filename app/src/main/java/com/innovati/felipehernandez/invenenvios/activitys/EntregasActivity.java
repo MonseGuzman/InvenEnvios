@@ -60,7 +60,7 @@ public class EntregasActivity extends AppCompatActivity
 
         cargarDatos();
 
-        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
+        /*ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 return false;
@@ -99,7 +99,7 @@ public class EntregasActivity extends AppCompatActivity
 
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+        itemTouchHelper.attachToRecyclerView(recyclerView);*/
 
     }
 
@@ -203,7 +203,7 @@ public class EntregasActivity extends AppCompatActivity
         VwPedidos_IDao pedidos_iDao = daoSession.getVwPedidos_IDao();
         QueryBuilder<VwPedidos_I> qb = pedidos_iDao.queryBuilder();
 
-        List<VwPedidos_I> pedidos = qb.list();
+        List<VwPedidos_I> pedidos = qb.orderAsc(VwPedidos_IDao.Properties.Folio).list();
         result = new VwPedidos[pedidos.size()];
 
         for(int x=0; x<pedidos.size(); x++)
