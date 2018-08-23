@@ -38,7 +38,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	/** 
 	 * All finder methods in this class use this SELECT constant to build their queries
 	 */
-	protected final String SQL_SELECT = "SELECT IdDetallePedido, IdPedido, ClaveArticulo, Cantidad, Precio, Subtotal, IVA, Total, UltimaFechaActualizacion, UltimoUsuarioActualizacion FROM " + getTableName() + "";
+	protected final String SQL_SELECT = "SELECT IdDetallePedido, IdPedido, ClaveArticulo, Cantidad, Precio, Subtotal, IVA, Total, Surtido, UltimaFechaActualizacion, UltimoUsuarioActualizacion FROM " + getTableName() + "";
 
 	/** 
 	 * Finder methods will pass this value to the JDBC setMaxRows method
@@ -48,7 +48,17 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	/** 
 	 * SQL INSERT statement for this table
 	 */
-	protected final String SQL_INSERT = "INSERT INTO " + getTableName() + " ( IdDetallePedido, IdPedido, ClaveArticulo, Cantidad, Precio, Subtotal, IVA, Total, UltimaFechaActualizacion, UltimoUsuarioActualizacion ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+	protected final String SQL_INSERT = "INSERT INTO " + getTableName() + " ( IdDetallePedido, IdPedido, ClaveArticulo, Cantidad, Precio, Subtotal, IVA, Total, Surtido, UltimaFechaActualizacion, UltimoUsuarioActualizacion ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+
+	/** 
+	 * SQL UPDATE statement for this table
+	 */
+	protected final String SQL_UPDATE = "UPDATE " + getTableName() + " SET IdDetallePedido = ?, IdPedido = ?, ClaveArticulo = ?, Cantidad = ?, Precio = ?, Subtotal = ?, IVA = ?, Total = ?, Surtido = ?, UltimaFechaActualizacion = ?, UltimoUsuarioActualizacion = ? WHERE IdDetallePedido = ?";
+
+	/** 
+	 * SQL DELETE statement for this table
+	 */
+	protected final String SQL_DELETE = "DELETE FROM " + getTableName() + " WHERE IdDetallePedido = ?";
 
 	/** 
 	 * Index of column IdDetallePedido
@@ -91,44 +101,54 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	protected static final int COLUMN_TOTAL = 8;
 
 	/** 
+	 * Index of column Surtido
+	 */
+	protected static final int COLUMN_SURTIDO = 9;
+
+	/** 
 	 * Index of column UltimaFechaActualizacion
 	 */
-	protected static final int COLUMN_ULTIMA_FECHA_ACTUALIZACION = 9;
+	protected static final int COLUMN_ULTIMA_FECHA_ACTUALIZACION = 10;
 
 	/** 
 	 * Index of column UltimoUsuarioActualizacion
 	 */
-	protected static final int COLUMN_ULTIMO_USUARIO_ACTUALIZACION = 10;
+	protected static final int COLUMN_ULTIMO_USUARIO_ACTUALIZACION = 11;
 
 	/** 
 	 * Number of columns
 	 */
-	protected static final int NUMBER_OF_COLUMNS = 10;
+	protected static final int NUMBER_OF_COLUMNS = 11;
+
+	/** 
+	 * Index of primary-key column IdDetallePedido
+	 */
+	protected static final int PK_COLUMN_ID_DETALLE_PEDIDO = 1;
 
 	/** 
 	 * Inserts a new row in the DetallesPedidos table.
 	 */
-	public void insert(DetallesPedidos dto) throws DetallesPedidosDaoException
+	public DetallesPedidosPk insert(DetallesPedidos dto) throws DetallesPedidosDaoException
 	{
 		long t1 = System.currentTimeMillis();
 		// declare variables
 		final boolean isConnSupplied = (userConn != null);
 		Connection conn = null;
-		CallableStatement stmt = null;
+		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
 		try {
 			// get the user-specified connection or get a connection from the ResourceManager
 			conn = isConnSupplied ? userConn : ResourceManager.getConnection();
 		
-			stmt = conn.prepareCall( SQL_INSERT );
-			stmt.setString( COLUMN_ID_DETALLE_PEDIDO, dto.getIdDetallePedido() );
-			stmt.setString( COLUMN_ID_PEDIDO, dto.getIdPedido() );
+			stmt = conn.prepareStatement( SQL_INSERT );
+			stmt.setObject( COLUMN_ID_DETALLE_PEDIDO, dto.getIdDetallePedido() );
+			stmt.setObject( COLUMN_ID_PEDIDO, dto.getIdPedido() );
 			stmt.setString( COLUMN_CLAVE_ARTICULO, dto.getClaveArticulo() );
 			if (dto.isCantidadNull()) {
-				stmt.setNull( COLUMN_CANTIDAD, java.sql.Types.FLOAT );
+				stmt.setNull( COLUMN_CANTIDAD, java.sql.Types.DOUBLE );
 			} else {
-				stmt.setFloat( COLUMN_CANTIDAD, dto.getCantidad() );
+				stmt.setDouble( COLUMN_CANTIDAD, dto.getCantidad() );
 			}
 		
 			if (dto.isPrecioNull()) {
@@ -155,12 +175,19 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 				stmt.setFloat( COLUMN_TOTAL, dto.getTotal() );
 			}
 		
+			if (dto.isSurtidoNull()) {
+				stmt.setNull( COLUMN_SURTIDO, java.sql.Types.INTEGER );
+			} else {
+				stmt.setShort( COLUMN_SURTIDO, dto.getSurtido() );
+			}
+		
 			stmt.setTimestamp(COLUMN_ULTIMA_FECHA_ACTUALIZACION, dto.getUltimaFechaActualizacion()==null ? null : new java.sql.Timestamp( dto.getUltimaFechaActualizacion().getTime() ) );
-			stmt.setString( COLUMN_ULTIMO_USUARIO_ACTUALIZACION, dto.getUltimoUsuarioActualizacion() );
+			stmt.setObject( COLUMN_ULTIMO_USUARIO_ACTUALIZACION, dto.getUltimoUsuarioActualizacion() );
 			System.out.println( "Executing " + SQL_INSERT + " with DTO: " + dto );
 			stmt.execute();
 			int rows = stmt.getUpdateCount();
 			System.out.println( rows + " rows affected" );
+			return dto.createPk();
 		}
 		catch (Exception _e) {
 			_e.printStackTrace();
@@ -177,11 +204,143 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	}
 
 	/** 
+	 * Updates a single row in the DetallesPedidos table.
+	 */
+	public void update(DetallesPedidosPk pk, DetallesPedidos dto) throws DetallesPedidosDaoException
+	{
+		long t1 = System.currentTimeMillis();
+		// declare variables
+		final boolean isConnSupplied = (userConn != null);
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			// get the user-specified connection or get a connection from the ResourceManager
+			conn = isConnSupplied ? userConn : ResourceManager.getConnection();
+		
+			System.out.println( "Executing " + SQL_UPDATE + " with DTO: " + dto );
+			stmt = conn.prepareStatement( SQL_UPDATE );
+			int index=1;
+			stmt.setString( index++, dto.getIdDetallePedido() );
+			stmt.setString( index++, dto.getIdPedido() );
+			stmt.setString( index++, dto.getClaveArticulo() );
+			if (dto.isCantidadNull()) {
+				stmt.setNull( index++, java.sql.Types.DOUBLE );
+			} else {
+				stmt.setDouble( index++, dto.getCantidad() );
+			}
+		
+			if (dto.isPrecioNull()) {
+				stmt.setNull( index++, java.sql.Types.FLOAT );
+			} else {
+				stmt.setFloat( index++, dto.getPrecio() );
+			}
+		
+			if (dto.isSubtotalNull()) {
+				stmt.setNull( index++, java.sql.Types.FLOAT );
+			} else {
+				stmt.setFloat( index++, dto.getSubtotal() );
+			}
+		
+			if (dto.isIvaNull()) {
+				stmt.setNull( index++, java.sql.Types.FLOAT );
+			} else {
+				stmt.setFloat( index++, dto.getIva() );
+			}
+		
+			if (dto.isTotalNull()) {
+				stmt.setNull( index++, java.sql.Types.FLOAT );
+			} else {
+				stmt.setFloat( index++, dto.getTotal() );
+			}
+		
+			if (dto.isSurtidoNull()) {
+				stmt.setNull( index++, java.sql.Types.INTEGER );
+			} else {
+				stmt.setShort( index++, dto.getSurtido() );
+			}
+		
+			stmt.setTimestamp(index++, dto.getUltimaFechaActualizacion()==null ? null : new java.sql.Timestamp( dto.getUltimaFechaActualizacion().getTime() ) );
+			stmt.setString( index++, dto.getUltimoUsuarioActualizacion() );
+			stmt.setString( 12, pk.getIdDetallePedido() );
+			int rows = stmt.executeUpdate();
+			reset(dto);
+			long t2 = System.currentTimeMillis();
+			System.out.println( rows + " rows affected (" + (t2-t1) + " ms)" );
+		}
+		catch (Exception _e) {
+			_e.printStackTrace();
+			throw new DetallesPedidosDaoException( "Exception: " + _e.getMessage(), _e );
+		}
+		finally {
+			ResourceManager.close(stmt);
+			if (!isConnSupplied) {
+				ResourceManager.close(conn);
+			}
+		
+		}
+		
+	}
+
+	/** 
+	 * Deletes a single row in the DetallesPedidos table.
+	 */
+	public void delete(DetallesPedidosPk pk) throws DetallesPedidosDaoException
+	{
+		long t1 = System.currentTimeMillis();
+		// declare variables
+		final boolean isConnSupplied = (userConn != null);
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			// get the user-specified connection or get a connection from the ResourceManager
+			conn = isConnSupplied ? userConn : ResourceManager.getConnection();
+		
+			System.out.println( "Executing " + SQL_DELETE + " with PK: " + pk );
+			stmt = conn.prepareStatement( SQL_DELETE );
+			stmt.setString( 1, pk.getIdDetallePedido() );
+			int rows = stmt.executeUpdate();
+			long t2 = System.currentTimeMillis();
+			System.out.println( rows + " rows affected (" + (t2-t1) + " ms)" );
+		}
+		catch (Exception _e) {
+			_e.printStackTrace();
+			throw new DetallesPedidosDaoException( "Exception: " + _e.getMessage(), _e );
+		}
+		finally {
+			ResourceManager.close(stmt);
+			if (!isConnSupplied) {
+				ResourceManager.close(conn);
+			}
+		
+		}
+		
+	}
+
+	/** 
+	 * Returns the rows from the DetallesPedidos table that matches the specified primary-key value.
+	 */
+	public DetallesPedidos findByPrimaryKey(DetallesPedidosPk pk) throws DetallesPedidosDaoException
+	{
+		return findByPrimaryKey( pk.getIdDetallePedido() );
+	}
+
+	/** 
+	 * Returns all rows from the DetallesPedidos table that match the criteria 'IdDetallePedido = :idDetallePedido'.
+	 */
+	public DetallesPedidos findByPrimaryKey(String idDetallePedido) throws DetallesPedidosDaoException
+	{
+		DetallesPedidos ret[] = findByDynamicSelect( SQL_SELECT + " WHERE IdDetallePedido = ?", new Object[] { idDetallePedido } );
+		return ret.length==0 ? null : ret[0];
+	}
+
+	/** 
 	 * Returns all rows from the DetallesPedidos table that match the criteria ''.
 	 */
 	public DetallesPedidos[] findAll() throws DetallesPedidosDaoException
 	{
-		return findByDynamicSelect( SQL_SELECT, null );
+		return findByDynamicSelect( SQL_SELECT + " ORDER BY IdDetallePedido", null );
 	}
 
 	/** 
@@ -246,6 +405,14 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	public DetallesPedidos[] findWhereTotalEquals(float total) throws DetallesPedidosDaoException
 	{
 		return findByDynamicSelect( SQL_SELECT + " WHERE Total = ? ORDER BY Total", new Object[] {  new Float(total) } );
+	}
+
+	/** 
+	 * Returns all rows from the DetallesPedidos table that match the criteria 'Surtido = :surtido'.
+	 */
+	public DetallesPedidos[] findWhereSurtidoEquals(short surtido) throws DetallesPedidosDaoException
+	{
+		return findByDynamicSelect( SQL_SELECT + " WHERE Surtido = ? ORDER BY Surtido", new Object[] {  new Short(surtido) } );
 	}
 
 	/** 
@@ -348,7 +515,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		dto.setIdDetallePedido( rs.getString( COLUMN_ID_DETALLE_PEDIDO ) );
 		dto.setIdPedido( rs.getString( COLUMN_ID_PEDIDO ) );
 		dto.setClaveArticulo( rs.getString( COLUMN_CLAVE_ARTICULO ) );
-		dto.setCantidad( rs.getFloat( COLUMN_CANTIDAD ) );
+		dto.setCantidad( rs.getDouble( COLUMN_CANTIDAD ) );
 		if (rs.wasNull()) {
 			dto.setCantidadNull( true );
 		}
@@ -371,6 +538,11 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		dto.setTotal( rs.getFloat( COLUMN_TOTAL ) );
 		if (rs.wasNull()) {
 			dto.setTotalNull( true );
+		}
+		
+		dto.setSurtido( rs.getShort( COLUMN_SURTIDO ) );
+		if (rs.wasNull()) {
+			dto.setSurtidoNull( true );
 		}
 		
 		dto.setUltimaFechaActualizacion( rs.getTimestamp(COLUMN_ULTIMA_FECHA_ACTUALIZACION ) );

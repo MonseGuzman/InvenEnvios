@@ -16,6 +16,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/splashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,10 +37,14 @@
             android:name=".activitys.ArticuloActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activitys.PedidoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.AbastecimientosActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activitys.EntregasActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyMaterialTheme"/>
-        <activity android:name=".activitys.ArticulosPedidosActivity"/>
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

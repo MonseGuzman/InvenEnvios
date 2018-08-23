@@ -3,13 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.BusquedaClienteFragment">
+    tools:context=".fragments.BusquedaClienteFragment"
+    android:background="@color/primaryTextColor">
 
-    <include
-        android:id="@+id/busquedaCliente"
-        android:layout_height="match_parent"
-        android:layout_width="wrap_content"
-        layout="@layout/buscar"
-        android:layout_gravity="center"/>
+    <RelativeLayout
+        android:id="@+id/busClienteBlock"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/buscar_recycleview" />
+    </RelativeLayout>
 
 </FrameLayout>

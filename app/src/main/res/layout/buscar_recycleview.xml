@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/buscadorEditText"
+            android:layout_width="287dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:hint="@string/seleccionarCliente" />
+
+        <ImageButton
+            android:id="@+id/BusquedaImageButton"
+            android:layout_width="43dp"
+            android:layout_height="match_parent"
+            android:background="@color/secondaryColor"
+            android:src="@drawable/ic_busqueda" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:scrollbars="vertical"
+        android:layout_below="@id/linearLayout3" />
+
+    <include
+        android:id="@+id/fragment_Datos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/fragment_cliente"
+        android:layout_below="@id/linearLayout3"
+        android:visibility="invisible" />
+</RelativeLayout>

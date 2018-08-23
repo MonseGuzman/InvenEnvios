@@ -17,7 +17,7 @@ public class VwAgenteDaoFactory
 	/**
 	 * Method 'create'
 	 * 
-	 * @return VwAgenteDao
+	 * @return VwAgenteDao_I
 	 */
 	public static VwAgenteDao create()
 	{
@@ -28,7 +28,7 @@ public class VwAgenteDaoFactory
 	 * Method 'create'
 	 * 
 	 * @param conn
-	 * @return VwAgenteDao
+	 * @return VwAgenteDao_I
 	 */
 	public static VwAgenteDao create(Connection conn)
 	{

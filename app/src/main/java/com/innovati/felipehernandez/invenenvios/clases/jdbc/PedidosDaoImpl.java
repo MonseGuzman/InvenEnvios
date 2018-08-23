@@ -38,7 +38,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	/** 
 	 * All finder methods in this class use this SELECT constant to build their queries
 	 */
-	protected final String SQL_SELECT = "SELECT IdPedido, IdUsuario, ClaveCliente, Fecha, Estatus, Subtotal, IVA, Total, Observaciones, UltimaFechaActualizacion, UltimoUsuarioActualizacion FROM " + getTableName() + "";
+	protected final String SQL_SELECT = "SELECT IdPedido, IdUsuario, Folio, ClaveCliente, Fecha, Estatus, Subtotal, IVA, Total, Observaciones, UltimaFechaActualizacion, UltimoUsuarioActualizacion FROM " + getTableName() + "";
 
 	/** 
 	 * Finder methods will pass this value to the JDBC setMaxRows method
@@ -48,7 +48,9 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	/** 
 	 * SQL INSERT statement for this table
 	 */
-	protected final String SQL_INSERT = "INSERT INTO " + getTableName() + " ( IdPedido, IdUsuario, ClaveCliente, Fecha, Estatus, Subtotal, IVA, Total, Observaciones, UltimaFechaActualizacion, UltimoUsuarioActualizacion ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+	protected final String SQL_INSERT = "INSERT INTO " + getTableName() + " ( IdPedido, IdUsuario, Folio, ClaveCliente, Fecha, Estatus, Subtotal, IVA, Total, Observaciones, UltimaFechaActualizacion, UltimoUsuarioActualizacion ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+
+	protected final String SQL_UPDATE = "UPDATE " + getTableName() + " SET IdPedido = ?, IdUsuario = ?, Folio = ?, ClaveCliente = ?, Fecha = ?, Estatus = ?,Subtotal = ?, IVA = ?, Total = ?, Observaciones = ?, UltimaFechaActualizacion = ?, UltimoUsuarioActualizacion = ?";
 
 	/** 
 	 * Index of column IdPedido
@@ -61,54 +63,59 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	protected static final int COLUMN_ID_USUARIO = 2;
 
 	/** 
+	 * Index of column Folio
+	 */
+	protected static final int COLUMN_FOLIO = 3;
+
+	/** 
 	 * Index of column ClaveCliente
 	 */
-	protected static final int COLUMN_CLAVE_CLIENTE = 3;
+	protected static final int COLUMN_CLAVE_CLIENTE = 4;
 
 	/** 
 	 * Index of column Fecha
 	 */
-	protected static final int COLUMN_FECHA = 4;
+	protected static final int COLUMN_FECHA = 5;
 
 	/** 
 	 * Index of column Estatus
 	 */
-	protected static final int COLUMN_ESTATUS = 5;
+	protected static final int COLUMN_ESTATUS = 6;
 
 	/** 
 	 * Index of column Subtotal
 	 */
-	protected static final int COLUMN_SUBTOTAL = 6;
+	protected static final int COLUMN_SUBTOTAL = 7;
 
 	/** 
 	 * Index of column IVA
 	 */
-	protected static final int COLUMN_IVA = 7;
+	protected static final int COLUMN_IVA = 8;
 
 	/** 
 	 * Index of column Total
 	 */
-	protected static final int COLUMN_TOTAL = 8;
+	protected static final int COLUMN_TOTAL = 9;
 
 	/** 
 	 * Index of column Observaciones
 	 */
-	protected static final int COLUMN_OBSERVACIONES = 9;
+	protected static final int COLUMN_OBSERVACIONES = 10;
 
 	/** 
 	 * Index of column UltimaFechaActualizacion
 	 */
-	protected static final int COLUMN_ULTIMA_FECHA_ACTUALIZACION = 10;
+	protected static final int COLUMN_ULTIMA_FECHA_ACTUALIZACION = 11;
 
 	/** 
 	 * Index of column UltimoUsuarioActualizacion
 	 */
-	protected static final int COLUMN_ULTIMO_USUARIO_ACTUALIZACION = 11;
+	protected static final int COLUMN_ULTIMO_USUARIO_ACTUALIZACION = 12;
 
 	/** 
 	 * Number of columns
 	 */
-	protected static final int NUMBER_OF_COLUMNS = 11;
+	protected static final int NUMBER_OF_COLUMNS = 12;
 
 	/** 
 	 * Inserts a new row in the Pedidos table.
@@ -119,16 +126,22 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		// declare variables
 		final boolean isConnSupplied = (userConn != null);
 		Connection conn = null;
-		CallableStatement stmt = null;
+		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
 		try {
 			// get the user-specified connection or get a connection from the ResourceManager
 			conn = isConnSupplied ? userConn : ResourceManager.getConnection();
 		
-			stmt = conn.prepareCall( SQL_INSERT );
+			stmt = conn.prepareStatement( SQL_INSERT );
 			stmt.setString( COLUMN_ID_PEDIDO, dto.getIdPedido() );
 			stmt.setString( COLUMN_ID_USUARIO, dto.getIdUsuario() );
+			if (dto.isFolioNull()) {
+				stmt.setNull( COLUMN_FOLIO, java.sql.Types.INTEGER );
+			} else {
+				stmt.setInt( COLUMN_FOLIO, dto.getFolio() );
+			}
+		
 			stmt.setString( COLUMN_CLAVE_CLIENTE, dto.getClaveCliente() );
 			stmt.setTimestamp(COLUMN_FECHA, dto.getFecha()==null ? null : new java.sql.Timestamp( dto.getFecha().getTime() ) );
 			if (dto.isEstatusNull()) {
@@ -177,6 +190,81 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		
 	}
 
+
+	public void update(Pedidos dto, String sql, Object[] sqlParams) throws PedidosDaoException
+	{
+		long t1 = System.currentTimeMillis();
+		// declare variables
+		final boolean isConnSupplied = (userConn != null);
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		final String SQL = SQL_UPDATE + " WHERE " + sql;
+
+		try {
+			// get the user-specified connection or get a connection from the ResourceManager
+			conn = isConnSupplied ? userConn : ResourceManager.getConnection();
+
+			stmt = conn.prepareStatement( SQL  );
+			stmt.setString( COLUMN_ID_PEDIDO, dto.getIdPedido() );
+			stmt.setString( COLUMN_ID_USUARIO, dto.getIdUsuario() );
+			if (dto.isFolioNull()) {
+				stmt.setNull( COLUMN_FOLIO, java.sql.Types.INTEGER );
+			} else {
+				stmt.setInt( COLUMN_FOLIO, dto.getFolio() );
+			}
+
+			stmt.setString( COLUMN_CLAVE_CLIENTE, dto.getClaveCliente() );
+			stmt.setTimestamp(COLUMN_FECHA, dto.getFecha()==null ? null : new java.sql.Timestamp( dto.getFecha().getTime() ) );
+			if (dto.isEstatusNull()) {
+				stmt.setNull( COLUMN_ESTATUS, java.sql.Types.INTEGER );
+			} else {
+				stmt.setShort( COLUMN_ESTATUS, dto.getEstatus() );
+			}
+
+			if (dto.isSubtotalNull()) {
+				stmt.setNull( COLUMN_SUBTOTAL, java.sql.Types.FLOAT );
+			} else {
+				stmt.setFloat( COLUMN_SUBTOTAL, dto.getSubtotal() );
+			}
+
+			if (dto.isIvaNull()) {
+				stmt.setNull( COLUMN_IVA, java.sql.Types.FLOAT );
+			} else {
+				stmt.setFloat( COLUMN_IVA, dto.getIva() );
+			}
+
+			if (dto.isTotalNull()) {
+				stmt.setNull( COLUMN_TOTAL, java.sql.Types.FLOAT );
+			} else {
+				stmt.setFloat( COLUMN_TOTAL, dto.getTotal() );
+			}
+
+			stmt.setString( COLUMN_OBSERVACIONES, dto.getObservaciones() );
+			stmt.setTimestamp(COLUMN_ULTIMA_FECHA_ACTUALIZACION, dto.getUltimaFechaActualizacion()==null ? null : new java.sql.Timestamp( dto.getUltimaFechaActualizacion().getTime() ) );
+			stmt.setString( COLUMN_ULTIMO_USUARIO_ACTUALIZACION, dto.getUltimoUsuarioActualizacion() );
+
+			System.out.println( "Executing " + SQL_UPDATE + " with DTO: " + dto );
+			for (int i=0; sqlParams!=null && i<sqlParams.length ; i++ ) {
+				stmt.setObject( i+13, sqlParams[i] );
+			}
+			stmt.execute();
+			int rows = stmt.getUpdateCount();
+			System.out.println( rows + " rows affected" );
+		}
+		catch (Exception _e) {
+			_e.printStackTrace();
+			throw new PedidosDaoException( "Exception: " + _e.getMessage(), _e );
+		}
+		finally {
+			ResourceManager.close(stmt);
+			if (!isConnSupplied) {
+				ResourceManager.close(conn);
+			}
+
+		}
+
+	}
 	/** 
 	 * Returns all rows from the Pedidos table that match the criteria ''.
 	 */
@@ -199,6 +287,14 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	public Pedidos[] findWhereIdUsuarioEquals(String idUsuario) throws PedidosDaoException
 	{
 		return findByDynamicSelect( SQL_SELECT + " WHERE IdUsuario = ? ORDER BY IdUsuario", new Object[] { idUsuario } );
+	}
+
+	/** 
+	 * Returns all rows from the Pedidos table that match the criteria 'Folio = :folio'.
+	 */
+	public Pedidos[] findWhereFolioEquals(int folio) throws PedidosDaoException
+	{
+		return findByDynamicSelect( SQL_SELECT + " WHERE Folio = ? ORDER BY Folio", new Object[] {  new Integer(folio) } );
 	}
 
 	/** 
@@ -356,6 +452,11 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	{
 		dto.setIdPedido( rs.getString( COLUMN_ID_PEDIDO ) );
 		dto.setIdUsuario( rs.getString( COLUMN_ID_USUARIO ) );
+		dto.setFolio( rs.getInt( COLUMN_FOLIO ) );
+		if (rs.wasNull()) {
+			dto.setFolioNull( true );
+		}
+		
 		dto.setClaveCliente( rs.getString( COLUMN_CLAVE_CLIENTE ) );
 		dto.setFecha( rs.getTimestamp(COLUMN_FECHA ) );
 		dto.setEstatus( rs.getShort( COLUMN_ESTATUS ) );
@@ -381,6 +482,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		dto.setObservaciones( rs.getString( COLUMN_OBSERVACIONES ) );
 		dto.setUltimaFechaActualizacion( rs.getTimestamp(COLUMN_ULTIMA_FECHA_ACTUALIZACION ) );
 		dto.setUltimoUsuarioActualizacion( rs.getString( COLUMN_ULTIMO_USUARIO_ACTUALIZACION ) );
+		reset(dto);
 	}
 
 	/** 
@@ -388,6 +490,18 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	protected void reset(Pedidos dto)
 	{
+		dto.setIdPedidoModified( false );
+		dto.setIdUsuarioModified( false );
+		dto.setFolioModified( false );
+		dto.setClaveClienteModified( false );
+		dto.setFechaModified( false );
+		dto.setEstatusModified( false );
+		dto.setSubtotalModified( false );
+		dto.setIvaModified( false );
+		dto.setTotalModified( false );
+		dto.setObservacionesModified( false );
+		dto.setUltimaFechaActualizacionModified( false );
+		dto.setUltimoUsuarioActualizacionModified( false );
 	}
 
 	/** 

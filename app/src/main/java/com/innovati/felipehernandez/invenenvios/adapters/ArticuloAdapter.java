@@ -30,8 +30,9 @@ public class ArticuloAdapter extends BaseAdapter
 
     @Override
     public int getCount() {
-        //return lista.size();
-        return lista.length;
+        if(lista != null)
+            return lista.length;
+        else return 0;
     }
 
     @Override
@@ -76,8 +77,4 @@ public class ArticuloAdapter extends BaseAdapter
         TextView nombreArticulo, existencia, IDArticulo;
     }
 
-    public static VwArticulosDao getVwArticulosDao()
-    {
-        return VwArticulosDaoFactory.create();
-    }
 }

@@ -3,11 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/Historial_C"
-        android:title="Historial" />
-    <item
-        android:id="@+id/Agregar_C"
-        android:title="Agregar"
-        android:enabled="false"/>
+        android:title="Historial"
+        android:visible="false"/>
     <item
         android:id="@+id/Llamar_C"
         android:enabled="true"

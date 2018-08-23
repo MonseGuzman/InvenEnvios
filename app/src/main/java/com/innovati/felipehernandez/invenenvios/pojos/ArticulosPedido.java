@@ -4,16 +4,25 @@ public class ArticulosPedido {
     String idArticulo;
     String nombre;
     String presentacion;
-    double cantidad;
-    double precio;
-    double subTotal;
-    double iva;
-    double total;
+    float cantidad;
+    float precio;
+    float subTotal;
+    float iva;
+    float total;
+    float exits;
+    boolean status;
+    short estado;
+    /*
+    * 1 = Activo
+    * 2 = surtido
+    * 3 = Cancelado
+    * 4 = Devulto
+    * */
 
     public ArticulosPedido() {
     }
 
-    public ArticulosPedido(String idArticulo, String nombre, String presentacion, double cantidad, double precio, double subTotal, double iva, double total) {
+    public ArticulosPedido(String idArticulo, String nombre, String presentacion, float cantidad, float precio, float subTotal, float iva, float total, float exits, boolean status, short estado) {
         this.idArticulo = idArticulo;
         this.nombre = nombre;
         this.presentacion = presentacion;
@@ -22,6 +31,9 @@ public class ArticulosPedido {
         this.subTotal = subTotal;
         this.iva = iva;
         this.total = total;
+        this.exits = exits;
+        this.status = status;
+        this.estado = estado;
     }
 
     public String getIdArticulo() {
@@ -48,43 +60,67 @@ public class ArticulosPedido {
         this.presentacion = presentacion;
     }
 
-    public double getCantidad() {
+    public float getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(double cantidad) {
+    public void setCantidad(float cantidad) {
         this.cantidad = cantidad;
     }
 
-    public double getPrecio() {
+    public float getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(float precio) {
         this.precio = precio;
     }
 
-    public double getSubTotal() {
+    public float getSubTotal() {
         return subTotal;
     }
 
-    public void setSubTotal(double subTotal) {
+    public void setSubTotal(float subTotal) {
         this.subTotal = subTotal;
     }
 
-    public double getIva() {
+    public float getIva() {
         return iva;
     }
 
-    public void setIva(double iva) {
+    public void setIva(float iva) {
         this.iva = iva;
     }
 
-    public double getTotal() {
+    public float getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(float total) {
         this.total = total;
+    }
+
+    public float getExits() {
+        return exits;
+    }
+
+    public void setExits(float exits) {
+        this.exits = exits;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public short getEstado() {
+        return estado;
+    }
+
+    public void setEstado(short estado) {
+        this.estado = estado;
     }
 }

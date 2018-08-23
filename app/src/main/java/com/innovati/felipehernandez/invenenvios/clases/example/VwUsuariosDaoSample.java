@@ -228,9 +228,9 @@ public class VwUsuariosDaoSample
 	}
 
 	/**
-	 * Method 'getVwUsuariosDao'
+	 * Method 'getVwUsuariosDaoI'
 	 * 
-	 * @return VwUsuariosDao
+	 * @return VwUsuariosDao_I
 	 */
 	public static VwUsuariosDao getVwUsuariosDao()
 	{

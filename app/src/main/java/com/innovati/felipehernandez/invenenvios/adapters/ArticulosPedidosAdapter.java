@@ -1,30 +1,33 @@
 package com.innovati.felipehernandez.invenenvios.adapters;
 
-import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 import java.util.List;
+
 public class ArticulosPedidosAdapter extends RecyclerView.Adapter<ArticulosPedidosAdapter.ViewHolder>{
     private RecycleViewOnItemClickListener recyclerViewOnItemClickListener;
-    public List<ArticulosPedido> articulosPedidos;
-    private Context   context;
-    /*public ArticulosPedidosAdapter( List<ArticulosPedido> articulosPedidos,@NonNull RecycleViewOnItemClickListener recyclerViewOnItemClickListener)
+    public static List<ArticulosPedido> articulosPedidos;
+    private boolean ban;
+
+    public ArticulosPedidosAdapter( List<ArticulosPedido> articulosPedidos,@NonNull RecycleViewOnItemClickListener recyclerViewOnItemClickListener)
     {
         this.recyclerViewOnItemClickListener = recyclerViewOnItemClickListener;
         this.articulosPedidos = articulosPedidos;
-    }*/
-    public ArticulosPedidosAdapter(Context context, List<ArticulosPedido> articulosPedidos)
+    }
+    public ArticulosPedidosAdapter(Boolean ban ,List<ArticulosPedido> articulosPedidos,@NonNull RecycleViewOnItemClickListener recyclerViewOnItemClickListener)
     {
-
-        this.context = context;
+        this.ban = ban;
+        this.recyclerViewOnItemClickListener = recyclerViewOnItemClickListener;
         this.articulosPedidos = articulosPedidos;
     }
     @NonNull
@@ -41,25 +44,46 @@ public class ArticulosPedidosAdapter extends RecyclerView.Adapter<ArticulosPedid
         holder.tvPercentacionArticuloItem.setText(articulosPedidos.get(position).getPresentacion());
         holder.tvCountArticuloItem.setText("Cantidad: " + articulosPedidos.get(position).getCantidad());
         holder.tvPriceArticuloItem.setText("precio: "+articulosPedidos.get(position).getPrecio());
-        holder.tvSubArticuloItem.setText("Sub: "+articulosPedidos.get(position).getSubTotal());
+        holder.tvSubArticuloItem.setText("$: "+articulosPedidos.get(position).getSubTotal());
+        if(ban){
+            if (articulosPedidos.get(position).getEstado() == 1){
+                holder.view_foreground.setBackgroundColor(Color.WHITE);
+            }else if (articulosPedidos.get(position).getEstado() == 3){
+                holder.view_foreground.setBackgroundColor(Color.RED);
+            }else if(articulosPedidos.get(position).getEstado() == 2){
+                holder.view_foreground.setBackgroundColor(Color.rgb(176,236,222));
+            }
+
+        }else{
+            if (articulosPedidos.get(position).isStatus()){
+                holder.view_foreground.setBackgroundColor(Color.WHITE);
+            }else{
+                holder.view_foreground.setBackgroundColor(Color.GRAY);
+            }
+        }
     }
 
     @Override
     public int getItemCount() {
-        return articulosPedidos.size();
+        if(articulosPedidos != null){
+            return articulosPedidos.size();
+        }
+        return 0;
     }
 
-    /*public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         CardView cardView;
+        RelativeLayout view_foreground;
         TextView tvNombreArticuloItem, tvPercentacionArticuloItem,tvCountArticuloItem,tvPriceArticuloItem,tvSubArticuloItem;
         public ViewHolder(View itemView) {
             super(itemView);
-            cardView =itemView.findViewById(R.id.cardview);
+            cardView =itemView.findViewById(R.id.cardviewCarrito);
             tvNombreArticuloItem = itemView.findViewById(R.id.tvNombreArticuloItem);
             tvPercentacionArticuloItem = itemView.findViewById(R.id.tvPercentacionArticuloItem);
             tvCountArticuloItem = itemView.findViewById(R.id.tvCountArticuloItem);
             tvPriceArticuloItem = itemView.findViewById(R.id.tvPriceArticuloItem);
             tvSubArticuloItem = itemView.findViewById(R.id.tvSubArticuloItem);
+            view_foreground = itemView.findViewById(R.id.view_foreground);
             itemView.setOnClickListener(this);
         }
 
@@ -67,20 +91,6 @@ public class ArticulosPedidosAdapter extends RecyclerView.Adapter<ArticulosPedid
         public void onClick(View view) {
             recyclerViewOnItemClickListener.onClick(view,getAdapterPosition());
         }
-    }*/
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        CardView cardView;
-        TextView tvNombreArticuloItem, tvPercentacionArticuloItem,tvCountArticuloItem,tvPriceArticuloItem,tvSubArticuloItem;
-        public ViewHolder(View itemView) {
-            super(itemView);
-            cardView =itemView.findViewById(R.id.cardview);
-            tvNombreArticuloItem = itemView.findViewById(R.id.tvNombreArticuloItem);
-            tvPercentacionArticuloItem = itemView.findViewById(R.id.tvPercentacionArticuloItem);
-            tvCountArticuloItem = itemView.findViewById(R.id.tvCountArticuloItem);
-            tvPriceArticuloItem = itemView.findViewById(R.id.tvPriceArticuloItem);
-            tvSubArticuloItem = itemView.findViewById(R.id.tvSubArticuloItem);
-        }
-
-
     }
+
 }

@@ -1,7 +1,6 @@
 package com.innovati.felipehernandez.invenenvios.fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.activitys.ArticuloActivity;
+import com.innovati.felipehernandez.invenenvios.activitys.PedidoActivity;
 import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 public class ArticuloFragment extends Fragment implements View.OnClickListener
@@ -28,6 +28,7 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
     private EditText existenciasEditText_A;
     private Button MenosButton_A;
     private Button MasButton_A;
+    private Button addArticuloList;
     private EditText cantidadEditText_A;
 
     String fragmento;
@@ -40,7 +41,7 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
     String unidad;
     float cantidadPedido = 0;
 
-    FloatingActionButton AgregarFAB_A;
+    //FloatingActionButton AgregarFAB_A;
 
     public ArticuloFragment() {
         // Required empty public constructor
@@ -91,7 +92,8 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
 
         MasButton_A.setOnClickListener(this);
         MenosButton_A.setOnClickListener(this);
-
+        addArticuloList.setOnClickListener(this);
+        validadCantidad();
         return v;
     }
 
@@ -109,6 +111,7 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
         MenosButton_A =  (Button) v.findViewById(R.id.MenosButton_A);
         MasButton_A = (Button) v.findViewById(R.id.MasButton_A);
         cantidadEditText_A = (EditText) v.findViewById(R.id.cantidadEditText_A);
+        addArticuloList = v.findViewById(R.id.addArticuloList);
     }
 
     private void limpiar()
@@ -122,7 +125,7 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
         precioEditText_A.setText("");
         unidadEditText_A.setText("");
 
-        //INAVILITA
+        //INHABILITA
         nombreEditText_A.setFocusable(true);
 
         claveTextView_A.setEnabled(true);
@@ -137,30 +140,85 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ArticuloActivity.disableLista("");
-        ArticulosPedido articulosPedido = new ArticulosPedido();
-        articulosPedido.setIdArticulo(clave);
-        articulosPedido.setNombre(nombre);
-        articulosPedido.setPrecio(precio);
-        articulosPedido.setCantidad(cantidadPedido);
-        articulosPedido.setSubTotal((precio*cantidadPedido));
-        articulosPedido.setIva(articulosPedido.getSubTotal()*0.16);
-        articulosPedido.setTotal(articulosPedido.getSubTotal()+articulosPedido.getIva());
-        ArticuloActivity.addArticulo(articulosPedido);
+        try{
+            BusquedaArticulosFragment.blockeo();
+        }catch (Exception e){
+
+        }
+        try{
+            ArticuloActivity.blockeo();
+        }catch (Exception e){
+
+        }
     }
 
     @Override
     public void onClick(View v)
     {
+        cantidadEditText_A.setText(String.valueOf(cantidadPedido));
+        cantidadPedido = Float.valueOf(cantidadEditText_A.getText().toString());
         switch (v.getId())
         {
             case R.id.MasButton_A:
-                cantidadPedido -=1;
+                if(cantidadPedido != 0){
+                    cantidadPedido -=1;
+                }
                 break;
             case R.id.MenosButton_A:
-                cantidadPedido +=1;
+                float exit = Float.valueOf(existencias.toString());
+                if(cantidadPedido < exit){
+                    cantidadPedido +=1;
+                }
+                break;
+            case R.id.addArticuloList:
+                addArticuloList();
                 break;
         }
         cantidadEditText_A.setText(String.valueOf(cantidadPedido));
+    }
+    public void validadCantidad(){
+        try{
+            boolean ban = false;
+            int position = -1;
+            for(ArticulosPedido ar: PedidoActivity.articulosPedidoList){
+                position +=1;
+                if (ar.getIdArticulo() == clave){
+                    ban = true;
+                    break;
+                }
+            }
+            if (ban){
+                cantidadPedido = PedidoActivity.articulosPedidoList.get(position).getCantidad();
+            }else{
+                if(existencias != 0){
+                    cantidadPedido = 1;
+                }else{
+                    cantidadPedido = 0;
+                }
+            }
+            cantidadEditText_A.setText(String.valueOf(cantidadPedido));
+        }catch (Exception e){
+
+        }
+        cantidadEditText_A.setText(String.valueOf(cantidadPedido));
+    }
+
+    public void addArticuloList(){
+        float precioAux = Float.valueOf(precio.toString());
+        ArticulosPedido articulosPedido = new ArticulosPedido();
+        articulosPedido.setIdArticulo(clave);
+        articulosPedido.setNombre(nombre);
+        articulosPedido.setPrecio(precioAux);
+        articulosPedido.setCantidad(cantidadPedido);
+        articulosPedido.setSubTotal((float) (precioAux*cantidadPedido));
+        articulosPedido.setPresentacion(unidad);
+        articulosPedido.setStatus(true);
+        float ivaAux = (float) (articulosPedido.getTotal()*0.16);
+        articulosPedido.setIva(ivaAux);
+        ivaAux = Float.valueOf(existencias.toString());
+        articulosPedido.setExits(ivaAux);
+        articulosPedido.setTotal(articulosPedido.getSubTotal()+articulosPedido.getIva());
+        PedidoActivity.addArticulo(articulosPedido);
+        getActivity().onBackPressed();
     }
 }

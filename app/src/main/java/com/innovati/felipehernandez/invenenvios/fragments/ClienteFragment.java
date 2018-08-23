@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.innovati.felipehernandez.invenenvios.R;
+import com.innovati.felipehernandez.invenenvios.activitys.ClientesActivity;
 
 public class ClienteFragment extends Fragment
 {
     private EditText nombreClienteEditText_C;
     private EditText rfcEditText_C;
-    private EditText calleEditTect_C;
+    private EditText calleEditText_C;
     private EditText numeroExteriorEditText_C;
     private EditText numeroInteriorEditText_C;
     private EditText coloniaEditText_C;
@@ -32,7 +33,9 @@ public class ClienteFragment extends Fragment
                              Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.fragment_cliente, container, false);
+
         inicializar(v);
+
         Bundle args = getArguments();
         nombre = args.getString("nombre", "");
         rfc = args.getString("rfc", "");
@@ -44,7 +47,7 @@ public class ClienteFragment extends Fragment
 
         nombreClienteEditText_C.setText(nombre);
         rfcEditText_C.setText(rfc);
-        calleEditTect_C.setText(calle);
+        calleEditText_C.setText(calle);
         numeroExteriorEditText_C.setText(numeroExterior);
         numeroInteriorEditText_C.setText(numeroInterior);
         coloniaEditText_C.setText(colonia);
@@ -58,11 +61,16 @@ public class ClienteFragment extends Fragment
     {
         nombreClienteEditText_C = v.findViewById(R.id.NombreClienteEditText_C);
         rfcEditText_C = v.findViewById(R.id.RFCEditText_C);
-        calleEditTect_C = v.findViewById(R.id.CalleEditText_C);
+        calleEditText_C = v.findViewById(R.id.CalleEditText_C);
         numeroExteriorEditText_C = v.findViewById(R.id.NumeroExteriorEditText_C);
         numeroInteriorEditText_C = v.findViewById(R.id.NumeroInteriorEditText_C);
         coloniaEditText_C = v.findViewById(R.id.ColoniaEditText_C);
         telefonoEditText_C = v.findViewById(R.id.TelefonoEditText_C);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ClientesActivity.bloqueo();
+    }
 }

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,47 +13,56 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.innovati.felipehernandez.invenenvios.API.DelayedProgressDialog;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
 import com.innovati.felipehernandez.invenenvios.adapters.ClientesAdaptador;
+import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwClientesDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwClientes;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwClientesDaoFactory;
+import com.innovati.felipehernandez.invenenvios.database.DaoSession;
+import com.innovati.felipehernandez.invenenvios.database.VwClientes_I;
+import com.innovati.felipehernandez.invenenvios.database.VwClientes_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.ClienteFragment;
+
+import org.greenrobot.greendao.query.QueryBuilder;
+
+import java.util.List;
 
 public class ClientesActivity extends AppCompatActivity
 {
-    private ListView datitosListView;
+    private static ListView datitosListView;
     private EditText buscarEditText;
-    private ImageButton BuscarImageButton;
-    private Bundle args;
+    private Button BuscarButton;
 
+    private Bundle args;
     private ClientesAdaptador adaptador;
     VwClientes result[];
     MetodosInternos metodosInternos = new MetodosInternos(this);
-    String actividad, fragment ="";
-    Intent i = new Intent();
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private int posicion;
+    private DaoSession daoSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientes);
-        actividad = getIntent().getExtras().getString("actividad");
+
         inicializacion();
 
         this.setTitle(R.string.tituloClientes);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
+        buscarEditText.setHint(R.string.seleccionarCliente);
+        daoSession = ((MyApp) getApplication()).getDaoSession();
 
         datitosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -60,8 +70,6 @@ public class ClientesActivity extends AppCompatActivity
             {
                 ClienteFragment clienteFragment = new ClienteFragment();
                 args = new Bundle();
-
-                fragment = "Agregar";
 
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_regresar);
@@ -78,7 +86,7 @@ public class ClientesActivity extends AppCompatActivity
             }
         });
 
-        BuscarImageButton.setOnClickListener(new View.OnClickListener() {
+        BuscarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 filtar(v);
@@ -86,15 +94,13 @@ public class ClientesActivity extends AppCompatActivity
         });
         //menú de contexto
         registerForContextMenu(datitosListView);
-
     }
-
 
     private void inicializacion()
     {
         datitosListView = (ListView)findViewById(R.id.datitosListView);
         buscarEditText = (EditText)findViewById(R.id.buscarEditText);
-        BuscarImageButton = (ImageButton)findViewById(R.id.BuscarImageButton);
+        BuscarButton = (Button)findViewById(R.id.BuscarButton);
     }
 
     //menú de contexto
@@ -124,12 +130,16 @@ public class ClientesActivity extends AppCompatActivity
                     telefono(posicion);
 
                 return true;
-            /*case  R.id.edit_note:
-                ShowAlertForEditBoard("Editar", "Cambiar el nombre de la nota", notes.get(info.position));
-                return true;*/
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
     }
 
     @Override
@@ -137,11 +147,11 @@ public class ClientesActivity extends AppCompatActivity
     {
         switch (item.getItemId())
         {
+            case R.id.menu_home:
+                finish();
+                return true;
             case android.R.id.home:
-                if (fragment.equals("Agregar"))
-                    onBackPressed();
-                else
-                    finish();
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -157,9 +167,7 @@ public class ClientesActivity extends AppCompatActivity
             super.onBackPressed();
             getSupportFragmentManager().popBackStack();
 
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home);
-            fragment = "";
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
         else
             finish();
@@ -187,18 +195,17 @@ public class ClientesActivity extends AppCompatActivity
     public void filtar(View v)
     {
         String nombre = buscarEditText.getText().toString();
-        if(TextUtils.isEmpty(nombre))
+
+        if(metodosInternos.conexionRed())
         {
             //sin filtro = todos
-            if(metodosInternos.conexionRed())
+            if(TextUtils.isEmpty(nombre))
             {
                 try
                 {
                     VwClientesDao _dao = getVwClientesDao();
-                    result = _dao.findAll();
-                    adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
-                    datitosListView.setAdapter(adaptador);
-
+                    ConsultaClientes c = new ConsultaClientes(nombre);
+                    c.execute(_dao);
                 }
                 catch(Exception e)
                 {
@@ -206,34 +213,84 @@ public class ClientesActivity extends AppCompatActivity
                 }
             }
             else
-            {
-                //bd interna
-            }
-        }
-        else
-        {
-            //todos los que se parecen con el where
-            if(metodosInternos.conexionRed())
             {
                 try
                 {
                     nombre = "%" + nombre;
                     nombre += "%";
                     VwClientesDao _dao = getVwClientesDao();
-                    result = _dao.findWhereNombreEquals(nombre);
-                    adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
-                    datitosListView.setAdapter(adaptador);
+                    ConsultaClientes c = new ConsultaClientes(nombre);
+                    c.execute(_dao);
                 }
                 catch(Exception e)
                 {
                     Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
                 }
             }
-            else
-            {
-                //bd interna
-            }
         }
+        else
+            try
+            {
+                internaBD();
+            } catch (Exception e)
+            {
+                metodosInternos.Alerta(R.string.error, R.string.errorBDInterna);
+                e.printStackTrace();
+            }
+    }
+
+    private void internaBD()
+    {
+        String nombre = buscarEditText.getText().toString();
+        VwClientes_IDao vwClientes_iDao = daoSession.getVwClientes_IDao();
+        List<VwClientes_I> clientes;
+
+        //si esta vacio
+        if(TextUtils.isEmpty(nombre))
+        {
+            QueryBuilder<VwClientes_I> qb = vwClientes_iDao.queryBuilder();
+            clientes = qb.list();
+            result = new VwClientes[clientes.size()];
+        }
+        else
+        {
+            nombre = "%" + nombre;
+            nombre += "%";
+
+            QueryBuilder<VwClientes_I> qb = vwClientes_iDao.queryBuilder();
+            qb.where(VwClientes_IDao.Properties.Nombre.like(nombre));
+
+            clientes = qb.list();
+            result = new VwClientes[clientes.size()];
+        }
+
+        for(int x=0; x<clientes.size(); x++)
+        {
+            VwClientes objetoCliente = new VwClientes();
+
+            objetoCliente.setClave(clientes.get(x).getClave());
+            objetoCliente.setNombre(clientes.get(x).getNombre());
+            objetoCliente.setRfc(clientes.get(x).getRfc());
+            objetoCliente.setCalle(clientes.get(x).getCalle());
+            objetoCliente.setNumeroExterior(clientes.get(x).getNumeroExterior());
+            objetoCliente.setNumeroInterior(clientes.get(x).getNumeroInterior());
+            objetoCliente.setColonia(clientes.get(x).getColonia());
+            objetoCliente.setTelefono(clientes.get(x).getTelefono());
+
+            result[x] = objetoCliente;
+        }
+
+        cargarDatos(result);
+    }
+
+    private void cargarDatos(VwClientes[] result)
+    {
+        adaptador = new ClientesAdaptador(this,  R.layout.listview_cliente, result);
+        datitosListView.setAdapter(adaptador);
+    }
+
+    public static void bloqueo(){
+        datitosListView.setVisibility(View.VISIBLE);
     }
 
     public boolean checkPermission(){
@@ -260,8 +317,62 @@ public class ClientesActivity extends AppCompatActivity
                 else
                 {
                     //Aquí lo que se hace si no lo aceptan
+                    metodosInternos.Alerta(R.string.error, R.string.noLlamar);
                 }
                 break;
+        }
+    }
+
+    public class ConsultaClientes extends AsyncTask<VwClientesDao, VwClientes[], VwClientes[]>
+    {
+        String nombre;
+        DelayedProgressDialog progressDialog = new DelayedProgressDialog();
+
+        public ConsultaClientes(String nombre)
+        {
+            this.nombre = nombre;
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+
+            progressDialog.setCancelable(false);
+            progressDialog.show(getSupportFragmentManager(), "tag");
+        }
+
+        @Override
+        protected VwClientes[] doInBackground(VwClientesDao... vwClientesDaos)
+        {
+            try
+            {
+                if(nombre.equals(""))
+                    result = vwClientesDaos[0].findAll();
+                else
+                    result = vwClientesDaos[0].findWhereNombreEquals(nombre);
+
+            }
+            catch (Exception e){
+
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(VwClientes[] vwArticulos)
+        {
+            super.onPostExecute(vwArticulos);
+            cargarDatos(result);
+
+            progressDialog.cancel(); //o .cancel();
+        }
+
+        @Override
+        protected void onCancelled()
+        {
+            super.onCancelled();
+            progressDialog.cancel();
         }
     }
 }

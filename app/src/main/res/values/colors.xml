@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1976d2</color>
-    <color name="colorPrimaryDark">#004ba0</color>
 
-    <!-- quitar -->
-    <color name="colorAccent">#63a4ff</color>
+    <!--COLORES PARA LTH-->
+    <!--<color name="colorPrimary">#005096</color>
+    <color name="colorPrimaryDark">#002967</color>
+    <color name="secondaryColor">#4d7cc7</color>
+    <color name="colorAccent">#cf1e2d</color>
+    <color name="secondaryLightColor">#ff5b57</color>
+    <color name="secondaryDarkColor">#960005</color>-->
 
-    <color name="secondaryColor">#7e57c2</color>
-    <color name="secondaryLightColor">#b085f5</color>
-    <color name="secondaryDarkColor">#4d2c91</color>
+    <!-- COLORES PARA CARMENTA -->
+    <color name="colorPrimary">#b2102b</color>
+    <color name="colorPrimaryDark">#7b0002</color>
+    <color name="secondaryColor">#ea4f54</color>
+    <color name="colorAccent">#7d1128</color>
+    <color name="secondaryLightColor">#b14550</color>
+    <color name="secondaryDarkColor">#4b0000</color>
+
+    <!-- COLORES PARA INCI -->
+    <!--<color name="colorPrimary">#038cdc</color>
+    <color name="colorPrimaryDark">#005faa</color>
+    <color name="secondaryColor">#61bcff</color>
+    <color name="colorAccent">#9edc31</color>
+    <color name="secondaryLightColor">#d3ff67</color>
+    <color name="secondaryDarkColor">#6aaa00</color>-->
+
     <color name="primaryTextColor">#ffffff</color>
-<!--
-    <color name="secondaryTextColor">#f8f9f9</color>
--->
+    <color name="bg_row_background">#fa315b</color>
+    <color name="black_semi_transparent">#B2000000</color>
+
 </resources>

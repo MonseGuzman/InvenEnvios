@@ -20,6 +20,7 @@ public interface PedidosDao
 	 */
 	public void insert(Pedidos dto) throws PedidosDaoException;
 
+	public void update(Pedidos dto, String sql, Object[] sqlParams) throws PedidosDaoException;
 	/** 
 	 * Returns all rows from the Pedidos table that match the criteria ''.
 	 */
@@ -34,6 +35,11 @@ public interface PedidosDao
 	 * Returns all rows from the Pedidos table that match the criteria 'IdUsuario = :idUsuario'.
 	 */
 	public Pedidos[] findWhereIdUsuarioEquals(String idUsuario) throws PedidosDaoException;
+
+	/** 
+	 * Returns all rows from the Pedidos table that match the criteria 'Folio = :folio'.
+	 */
+	public Pedidos[] findWhereFolioEquals(int folio) throws PedidosDaoException;
 
 	/** 
 	 * Returns all rows from the Pedidos table that match the criteria 'ClaveCliente = :claveCliente'.

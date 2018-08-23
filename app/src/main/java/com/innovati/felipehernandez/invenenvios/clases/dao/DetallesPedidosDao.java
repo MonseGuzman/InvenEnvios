@@ -18,7 +18,27 @@ public interface DetallesPedidosDao
 	/** 
 	 * Inserts a new row in the DetallesPedidos table.
 	 */
-	public void insert(DetallesPedidos dto) throws DetallesPedidosDaoException;
+	public DetallesPedidosPk insert(DetallesPedidos dto) throws DetallesPedidosDaoException;
+
+	/** 
+	 * Updates a single row in the DetallesPedidos table.
+	 */
+	public void update(DetallesPedidosPk pk, DetallesPedidos dto) throws DetallesPedidosDaoException;
+
+	/** 
+	 * Deletes a single row in the DetallesPedidos table.
+	 */
+	public void delete(DetallesPedidosPk pk) throws DetallesPedidosDaoException;
+
+	/** 
+	 * Returns the rows from the DetallesPedidos table that matches the specified primary-key value.
+	 */
+	public DetallesPedidos findByPrimaryKey(DetallesPedidosPk pk) throws DetallesPedidosDaoException;
+
+	/** 
+	 * Returns all rows from the DetallesPedidos table that match the criteria 'IdDetallePedido = :idDetallePedido'.
+	 */
+	public DetallesPedidos findByPrimaryKey(String idDetallePedido) throws DetallesPedidosDaoException;
 
 	/** 
 	 * Returns all rows from the DetallesPedidos table that match the criteria ''.
@@ -64,6 +84,11 @@ public interface DetallesPedidosDao
 	 * Returns all rows from the DetallesPedidos table that match the criteria 'Total = :total'.
 	 */
 	public DetallesPedidos[] findWhereTotalEquals(float total) throws DetallesPedidosDaoException;
+
+	/** 
+	 * Returns all rows from the DetallesPedidos table that match the criteria 'Surtido = :surtido'.
+	 */
+	public DetallesPedidos[] findWhereSurtidoEquals(short surtido) throws DetallesPedidosDaoException;
 
 	/** 
 	 * Returns all rows from the DetallesPedidos table that match the criteria 'UltimaFechaActualizacion = :ultimaFechaActualizacion'.
