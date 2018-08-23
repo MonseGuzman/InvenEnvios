@@ -161,7 +161,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	public VwPedidos[] findWhereEstatusEquals(short estatus) throws VwPedidosDaoException
 	{
-		return findByDynamicSelect( SQL_SELECT + " WHERE Estatus = ? ORDER BY Estatus", new Object[] {  new Short(estatus) } );
+		return findByDynamicSelect( SQL_SELECT + " WHERE Estatus = ? ORDER BY Folio", new Object[] {  new Short(estatus) } );
 	}
 
 	/** 
@@ -169,7 +169,7 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	public VwPedidos[] findWhereSubtotalEquals(float subtotal) throws VwPedidosDaoException
 	{
-		return findByDynamicSelect( SQL_SELECT + " WHERE Subtotal = ? ORDER BY Subtotal", new Object[] {  new Float(subtotal) } );
+		return findByDynamicSelect( SQL_SELECT + " WHERE Subtotal = ? ORDER BY Folio", new Object[] {  new Float(subtotal) } );
 	}
 
 	/** 
