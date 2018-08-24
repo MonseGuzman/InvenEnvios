@@ -226,6 +226,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             @Override
             public void onClick(View view, int position) {
                 if(bandera){
+                    si = true;
                     positionList =position;
                     updateAr(position);
                 }
