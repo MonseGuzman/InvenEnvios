@@ -60,7 +60,7 @@ public class EntregasActivity extends AppCompatActivity
 
         cargarDatos();
 
-        /*ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 return false;
@@ -99,7 +99,7 @@ public class EntregasActivity extends AppCompatActivity
 
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);*/
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
     }
 

@@ -99,35 +99,38 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         bandera = args.getBoolean("bandera",true);
         loadData();
         si = false;
-        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                int  position = viewHolder.getAdapterPosition();
-                ArticulosPedidosAdapter adapter = (ArticulosPedidosAdapter) recyclerArticulos.getAdapter();
-                ArticulosPedido articulosPedido;
-                articulosPedido = adapter.articulosPedidos.get(position);
-                if (direction == ItemTouchHelper.RIGHT){
-                    articulosPedido.setEstado((short)2);
-                }else if (direction == ItemTouchHelper.LEFT){
-                    articulosPedido.setEstado((short)3);
-                    articulosPedido.setCantidad(0);
-                    articulosPedido.setIva(0);
-                    articulosPedido.setSubTotal(0);
-                    articulosPedido.setTotal(0);
+        if (bandera){
+            ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+                @Override
+                public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                    return false;
                 }
-                adapter.articulosPedidos.set(position,articulosPedido);
-                updateAdapter();
-                si = true;
-            }
 
-        };
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerArticulos);
+                @Override
+                public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                    int  position = viewHolder.getAdapterPosition();
+                    ArticulosPedidosAdapter adapter = (ArticulosPedidosAdapter) recyclerArticulos.getAdapter();
+                    ArticulosPedido articulosPedido;
+                    articulosPedido = adapter.articulosPedidos.get(position);
+                    if (direction == ItemTouchHelper.RIGHT){
+                        articulosPedido.setEstado((short)2);
+                    }else if (direction == ItemTouchHelper.LEFT){
+                        articulosPedido.setEstado((short)3);
+                        articulosPedido.setCantidad(0);
+                        articulosPedido.setIva(0);
+                        articulosPedido.setSubTotal(0);
+                        articulosPedido.setTotal(0);
+                    }
+                    adapter.articulosPedidos.set(position,articulosPedido);
+                    updateAdapter();
+                    si = true;
+                }
+
+            };
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+            itemTouchHelper.attachToRecyclerView(recyclerArticulos);
+        }
+
         return v;
     }
 
