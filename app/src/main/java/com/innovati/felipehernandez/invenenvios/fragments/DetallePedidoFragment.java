@@ -164,8 +164,8 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         }
     }
 
-    private void internaBD() //PREGUNTARLE A DEINI MAÑANA
-    {//Borrar el comentario anterio de monse
+    private void internaBD()
+    {
         VwDetallePedido_IDao detallePedidoIDao = daoSession.getVwDetallePedido_IDao();
         QueryBuilder<VwDetallePedido_I> qb = detallePedidoIDao.queryBuilder();
 
@@ -563,6 +563,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             objetoPedidos.setIdPedido(pedidos.get(x).getIdPedido());
             objetoPedidos.setIdUsuario(pedidos.get(x).getIdUsuario());
             objetoPedidos.setFolio(pedidos.get(x).getFolio());
+            objetoPedidos.setNombre(pedidos.get(x).getNombre());
             objetoPedidos.setClaveCliente(pedidos.get(x).getClaveCliente());
             objetoPedidos.setFecha(pedidos.get(x).getFecha());
             objetoPedidos.setEstatus(pedidos.get(x).getEstatus());

@@ -153,7 +153,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                     String nombre = abastecimiento.getNombre() + " " + abastecimiento.getCantidad() + abastecimiento.getUnidadPrimaria();
                     QueryBuilder<VwDetallePedido_I> qb = vwDetallePedido_iDao.queryBuilder();
 
-                    qb.where(VwDetallePedido_IDao.Properties.Nombre.eq(abastecimiento.getNombre()), VwDetallePedido_IDao.Properties.Surtido.eq(0));
+                    qb.where(VwDetallePedido_IDao.Properties.Nombre.eq(abastecimiento.getNombre()), VwDetallePedido_IDao.Properties.Surtido.eq(1));
 
                     List<VwDetallePedido_I> detalles = qb.list();
 
