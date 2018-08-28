@@ -65,7 +65,6 @@ public class MenuActivity extends AppCompatActivity
     private SharedPreferences preferences;
     DaoSession daoSession;
     private MetodosInternos metodosInternos = new MetodosInternos(this);
-    private DelayedProgressDialog progressDialog = new DelayedProgressDialog();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +84,6 @@ public class MenuActivity extends AppCompatActivity
     //              |  2 | VISTA CON DETALLES
     public void botones(View v)
     {
-        progressDialog.setCancelable(false);
-        progressDialog.show(getSupportFragmentManager(), "tag");
-
         Intent i = new Intent();
 
         switch (v.getId())
@@ -110,27 +106,19 @@ public class MenuActivity extends AppCompatActivity
                 break;
         }
         startActivity(i);
-        progressDialog.cancel();
     }
 
     public void salir(View v)
     {
-        progressDialog.setCancelable(false);
-        progressDialog.show(getSupportFragmentManager(), "tag");
-
         preferences.edit().clear().apply();
 
         Intent i = new Intent(this, LoginActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //cierra esta actividad
         startActivity(i);
-
-        progressDialog.cancel();
     }
 
     public void actualizarDBServidor(View v)
     {
-
-
         if(metodosInternos.conexionRed())
         {
             VwDetallePedido_IDao daoDetallesPedidos = daoSession.getVwDetallePedido_IDao();
@@ -145,36 +133,30 @@ public class MenuActivity extends AppCompatActivity
         }
         else
             metodosInternos.Alerta(R.string.error, R.string.conectarse);
-
-        progressDialog.cancel();
     }
 
     public void actualizarDBInterna(View v)
     {
-        progressDialog.setCancelable(false);
-        progressDialog.show(getSupportFragmentManager(), "tag");
-
         if(metodosInternos.conexionRed())
         {
             InsertarAInterna insertar = new InsertarAInterna();
             insertar.execute();
         }
         else
-        {
             metodosInternos.Alerta(R.string.error, R.string.conectarse);
-        }
-        progressDialog.cancel();
     }
 
     private class InsertarAServidor extends AsyncTask<List<Object>,Void, Void>
     {
+        DelayedProgressDialog pd = new DelayedProgressDialog();
+
         @Override
         protected void onPreExecute()
         {
             super.onPreExecute();
 
-            progressDialog.setCancelable(false);
-            progressDialog.show(getSupportFragmentManager(), "tag");
+            pd.setCancelable(false);
+            pd.show(getSupportFragmentManager(), "tag");
         }
 
         @Override
@@ -251,16 +233,17 @@ public class MenuActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            progressDialog.cancel();
+            pd.cancel();
         }
 
         @Override
         protected void onCancelled()
         {
             super.onCancelled();
-            progressDialog.cancel();
+            pd.cancel();
         }
     }
+
     private class InsertarAInterna extends AsyncTask<Void, Void, Void>
     {
         private PedidosDao _daoPedidos;
@@ -272,14 +255,15 @@ public class MenuActivity extends AppCompatActivity
         private VwAbastecimientoDao _daoVwAbastecimiento;
         private VwPedidosDao _daoVwPedidos;
         private long cont=1;
+        DelayedProgressDialog pg = new DelayedProgressDialog();
 
         @Override
         protected void onPreExecute()
         {
             super.onPreExecute();
 
-            progressDialog.setCancelable(false);
-            progressDialog.show(getSupportFragmentManager(), "tag");
+            pg.setCancelable(false);
+            pg.show(getSupportFragmentManager(), "tag");
         }
 
         @Override
@@ -487,13 +471,13 @@ public class MenuActivity extends AppCompatActivity
         protected void onCancelled()
         {
             super.onCancelled();
-            progressDialog.cancel();
+            pg.cancel();
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            progressDialog.cancel();
+            pg.cancel();
             metodosInternos.Alerta(R.string.tituloBDI, R.string.mensajeBDI);
         }
     }
