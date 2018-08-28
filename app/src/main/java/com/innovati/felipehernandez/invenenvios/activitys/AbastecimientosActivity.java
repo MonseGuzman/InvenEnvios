@@ -330,7 +330,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                 {
 
                     String nombre = abastecimiento.getNombre() + " " + abastecimiento.getTotal() + abastecimiento.getUnidadPrimaria();
-                    VwDetallePedido[] detalles = _daoDetalle.findByDynamicSelect("SELECT NULL, NULL, NULL, NULL, Cantidad, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL FROM VwDetallePedido WHERE Surtido = ? AND Nombre = ?",new Object[]{0,abastecimiento.getNombre()});
+                    VwDetallePedido[] detalles = _daoDetalle.findByDynamicSelect("SELECT NULL, NULL, NULL, NULL, Cantidad, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL FROM VwDetallePedido WHERE Surtido = ? AND Nombre = ?",new Object[]{1,abastecimiento.getNombre()});
 
                     List<Float> numeros = new ArrayList<>();
                     for(VwDetallePedido cantidades: detalles)
