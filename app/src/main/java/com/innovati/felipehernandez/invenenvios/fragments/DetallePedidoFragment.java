@@ -38,6 +38,8 @@ import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_I;
 import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwArticulos_I;
+import com.innovati.felipehernandez.invenenvios.database.VwArticulos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_I;
 import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwPedidos_I;
@@ -208,6 +210,19 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             listDet.add(pedidos.getIdDetallePedido());
             idUsuario = pedidos.getIdDetallePedido();
         }
+
+        int x = 0;
+        for(ArticulosPedido articulosPedido: articulosPedidos)
+        {
+            VwArticulos_IDao articulos_i = daoSession.getVwArticulos_IDao();
+            QueryBuilder<VwArticulos_I> qbArticulos = articulos_i.queryBuilder();
+            qbArticulos.where(VwArticulos_IDao.Properties.Clave.eq(articulosPedido.getIdArticulo()));
+            List<VwArticulos_I> list = qbArticulos.list();
+            Float tem = list.get(0).getExistenciaTotal();
+            articulosPedido.setExits(tem);
+            articulosPedidos.set(x,articulosPedido);
+            x++;
+        }
         updateAdapter();
     }
 
@@ -324,9 +339,11 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                     articulo.setSubTotal(pedidos.getSubtotal());
                     articulo.setStatus(true);
                     articulo.setEstado(pedidos.getSurtido());
+                    articulo.setExits(0);
                     articulosPedidos.add(articulo);
                     listDet.add(pedidos.getIdDetallePedido());
                     idUsuario = pedidos.getIdDetallePedido();
+
                 }
 
                 VwArticulos vwArticulos[];
