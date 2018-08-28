@@ -56,4 +56,6 @@
     <string name="tituloAbastecimiento">Consulta de abastecimiento</string>
     <string name="guardado">¡Pedido guardado!</string>
     <string name="btnEntregas">Registrar Entregas</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
 </resources>

@@ -153,7 +153,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                     String nombre = abastecimiento.getNombre() + " " + abastecimiento.getCantidad() + abastecimiento.getUnidadPrimaria();
                     QueryBuilder<VwDetallePedido_I> qb = vwDetallePedido_iDao.queryBuilder();
 
-                    qb.where(VwDetallePedido_IDao.Properties.Nombre.eq(abastecimiento.getNombre()), VwDetallePedido_IDao.Properties.Surtido.eq(0));
+                    qb.where(VwDetallePedido_IDao.Properties.Nombre.eq(abastecimiento.getNombre()), VwDetallePedido_IDao.Properties.Surtido.eq(1));
 
                     List<VwDetallePedido_I> detalles = qb.list();
 
@@ -330,7 +330,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                 {
 
                     String nombre = abastecimiento.getNombre() + " " + abastecimiento.getTotal() + abastecimiento.getUnidadPrimaria();
-                    VwDetallePedido[] detalles = _daoDetalle.findByDynamicSelect("SELECT NULL, NULL, NULL, NULL, Cantidad, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL FROM VwDetallePedido WHERE Surtido = ? AND Nombre = ?",new Object[]{0,abastecimiento.getNombre()});
+                    VwDetallePedido[] detalles = _daoDetalle.findByDynamicSelect("SELECT NULL, NULL, NULL, NULL, Cantidad, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL FROM VwDetallePedido WHERE Surtido = ? AND Nombre = ?",new Object[]{1,abastecimiento.getNombre()});
 
                     List<Float> numeros = new ArrayList<>();
                     for(VwDetallePedido cantidades: detalles)
