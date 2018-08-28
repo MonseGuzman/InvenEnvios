@@ -65,7 +65,7 @@
                 android:textSize="24dp"
                 android:background="@color/bg_row_background"
                 android:textColor="@color/primaryTextColor"
-                android:text="Cancelar"
+                android:text="@string/cancelar"
                 />
             <Button
                 android:id="@+id/editArticuloListAceptar"
@@ -76,7 +76,7 @@
                 android:layout_margin="5dp"
                 android:background="@color/colorPrimaryDark"
                 android:textColor="@color/primaryTextColor"
-                android:text="Aceptar"
+                android:text="@string/aceptar"
                 />
         </LinearLayout>
     </LinearLayout>
