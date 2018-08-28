@@ -401,7 +401,7 @@ public class PedidoActivity extends AppCompatActivity
         {
             VwPedidos_IDao pedidos_iDao = daoSession.getVwPedidos_IDao();
             QueryBuilder<VwPedidos_I> qb = pedidos_iDao.queryBuilder();
-            long folio = qb.count();
+            long folio = qb.count()+1;
             tvFolio.setText(String.valueOf(folio));
         }
     }
