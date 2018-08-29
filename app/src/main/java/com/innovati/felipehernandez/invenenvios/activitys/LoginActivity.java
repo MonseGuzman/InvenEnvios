@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.innovati.felipehernandez.invenenvios.API.DelayedProgressDialog;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
 import com.innovati.felipehernandez.invenenvios.R;
+import com.innovati.felipehernandez.invenenvios.SettingActivity;
 import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwUsuarios;
@@ -215,6 +216,15 @@ public class LoginActivity extends AppCompatActivity
             editor.commit(); // empieza a guardar los put*
             editor.apply(); //guarda todos los cambios aunque no se guarden todos
         }catch (Exception e){}
+    }
+
+    public void setting(View view){
+        touch ++;
+        if ( touch == 10){
+            touch = 0;
+            Intent intent = new Intent(this, SettingActivity.class);
+            startActivity(intent);
+        }
     }
 
 }
