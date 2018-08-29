@@ -20,6 +20,8 @@
     <string name="noLlamar">No se usar el "teléfono" en esta aplicación hasta que proporcione el permiso</string>
     <string name="vacioDescripcion">Sin datos que consultar</string>
     <string name="vacioTitulo">Carga terminada</string>
+    <string name="si">Si</string>
+    <string name="no">No</string>
 
     <!--Menú-->
     <string name="menuLlamar">Llamar</string>
@@ -40,10 +42,6 @@
     <string name="introduzcaCliente">Introduzca el nombre del cliente</string>
     <string name="seleccionarCliente">Nombre del cliente a localizar</string>
 
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <!--Entregas-->
     <string name="tituloPedidos">Pedidos</string>
     <string name="title_activity_articulos_pedido">ArticulosPedidoActivity</string>
@@ -51,6 +49,7 @@
 
     <!--Pedidos-->
     <string name="tituloEntregas">Consulta de entregas</string>
+    <string name="salirSinGuardar">¿Desea salir sin realizar el pedido?</string>
 
     <!--Abastecimiento-->
     <string name="tituloAbastecimiento">Consulta de abastecimiento</string>

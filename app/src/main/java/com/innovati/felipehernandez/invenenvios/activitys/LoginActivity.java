@@ -35,7 +35,6 @@ public class LoginActivity extends AppCompatActivity
     private EditText etUsuario, etPassword;
 
     private SharedPreferences preferences;
-    private int touch= 0;
     private EncryptionAndDecryption EaD= new EncryptionAndDecryption();
     private MetodosInternos conectado = new MetodosInternos(this);
     private DaoSession daoSession;
@@ -54,7 +53,6 @@ public class LoginActivity extends AppCompatActivity
         preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         verificaCredenciales();
 
-        touch = 0;
         daoSession = ((MyApp) getApplication()).getDaoSession();
     }
 

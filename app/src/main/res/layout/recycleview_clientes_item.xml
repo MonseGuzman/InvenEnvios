@@ -9,7 +9,7 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    card_view:cardBackgroundColor="@color/secondaryLightColor"
+    card_view:cardBackgroundColor="@color/primaryTextColor"
     card_view:cardCornerRadius="4dp">
 
     <TextView
@@ -20,7 +20,8 @@
         android:text="Andrea Guzmán"
         android:textSize="15dp"
         android:textAlignment="center"
-        android:textColor="@color/primaryTextColor"
+        android:textColor="@color/secondaryLightColor"
+        android:textStyle="bold"
         android:layout_marginTop="5dp" />
 
     <TextView
