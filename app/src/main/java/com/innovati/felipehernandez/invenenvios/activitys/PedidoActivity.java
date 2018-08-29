@@ -1,15 +1,18 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.innovati.felipehernandez.invenenvios.API.DelayedProgressDialog;
@@ -136,7 +139,8 @@ public class PedidoActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         //cantidad de fragmentos que estan actualmente apilados.
         if(getSupportFragmentManager().getBackStackEntryCount() != 0)
         {
@@ -145,7 +149,12 @@ public class PedidoActivity extends AppCompatActivity
             getSupportFragmentManager().popBackStack();
         }
         else
-            finish();
+        {
+            if (ClienteEntTextView.getText().toString().equals("Cliente:"))
+                finish();
+            else
+                mensajeAdvertencia();
+        }
     }
 
     @Override
@@ -166,6 +175,25 @@ public class PedidoActivity extends AppCompatActivity
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void mensajeAdvertencia()
+    {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(R.string.salirSinGuardar);
+        alert.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                finish();
+            }
+        });
+        alert.setNeutralButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
     }
 
     public static void addArticulo(ArticulosPedido a){
