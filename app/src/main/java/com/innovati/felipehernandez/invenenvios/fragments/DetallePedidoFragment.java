@@ -12,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.innovati.felipehernandez.invenenvios.API.DelayedProgressDialog;
 import com.innovati.felipehernandez.invenenvios.MetodosInternos;
@@ -73,6 +76,8 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     private MetodosInternos metodosInternos;
     private DaoSession daoSession;
     private List<Long> ids = new ArrayList<>();
+    TextView tvFolio, tvFecha;
+
 
     public DetallePedidoFragment() {
         // Required empty public constructor
@@ -100,9 +105,12 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         Bundle args = getArguments();
         clavePedido = args.getString("pedido", "");
         bandera = args.getBoolean("bandera",true);
+        tvFecha.setText(args.getString("fecha", "Hoy"));
+        tvFolio.setText(args.getString("folio", "1"));
         loadData();
         si = false;
         if (bandera){
+
             ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
                 @Override
                 public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -117,6 +125,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                     articulosPedido = adapter.articulosPedidos.get(position);
                     if (direction == ItemTouchHelper.RIGHT){
                         articulosPedido.setEstado((short)2);
+                        Toast.makeText(getContext(),"Articulo Abastecido",Toast.LENGTH_SHORT).show();
                     }else if (direction == ItemTouchHelper.LEFT){
                         articulosPedido.setEstado((short)3);
                         articulosPedido.setCantidad(0);
@@ -147,6 +156,8 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         btnCancelar = v.findViewById(R.id.editArticuloListAceptar);
         editCantida = v.findViewById(R.id.cantidadEditText_AEdit);
         datosEditArticle.setVisibility(View.INVISIBLE);
+        tvFolio = v.findViewById(R.id.tvFolioDetalle);
+        tvFecha = v.findViewById(R.id.tvFechaDetalle);
 
         listDet = new ArrayList<String>();
         articuloEdit = new ArrayList<ArticulosPedido>();
@@ -345,6 +356,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                     articulosPedidos.add(articulo);
                     listDet.add(pedidos.getIdDetallePedido());
                     idUsuario = pedidos.getIdDetallePedido();
+
 
                 }
 
