@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity
     private EncryptionAndDecryption EaD= new EncryptionAndDecryption();
     private MetodosInternos conectado = new MetodosInternos(this);
     private DaoSession daoSession;
+    private int touch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
