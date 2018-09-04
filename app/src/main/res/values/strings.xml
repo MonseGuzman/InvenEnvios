@@ -22,6 +22,7 @@
     <string name="vacioTitulo">Carga terminada</string>
     <string name="si">Si</string>
     <string name="no">No</string>
+    <string name="advertencia">Advertencia</string>
 
     <!--Menú-->
     <string name="menuLlamar">Llamar</string>

@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.innovati.felipehernandez.invenenvios.API.DelayedProgressDialog;
@@ -30,8 +29,6 @@ import com.innovati.felipehernandez.invenenvios.clases.factory.DetallesPedidosDa
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwUsuariosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
-import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
-import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_I;
 import com.innovati.felipehernandez.invenenvios.database.VwAbastecimientos_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_I;
@@ -81,10 +78,8 @@ public class PedidoActivity extends AppCompatActivity
 
         daoSession = ((MyApp) this.getApplication()).getDaoSession();
         geneFolio();
-        //fecha
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        Date date = new Date();
-        fechaTextView.setText("Fecha: "+dateFormat.format(date));
+
+        limpiar();
         agente = preferences.getString("agente", " Falta Dato");
         idUsuario = preferences.getString("idUsuario", null);
         tvAgente.setText("Agente: " + agente);
@@ -150,7 +145,7 @@ public class PedidoActivity extends AppCompatActivity
         }
         else
         {
-            if (ClienteEntTextView.getText().toString().equals("Cliente:"))
+            if (ClienteEntTextView.getText().toString().equals("Cliente: No elegido"))
                 finish();
             else
                 mensajeAdvertencia();
@@ -170,7 +165,10 @@ public class PedidoActivity extends AppCompatActivity
         switch (item.getItemId())
         {
             case R.id.menu_home:
-                finish();
+                if (ClienteEntTextView.getText().toString().equals("Cliente: No elegido"))
+                    finish();
+                else
+                    mensajeAdvertencia();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -180,7 +178,8 @@ public class PedidoActivity extends AppCompatActivity
     private void mensajeAdvertencia()
     {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle(R.string.salirSinGuardar);
+        alert.setTitle(R.string.advertencia);
+        alert.setMessage(R.string.salirSinGuardar);
         alert.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which)
@@ -194,6 +193,18 @@ public class PedidoActivity extends AppCompatActivity
                 dialog.dismiss();
             }
         });
+        alert.setCancelable(false);
+        alert.show();
+    }
+
+    private static void limpiar() {
+        //fecha
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        Date date = new Date();
+        fechaTextView.setText("Fecha: " + dateFormat.format(date));
+
+        tvAgente.setText("Agente: " + agente);
+        ClienteEntTextView.setText("Cliente: No elegido");
     }
 
     public static void addArticulo(ArticulosPedido a){
@@ -295,7 +306,8 @@ public class PedidoActivity extends AppCompatActivity
         articulosPedidoList = null;
         calTotal();
         DatosPedidoFragment.updateAdapter();
-        nombreC = "No elegido";
+        //nombreC = "No elegido";
+        limpiar();
     }
 
     public static void insertar(String idPedido,String idUsuario, String claveCliente, Date fecha, short estatus, float subtotal, float iva, float total, String observaciones, int folio)
@@ -418,14 +430,7 @@ public class PedidoActivity extends AppCompatActivity
 
     public void geneFolio()
     {
-        if(metodosInternos.conexionRed())
-        {
-            Pedidos pedidosResult[] = null;
-            PedidosDao daoPedidos = getPedidosDao();
-            Consulta c = new Consulta();
-            c.execute(daoPedidos, daoPedidos);
-        }
-        else
+        if(!metodosInternos.conexionRed())
         {
             VwPedidos_IDao pedidos_iDao = daoSession.getVwPedidos_IDao();
             QueryBuilder<VwPedidos_I> qb = pedidos_iDao.queryBuilder();
