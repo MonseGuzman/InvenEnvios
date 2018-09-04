@@ -23,19 +23,9 @@ public class Pedidos implements Serializable
 	protected String idPedido;
 
 	/** 
-	 * This attribute represents whether the attribute idPedido has been modified since being read from the database.
-	 */
-	protected boolean idPedidoModified = false;
-
-	/** 
 	 * This attribute maps to the column IdUsuario in the Pedidos table.
 	 */
 	protected String idUsuario;
-
-	/** 
-	 * This attribute represents whether the attribute idUsuario has been modified since being read from the database.
-	 */
-	protected boolean idUsuarioModified = false;
 
 	/** 
 	 * This attribute maps to the column Folio in the Pedidos table.
@@ -43,34 +33,14 @@ public class Pedidos implements Serializable
 	protected int folio;
 
 	/** 
-	 * This attribute represents whether the primitive attribute folio is null.
-	 */
-	protected boolean folioNull = true;
-
-	/** 
-	 * This attribute represents whether the attribute folio has been modified since being read from the database.
-	 */
-	protected boolean folioModified = false;
-
-	/** 
 	 * This attribute maps to the column ClaveCliente in the Pedidos table.
 	 */
 	protected String claveCliente;
 
 	/** 
-	 * This attribute represents whether the attribute claveCliente has been modified since being read from the database.
-	 */
-	protected boolean claveClienteModified = false;
-
-	/** 
 	 * This attribute maps to the column Fecha in the Pedidos table.
 	 */
 	protected Date fecha;
-
-	/** 
-	 * This attribute represents whether the attribute fecha has been modified since being read from the database.
-	 */
-	protected boolean fechaModified = false;
 
 	/** 
 	 * This attribute maps to the column Estatus in the Pedidos table.
@@ -83,11 +53,6 @@ public class Pedidos implements Serializable
 	protected boolean estatusNull = true;
 
 	/** 
-	 * This attribute represents whether the attribute estatus has been modified since being read from the database.
-	 */
-	protected boolean estatusModified = false;
-
-	/** 
 	 * This attribute maps to the column Subtotal in the Pedidos table.
 	 */
 	protected float subtotal;
@@ -96,11 +61,6 @@ public class Pedidos implements Serializable
 	 * This attribute represents whether the primitive attribute subtotal is null.
 	 */
 	protected boolean subtotalNull = true;
-
-	/** 
-	 * This attribute represents whether the attribute subtotal has been modified since being read from the database.
-	 */
-	protected boolean subtotalModified = false;
 
 	/** 
 	 * This attribute maps to the column IVA in the Pedidos table.
@@ -113,11 +73,6 @@ public class Pedidos implements Serializable
 	protected boolean ivaNull = true;
 
 	/** 
-	 * This attribute represents whether the attribute iva has been modified since being read from the database.
-	 */
-	protected boolean ivaModified = false;
-
-	/** 
 	 * This attribute maps to the column Total in the Pedidos table.
 	 */
 	protected float total;
@@ -128,19 +83,9 @@ public class Pedidos implements Serializable
 	protected boolean totalNull = true;
 
 	/** 
-	 * This attribute represents whether the attribute total has been modified since being read from the database.
-	 */
-	protected boolean totalModified = false;
-
-	/** 
 	 * This attribute maps to the column Observaciones in the Pedidos table.
 	 */
 	protected String observaciones;
-
-	/** 
-	 * This attribute represents whether the attribute observaciones has been modified since being read from the database.
-	 */
-	protected boolean observacionesModified = false;
 
 	/** 
 	 * This attribute maps to the column UltimaFechaActualizacion in the Pedidos table.
@@ -148,19 +93,9 @@ public class Pedidos implements Serializable
 	protected Date ultimaFechaActualizacion;
 
 	/** 
-	 * This attribute represents whether the attribute ultimaFechaActualizacion has been modified since being read from the database.
-	 */
-	protected boolean ultimaFechaActualizacionModified = false;
-
-	/** 
 	 * This attribute maps to the column UltimoUsuarioActualizacion in the Pedidos table.
 	 */
 	protected String ultimoUsuarioActualizacion;
-
-	/** 
-	 * This attribute represents whether the attribute ultimoUsuarioActualizacion has been modified since being read from the database.
-	 */
-	protected boolean ultimoUsuarioActualizacionModified = false;
 
 	/**
 	 * Method 'Pedidos'
@@ -188,23 +123,6 @@ public class Pedidos implements Serializable
 	public void setIdPedido(String idPedido)
 	{
 		this.idPedido = idPedido;
-		this.idPedidoModified = true;
-	}
-
-	/** 
-	 * Sets the value of idPedidoModified
-	 */
-	public void setIdPedidoModified(boolean idPedidoModified)
-	{
-		this.idPedidoModified = idPedidoModified;
-	}
-
-	/** 
-	 * Gets the value of idPedidoModified
-	 */
-	public boolean isIdPedidoModified()
-	{
-		return idPedidoModified;
 	}
 
 	/**
@@ -225,23 +143,6 @@ public class Pedidos implements Serializable
 	public void setIdUsuario(String idUsuario)
 	{
 		this.idUsuario = idUsuario;
-		this.idUsuarioModified = true;
-	}
-
-	/** 
-	 * Sets the value of idUsuarioModified
-	 */
-	public void setIdUsuarioModified(boolean idUsuarioModified)
-	{
-		this.idUsuarioModified = idUsuarioModified;
-	}
-
-	/** 
-	 * Gets the value of idUsuarioModified
-	 */
-	public boolean isIdUsuarioModified()
-	{
-		return idUsuarioModified;
 	}
 
 	/**
@@ -262,45 +163,6 @@ public class Pedidos implements Serializable
 	public void setFolio(int folio)
 	{
 		this.folio = folio;
-		this.folioNull = false;
-		this.folioModified = true;
-	}
-
-	/**
-	 * Method 'setFolioNull'
-	 * 
-	 * @param value
-	 */
-	public void setFolioNull(boolean value)
-	{
-		this.folioNull = value;
-		this.folioModified = true;
-	}
-
-	/**
-	 * Method 'isFolioNull'
-	 * 
-	 * @return boolean
-	 */
-	public boolean isFolioNull()
-	{
-		return folioNull;
-	}
-
-	/** 
-	 * Sets the value of folioModified
-	 */
-	public void setFolioModified(boolean folioModified)
-	{
-		this.folioModified = folioModified;
-	}
-
-	/** 
-	 * Gets the value of folioModified
-	 */
-	public boolean isFolioModified()
-	{
-		return folioModified;
 	}
 
 	/**
@@ -321,23 +183,6 @@ public class Pedidos implements Serializable
 	public void setClaveCliente(String claveCliente)
 	{
 		this.claveCliente = claveCliente;
-		this.claveClienteModified = true;
-	}
-
-	/** 
-	 * Sets the value of claveClienteModified
-	 */
-	public void setClaveClienteModified(boolean claveClienteModified)
-	{
-		this.claveClienteModified = claveClienteModified;
-	}
-
-	/** 
-	 * Gets the value of claveClienteModified
-	 */
-	public boolean isClaveClienteModified()
-	{
-		return claveClienteModified;
 	}
 
 	/**
@@ -358,23 +203,6 @@ public class Pedidos implements Serializable
 	public void setFecha(Date fecha)
 	{
 		this.fecha = fecha;
-		this.fechaModified = true;
-	}
-
-	/** 
-	 * Sets the value of fechaModified
-	 */
-	public void setFechaModified(boolean fechaModified)
-	{
-		this.fechaModified = fechaModified;
-	}
-
-	/** 
-	 * Gets the value of fechaModified
-	 */
-	public boolean isFechaModified()
-	{
-		return fechaModified;
 	}
 
 	/**
@@ -396,7 +224,6 @@ public class Pedidos implements Serializable
 	{
 		this.estatus = estatus;
 		this.estatusNull = false;
-		this.estatusModified = true;
 	}
 
 	/**
@@ -407,7 +234,6 @@ public class Pedidos implements Serializable
 	public void setEstatusNull(boolean value)
 	{
 		this.estatusNull = value;
-		this.estatusModified = true;
 	}
 
 	/**
@@ -418,22 +244,6 @@ public class Pedidos implements Serializable
 	public boolean isEstatusNull()
 	{
 		return estatusNull;
-	}
-
-	/** 
-	 * Sets the value of estatusModified
-	 */
-	public void setEstatusModified(boolean estatusModified)
-	{
-		this.estatusModified = estatusModified;
-	}
-
-	/** 
-	 * Gets the value of estatusModified
-	 */
-	public boolean isEstatusModified()
-	{
-		return estatusModified;
 	}
 
 	/**
@@ -455,7 +265,6 @@ public class Pedidos implements Serializable
 	{
 		this.subtotal = subtotal;
 		this.subtotalNull = false;
-		this.subtotalModified = true;
 	}
 
 	/**
@@ -466,7 +275,6 @@ public class Pedidos implements Serializable
 	public void setSubtotalNull(boolean value)
 	{
 		this.subtotalNull = value;
-		this.subtotalModified = true;
 	}
 
 	/**
@@ -477,22 +285,6 @@ public class Pedidos implements Serializable
 	public boolean isSubtotalNull()
 	{
 		return subtotalNull;
-	}
-
-	/** 
-	 * Sets the value of subtotalModified
-	 */
-	public void setSubtotalModified(boolean subtotalModified)
-	{
-		this.subtotalModified = subtotalModified;
-	}
-
-	/** 
-	 * Gets the value of subtotalModified
-	 */
-	public boolean isSubtotalModified()
-	{
-		return subtotalModified;
 	}
 
 	/**
@@ -514,7 +306,6 @@ public class Pedidos implements Serializable
 	{
 		this.iva = iva;
 		this.ivaNull = false;
-		this.ivaModified = true;
 	}
 
 	/**
@@ -525,7 +316,6 @@ public class Pedidos implements Serializable
 	public void setIvaNull(boolean value)
 	{
 		this.ivaNull = value;
-		this.ivaModified = true;
 	}
 
 	/**
@@ -536,22 +326,6 @@ public class Pedidos implements Serializable
 	public boolean isIvaNull()
 	{
 		return ivaNull;
-	}
-
-	/** 
-	 * Sets the value of ivaModified
-	 */
-	public void setIvaModified(boolean ivaModified)
-	{
-		this.ivaModified = ivaModified;
-	}
-
-	/** 
-	 * Gets the value of ivaModified
-	 */
-	public boolean isIvaModified()
-	{
-		return ivaModified;
 	}
 
 	/**
@@ -573,7 +347,6 @@ public class Pedidos implements Serializable
 	{
 		this.total = total;
 		this.totalNull = false;
-		this.totalModified = true;
 	}
 
 	/**
@@ -584,7 +357,6 @@ public class Pedidos implements Serializable
 	public void setTotalNull(boolean value)
 	{
 		this.totalNull = value;
-		this.totalModified = true;
 	}
 
 	/**
@@ -595,22 +367,6 @@ public class Pedidos implements Serializable
 	public boolean isTotalNull()
 	{
 		return totalNull;
-	}
-
-	/** 
-	 * Sets the value of totalModified
-	 */
-	public void setTotalModified(boolean totalModified)
-	{
-		this.totalModified = totalModified;
-	}
-
-	/** 
-	 * Gets the value of totalModified
-	 */
-	public boolean isTotalModified()
-	{
-		return totalModified;
 	}
 
 	/**
@@ -631,23 +387,6 @@ public class Pedidos implements Serializable
 	public void setObservaciones(String observaciones)
 	{
 		this.observaciones = observaciones;
-		this.observacionesModified = true;
-	}
-
-	/** 
-	 * Sets the value of observacionesModified
-	 */
-	public void setObservacionesModified(boolean observacionesModified)
-	{
-		this.observacionesModified = observacionesModified;
-	}
-
-	/** 
-	 * Gets the value of observacionesModified
-	 */
-	public boolean isObservacionesModified()
-	{
-		return observacionesModified;
 	}
 
 	/**
@@ -668,23 +407,6 @@ public class Pedidos implements Serializable
 	public void setUltimaFechaActualizacion(Date ultimaFechaActualizacion)
 	{
 		this.ultimaFechaActualizacion = ultimaFechaActualizacion;
-		this.ultimaFechaActualizacionModified = true;
-	}
-
-	/** 
-	 * Sets the value of ultimaFechaActualizacionModified
-	 */
-	public void setUltimaFechaActualizacionModified(boolean ultimaFechaActualizacionModified)
-	{
-		this.ultimaFechaActualizacionModified = ultimaFechaActualizacionModified;
-	}
-
-	/** 
-	 * Gets the value of ultimaFechaActualizacionModified
-	 */
-	public boolean isUltimaFechaActualizacionModified()
-	{
-		return ultimaFechaActualizacionModified;
 	}
 
 	/**
@@ -705,23 +427,6 @@ public class Pedidos implements Serializable
 	public void setUltimoUsuarioActualizacion(String ultimoUsuarioActualizacion)
 	{
 		this.ultimoUsuarioActualizacion = ultimoUsuarioActualizacion;
-		this.ultimoUsuarioActualizacionModified = true;
-	}
-
-	/** 
-	 * Sets the value of ultimoUsuarioActualizacionModified
-	 */
-	public void setUltimoUsuarioActualizacionModified(boolean ultimoUsuarioActualizacionModified)
-	{
-		this.ultimoUsuarioActualizacionModified = ultimoUsuarioActualizacionModified;
-	}
-
-	/** 
-	 * Gets the value of ultimoUsuarioActualizacionModified
-	 */
-	public boolean isUltimoUsuarioActualizacionModified()
-	{
-		return ultimoUsuarioActualizacionModified;
 	}
 
 	/**
@@ -749,15 +454,7 @@ public class Pedidos implements Serializable
 			return false;
 		}
 		
-		if (idPedidoModified != _cast.idPedidoModified) {
-			return false;
-		}
-		
 		if (idUsuario == null ? _cast.idUsuario != idUsuario : !idUsuario.equals( _cast.idUsuario )) {
-			return false;
-		}
-		
-		if (idUsuarioModified != _cast.idUsuarioModified) {
 			return false;
 		}
 		
@@ -765,27 +462,11 @@ public class Pedidos implements Serializable
 			return false;
 		}
 		
-		if (folioNull != _cast.folioNull) {
-			return false;
-		}
-		
-		if (folioModified != _cast.folioModified) {
-			return false;
-		}
-		
 		if (claveCliente == null ? _cast.claveCliente != claveCliente : !claveCliente.equals( _cast.claveCliente )) {
 			return false;
 		}
 		
-		if (claveClienteModified != _cast.claveClienteModified) {
-			return false;
-		}
-		
 		if (fecha == null ? _cast.fecha != fecha : !fecha.equals( _cast.fecha )) {
-			return false;
-		}
-		
-		if (fechaModified != _cast.fechaModified) {
 			return false;
 		}
 		
@@ -797,19 +478,11 @@ public class Pedidos implements Serializable
 			return false;
 		}
 		
-		if (estatusModified != _cast.estatusModified) {
-			return false;
-		}
-		
 		if (subtotal != _cast.subtotal) {
 			return false;
 		}
 		
 		if (subtotalNull != _cast.subtotalNull) {
-			return false;
-		}
-		
-		if (subtotalModified != _cast.subtotalModified) {
 			return false;
 		}
 		
@@ -821,10 +494,6 @@ public class Pedidos implements Serializable
 			return false;
 		}
 		
-		if (ivaModified != _cast.ivaModified) {
-			return false;
-		}
-		
 		if (total != _cast.total) {
 			return false;
 		}
@@ -833,15 +502,7 @@ public class Pedidos implements Serializable
 			return false;
 		}
 		
-		if (totalModified != _cast.totalModified) {
-			return false;
-		}
-		
 		if (observaciones == null ? _cast.observaciones != observaciones : !observaciones.equals( _cast.observaciones )) {
-			return false;
-		}
-		
-		if (observacionesModified != _cast.observacionesModified) {
 			return false;
 		}
 		
@@ -849,15 +510,7 @@ public class Pedidos implements Serializable
 			return false;
 		}
 		
-		if (ultimaFechaActualizacionModified != _cast.ultimaFechaActualizacionModified) {
-			return false;
-		}
-		
 		if (ultimoUsuarioActualizacion == null ? _cast.ultimoUsuarioActualizacion != ultimoUsuarioActualizacion : !ultimoUsuarioActualizacion.equals( _cast.ultimoUsuarioActualizacion )) {
-			return false;
-		}
-		
-		if (ultimoUsuarioActualizacionModified != _cast.ultimoUsuarioActualizacionModified) {
 			return false;
 		}
 		
@@ -876,53 +529,50 @@ public class Pedidos implements Serializable
 			_hashCode = 29 * _hashCode + idPedido.hashCode();
 		}
 		
-		_hashCode = 29 * _hashCode + (idPedidoModified ? 1 : 0);
 		if (idUsuario != null) {
 			_hashCode = 29 * _hashCode + idUsuario.hashCode();
 		}
 		
-		_hashCode = 29 * _hashCode + (idUsuarioModified ? 1 : 0);
 		_hashCode = 29 * _hashCode + folio;
-		_hashCode = 29 * _hashCode + (folioNull ? 1 : 0);
-		_hashCode = 29 * _hashCode + (folioModified ? 1 : 0);
 		if (claveCliente != null) {
 			_hashCode = 29 * _hashCode + claveCliente.hashCode();
 		}
 		
-		_hashCode = 29 * _hashCode + (claveClienteModified ? 1 : 0);
 		if (fecha != null) {
 			_hashCode = 29 * _hashCode + fecha.hashCode();
 		}
 		
-		_hashCode = 29 * _hashCode + (fechaModified ? 1 : 0);
 		_hashCode = 29 * _hashCode + (int) estatus;
 		_hashCode = 29 * _hashCode + (estatusNull ? 1 : 0);
-		_hashCode = 29 * _hashCode + (estatusModified ? 1 : 0);
 		_hashCode = 29 * _hashCode + Float.floatToIntBits(subtotal);
 		_hashCode = 29 * _hashCode + (subtotalNull ? 1 : 0);
-		_hashCode = 29 * _hashCode + (subtotalModified ? 1 : 0);
 		_hashCode = 29 * _hashCode + Float.floatToIntBits(iva);
 		_hashCode = 29 * _hashCode + (ivaNull ? 1 : 0);
-		_hashCode = 29 * _hashCode + (ivaModified ? 1 : 0);
 		_hashCode = 29 * _hashCode + Float.floatToIntBits(total);
 		_hashCode = 29 * _hashCode + (totalNull ? 1 : 0);
-		_hashCode = 29 * _hashCode + (totalModified ? 1 : 0);
 		if (observaciones != null) {
 			_hashCode = 29 * _hashCode + observaciones.hashCode();
 		}
 		
-		_hashCode = 29 * _hashCode + (observacionesModified ? 1 : 0);
 		if (ultimaFechaActualizacion != null) {
 			_hashCode = 29 * _hashCode + ultimaFechaActualizacion.hashCode();
 		}
 		
-		_hashCode = 29 * _hashCode + (ultimaFechaActualizacionModified ? 1 : 0);
 		if (ultimoUsuarioActualizacion != null) {
 			_hashCode = 29 * _hashCode + ultimoUsuarioActualizacion.hashCode();
 		}
 		
-		_hashCode = 29 * _hashCode + (ultimoUsuarioActualizacionModified ? 1 : 0);
 		return _hashCode;
+	}
+
+	/**
+	 * Method 'createPk'
+	 * 
+	 * @return PedidosPk
+	 */
+	public PedidosPk createPk()
+	{
+		return new PedidosPk(idPedido);
 	}
 
 	/**

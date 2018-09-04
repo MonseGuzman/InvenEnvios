@@ -48,9 +48,17 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	/** 
 	 * SQL INSERT statement for this table
 	 */
-	protected final String SQL_INSERT = "INSERT INTO " + getTableName() + " ( IdPedido, IdUsuario, Folio, ClaveCliente, Fecha, Estatus, Subtotal, IVA, Total, Observaciones, UltimaFechaActualizacion, UltimoUsuarioActualizacion ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+	protected final String SQL_INSERT = "INSERT INTO " + getTableName() + " ( IdPedido, IdUsuario, ClaveCliente, Fecha, Estatus, Subtotal, IVA, Total, Observaciones, UltimaFechaActualizacion, UltimoUsuarioActualizacion ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );SELECT @@IDENTITY";
 
-	protected final String SQL_UPDATE = "UPDATE " + getTableName() + " SET IdPedido = ?, IdUsuario = ?, Folio = ?, ClaveCliente = ?, Fecha = ?, Estatus = ?,Subtotal = ?, IVA = ?, Total = ?, Observaciones = ?, UltimaFechaActualizacion = ?, UltimoUsuarioActualizacion = ?";
+	/** 
+	 * SQL UPDATE statement for this table
+	 */
+	protected final String SQL_UPDATE = "UPDATE " + getTableName() + " SET IdPedido = ?, IdUsuario = ?, ClaveCliente = ?, Fecha = ?, Estatus = ?, Subtotal = ?, IVA = ?, Total = ?, Observaciones = ?, UltimaFechaActualizacion = ?, UltimoUsuarioActualizacion = ? WHERE IdPedido = ?";
+
+	/** 
+	 * SQL DELETE statement for this table
+	 */
+	protected final String SQL_DELETE = "DELETE FROM " + getTableName() + " WHERE IdPedido = ?";
 
 	/** 
 	 * Index of column IdPedido
@@ -118,9 +126,14 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	protected static final int NUMBER_OF_COLUMNS = 12;
 
 	/** 
+	 * Index of primary-key column IdPedido
+	 */
+	protected static final int PK_COLUMN_ID_PEDIDO = 1;
+
+	/** 
 	 * Inserts a new row in the Pedidos table.
 	 */
-	public void insert(Pedidos dto) throws PedidosDaoException
+	public PedidosPk insert(Pedidos dto) throws PedidosDaoException
 	{
 		long t1 = System.currentTimeMillis();
 		// declare variables
@@ -136,45 +149,61 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 			stmt = conn.prepareStatement( SQL_INSERT );
 			stmt.setString( COLUMN_ID_PEDIDO, dto.getIdPedido() );
 			stmt.setString( COLUMN_ID_USUARIO, dto.getIdUsuario() );
-			if (dto.isFolioNull()) {
-				stmt.setNull( COLUMN_FOLIO, java.sql.Types.INTEGER );
-			} else {
-				stmt.setInt( COLUMN_FOLIO, dto.getFolio() );
-			}
-		
-			stmt.setString( COLUMN_CLAVE_CLIENTE, dto.getClaveCliente() );
-			stmt.setTimestamp(COLUMN_FECHA, dto.getFecha()==null ? null : new java.sql.Timestamp( dto.getFecha().getTime() ) );
+			// no bind statement for auto increment column 'Folio
+			stmt.setString( COLUMN_CLAVE_CLIENTE - 1, dto.getClaveCliente() );
+			stmt.setTimestamp(COLUMN_FECHA - 1, dto.getFecha()==null ? null : new java.sql.Timestamp( dto.getFecha().getTime() ) );
 			if (dto.isEstatusNull()) {
-				stmt.setNull( COLUMN_ESTATUS, java.sql.Types.INTEGER );
+				stmt.setNull( COLUMN_ESTATUS - 1, java.sql.Types.INTEGER );
 			} else {
-				stmt.setShort( COLUMN_ESTATUS, dto.getEstatus() );
+				stmt.setShort( COLUMN_ESTATUS - 1, dto.getEstatus() );
 			}
 		
 			if (dto.isSubtotalNull()) {
-				stmt.setNull( COLUMN_SUBTOTAL, java.sql.Types.FLOAT );
+				stmt.setNull( COLUMN_SUBTOTAL - 1, java.sql.Types.FLOAT );
 			} else {
-				stmt.setFloat( COLUMN_SUBTOTAL, dto.getSubtotal() );
+				stmt.setFloat( COLUMN_SUBTOTAL - 1, dto.getSubtotal() );
 			}
 		
 			if (dto.isIvaNull()) {
-				stmt.setNull( COLUMN_IVA, java.sql.Types.FLOAT );
+				stmt.setNull( COLUMN_IVA - 1, java.sql.Types.FLOAT );
 			} else {
-				stmt.setFloat( COLUMN_IVA, dto.getIva() );
+				stmt.setFloat( COLUMN_IVA - 1, dto.getIva() );
 			}
 		
 			if (dto.isTotalNull()) {
-				stmt.setNull( COLUMN_TOTAL, java.sql.Types.FLOAT );
+				stmt.setNull( COLUMN_TOTAL - 1, java.sql.Types.FLOAT );
 			} else {
-				stmt.setFloat( COLUMN_TOTAL, dto.getTotal() );
+				stmt.setFloat( COLUMN_TOTAL - 1, dto.getTotal() );
 			}
 		
-			stmt.setString( COLUMN_OBSERVACIONES, dto.getObservaciones() );
-			stmt.setTimestamp(COLUMN_ULTIMA_FECHA_ACTUALIZACION, dto.getUltimaFechaActualizacion()==null ? null : new java.sql.Timestamp( dto.getUltimaFechaActualizacion().getTime() ) );
-			stmt.setString( COLUMN_ULTIMO_USUARIO_ACTUALIZACION, dto.getUltimoUsuarioActualizacion() );
+			stmt.setString( COLUMN_OBSERVACIONES - 1, dto.getObservaciones() );
+			stmt.setTimestamp(COLUMN_ULTIMA_FECHA_ACTUALIZACION - 1, dto.getUltimaFechaActualizacion()==null ? null : new java.sql.Timestamp( dto.getUltimaFechaActualizacion().getTime() ) );
+			stmt.setString( COLUMN_ULTIMO_USUARIO_ACTUALIZACION - 1, dto.getUltimoUsuarioActualizacion() );
 			System.out.println( "Executing " + SQL_INSERT + " with DTO: " + dto );
 			stmt.execute();
 			int rows = stmt.getUpdateCount();
 			System.out.println( rows + " rows affected" );
+		
+			// retrieve values from IDENTITY columns
+			boolean moreResults = true;
+			while (moreResults || rows != -1) {
+				try {
+					rs = stmt.getResultSet();
+				}
+				catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				}
+		
+				if (rs != null) {
+					rs.next();
+					dto.setFolio( rs.getInt( 1 ) );
+				}
+		
+				moreResults = stmt.getMoreResults();
+				rows = stmt.getUpdateCount();
+			}
+		
+			return dto.createPk();
 		}
 		catch (Exception _e) {
 			_e.printStackTrace();
@@ -190,67 +219,60 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		
 	}
 
-
-	public void update(Pedidos dto, String sql, Object[] sqlParams) throws PedidosDaoException
+	/** 
+	 * Updates a single row in the Pedidos table.
+	 */
+	public void update(PedidosPk pk, Pedidos dto) throws PedidosDaoException
 	{
 		long t1 = System.currentTimeMillis();
 		// declare variables
 		final boolean isConnSupplied = (userConn != null);
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		final String SQL = SQL_UPDATE + " WHERE " + sql;
-
+		
 		try {
 			// get the user-specified connection or get a connection from the ResourceManager
 			conn = isConnSupplied ? userConn : ResourceManager.getConnection();
-
-			stmt = conn.prepareStatement( SQL  );
-			stmt.setString( COLUMN_ID_PEDIDO, dto.getIdPedido() );
-			stmt.setString( COLUMN_ID_USUARIO, dto.getIdUsuario() );
-			if (dto.isFolioNull()) {
-				stmt.setNull( COLUMN_FOLIO, java.sql.Types.INTEGER );
-			} else {
-				stmt.setInt( COLUMN_FOLIO, dto.getFolio() );
-			}
-
-			stmt.setString( COLUMN_CLAVE_CLIENTE, dto.getClaveCliente() );
-			stmt.setTimestamp(COLUMN_FECHA, dto.getFecha()==null ? null : new java.sql.Timestamp( dto.getFecha().getTime() ) );
-			if (dto.isEstatusNull()) {
-				stmt.setNull( COLUMN_ESTATUS, java.sql.Types.INTEGER );
-			} else {
-				stmt.setShort( COLUMN_ESTATUS, dto.getEstatus() );
-			}
-
-			if (dto.isSubtotalNull()) {
-				stmt.setNull( COLUMN_SUBTOTAL, java.sql.Types.FLOAT );
-			} else {
-				stmt.setFloat( COLUMN_SUBTOTAL, dto.getSubtotal() );
-			}
-
-			if (dto.isIvaNull()) {
-				stmt.setNull( COLUMN_IVA, java.sql.Types.FLOAT );
-			} else {
-				stmt.setFloat( COLUMN_IVA, dto.getIva() );
-			}
-
-			if (dto.isTotalNull()) {
-				stmt.setNull( COLUMN_TOTAL, java.sql.Types.FLOAT );
-			} else {
-				stmt.setFloat( COLUMN_TOTAL, dto.getTotal() );
-			}
-
-			stmt.setString( COLUMN_OBSERVACIONES, dto.getObservaciones() );
-			stmt.setTimestamp(COLUMN_ULTIMA_FECHA_ACTUALIZACION, dto.getUltimaFechaActualizacion()==null ? null : new java.sql.Timestamp( dto.getUltimaFechaActualizacion().getTime() ) );
-			stmt.setString( COLUMN_ULTIMO_USUARIO_ACTUALIZACION, dto.getUltimoUsuarioActualizacion() );
-
+		
 			System.out.println( "Executing " + SQL_UPDATE + " with DTO: " + dto );
-			for (int i=0; sqlParams!=null && i<sqlParams.length ; i++ ) {
-				stmt.setObject( i+13, sqlParams[i] );
+			stmt = conn.prepareStatement( SQL_UPDATE );
+			int index=1;
+			stmt.setString( index++, dto.getIdPedido() );
+			stmt.setString( index++, dto.getIdUsuario() );
+			stmt.setString( index++, dto.getClaveCliente() );
+			stmt.setTimestamp(index++, dto.getFecha()==null ? null : new java.sql.Timestamp( dto.getFecha().getTime() ) );
+			if (dto.isEstatusNull()) {
+				stmt.setNull( index++, java.sql.Types.INTEGER );
+			} else {
+				stmt.setShort( index++, dto.getEstatus() );
 			}
-			stmt.execute();
-			int rows = stmt.getUpdateCount();
-			System.out.println( rows + " rows affected" );
+		
+			if (dto.isSubtotalNull()) {
+				stmt.setNull( index++, java.sql.Types.FLOAT );
+			} else {
+				stmt.setFloat( index++, dto.getSubtotal() );
+			}
+		
+			if (dto.isIvaNull()) {
+				stmt.setNull( index++, java.sql.Types.FLOAT );
+			} else {
+				stmt.setFloat( index++, dto.getIva() );
+			}
+		
+			if (dto.isTotalNull()) {
+				stmt.setNull( index++, java.sql.Types.FLOAT );
+			} else {
+				stmt.setFloat( index++, dto.getTotal() );
+			}
+		
+			stmt.setString( index++, dto.getObservaciones() );
+			stmt.setTimestamp(index++, dto.getUltimaFechaActualizacion()==null ? null : new java.sql.Timestamp( dto.getUltimaFechaActualizacion().getTime() ) );
+			stmt.setString( index++, dto.getUltimoUsuarioActualizacion() );
+			stmt.setString( 12, pk.getIdPedido() );
+			int rows = stmt.executeUpdate();
+			reset(dto);
+			long t2 = System.currentTimeMillis();
+			System.out.println( rows + " rows affected (" + (t2-t1) + " ms)" );
 		}
 		catch (Exception _e) {
 			_e.printStackTrace();
@@ -261,16 +283,70 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 			if (!isConnSupplied) {
 				ResourceManager.close(conn);
 			}
-
+		
 		}
-
+		
 	}
+
+	/** 
+	 * Deletes a single row in the Pedidos table.
+	 */
+	public void delete(PedidosPk pk) throws PedidosDaoException
+	{
+		long t1 = System.currentTimeMillis();
+		// declare variables
+		final boolean isConnSupplied = (userConn != null);
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			// get the user-specified connection or get a connection from the ResourceManager
+			conn = isConnSupplied ? userConn : ResourceManager.getConnection();
+		
+			System.out.println( "Executing " + SQL_DELETE + " with PK: " + pk );
+			stmt = conn.prepareStatement( SQL_DELETE );
+			stmt.setString( 1, pk.getIdPedido() );
+			int rows = stmt.executeUpdate();
+			long t2 = System.currentTimeMillis();
+			System.out.println( rows + " rows affected (" + (t2-t1) + " ms)" );
+		}
+		catch (Exception _e) {
+			_e.printStackTrace();
+			throw new PedidosDaoException( "Exception: " + _e.getMessage(), _e );
+		}
+		finally {
+			ResourceManager.close(stmt);
+			if (!isConnSupplied) {
+				ResourceManager.close(conn);
+			}
+		
+		}
+		
+	}
+
+	/** 
+	 * Returns the rows from the Pedidos table that matches the specified primary-key value.
+	 */
+	public Pedidos findByPrimaryKey(PedidosPk pk) throws PedidosDaoException
+	{
+		return findByPrimaryKey( pk.getIdPedido() );
+	}
+
+	/** 
+	 * Returns all rows from the Pedidos table that match the criteria 'IdPedido = :idPedido'.
+	 */
+	public Pedidos findByPrimaryKey(String idPedido) throws PedidosDaoException
+	{
+		Pedidos ret[] = findByDynamicSelect( SQL_SELECT + " WHERE IdPedido = ?", new Object[] { idPedido } );
+		return ret.length==0 ? null : ret[0];
+	}
+
 	/** 
 	 * Returns all rows from the Pedidos table that match the criteria ''.
 	 */
 	public Pedidos[] findAll() throws PedidosDaoException
 	{
-		return findByDynamicSelect( SQL_SELECT, null );
+		return findByDynamicSelect( SQL_SELECT + " ORDER BY IdPedido", null );
 	}
 
 	/** 
@@ -453,10 +529,6 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		dto.setIdPedido( rs.getString( COLUMN_ID_PEDIDO ) );
 		dto.setIdUsuario( rs.getString( COLUMN_ID_USUARIO ) );
 		dto.setFolio( rs.getInt( COLUMN_FOLIO ) );
-		if (rs.wasNull()) {
-			dto.setFolioNull( true );
-		}
-		
 		dto.setClaveCliente( rs.getString( COLUMN_CLAVE_CLIENTE ) );
 		dto.setFecha( rs.getTimestamp(COLUMN_FECHA ) );
 		dto.setEstatus( rs.getShort( COLUMN_ESTATUS ) );
@@ -482,7 +554,6 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 		dto.setObservaciones( rs.getString( COLUMN_OBSERVACIONES ) );
 		dto.setUltimaFechaActualizacion( rs.getTimestamp(COLUMN_ULTIMA_FECHA_ACTUALIZACION ) );
 		dto.setUltimoUsuarioActualizacion( rs.getString( COLUMN_ULTIMO_USUARIO_ACTUALIZACION ) );
-		reset(dto);
 	}
 
 	/** 
@@ -490,18 +561,6 @@ calls to this DAO, otherwise a new Connection will be allocated for each operati
 	 */
 	protected void reset(Pedidos dto)
 	{
-		dto.setIdPedidoModified( false );
-		dto.setIdUsuarioModified( false );
-		dto.setFolioModified( false );
-		dto.setClaveClienteModified( false );
-		dto.setFechaModified( false );
-		dto.setEstatusModified( false );
-		dto.setSubtotalModified( false );
-		dto.setIvaModified( false );
-		dto.setTotalModified( false );
-		dto.setObservacionesModified( false );
-		dto.setUltimaFechaActualizacionModified( false );
-		dto.setUltimoUsuarioActualizacionModified( false );
 	}
 
 	/** 

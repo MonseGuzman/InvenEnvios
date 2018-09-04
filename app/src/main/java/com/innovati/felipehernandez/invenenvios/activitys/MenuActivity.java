@@ -24,6 +24,7 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.VwUsuariosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidosPk;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.PedidosPk;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwAbastecimiento;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwAgente;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
@@ -186,7 +187,10 @@ public class MenuActivity extends BaseCoinHiveActivity
                         try
                         {
                             if(pedido.getServidor())
-                                _dao.update(p, "IdPedido = ?", new String[]{pedido.getIdPedido()});
+                            {
+                                PedidosPk clave = new PedidosPk(pedido.getIdPedido());
+                                _dao.update(clave, p);
+                            }
                             else
                                 _dao.insert(p);
                         }

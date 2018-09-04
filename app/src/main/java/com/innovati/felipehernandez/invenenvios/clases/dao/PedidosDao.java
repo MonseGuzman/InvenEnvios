@@ -18,9 +18,28 @@ public interface PedidosDao
 	/** 
 	 * Inserts a new row in the Pedidos table.
 	 */
-	public void insert(Pedidos dto) throws PedidosDaoException;
+	public PedidosPk insert(Pedidos dto) throws PedidosDaoException;
 
-	public void update(Pedidos dto, String sql, Object[] sqlParams) throws PedidosDaoException;
+	/** 
+	 * Updates a single row in the Pedidos table.
+	 */
+	public void update(PedidosPk pk, Pedidos dto) throws PedidosDaoException;
+
+	/** 
+	 * Deletes a single row in the Pedidos table.
+	 */
+	public void delete(PedidosPk pk) throws PedidosDaoException;
+
+	/** 
+	 * Returns the rows from the Pedidos table that matches the specified primary-key value.
+	 */
+	public Pedidos findByPrimaryKey(PedidosPk pk) throws PedidosDaoException;
+
+	/** 
+	 * Returns all rows from the Pedidos table that match the criteria 'IdPedido = :idPedido'.
+	 */
+	public Pedidos findByPrimaryKey(String idPedido) throws PedidosDaoException;
+
 	/** 
 	 * Returns all rows from the Pedidos table that match the criteria ''.
 	 */
