@@ -25,6 +25,7 @@ import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.PedidosPk;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
@@ -304,8 +305,8 @@ public class EntregasActivity extends AppCompatActivity
             try
             {
                 if(metodosInternos.conexionRed()) {
-                    String parametros[] = new String[]{pedidos[0].getIdPedido()};
-                    _dao.update(pedidos[0], "IdPedido = ?", parametros);
+                    PedidosPk clave = new PedidosPk(pedidos[0].getIdPedido());
+                    _dao.update(clave, pedidos[0]);
                 }
                 else{
 

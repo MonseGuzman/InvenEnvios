@@ -26,6 +26,7 @@ import com.innovati.felipehernandez.invenenvios.clases.dao.VwDetallePedidoDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.DetallesPedidosPk;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.PedidosPk;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwAbastecimiento;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwArticulos;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
@@ -649,8 +650,8 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             PedidosDao _dao = getPedidosDao();
             try
             {
-                String parametros[] = new String[]{pedidos[0].getIdPedido()};
-                _dao.update(pedidos[0], "IdPedido = ?", parametros);
+                PedidosPk clave = new PedidosPk(pedidos[0].getIdPedido());
+                _dao.update(clave, pedidos[0]);
             }
             catch (Exception e)
             {
