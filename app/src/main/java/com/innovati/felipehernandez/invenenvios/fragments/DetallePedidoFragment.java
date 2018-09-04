@@ -63,7 +63,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     private List<ArticulosPedido> articulosPedidos = new ArrayList<ArticulosPedido>();
     VwDetallePedido result[];
     String clavePedido = "";
-    private static float exitArticul = 0, cantidaNum;
+    private static float cantidaNum; //exitArticul = 0,
     private static int positionList;
     private boolean bandera = true, si = false;
     private List<String> listDet;
@@ -218,8 +218,8 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             QueryBuilder<VwArticulos_I> qbArticulos = articulos_i.queryBuilder();
             qbArticulos.where(VwArticulos_IDao.Properties.Clave.eq(articulosPedido.getIdArticulo()));
             List<VwArticulos_I> list = qbArticulos.list();
-            Float tem = list.get(0).getExistenciaTotal();
-            articulosPedido.setExits(tem);
+            //Float tem = list.get(0).getExistenciaTotal();
+            //articulosPedido.setExits(tem);
             articulosPedidos.set(x,articulosPedido);
             x++;
         }
@@ -264,7 +264,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             articuloEdit.add(articulosPedidos.get(position));
         }
         updateAdapterArt(articuloEdit);
-        exitArticul = articuloEdit.get(0).getExits();
+        //exitArticul = articuloEdit.get(0).getExits();
         editCantida.setText(String.valueOf(articulosPedidos.get(position).getCantidad()));
         datosEditArticle.setVisibility(View.VISIBLE);
     }
@@ -289,10 +289,11 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                 }
                 break;
             case R.id.MenosButton_AEdit:
-                float exit = exitArticul;
+                /*float exit = exitArticul;
                 if(cantidaNum < exit){
                     cantidaNum +=1;
-                }
+                }*/
+                cantidaNum +=1;
                 break;
             case R.id.editArticuloListCancelar:
                 updateArticleList(false);
@@ -339,7 +340,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                     articulo.setSubTotal(pedidos.getSubtotal());
                     articulo.setStatus(true);
                     articulo.setEstado(pedidos.getSurtido());
-                    articulo.setExits(0);
+                    //articulo.setExits(0);
                     articulosPedidos.add(articulo);
                     listDet.add(pedidos.getIdDetallePedido());
                     idUsuario = pedidos.getIdDetallePedido();
@@ -352,7 +353,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                 {
                     vwArticulos = getVwArticulosDao().findWhereClaveEquals(articulosPedido.getIdArticulo());
                     Double tem = vwArticulos[0].getExistenciaTotal();
-                    articulosPedido.setExits(Float.valueOf(tem.toString()));
+                    //articulosPedido.setExits(Float.valueOf(tem.toString()));
                     articulosPedidos.set(x,articulosPedido);
                     x++;
                 }
@@ -392,8 +393,8 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             articulosPedido.setEstado(articulosPedidos.get(positionList).getEstado());
             float ivaAux = (float) (articulosPedido.getTotal()*0.16);
             articulosPedido.setIva(ivaAux);
-            ivaAux = articulosPedidos.get(positionList).getExits();
-            articulosPedido.setExits(ivaAux);
+            //ivaAux = articulosPedidos.get(positionList).getExits();
+            //articulosPedido.setExits(ivaAux);
             articulosPedido.setTotal(articulosPedido.getSubTotal()+articulosPedido.getIva());
             addArticulo(articulosPedido);
         }
@@ -542,9 +543,9 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         }catch (Exception e){
             cantidaNum = 0;
         }
-        if (cantidaNum > exitArticul){
+        /*if (cantidaNum > exitArticul){
             cantidaNum = exitArticul;
-        }
+        }*/
         editCantida.setText(String.valueOf(cantidaNum));
 
     }

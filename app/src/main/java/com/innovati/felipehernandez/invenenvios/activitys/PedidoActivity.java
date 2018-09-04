@@ -57,8 +57,8 @@ public class PedidoActivity extends AppCompatActivity
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private static TextView fechaTextView, tvTotal;
-    public static TextView ClienteEntTextView, tvAgente, tvFolio;
-
+    public static TextView ClienteEntTextView, tvAgente, tvArticulosNum;
+    private static int Folio;
     public static List<ArticulosPedido> articulosPedidoList;
     private SharedPreferences preferences;
     public static String clave = "";
@@ -135,7 +135,7 @@ public class PedidoActivity extends AppCompatActivity
         tvTotal = findViewById(R.id.tvTotalEnt);
         ClienteEntTextView = (TextView)findViewById(R.id.ClienteEntTextView);
         tvAgente = (TextView)findViewById(R.id.tvAgente);
-        tvFolio = (TextView)findViewById(R.id.tvFolioEnt);
+        tvArticulosNum = (TextView)findViewById(R.id.tvArticulosNum);
     }
 
     @Override
@@ -227,26 +227,27 @@ public class PedidoActivity extends AppCompatActivity
         return DetallesPedidosDaoFactory.create();
     }
     static public void calTotal(){
-        float total = 0;
+        float total = 0, x = 0;
         if (articulosPedidoList != null){
             for(ArticulosPedido ar: articulosPedidoList){
                 if (ar.isStatus()){
                     total += ar.getTotal();
-
+                    x++;
                 }
             }
         }
         tvTotal.setText("Total: "+String.valueOf(total));
+        tvArticulosNum.setText("Articulos: ".concat(String.valueOf(x)));
     }
 
     public static void addPedidoDb(){
         //"%05d%n", 5
         String idPedido = UUID.randomUUID().toString();
         Date date = new Date();
-        int auxFolio = Integer.valueOf(tvFolio.getText().toString());
+        //int auxFolio = Integer.valueOf(tvFolio.getText().toString());
 
         if(!metodosInternos.conexionRed()){
-            insertarInterna(idPedido,idUsuario,clave,date,Short.valueOf("1"),getSub(),getIva(),getTotal(),"No Hay", auxFolio);
+            insertarInterna(idPedido,idUsuario,clave,date,Short.valueOf("1"),getSub(),getIva(),getTotal(),"No Hay",Folio);
 
             HashMap<String, Float> cantidades = new HashMap();
             List<String> unidades = new ArrayList<>();
@@ -284,7 +285,7 @@ public class PedidoActivity extends AppCompatActivity
                 abastecimientos_iDao.insert(abastecimiento);
             }
         }else{
-            insertar(idPedido,idUsuario,clave,date,Short.valueOf("1"),getSub(),getIva(),getTotal(),"No Hay", auxFolio);
+            insertar(idPedido,idUsuario,clave,date,Short.valueOf("1"),getSub(),getIva(),getTotal(),"No Hay", Folio);
             for (ArticulosPedido ar:articulosPedidoList){
                 if (ar.isStatus()){
                     detPedido(idUsuario,idPedido,ar);
@@ -429,8 +430,9 @@ public class PedidoActivity extends AppCompatActivity
         {
             VwPedidos_IDao pedidos_iDao = daoSession.getVwPedidos_IDao();
             QueryBuilder<VwPedidos_I> qb = pedidos_iDao.queryBuilder();
-            long folio = qb.count()+1;
-            tvFolio.setText(String.valueOf(folio));
+            Long folio = qb.count()+1;
+            Folio = Integer.valueOf(folio.toString());
+            //tvFolio.setText(String.valueOf(folio));
         }
     }
 
@@ -474,7 +476,7 @@ public class PedidoActivity extends AppCompatActivity
             else
                 folioAux = 1;
 
-            tvFolio.setText(String.valueOf(folioAux));
+            //tvFolio.setText(String.valueOf(folioAux));
         }
 
         @Override

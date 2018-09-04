@@ -9,7 +9,7 @@ public class ArticulosPedido {
     float subTotal;
     float iva;
     float total;
-    float exits;
+    //float exits;
     boolean status;
     short estado;
     /*
@@ -22,19 +22,6 @@ public class ArticulosPedido {
     public ArticulosPedido() {
     }
 
-    public ArticulosPedido(String idArticulo, String nombre, String presentacion, float cantidad, float precio, float subTotal, float iva, float total, float exits, boolean status, short estado) {
-        this.idArticulo = idArticulo;
-        this.nombre = nombre;
-        this.presentacion = presentacion;
-        this.cantidad = cantidad;
-        this.precio = precio;
-        this.subTotal = subTotal;
-        this.iva = iva;
-        this.total = total;
-        this.exits = exits;
-        this.status = status;
-        this.estado = estado;
-    }
 
     public String getIdArticulo() {
         return idArticulo;
@@ -100,13 +87,13 @@ public class ArticulosPedido {
         this.total = total;
     }
 
-    public float getExits() {
+    /*public float getExits() {
         return exits;
     }
 
     public void setExits(float exits) {
         this.exits = exits;
-    }
+    }*/
 
     public boolean isStatus() {
         return status;

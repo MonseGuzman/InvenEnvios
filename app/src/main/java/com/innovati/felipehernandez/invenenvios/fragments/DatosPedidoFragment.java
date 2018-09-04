@@ -31,7 +31,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
     private Button btnReg, btnMas, btnMeno, btnAceptar, btnCancelar;
     private static EditText editCantida;
     private static ConstraintLayout datosEditArticle;
-    private static float exitArticul = 0, cantidaNum;
+    private static float cantidaNum;/*exitArticul = 0,*/
     private static int positionList;
     static List<ArticulosPedido> articuloEdit = new ArrayList<ArticulosPedido>();
 
@@ -129,10 +129,11 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
                     }
                     break;
                 case R.id.MenosButton_AEdit:
-                    float exit = exitArticul;
-                    if(cantidaNum < exit){
+                    //float exit = exitArticul;
+                    /*if(cantidaNum < exit){
                         cantidaNum +=1;
-                    }
+                    }*/
+                    cantidaNum +=1;
                     break;
                 case R.id.editArticuloListCancelar:
                     updateArticleList(false);
@@ -175,7 +176,7 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
             articuloEdit.add(PedidoActivity.articulosPedidoList.get(position));
         }
         updateAdapterArt(articuloEdit);
-        exitArticul = articuloEdit.get(0).getExits();
+        //exitArticul = articuloEdit.get(0).getExits();
        editCantida.setText(String.valueOf(PedidoActivity.articulosPedidoList.get(position).getCantidad()));
         datosEditArticle.setVisibility(View.VISIBLE);
     }
@@ -205,8 +206,8 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
             articulosPedido.setStatus(true);
             float ivaAux = (float) (articulosPedido.getTotal()*0.16);
             articulosPedido.setIva(ivaAux);
-            ivaAux = PedidoActivity.articulosPedidoList.get(positionList).getExits();
-            articulosPedido.setExits(ivaAux);
+            //ivaAux = PedidoActivity.articulosPedidoList.get(positionList).getExits();
+            //articulosPedido.setExits(ivaAux);
             articulosPedido.setTotal(articulosPedido.getSubTotal()+articulosPedido.getIva());
             PedidoActivity.addArticulo(articulosPedido);
         }
@@ -225,9 +226,9 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         }catch (Exception e){
             cantidaNum = 0;
         }
-        if (cantidaNum > exitArticul){
+        /*if (cantidaNum > exitArticul){
             cantidaNum = exitArticul;
-        }
+        }*/
         editCantida.setText(String.valueOf(cantidaNum));
 
     }

@@ -61,11 +61,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/tvFolioEnt"
+                android:id="@+id/tvArticulosNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
-                android:text="Folio: 00000"
+                android:text="Articulos: 00000"
                 android:textSize="17sp"
                 android:textColor="@color/primaryTextColor"/>
 
