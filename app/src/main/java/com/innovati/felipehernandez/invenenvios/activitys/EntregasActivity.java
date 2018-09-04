@@ -25,12 +25,15 @@ import com.innovati.felipehernandez.invenenvios.app.MyApp;
 import com.innovati.felipehernandez.invenenvios.clases.dao.PedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dao.VwPedidosDao;
 import com.innovati.felipehernandez.invenenvios.clases.dto.Pedidos;
+import com.innovati.felipehernandez.invenenvios.clases.dto.VwDetallePedido;
 import com.innovati.felipehernandez.invenenvios.clases.dto.VwPedidos;
 import com.innovati.felipehernandez.invenenvios.clases.factory.PedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.clases.factory.VwPedidosDaoFactory;
 import com.innovati.felipehernandez.invenenvios.database.DaoSession;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.Pedidos_IDao;
+import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_I;
+import com.innovati.felipehernandez.invenenvios.database.VwDetallePedido_IDao;
 import com.innovati.felipehernandez.invenenvios.database.VwPedidos_I;
 import com.innovati.felipehernandez.invenenvios.database.VwPedidos_IDao;
 import com.innovati.felipehernandez.invenenvios.fragments.DetallePedidoFragment;
@@ -43,7 +46,8 @@ import java.util.List;
 public class EntregasActivity extends AppCompatActivity
 {
     private VwPedidos result[];
-    private MetodosInternos metodosInternos = new MetodosInternos(this);
+    private VwDetallePedido detPedidos[];
+    private static MetodosInternos metodosInternos;
     private DaoSession daoSession;
 
     private RecyclerView recyclerView;
@@ -55,6 +59,8 @@ public class EntregasActivity extends AppCompatActivity
 
         this.setTitle(R.string.tituloEntregas);
         inicializacion();
+
+        metodosInternos = new MetodosInternos(this);
 
         daoSession = ((MyApp) getApplication()).getDaoSession();
 
@@ -70,37 +76,59 @@ public class EntregasActivity extends AppCompatActivity
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int  position = viewHolder.getAdapterPosition();
                 if (direction == ItemTouchHelper.RIGHT){
-                    SharedPreferences preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+                    if(metodosInternos.conexionRed()) {
+                        SharedPreferences preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
 
-                    Pedidos pedidos = new Pedidos();
+                        Pedidos pedidos = new Pedidos();
 
-                    if(result[position].getEstatus() == 3){
-                        result[position].setEstatus((short) 4);
-                    }else{
-                        result[position].setEstatus((short) 3);
+                        if (result[position].getEstatus() == 3) {
+                            result[position].setEstatus((short) 4);
+                        } else {
+                            result[position].setEstatus((short) 3);
+                        }
+                        pedidos.setIdPedido(result[position].getIdPedido());
+                        pedidos.setIdUsuario(result[position].getIdUsuario());
+                        pedidos.setFolio(result[position].getFolio());
+                        pedidos.setClaveCliente(result[position].getClaveCliente());
+                        pedidos.setFecha(result[position].getFecha());
+                        pedidos.setEstatus(result[position].getEstatus());
+                        pedidos.setSubtotal(result[position].getSubtotal());
+                        pedidos.setIva(result[position].getIva());
+                        pedidos.setTotal(result[position].getTotal());
+                        pedidos.setUltimaFechaActualizacion(new Date());
+                        pedidos.setUltimoUsuarioActualizacion(preferences.getString("idUsuario", ""));
+                        ActualizarPedido a = new ActualizarPedido();
+                        a.execute(pedidos);
                     }
-                    pedidos.setIdPedido(result[position].getIdPedido());
-                    pedidos.setIdUsuario(result[position].getIdUsuario());
-                    pedidos.setFolio(result[position].getFolio());
-                    pedidos.setClaveCliente(result[position].getClaveCliente());
-                    pedidos.setFecha(result[position].getFecha());
-                    pedidos.setEstatus(result[position].getEstatus());
-                    pedidos.setSubtotal(result[position].getSubtotal());
-                    pedidos.setIva(result[position].getIva());
-                    pedidos.setTotal(result[position].getTotal());
-                    pedidos.setUltimaFechaActualizacion( new Date());
-                    pedidos.setUltimoUsuarioActualizacion(preferences.getString("idUsuario", ""));
-                    ActualizarPedido a = new ActualizarPedido();
-                    a.execute(pedidos);
+                    else{
+                        SharedPreferences preferences = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+                        Pedidos pedidos = new Pedidos();
 
+                        if (result[position].getEstatus() == 3) {
+                            result[position].setEstatus((short) 4);
+                        } else {
+                            result[position].setEstatus((short) 3);
+                        }
+                        pedidos.setIdPedido(result[position].getIdPedido());
+                        pedidos.setIdUsuario(result[position].getIdUsuario());
+                        pedidos.setFolio(result[position].getFolio());
+                        pedidos.setClaveCliente(result[position].getClaveCliente());
+                        pedidos.setFecha(result[position].getFecha());
+                        pedidos.setEstatus(result[position].getEstatus());
+                        pedidos.setSubtotal(result[position].getSubtotal());
+                        pedidos.setIva(result[position].getIva());
+                        pedidos.setTotal(result[position].getTotal());
+                        pedidos.setUltimaFechaActualizacion(new Date());
+                        pedidos.setUltimoUsuarioActualizacion(preferences.getString("idUsuario", ""));
+                        ActualizarPedido a = new ActualizarPedido();
+                        a.execute(pedidos);
+                    }
                 }
                 updateAdapter();
             }
-
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-
     }
 
     private void inicializacion()
@@ -248,7 +276,6 @@ public class EntregasActivity extends AppCompatActivity
             catch (Exception e){
 
             }
-
             return result;
         }
 
@@ -276,8 +303,13 @@ public class EntregasActivity extends AppCompatActivity
             PedidosDao _dao = getPedidosDao();
             try
             {
-                String parametros[] = new String[]{pedidos[0].getIdPedido()};
-                _dao.update(pedidos[0], "IdPedido = ?", parametros);
+                if(metodosInternos.conexionRed()) {
+                    String parametros[] = new String[]{pedidos[0].getIdPedido()};
+                    _dao.update(pedidos[0], "IdPedido = ?", parametros);
+                }
+                else{
+
+                }
             }
             catch (Exception e)
             {

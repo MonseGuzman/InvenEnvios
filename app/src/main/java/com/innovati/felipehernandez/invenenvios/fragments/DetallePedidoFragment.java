@@ -495,7 +495,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                     List<String> unidades = new ArrayList<>();
                     List<String> nombres = new ArrayList<>();
                     for (ArticulosPedido ar: articulosPedidos){
-                        uptadeExitsDBI(ids.get(x), listDet.get(x).toString(),ar.getNombre(), clavePedido,ar.getIdArticulo(), ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
+                        uptadeExitsDBI(ids.get(x), listDet.get(x).toString(), clavePedido,ar.getIdArticulo(), ar.getNombre(), ar.getCantidad(),ar.getPrecio(),ar.getSubTotal(),ar.getIva(),ar.getTotal(), idUsuario, ar.getEstado());
                         if(!nombres.contains(ar.getNombre()))
                         {
                             nombres.add(ar.getNombre());
@@ -547,9 +547,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             cantidaNum = exitArticul;
         }*/
         editCantida.setText(String.valueOf(cantidaNum));
-
     }
-
 
     public void uptadeExitsDBI(long id, String idDet, String idPedido, String clave , String nombre, float cantidad, float precio, float subTotal, float iva, float total, String idUsuario, short estado)
     {
@@ -569,8 +567,8 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         detalle.setUsuarioActualizacion(idPedido);
         detalle.setFechaActualizacion(Calendar.getInstance().getTime());
         detallePedidoIDao.update(detalle);
-
     }
+
     public void pedidoExitsDBI(){
         VwPedidos_IDao pedidos_iDao = daoSession.getVwPedidos_IDao();
         QueryBuilder<VwPedidos_I> qb = pedidos_iDao.queryBuilder();
