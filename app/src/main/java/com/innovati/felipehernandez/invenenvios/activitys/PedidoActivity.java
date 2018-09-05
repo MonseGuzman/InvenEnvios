@@ -475,11 +475,11 @@ public class PedidoActivity extends AppCompatActivity
             super.onPostExecute(pedidos);
             progressDialog.cancel();
 
-            int folioAux;
+            /*int folioAux;
             if(pedidos != null)
                  folioAux = pedidos.length+1;
             else
-                folioAux = 1;
+                folioAux = 1;*/
 
             //tvFolio.setText(String.valueOf(folioAux));
         }

@@ -254,6 +254,8 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
         args = new Bundle();
         args.putString("pedido", result[position].getIdPedido());
         args.putBoolean("bandera",true);
+        args.putString("folio", String.valueOf(result[position].getFolio()));
+        args.putString("fecha", String.valueOf(result[position].getFecha()));
         detallePedidoFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction().replace(R.id.abastecimientoConsulta, detallePedidoFragment).addToBackStack(null).commit();
     }
