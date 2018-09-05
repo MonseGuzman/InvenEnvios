@@ -108,7 +108,8 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
             if(!PedidoActivity.articulosPedidoList.isEmpty())
             {
                 String mensaje;
-                mensaje = String.valueOf(R.string.guardado) + " con Folio *";
+                //falta consulta del folio y agregarlo a este string
+                mensaje = "¡Pedido guardado!" + " con Folio *";
 
                 PedidoActivity.addPedidoDb();
                 datosEditArticle.setVisibility(View.INVISIBLE);
@@ -117,12 +118,12 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
                     @Override
                     public void onClick(View v)
                     {
-                        getActivity().finish();
+                        //getActivity().finish();
+                        PedidoActivity.limpiar();
                     }
                 }).show();
-            }else{
+            }else
                 Snackbar.make(v, "Faltan añadir articulos", Snackbar.LENGTH_SHORT).show();
-            }
             //this.getActivity().finish();
         }else{
 
