@@ -105,19 +105,25 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
         validacionCatidad();
         if(v.getId() == R.id.btnRegistrarPedido)
         {
-            if(!PedidoActivity.articulosPedidoList.isEmpty()){
+            if(!PedidoActivity.articulosPedidoList.isEmpty())
+            {
+                String mensaje;
+                //falta consulta del folio y agregarlo a este string
+                mensaje = "¡Pedido guardado!" + " con Folio *";
+
                 PedidoActivity.addPedidoDb();
                 datosEditArticle.setVisibility(View.INVISIBLE);
-                Snackbar.make(v, R.string.guardado, Snackbar.LENGTH_INDEFINITE).setAction("Ok", new View.OnClickListener() {
+
+                Snackbar.make(v, mensaje, Snackbar.LENGTH_INDEFINITE).setAction("Ok", new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
                     {
-                        getActivity().finish();
+                        //getActivity().finish();
+                        PedidoActivity.limpiar();
                     }
                 }).show();
-            }else{
+            }else
                 Snackbar.make(v, "Faltan añadir articulos", Snackbar.LENGTH_SHORT).show();
-            }
             //this.getActivity().finish();
         }else{
 

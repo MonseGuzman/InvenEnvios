@@ -1,5 +1,7 @@
 package com.innovati.felipehernandez.invenenvios.activitys;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +10,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -133,6 +136,7 @@ public class ArticuloActivity extends AppCompatActivity
                     VwArticulosDao _dao = getVwArticulosDao();
                     ConsultaArticulos c = new ConsultaArticulos(nombre);
                     c.execute(_dao);
+                    hideKeyboardFrom(this, buscarEditText);
                 }
                 catch(Exception e)
                 {
@@ -148,7 +152,7 @@ public class ArticuloActivity extends AppCompatActivity
                     VwArticulosDao _dao = getVwArticulosDao();
                     ConsultaArticulos c = new ConsultaArticulos(nombre);
                     c.execute(_dao);
-
+                    hideKeyboardFrom(this, buscarEditText);
                 }
                 catch(Exception e)
                 {
@@ -295,7 +299,13 @@ public class ArticuloActivity extends AppCompatActivity
          }
      }
 
-     public static void blockeo(){
+    public static void blockeo(){
          datitosListView.setVisibility(View.VISIBLE);
      }
+
+    //Este método sirve para bajar el teclado :v
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 }
