@@ -403,6 +403,7 @@ public class MenuActivity extends BaseCoinHiveActivity
                     detallePedido_i.setTotal(detallePedido.getTotal());
                     detallePedido_i.setSurtido(detallePedido.getSurtido());
                     detallePedido_i.setServidor(true);
+                    detallePedido_i.setUnidadPrimaria(detallePedido.getUnidadPrimaria());
                     detallePedido_i.setFechaActualizacion(detallePedido.getUltimaFechaActualizacion());
                     detallePedido_i.setUsuarioActualizacion(detallePedido.getUltimoUsuarioActualizacion());
 
