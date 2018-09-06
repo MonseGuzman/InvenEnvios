@@ -197,7 +197,7 @@ public class PedidoActivity extends AppCompatActivity
         alert.show();
     }
 
-    private static void limpiar() {
+    public static void limpiar() {
         //fecha
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         Date date = new Date();
