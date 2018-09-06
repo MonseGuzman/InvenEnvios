@@ -21,13 +21,15 @@ public class VwDetallePedido_I
     private float total;
     private boolean servidor;
     private short surtido;
+    private String unidadPrimaria;
     private Date fechaActualizacion;
     private String usuarioActualizacion;
-    @Generated(hash = 1964118610)
+    @Generated(hash = 2028338988)
     public VwDetallePedido_I(Long Id, String idDetallePedido, String idPedido,
             String claveArticulo, String nombre, float cantidad, float precio,
             float subtotal, float iva, float total, boolean servidor, short surtido,
-            Date fechaActualizacion, String usuarioActualizacion) {
+            String unidadPrimaria, Date fechaActualizacion,
+            String usuarioActualizacion) {
         this.Id = Id;
         this.idDetallePedido = idDetallePedido;
         this.idPedido = idPedido;
@@ -40,6 +42,7 @@ public class VwDetallePedido_I
         this.total = total;
         this.servidor = servidor;
         this.surtido = surtido;
+        this.unidadPrimaria = unidadPrimaria;
         this.fechaActualizacion = fechaActualizacion;
         this.usuarioActualizacion = usuarioActualizacion;
     }
@@ -118,6 +121,12 @@ public class VwDetallePedido_I
     public void setSurtido(short surtido) {
         this.surtido = surtido;
     }
+    public String getUnidadPrimaria() {
+        return this.unidadPrimaria;
+    }
+    public void setUnidadPrimaria(String unidadPrimaria) {
+        this.unidadPrimaria = unidadPrimaria;
+    }
     public Date getFechaActualizacion() {
         return this.fechaActualizacion;
     }
@@ -130,5 +139,4 @@ public class VwDetallePedido_I
     public void setUsuarioActualizacion(String usuarioActualizacion) {
         this.usuarioActualizacion = usuarioActualizacion;
     }
-    
 }
