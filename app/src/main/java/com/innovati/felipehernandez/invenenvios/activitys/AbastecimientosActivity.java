@@ -373,4 +373,10 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
             progressDialog.cancel();
         }
     }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        cargarDatos(tipo);
+    }
 }

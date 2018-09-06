@@ -260,13 +260,16 @@ public class PedidoActivity extends AppCompatActivity
                     if(!nombres.contains(ar.getNombre()))
                     {
                         nombres.add(ar.getNombre());
-                        unidades.add(ar.getPresentacion());
                         cantidades.put(ar.getNombre(), ar.getCantidad());
                     }
                     else
                     {
                         Float n =  cantidades.get(ar.getNombre()) + ar.getCantidad();
                         cantidades.put(ar.getNombre(),n);
+                    }
+                    if(!unidades.contains(ar.getPresentacion()))
+                    {
+                        unidades.add(ar.getPresentacion());
                     }
 
                 }
