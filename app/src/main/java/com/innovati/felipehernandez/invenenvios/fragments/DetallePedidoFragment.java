@@ -521,7 +521,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                         }
                         if(!unidades.contains(ar.getPresentacion()))
                         {
-                            unidades.contains(ar.getPresentacion());
+                            unidades.add(ar.getPresentacion());
                         }
                         x++;
                     }
