@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,10 +53,14 @@ import com.innovati.felipehernandez.invenenvios.pojos.ArticulosPedido;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class DetallePedidoFragment extends Fragment implements View.OnClickListener
 {
@@ -105,8 +110,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
         Bundle args = getArguments();
         clavePedido = args.getString("pedido", "");
         bandera = args.getBoolean("bandera",true);
-        tvFecha.setText(args.getString("fecha", "Hoy"));
-        tvFolio.setText(args.getString("folio", "1"));
+
         loadData();
         si = false;
         if (bandera){
@@ -381,6 +385,11 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             super.onPostExecute(vwDetallePedido);
 
             progressDialog.cancel();
+
+            Bundle args = getArguments();
+
+            tvFecha.setText("Fecha: " + args.getString("fecha", "Hoy"));
+            tvFolio.setText("Folio: " + args.getString("folio", "1"));
             updateAdapter();
         }
 

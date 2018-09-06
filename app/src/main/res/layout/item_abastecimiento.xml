@@ -9,7 +9,7 @@
         android:id="@+id/DescripcionTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/secondaryColor"
+        android:background="@color/colorPrimary"
         android:padding="10dp"
         android:textSize="15dp"
         android:text="número de articulos"

@@ -121,7 +121,9 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
                         //getActivity().finish();
                         PedidoActivity.limpiar();
                     }
-                }).show();
+                })
+                        .setActionTextColor(getResources().getColor(R.color.secondaryColor))
+                        .show();
             }else
                 Snackbar.make(v, "Faltan añadir articulos", Snackbar.LENGTH_SHORT).show();
             //this.getActivity().finish();
