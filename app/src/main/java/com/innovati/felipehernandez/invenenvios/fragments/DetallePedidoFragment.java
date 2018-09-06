@@ -201,6 +201,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             objetoDetalle.setSubtotal(detallePedido.get(x).getSubtotal());
             objetoDetalle.setTotal(detallePedido.get(x).getTotal());
             objetoDetalle.setIva(detallePedido.get(x).getIva());
+            objetoDetalle.setUnidadPrimaria(detallePedido.get(x).getUnidadPrimaria());
             objetoDetalle.setUltimoUsuarioActualizacion(detallePedido.get(x).getUsuarioActualizacion());
             objetoDetalle.setUltimaFechaActualizacion(detallePedido.get(x).getFechaActualizacion());
 
