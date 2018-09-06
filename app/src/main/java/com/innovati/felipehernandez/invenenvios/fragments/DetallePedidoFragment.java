@@ -512,13 +512,16 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                         if(!nombres.contains(ar.getNombre()))
                         {
                             nombres.add(ar.getNombre());
-                            unidades.add(ar.getPresentacion());
                             cantidades.put(ar.getNombre(), ar.getCantidad());
                         }
                         else
                         {
                             Float n =  cantidades.get(ar.getNombre()) + ar.getCantidad();
                             cantidades.put(ar.getNombre(),n);
+                        }
+                        if(!unidades.contains(ar.getPresentacion()))
+                        {
+                            unidades.add(ar.getPresentacion());
                         }
                         x++;
                     }
@@ -534,7 +537,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                         abastecimiento.setId(list.get(0).getId());
                         abastecimiento.setNombre(nombres.get(y));
                         abastecimiento.setUnidadPrimaria(unidades.get(y));
-                        abastecimiento.setEstatus((short) 1);
+                        abastecimiento.setEstatus((short) 2);
                         Float n = cantidades.get(nombres.get(y));
                         abastecimiento.setCantidad(n);
 
