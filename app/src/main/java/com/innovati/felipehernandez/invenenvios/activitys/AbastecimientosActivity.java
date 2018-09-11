@@ -56,7 +56,6 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
     ExpandableListAdapter expandableListAdapter;
     List<String> expandableListTitle;
     HashMap<String, List<Float>> expandableListDetail;
-    DelayedProgressDialog progressDialog = new DelayedProgressDialog();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,8 +193,6 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                 onBackPressed();
                 return true;
             case R.id.menu_cambia:
-                progressDialog.setCancelable(false);
-                progressDialog.show(getSupportFragmentManager(), "tag");
 
                 if(AbastecimientoExpandableListView.getVisibility() == View.VISIBLE)
                 {
@@ -211,7 +208,6 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
                 }
 
                 cargarDatos(tipo);
-                progressDialog.cancel();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -262,6 +258,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 
     private class ConsultaPedidos extends AsyncTask<VwPedidosDao,Void, VwPedidos[]>
     {
+        DelayedProgressDialog progressDialog = new DelayedProgressDialog();
 
         @Override
         protected void onPreExecute()
@@ -309,6 +306,8 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 
     private class LlenarAdaptador extends AsyncTask<VwAbastecimientoDao, Void, List<String>>
     {
+        DelayedProgressDialog progressDialog = new DelayedProgressDialog();
+
         @Override
         protected void onPreExecute()
         {
