@@ -442,6 +442,7 @@ public class MenuActivity extends BaseCoinHiveActivity
                     articulo_i.setTiempoSurtido(String.valueOf(articulo.getTiempoSurtido()));
                     articulo_i.setExistenciaTotal((float) articulo.getExistenciaTotal());
                     articulo_i.setCubicaje(String.valueOf(articulo.getCubicaje()));
+                    articulo_i.setUnidadPrimaria(articulo.getUnidadPrimaria());
 
                     VwArticulos_IDao metodo = daoSession.getVwArticulos_IDao();
                     metodo.insertOrReplace(articulo_i);
@@ -456,6 +457,7 @@ public class MenuActivity extends BaseCoinHiveActivity
                     abastecimientos_i.setNombre(abastecimiento.getNombre());
                     abastecimientos_i.setCantidad((float)abastecimiento.getTotal());
                     abastecimientos_i.setUnidadPrimaria(abastecimiento.getUnidadPrimaria());
+                    abastecimientos_i.setEstatus((short)1);
 
                     VwAbastecimientos_IDao metodo = daoSession.getVwAbastecimientos_IDao();
                     metodo.insertOrReplace(abastecimientos_i);

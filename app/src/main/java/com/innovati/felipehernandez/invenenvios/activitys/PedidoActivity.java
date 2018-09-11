@@ -288,6 +288,13 @@ public class PedidoActivity extends AppCompatActivity
             for(int y=0; y<nombres.size(); y++)
             {
                 VwAbastecimientos_I abastecimiento = new VwAbastecimientos_I();
+                VwAbastecimientos_IDao vwAbastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
+                QueryBuilder<VwAbastecimientos_I> qb = vwAbastecimientos_iDao.queryBuilder();
+                qb.where(VwAbastecimientos_IDao.Properties.Estatus.eq(1), VwAbastecimientos_IDao.Properties.Nombre.eq(nombres.get(y)));
+                List<VwAbastecimientos_I> list = qb.list();
+
+                if(!list.isEmpty())
+                    abastecimiento.setId(list.get(0).getId());
 
                 abastecimiento.setNombre(nombres.get(y));
                 abastecimiento.setUnidadPrimaria(unidades.get(y));
@@ -296,7 +303,7 @@ public class PedidoActivity extends AppCompatActivity
                 abastecimiento.setCantidad(n);
 
                 VwAbastecimientos_IDao abastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
-                abastecimientos_iDao.insert(abastecimiento);
+                abastecimientos_iDao.insertOrReplace(abastecimiento);
             }
         }else{
             insertar(idPedido,idUsuario,clave,date,Short.valueOf("1"),getSub(),getIva(),getTotal(),"No Hay", Folio);
