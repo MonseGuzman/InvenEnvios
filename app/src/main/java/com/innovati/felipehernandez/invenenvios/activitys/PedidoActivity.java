@@ -394,6 +394,7 @@ public class PedidoActivity extends AppCompatActivity
         detalle.setSubtotal(a.getSubTotal());
         detalle.setIva(a.getIva());
         detalle.setTotal(a.getTotal());
+        detalle.setUnidadPrimaria(a.getPresentacion());
         detalle.setServidor(false);
         detalle.setSurtido((short)1);
         detalle.setNombre(a.getNombre());

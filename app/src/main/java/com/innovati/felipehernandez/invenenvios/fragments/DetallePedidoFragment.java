@@ -547,9 +547,12 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                         abastecimiento.setId(list.get(0).getId());
                         abastecimiento.setNombre(nombres.get(y));
                         abastecimiento.setUnidadPrimaria(unidades.get(y));
-                        abastecimiento.setEstatus((short) 1);
                         Float n = cantidades.get(nombres.get(y));
                         abastecimiento.setCantidad(n);
+
+                        if(n == null)
+                            abastecimiento.setEstatus((short) 2);
+
 
                         VwAbastecimientos_IDao abastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
                         abastecimientos_iDao.update(abastecimiento);

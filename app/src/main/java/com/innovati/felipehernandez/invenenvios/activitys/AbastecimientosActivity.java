@@ -143,18 +143,20 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
             case 2:
                 VwAbastecimientos_IDao vwAbastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
                 VwDetallePedido_IDao vwDetallePedido_iDao = daoSession.getVwDetallePedido_IDao();
-                List<VwAbastecimientos_I> abastecimientos_is = vwAbastecimientos_iDao.loadAll();
+                QueryBuilder<VwAbastecimientos_I> qb = vwAbastecimientos_iDao.queryBuilder();
+                qb.where(VwAbastecimientos_IDao.Properties.Estatus.eq(1));
+                List<VwAbastecimientos_I> abastecimientos_is = qb.list();
 
                 List<String> list = new ArrayList<>();
                 List<Object> objectList = new ArrayList<>();
                 for(VwAbastecimientos_I abastecimiento: abastecimientos_is)
                 {
                     String nombre = abastecimiento.getNombre() + " " + abastecimiento.getCantidad() + abastecimiento.getUnidadPrimaria();
-                    QueryBuilder<VwDetallePedido_I> qb = vwDetallePedido_iDao.queryBuilder();
+                    QueryBuilder<VwDetallePedido_I> qbP = vwDetallePedido_iDao.queryBuilder();
 
-                    qb.where(VwDetallePedido_IDao.Properties.Nombre.eq(abastecimiento.getNombre()), VwDetallePedido_IDao.Properties.Surtido.eq(1));
+                    qbP.where(VwDetallePedido_IDao.Properties.Nombre.eq(abastecimiento.getNombre()), VwDetallePedido_IDao.Properties.Surtido.eq(1));
 
-                    List<VwDetallePedido_I> detalles = qb.list();
+                    List<VwDetallePedido_I> detalles = qbP.list();
 
                     List<Float> numeros = new ArrayList<>();
                     for(VwDetallePedido_I cantidades: detalles)
