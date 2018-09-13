@@ -35,7 +35,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="63" />
+                                                <entry key="scalingPercent" value="60" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -47,7 +47,7 @@
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="fffbff" />
-                                      <entry key="foregroundImage" value="$USER_HOME$/Música/LogoLTHBateria.png" />
+                                      <entry key="foregroundImage" value="$USER_HOME$/Documentos/icono_carmenta.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
