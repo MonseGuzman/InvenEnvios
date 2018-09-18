@@ -218,14 +218,16 @@ public class PedidoActivity extends AppCompatActivity
                     break;
                 }
             }
+            if (ban){
+                articulosPedidoList.set(position,a);
+            }else{
+                articulosPedidoList.add(a);
+            }
+            calTotal();
+            DatosPedidoFragment.updateAdapter();
         }
-        if (ban){
-            articulosPedidoList.set(position,a);
-        }else{
-            articulosPedidoList.add(a);
-        }
-        calTotal();
-        DatosPedidoFragment.updateAdapter();
+
+
     }
 
     public static PedidosDao getPedidosDao()
