@@ -46,6 +46,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
 {
     private ListView AbastecimientoListView;
     private ExpandableListView AbastecimientoExpandableListView;
+    private MenuItem menu_cambia;
 
     private MetodosInternos metodosInternos = new MetodosInternos(this);
     private DaoSession daoSession;
@@ -76,6 +77,7 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
     {
         AbastecimientoListView = (ListView)findViewById(R.id.AbastecimientoListView);
         AbastecimientoExpandableListView = (ExpandableListView) findViewById(R.id.AbastecimientoExpandableListView);
+        menu_cambia = (MenuItem) findViewById(R.id.menu_cambia);
     }
 
     private void cargarDatos(int item)
@@ -244,6 +246,8 @@ public class AbastecimientosActivity extends AppCompatActivity implements Adapte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
+        menu_cambia.setEnabled(false);
+
         DetallePedidoFragment detallePedidoFragment = new DetallePedidoFragment();
         Bundle args;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
