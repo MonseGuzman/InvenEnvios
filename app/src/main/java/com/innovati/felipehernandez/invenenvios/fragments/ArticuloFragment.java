@@ -165,10 +165,11 @@ public class ArticuloFragment extends Fragment implements View.OnClickListener
                 }
                 break;
             case R.id.MenosButton_A:
-                float exit = Float.valueOf(existencias.toString());
-                if(cantidadPedido < exit){
+                //float exit = Float.valueOf(existencias.toString());
+                /*if(cantidadPedido < exit){
                     cantidadPedido +=1;
-                }
+                }*/
+                cantidadPedido +=1;
                 break;
             case R.id.addArticuloList:
                 addArticuloList();

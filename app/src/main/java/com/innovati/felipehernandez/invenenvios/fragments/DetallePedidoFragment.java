@@ -437,9 +437,13 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                 }
             }
         }
-        if (ban){
-            articulosPedidos.set(position,a);
-        }else
+        if(a != null){
+            if (ban){
+                articulosPedidos.set(position,a);
+            }else{
+                articulosPedidos.add(a);
+            }
+        }
         updateAdapter();
     }
 

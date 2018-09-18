@@ -21,28 +21,28 @@ public class DaoMaster extends AbstractDaoMaster {
 
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
-        Pedidos_IDao.createTable(db, ifNotExists);
-        Usuarios_IDao.createTable(db, ifNotExists);
-        VwAbastecimientos_IDao.createTable(db, ifNotExists);
         VwAgente_IDao.createTable(db, ifNotExists);
-        VwArticulos_IDao.createTable(db, ifNotExists);
-        VwClientes_IDao.createTable(db, ifNotExists);
         VwDetallePedido_IDao.createTable(db, ifNotExists);
+        Pedidos_IDao.createTable(db, ifNotExists);
+        VwClientes_IDao.createTable(db, ifNotExists);
+        VwArticulos_IDao.createTable(db, ifNotExists);
         VwPedidos_IDao.createTable(db, ifNotExists);
+        VwAbastecimientos_IDao.createTable(db, ifNotExists);
         VwUsuarios_IDao.createTable(db, ifNotExists);
+        Usuarios_IDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
-        Pedidos_IDao.dropTable(db, ifExists);
-        Usuarios_IDao.dropTable(db, ifExists);
-        VwAbastecimientos_IDao.dropTable(db, ifExists);
         VwAgente_IDao.dropTable(db, ifExists);
-        VwArticulos_IDao.dropTable(db, ifExists);
-        VwClientes_IDao.dropTable(db, ifExists);
         VwDetallePedido_IDao.dropTable(db, ifExists);
+        Pedidos_IDao.dropTable(db, ifExists);
+        VwClientes_IDao.dropTable(db, ifExists);
+        VwArticulos_IDao.dropTable(db, ifExists);
         VwPedidos_IDao.dropTable(db, ifExists);
+        VwAbastecimientos_IDao.dropTable(db, ifExists);
         VwUsuarios_IDao.dropTable(db, ifExists);
+        Usuarios_IDao.dropTable(db, ifExists);
     }
 
     /**
@@ -61,15 +61,15 @@ public class DaoMaster extends AbstractDaoMaster {
 
     public DaoMaster(Database db) {
         super(db, SCHEMA_VERSION);
-        registerDaoClass(Pedidos_IDao.class);
-        registerDaoClass(Usuarios_IDao.class);
-        registerDaoClass(VwAbastecimientos_IDao.class);
         registerDaoClass(VwAgente_IDao.class);
-        registerDaoClass(VwArticulos_IDao.class);
-        registerDaoClass(VwClientes_IDao.class);
         registerDaoClass(VwDetallePedido_IDao.class);
+        registerDaoClass(Pedidos_IDao.class);
+        registerDaoClass(VwClientes_IDao.class);
+        registerDaoClass(VwArticulos_IDao.class);
         registerDaoClass(VwPedidos_IDao.class);
+        registerDaoClass(VwAbastecimientos_IDao.class);
         registerDaoClass(VwUsuarios_IDao.class);
+        registerDaoClass(Usuarios_IDao.class);
     }
 
     public DaoSession newSession() {
