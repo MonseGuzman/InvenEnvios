@@ -118,11 +118,10 @@ public class DatosPedidoFragment extends Fragment implements View.OnClickListene
                     @Override
                     public void onClick(View v)
                     {
-                        //getActivity().finish();
                         PedidoActivity.limpiar();
                     }
                 })
-                        .setActionTextColor(getResources().getColor(R.color.secondaryColor))
+                        .setActionTextColor(getResources().getColor(R.color.secondaryColor, getContext().getTheme()))
                         .show();
             }else
                 Snackbar.make(v, "Faltan añadir articulos", Snackbar.LENGTH_SHORT).show();
