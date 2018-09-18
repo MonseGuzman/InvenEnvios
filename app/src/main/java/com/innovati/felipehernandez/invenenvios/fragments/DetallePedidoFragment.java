@@ -275,7 +275,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
     }
 
     public void updateArticle(int position){
-        if(null != articulosPedidos.get(position)){
             try{
                 articuloEdit.set(0,articulosPedidos.get(position));
             }catch (Exception e){
@@ -285,8 +284,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             //exitArticul = articuloEdit.get(0).getExits();
             editCantida.setText(String.valueOf(articulosPedidos.get(position).getCantidad()));
             datosEditArticle.setVisibility(View.VISIBLE);
-        }
-
     }
 
     public  void updateAdapterArt(List<ArticulosPedido> articuloEdit){
