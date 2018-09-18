@@ -6,5 +6,6 @@
         android:title="Cambiar"
         android:icon="@drawable/ic_cambios_menu"
         app:showAsAction="ifRoom"
+        android:enabled="true"
         android:visible="true"/>
 </menu>
