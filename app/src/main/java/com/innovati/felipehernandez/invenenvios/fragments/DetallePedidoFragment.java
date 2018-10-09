@@ -260,7 +260,7 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
             public void onClick(View view, int position) {
                 if(bandera){
                     si = true;
-                    positionList =position;
+                    positionList = position;
                     updateAr(position);
                 }
             }
@@ -362,8 +362,6 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                     articulosPedidos.add(articulo);
                     listDet.add(pedidos.getIdDetallePedido());
                     idUsuario = pedidos.getIdDetallePedido();
-
-
                 }
 
                 VwArticulos vwArticulos[];
@@ -549,24 +547,28 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                         List<VwAbastecimientos_I> list = qb.list();
 
                         VwAbastecimientos_I abastecimiento = new VwAbastecimientos_I();
-                        abastecimiento.setId(list.get(0).getId());
-                        abastecimiento.setNombre(nombres.get(y));
-                        abastecimiento.setUnidadPrimaria(unidades.get(y));
-                        Float n = cantidades.get(nombres.get(y));
-                        abastecimiento.setCantidad(n);
+                        if(list != null)
+                        {
+                            abastecimiento.setId(list.get(0).getId());
+                            abastecimiento.setNombre(nombres.get(y));
+                            abastecimiento.setUnidadPrimaria(unidades.get(y));
+                            Float n = cantidades.get(nombres.get(y));
+                            abastecimiento.setCantidad(n);
 
-                        if(n == null)
-                            abastecimiento.setEstatus((short) 2);
+                            if(n == null)
+                                abastecimiento.setEstatus((short) 2);
+                            else
+                                abastecimiento.setEstatus((short) 1);
 
-
-                        VwAbastecimientos_IDao abastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
-                        abastecimientos_iDao.update(abastecimiento);
-
+                            VwAbastecimientos_IDao abastecimientos_iDao = daoSession.getVwAbastecimientos_IDao();
+                            abastecimientos_iDao.update(abastecimiento);
+                        }
                     }
                 }
             }
         }
     }
+
     private void validacionCatidad(){
         try{
             if(editCantida.getText() != null){
@@ -728,12 +730,12 @@ public class DetallePedidoFragment extends Fragment implements View.OnClickListe
                      ActualizarPedido a = new ActualizarPedido();
                      a.execute(objetoPedidos);
                  }
-
             }
             catch (Exception e) { }
             return null;
         }
     }
+
     private boolean valideStatus(){
         Boolean ban = false;
         int x = 0;

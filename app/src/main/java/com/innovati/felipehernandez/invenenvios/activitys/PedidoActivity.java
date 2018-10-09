@@ -219,13 +219,13 @@ public class PedidoActivity extends AppCompatActivity
                 }
             }
         }
-            if(a != null){
-                if (ban){
-                    articulosPedidoList.set(position,a);
-                }else{
-                    articulosPedidoList.add(a);
-                }
+        if(a != null){
+            if (ban){
+                articulosPedidoList.set(position,a);
+            }else{
+                articulosPedidoList.add(a);
             }
+        }
         calTotal();
         DatosPedidoFragment.updateAdapter();
     }
@@ -314,7 +314,6 @@ public class PedidoActivity extends AppCompatActivity
                     detPedido(idUsuario,idPedido,ar);
                 }
             }
-
         }
         articulosPedidoList.clear();
         calTotal();
