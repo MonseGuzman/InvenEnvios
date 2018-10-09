@@ -14,7 +14,7 @@ public class ResourceManager
 	private static String JDBC_DRIVER   = "net.sourceforge.jtds.jdbc.Driver";
 	//private static String JDBC_DRIVER   = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 	private SharedPreferences preferences;
-	public static String addressIp = "192.168.0.34";
+	public static String addressIp = "innovati.ddns.net";
 	public  static  String port= "1433";
 	public static  String nameData = "Inven_E";
     public  static String JDBC_USER     = "sa";
